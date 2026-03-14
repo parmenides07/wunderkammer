@@ -1,6 +1,6 @@
 const GITHUB_USER = 'ParamGhetia';
 const GITHUB_REPO = 'personalSite';
-const BRANCH = 'main';
+const BRANCH = 'master';
 const CONTENT_PATH = 'content';
 
 const apiBase = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
