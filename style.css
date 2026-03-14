@@ -5,6 +5,10 @@ html, body {
   background: #F2EFED;
 }
 
+* {
+  cursor: url('Precision\ Select\ G191.cur'), auto; /* ccursors: https://www.rw-designer.com/cursor-set/guest-191-s-hands*/
+  }
+
 /* wrapper becomes the viewport container */
 .wrapper {
   position: relative;
@@ -14,6 +18,30 @@ html, body {
   overflow: hidden;
 
   container-type: size;
+}
+
+.wrapper::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 999;
+  opacity: 0.17;
+  background-image: url('noise.png'); /* watercolor paper texture*/
+  background-size: 200px 200px;
+  background-repeat: repeat;
+  mix-blend-mode: overlay;
+}
+
+a, button, .cardicon {
+  cursor: url('Normal\ Select\ G191.cur'), pointer;
+}
+
+p, h1, h2, h3, .content {
+  cursor: url('Text\ Select\ G191.cur'), text;
 }
 
 /* right grid paper region */
@@ -39,7 +67,7 @@ html, body {
   width: 100%;
   height: 100%;
   box-sizing: border-box;
-  padding-left: 8.3cqw;
+  padding-left: 8.1cqw;
   padding-top: 4cqw;
   padding-right: 2.6cqw;
   font-size: 2cqw;
@@ -50,6 +78,7 @@ html, body {
   opacity: 0.73;
   filter: blur(0.45px); 
   mix-blend-mode: multiply;
+
 }
 
 .leftbg {
@@ -84,9 +113,10 @@ html, body {
 
 /* notebook card */
 .card {
-  width: 44cqw;
+  position: relative;
+  width: 43.4cqw;
   container-type: inline-size;
-  background-image: url("linedpaper.png");
+  background-image: url("linedpapergraffiti.png");
   background-size: cover;
   background-repeat: no-repeat;
 
@@ -94,6 +124,15 @@ html, body {
   flex-direction: column;
 
   filter: drop-shadow(4px 4px 7px rgba(0,0,0,0.45));
+}
+
+.cardicon {
+  position: absolute;
+  top: -4.4cqw;
+  left: 4.2cqw;
+  width: 23cqw;
+  opacity: 1;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.35));
 }
 
 /* link container */

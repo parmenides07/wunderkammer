@@ -7,6 +7,7 @@ const apiBase = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/cont
 const rawBase = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}`;
 
 const cache = {};
+const history = [];
 
 function formatName(name) {
   return name
@@ -31,6 +32,7 @@ async function renderContent(path) {
 }
 
 async function navigate(path) {
+  history.push(path);
   window.location.hash = path.replace('content/', '');
   const items = await getItems(path);
   const folders = items.filter(i => i.type === 'dir');
@@ -77,6 +79,9 @@ const hash = window.location.hash.replace('#', '');
 if (hash) {
   const path = `content/${hash}`;
   if (hash.endsWith('.md')) {
+    // render the file AND build the parent folder links
+    const parentPath = path.substring(0, path.lastIndexOf('/'));
+    navigate(parentPath);
     renderContent(path);
   } else {
     navigate(path);
@@ -84,3 +89,13 @@ if (hash) {
 } else {
   navigate(CONTENT_PATH);
 }
+
+document.querySelector('.cardicon').addEventListener('click', () => {
+  history.pop(); // remove current
+  const previous = history.pop(); // get previous
+  if (previous) {
+    navigate(previous);
+  } else {
+    navigate(CONTENT_PATH);
+  }
+});
