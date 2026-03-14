@@ -8,6 +8,13 @@ const rawBase = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}
 
 const cache = {};
 
+function formatName(name) {
+  return name
+    .replace('.md', '')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/^./, str => str.toUpperCase());
+}
+
 async function getItems(path) {
   if (cache[path]) return cache[path];
   const res = await fetch(`${apiBase}/${path}`);
@@ -17,7 +24,7 @@ async function getItems(path) {
 }
 
 async function renderContent(path) {
-  window.location.hash = path.replace('content/', '');    
+  window.location.hash = path.replace('content/', '');
   const res = await fetch(`${rawBase}/${path}`);
   const text = await res.text();
   document.querySelector('.content').innerHTML = marked.parse(text);
@@ -29,20 +36,23 @@ async function navigate(path) {
   const folders = items.filter(i => i.type === 'dir');
   const files = items.filter(i => i.name.endsWith('.md'));
 
-  // if only one md file and no folders, just show it
+  const folderName = path.split('/').pop();
+  const indexFile = files.find(f => f.name === `${folderName}.md`);
+
+  if (indexFile) renderContent(indexFile.path);
+
   if (files.length === 1 && folders.length === 0) {
     renderContent(files[0].path);
     return;
   }
 
-  // otherwise build links from folders and files
   const cardLinks = document.querySelector('.card-links');
   cardLinks.innerHTML = '';
-  // folders first
+
   folders.forEach(folder => {
     const a = document.createElement('a');
     a.href = '#';
-    a.textContent = folder.name;
+    a.textContent = formatName(folder.name);
     a.addEventListener('click', (e) => {
       e.preventDefault();
       navigate(folder.path);
@@ -50,11 +60,11 @@ async function navigate(path) {
     cardLinks.appendChild(a);
   });
 
-  // then files
   files.forEach(file => {
+    if (file.name === `${folderName}.md`) return;
     const a = document.createElement('a');
     a.href = '#';
-    a.textContent = file.name.replace('.md', '');
+    a.textContent = formatName(file.name);
     a.addEventListener('click', (e) => {
       e.preventDefault();
       renderContent(file.path);
@@ -63,11 +73,9 @@ async function navigate(path) {
   });
 }
 
-// start at content folder
 const hash = window.location.hash.replace('#', '');
 if (hash) {
   const path = `content/${hash}`;
-  // check if it's a file or folder
   if (hash.endsWith('.md')) {
     renderContent(path);
   } else {
