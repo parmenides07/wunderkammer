@@ -82,6 +82,8 @@ p, h1, h2, h3, .content {
   width: 100%;
   opacity: 1;
   filter: none;
+  mix-blend-mode: normal;
+  isolation: isolate;
 }
 
 .content p, .content h1, .content h2, .content h3, .content li, .content a {
