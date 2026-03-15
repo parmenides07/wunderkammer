@@ -60,6 +60,7 @@ p, h1, h2, h3, .content {
 
   z-index: 0;
 }
+
 .content {
   position: absolute;
   top: 0;
@@ -75,10 +76,18 @@ p, h1, h2, h3, .content {
   overflow-y: auto;
   font-family: 'JetBrains Mono', monospace;
   color: #2d2d2d;
-  opacity: 0.73;
-  filter: blur(0.45px); 
-  mix-blend-mode: multiply;
+}
 
+.content img {
+  width: 100%;
+  opacity: 1;
+  filter: none;
+}
+
+.content p, .content h1, .content h2, .content h3, .content li, .content a {
+  opacity: 0.73;
+  filter: blur(0.45px);
+  mix-blend-mode: multiply;
 }
 
 .leftbg {
