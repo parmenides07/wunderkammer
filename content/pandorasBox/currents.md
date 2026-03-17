@@ -9,7 +9,7 @@
 ![album](assets/businessmen.jpg)
 *Businessmen & Ghosts - Working for a Nuclear Free City*
 
-![album](assets/bricolage.jpg)
+![album](assets/bricolage.png)
 *Bricolage - Working for a Nuclear Free City*
 
 ![album](assets/unakkul.png)
