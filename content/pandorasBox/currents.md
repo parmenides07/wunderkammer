@@ -10,7 +10,7 @@
 *Businessmen & Ghosts - Working for a Nuclear Free City*
 
 ![album](assets/bricolage.png)
-*Bricolage - Working for a Nuclear Free City*
+*Bricolage - Amon Tobin*
 
 ![album](assets/unakkul.png)
 *Unakkul Naane - Harris Jayaraj*
