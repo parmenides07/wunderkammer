@@ -1,1 +1,0 @@
-so i like love art and its the best

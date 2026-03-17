@@ -111,3 +111,17 @@ document.querySelector('.cardicon').addEventListener('click', () => {
     navigate(CONTENT_PATH);
   }
 });
+
+const backSound = new Audio('page-flip-01a.mp3');
+
+document.querySelector('.cardicon').addEventListener('click', () => {
+  backSound.currentTime = 0;
+  backSound.play();
+  history.pop();
+  const previous = history.pop();
+  if (previous) {
+    navigate(previous);
+  } else {
+    navigate(CONTENT_PATH);
+  }
+});
