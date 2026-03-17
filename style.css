@@ -108,6 +108,20 @@ p, h1, h2, h3, .content {
   font-size: 1.2cqw;
 }
 
+.content .float-right {
+  float: right;
+  width: 40%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.5cqw;
+  margin-left: 2cqw;
+}
+
+.content .float-right img {
+  width: 100%;
+  float: none;
+}
+
 /*
 .leftbgblur {
   position: absolute;
