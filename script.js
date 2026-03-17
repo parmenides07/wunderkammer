@@ -2,6 +2,8 @@ const GITHUB_USER = 'ParamGhetia';
 const GITHUB_REPO = 'personalSite';
 const BRANCH = 'master';
 const CONTENT_PATH = 'content';
+const backSound = new Audio('page-flip-01a.mp3');
+const clickSound = new Audio('holepunch.mp3');
 
 const apiBase = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
 const rawBase = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}`;
@@ -69,6 +71,8 @@ async function navigate(path) {
     a.textContent = formatName(folder.name);
     a.addEventListener('click', (e) => {
       e.preventDefault();
+      clickSound.currentTime = 0;
+      clickSound.play();
       navigate(folder.path);
     });
     cardLinks.appendChild(a);
@@ -81,6 +85,8 @@ async function navigate(path) {
     a.textContent = formatName(file.name);
     a.addEventListener('click', (e) => {
       e.preventDefault();
+      clickSound.currentTime = 0;
+      clickSound.play();
       renderContent(file.path);
     });
     cardLinks.appendChild(a);
@@ -113,5 +119,3 @@ document.querySelector('.cardicon').addEventListener('click', () => {
     navigate(CONTENT_PATH);
   }
 });
-
-const backSound = new Audio('page-flip-01a.mp3');
