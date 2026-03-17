@@ -247,6 +247,7 @@ p, h1, h2, h3, .content {
 }
 
 .cardicon {
+  transition: width 0.15s ease;
   position: absolute;
   top: 0.4cqw;
   left: 8cqw;
@@ -257,7 +258,13 @@ p, h1, h2, h3, .content {
   z-index: 5;
 }
 
+.cardicon:hover {
+  width: 20cqw;
+  transition: width 0.15s ease;
+}
+
 .cardicon2 {
+  transition: width 0.15s ease;
   position: absolute;
   bottom: -7cqw;
   rotate: -40deg;
@@ -265,6 +272,11 @@ p, h1, h2, h3, .content {
   width: 19cqw;
   opacity: 0.94;
   filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
+}
+
+.cardicon2:hover {
+  width: 20cqw;
+  transition: width 0.15s ease;
 }
 
 /* link container */
@@ -279,6 +291,7 @@ p, h1, h2, h3, .content {
 
 /* links */
 .card a {
+  transition: all 0.15s ease;
   text-decoration: none;
   color: #2d2d2d;
 
@@ -295,4 +308,10 @@ p, h1, h2, h3, .content {
   letter-spacing: -0.045em;
   filter: blur(0.52px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.22));
   mix-blend-mode: multiply;
+}
+
+
+.card a:hover {
+  color: #8b4513;
+  font-size: 4.6cqw;
 }
