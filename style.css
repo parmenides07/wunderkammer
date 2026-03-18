@@ -116,6 +116,7 @@ p, h1, h2, h3, .content {
 
 .content .grid img {
   width: 100%;
+  height: auto;
 }
 
 .content .grid em {
