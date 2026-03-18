@@ -1,11 +1,10 @@
+### OS
+Currently, Fedora Linux 43 is my daily driver but in the future, (once I get another laptop) I'd like to try either Arch or CachyOS.
 <div class="float-right">
 
 ![Setup 1](assets/setup1.jpg)
 
 </div>
-
-### OS
-Currently, Fedora Linux 43 is my daily driver but in the future, (once I get another laptop) I'd like to try either Arch or CachyOS.
 Amongst other distros, Fedora seems to be the best one. It just works while still allowing a lot of customizability.
 For context, I've tried EndeavourOS and Kubuntu. Amongst the debian-based and arch-based, I found Fedora to be my favorite.
 ![Setup 2](assets/setup2.jpg)

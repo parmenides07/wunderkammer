@@ -2,8 +2,8 @@ const GITHUB_USER = 'ParamGhetia';
 const GITHUB_REPO = 'personalSite';
 const BRANCH = 'master';
 const CONTENT_PATH = 'content';
-const backSound = new Audio('assets/page-flip-01a.mp3');
-const clickSound = new Audio('assets/holepunch.mp3');
+const backSound = new Audio('assets/holepunch.mp3');
+const clickSound = new Audio('assets/page-flip-01a.mp3');
 
 const apiBase = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
 const rawBase = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}`;
