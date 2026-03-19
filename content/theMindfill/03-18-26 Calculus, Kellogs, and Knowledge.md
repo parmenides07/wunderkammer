@@ -13,19 +13,3 @@
 - So then I beg the question: what is the jerk of knowledge? How about the snap? The crackle? pop? 
 
 - I was going to leave it at that but I realized this entry would be a bit too anticlimactic. I built towards this thing and never even explained it thouroughly. I don't exactly have an answer though, maybe tomorrow or another day. Maybe never but, I think I can answer what the 3rd derivative would be: health. This might seem odd but if learning is what facilitates the gaining of knowledge and the learning how to learn facilitates learning then its only natural that learning how to facilitate all of that can only be done through better health and maximization of brain power and raising of intillect. I'm not sure if this is a perfect answer but its definately something. I think it aligns with my ideas of scope extending too, since the increase in learning ability can impact all subjects learning but the increase in health can impact everything you do. So then I guess the final question I'm going to leave you and myself with is what facilitates and improves upon our health/brainpower? 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>

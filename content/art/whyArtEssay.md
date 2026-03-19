@@ -14,14 +14,3 @@ But just like Sisyphus, I’ve found joy in my prison. I’ve come to love visua
 Few other mediums can so elegantly and wholly capture the beauty of the world we live in. Visual art is uniquely able to forever preserve those fleeting beautiful moments. It's our means of escaping the passage of time. Art truly is like no other. Nothing escapes its eyes. And that’s why the doors that lie beyond me are gates of opportunity, ambiguity that excites me. And the knowledge of an ever present obstacle and opportunity for growth is one that motivates me to keep going.
 
 So now you know. Why art? Why do I still continue? Because that’s all I can do. And I wouldn’t have it any other way. 
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>

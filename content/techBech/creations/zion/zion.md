@@ -22,7 +22,7 @@
         - If not for this, I would've just allowed the display of only 1 package and all its children at a time by default and to see the contents, you would have to unfold each child individually. 
 ## QOL/Implications
 ### Viewport
-- I intend to split the viewport in two 65%, 35%. The majority should be the workspace where the user creates these relationships and lays out packages and arranges them. The other part should depict these relationships, it should be a display of the family tree of whatever package is clicked. Perhaps maybe there is some room for it to be something else. We shall see. 
+- I intend to split the viewport in two 65%, 35%. The majority should be the workspace where the user creates these relationships and lays out packages and arranges them. The other part should depict these relationships, it should be a display of the family tree of whatever package is clicked. Also it should display more packages than that idk. This is where you pull and search for the items to put into the workspace and form the relationship with. 
 ### Spatial Notetaking 
 - Since its a canvas/grid you can move around things. Not much to say here. Its kind of a byproduct and neccesity for the existance of the others. 
 
@@ -31,18 +31,3 @@
 
 ## Reflection
 - The main limiting factor to this project, as is so common, is my own technical abilities as a programmer. However I'm confident in my ability to learn and improve where I fall short. Working in tandem with my refined ability to ideate, I'm certain I can execute this project.  
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>

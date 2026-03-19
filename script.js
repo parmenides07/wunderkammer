@@ -43,9 +43,8 @@ async function renderContent(path) {
     `![$1](${rawBase}/${folder}/$2)`
   );
   console.log('after:', text);
-  document.querySelector('.content').innerHTML = marked.parse(text);
 
-  document.querySelector('.content').innerHTML = marked.parse(text);
+  document.querySelector('.content').innerHTML = marked.parse(text) + '<br>'.repeat(9);
 
   const hasImages = document.querySelector('.content img');
   if (!hasImages) {
