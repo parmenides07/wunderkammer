@@ -1,5 +1,5 @@
-const GITHUB_USER = 'ParamGhetia';
-const GITHUB_REPO = 'personalSite';
+const GITHUB_USER = 'parmenides07';
+const GITHUB_REPO = 'wunderkammer';
 const BRANCH = 'master';
 const CONTENT_PATH = 'content';
 const backSound = new Audio('assets/holepunch.mp3');
