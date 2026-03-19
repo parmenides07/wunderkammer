@@ -1,0 +1,31 @@
+### A Progression
+- I was reflecting on how much I've learned over the past years. It was astonishing. I remember what once was so difficult for me is now trivial. Even learing these things has become leagues easier than it previously was. I find this progression from knowledge to learning to learning how to learn so interesting.
+
+### A Series of Graphs
+- To better understand this I'd like to present a series of graphs. I invite you to use your imagination to visualize these. 
+
+- First, the graph of knowledge. This represents the amount of knowledge (y) we have over time (x). We take the derivative of this and it gives us the rate of change of this knowledge aka how fast we attain knowledge. Now we can take a graph of this too, and create a graph of learning (the rate at which knowledge grows). 
+  - Now something to point out about this graph is that your direct skills and knowledge in one subject are often limited to that subject and perhaps a few others. 
+- To move beyond that, we must take the derivative once more. Finding the rate of change of our graph of learning, we can yield yet another graph, one representing the rate at which learning grows. This is what I'm interested in. This ability to learn how to learn persists across disciplines. Any increase in this rate of change sees an even higher increase in every single discipline. 
+
+### Implication of Derivative
+- Now the implication of what I've set up here is that there can be a 3rd derivative, 4th derivative, 5th derivative, and so on till infinity. BUt what does this mean? Well, we've established that the scope of what this applies to grows one order with every derivative (knowledge -> one subject) (learning -> all subjects). And we have a relative understanding of what happens as we progress farther along this series of derivatives (knowledge *= d/dx). 
+- So then I beg the question: what is the jerk of knowledge? How about the snap? The crackle? pop? 
+
+- I was going to leave it at that but I realized this entry would be a bit too anticlimactic. I built towards this thing and never even explained it thouroughly. I don't exactly have an answer though, maybe tomorrow or another day. Maybe never but, I think I can answer what the 3rd derivative would be: health. This might seem odd but if learning is what facilitates the gaining of knowledge and the learning how to learn facilitates learning then its only natural that learning how to facilitate all of that can only be done through better health and maximization of brain power and raising of intillect. I'm not sure if this is a perfect answer but its definately something. I think it aligns with my ideas of scope extending too, since the increase in learning ability can impact all subjects learning but the increase in health can impact everything you do. So then I guess the final question I'm going to leave you and myself with is what facilitates and improves upon our health/brainpower? 
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
