@@ -1,0 +1,9 @@
+03.19.25 
+
+I didn't get a chance to spend that much time today but I made considerable progress in laying the groundwork for what comes forward and honing the idea. I was able to refine my concept a little further.
+
+Previously, I saw the packages being containers and their relationship being two different things but, I think it would be more effective to just have the relationship of parent child be the container formation. The way I am implimenting this is treating every relationship as a struct within the package struct. Every child relationship must also have a location. This location represents where in the parent the child is located. Another thing, every package struct has a size vector. This would define the size of the parent and then the children are the locations.
+
+I think you can begin to see what's forming here. The idea is that all these relationships and packages are stored on the disk and then on startup whichever children present within the focused parent are loaded onto an array, then these are mapped onto a matrix (based on child locations and child sizes and parent size which sets the dimensions of the matrix). This matrix is how I deal with spatial location. Lets say you click into one of these children or open that up, then all of its children will be loaded into the array and a new working matrix will be formed and the previous working array will be filed away. To accomodate for all of this though, I must treat the canvas as seperate from the viewport, so as to allow zooming and panning. This is quite simple because of the matrix setup we have established. I just need to write some logic to translate location on the matrix to the screen and account for offsets (due to panning) or scale (based on size). 
+
+Viewport and canvas distinction
