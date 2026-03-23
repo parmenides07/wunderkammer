@@ -9,9 +9,10 @@ marked.use({ breaks: true });
 
 function formatName(name) {
   return name
-    .replace('.md', '')
-    .replace(/([a-z])([A-Z])/g, '$1 $2')
-    .replace(/^./, str => str.toUpperCase());
+  .replace('.md', '')
+  .replace(/_/g, ' ')
+  .replace(/([a-z])([A-Z])/g, '$1 $2')
+  .replace(/^./, str => str.toUpperCase());
 }
 
 async function renderContent(path) {
