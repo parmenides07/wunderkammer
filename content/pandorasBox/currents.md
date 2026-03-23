@@ -20,14 +20,3 @@
 *The Facts and the Dreams - Fragile State*
 
 </div>
-
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-                .

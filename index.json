@@ -1,0 +1,34 @@
+{
+  "Miscellany": {
+    "inventory.md": true
+  },
+  "art": {
+    "art.md": true,
+    "inspirations.md": true,
+    "whyArtEssay.md": true
+  },
+  "content.md": true,
+  "pandorasBox": {
+    "currents.md": true
+  },
+  "techBech": {
+    "creations": {
+      "zion": {
+        "devblog1.md": true,
+        "devblog2.md": true,
+        "zion.md": true
+      }
+    },
+    "linuxBTW.md": true,
+    "notetakingAndProductivitySystem.md": true,
+    "techBech.md": true,
+    "test.md": true
+  },
+  "theMindfill": {
+    "03-18-26 Calculus, Kellogs, and Knowledge.md": true,
+    "03-19-26 The Stand User Could Be Anyone.md": true,
+    "03-20-26 Why The Visual.md": true,
+    "03-21-26 Emergent Complexity and Control.md": true,
+    "theMindfill.md": true
+  }
+}

@@ -1,15 +1,11 @@
-const GITHUB_USER = 'parmenides07';
-const GITHUB_REPO = 'wunderkammer';
-const BRANCH = 'master';
 const CONTENT_PATH = 'content';
 const backSound = new Audio('assets/holepunch.mp3');
 const clickSound = new Audio('assets/page-flip-01a.mp3');
-
-const apiBase = `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents`;
-const rawBase = `https://raw.githubusercontent.com/${GITHUB_USER}/${GITHUB_REPO}/${BRANCH}`;
-
+const hoverSound = new Audio('assets/boxclick1.mp3');
 const cache = {};
 const history = [];
+
+marked.use({ breaks: true });
 
 function formatName(name) {
   return name
@@ -18,34 +14,21 @@ function formatName(name) {
     .replace(/^./, str => str.toUpperCase());
 }
 
-async function getItems(path) {
-  if (cache[path]) return cache[path];
-  const res = await fetch(`${apiBase}/${path}`);
-  const items = await res.json();
-  cache[path] = items;
-  return items;
-}
-
-marked.use({ breaks: true });
-
 async function renderContent(path) {
-  console.log(path)
   window.location.hash = path.replace('content/', '');
-  const res = await fetch(`${rawBase}/${path}`);
-  let text = await res.text(); 
-
-  const folder = path.substring(0, path.lastIndexOf('/'));
-  console.log('folder:', folder);
-  console.log('before:', text);
-  
-  text = text.replace(
-    /!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
-    `![$1](${rawBase}/${folder}/$2)`
-  );
-  console.log('after:', text);
-
-  document.querySelector('.content').innerHTML = marked.parse(text) + '<br>'.repeat(9);
-
+  if (cache[path]) {
+    document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
+  } else {
+    const res = await fetch(path);
+    let text = await res.text();
+    const folder = path.substring(0, path.lastIndexOf('/'));
+    text = text.replace(
+      /!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
+      `![$1](${folder}/$2)`
+    );
+    cache[path] = marked.parse(text);
+    document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
+  }
   const hasImages = document.querySelector('.content img');
   if (!hasImages) {
     document.querySelector('.content').classList.add('text-only');
@@ -54,20 +37,19 @@ async function renderContent(path) {
   }
 }
 
-async function navigate(path) {
+async function navigate(path, index) {
   history.push(path);
   window.location.hash = path.replace('content/', '');
-  const items = await getItems(path);
-  const folders = items.filter(i => i.type === 'dir' && i.name.toLowerCase() !== 'assets');
-  const files = items.filter(i => i.name.endsWith('.md'));
 
+  const folders = Object.keys(index).filter(k => typeof index[k] === 'object' && k !== 'assets');
+  const files = Object.keys(index).filter(k => index[k] === true);
   const folderName = path.split('/').pop();
-  const indexFile = files.find(f => f.name === `${folderName}.md`);
+  const indexFile = files.find(f => f === `${folderName}.md`);
 
-  if (indexFile) renderContent(indexFile.path);
+  if (indexFile) renderContent(`${path}/${indexFile}`);
 
   if (files.length === 1 && folders.length === 0) {
-    renderContent(files[0].path);
+    renderContent(`${path}/${files[0]}`);
     return;
   }
 
@@ -77,45 +59,67 @@ async function navigate(path) {
   folders.forEach(folder => {
     const a = document.createElement('a');
     a.href = '#';
-    a.textContent = formatName(folder.name);
+    a.textContent = formatName(folder);
     a.addEventListener('click', (e) => {
       e.preventDefault();
       clickSound.currentTime = 0;
       clickSound.play();
-      navigate(folder.path);
+      navigate(`${path}/${folder}`, index[folder]);
+    });
+    a.addEventListener('mouseenter', () => {
+      hoverSound.cloneNode().play();
     });
     cardLinks.appendChild(a);
   });
 
   files.forEach(file => {
-    if (file.name === `${folderName}.md`) return;
+    if (file === `${folderName}.md`) return;
     const a = document.createElement('a');
     a.href = '#';
-    a.textContent = formatName(file.name);
+    a.textContent = formatName(file);
     a.addEventListener('click', (e) => {
       e.preventDefault();
       clickSound.currentTime = 0;
       clickSound.play();
-      renderContent(file.path);
+      renderContent(`${path}/${file}`);
+    });
+    a.addEventListener('mouseenter', () => {
+      hoverSound.cloneNode().play();
     });
     cardLinks.appendChild(a);
   });
 }
 
-const hash = window.location.hash.replace('#', '');
-if (hash) {
-  const path = `content/${hash}`;
-  if (hash.endsWith('.md')) {
-    // render the file AND build the parent folder links
-    const parentPath = path.substring(0, path.lastIndexOf('/'));
-    navigate(parentPath);
-    renderContent(path);
+async function init() {
+  const res = await fetch('index.json');
+  const index = await res.json();
+
+  const hash = window.location.hash.replace('#', '');
+  if (hash) {
+    const parts = hash.split('/');
+    let currentIndex = index;
+    let currentPath = CONTENT_PATH;
+    for (const part of parts) {
+      if (currentIndex[part] === true) {
+        const parentParts = parts.slice(0, parts.indexOf(part));
+        const parentPath = `${CONTENT_PATH}${parentParts.length ? '/' + parentParts.join('/') : ''}`;
+        navigate(parentPath, currentIndex);
+        renderContent(`${CONTENT_PATH}/${hash}`);
+        break;
+      } else if (currentIndex[part]) {
+        currentIndex = currentIndex[part];
+        currentPath = `${currentPath}/${part}`;
+      }
+    }
+    if (!hash.includes('.md')) {
+      navigate(currentPath, currentIndex);
+    }
   } else {
-    navigate(path);
+    navigate(CONTENT_PATH, index);
   }
-} else {
-  navigate(CONTENT_PATH);
 }
+
+init();
 
 document.querySelector('.cardicon').addEventListener('click', () => {
   backSound.currentTime = 0;
@@ -123,8 +127,17 @@ document.querySelector('.cardicon').addEventListener('click', () => {
   history.pop();
   const previous = history.pop();
   if (previous) {
-    navigate(previous);
+    fetch('index.json').then(r => r.json()).then(index => {
+      const parts = previous.replace('content/', '').split('/');
+      let currentIndex = index;
+      for (const part of parts) {
+        if (currentIndex[part]) currentIndex = currentIndex[part];
+      }
+      navigate(previous, currentIndex);
+    });
   } else {
-    navigate(CONTENT_PATH);
+    fetch('index.json').then(r => r.json()).then(index => {
+      navigate(CONTENT_PATH, index);
+    });
   }
 });
