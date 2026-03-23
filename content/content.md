@@ -28,8 +28,9 @@ Videogames:
 - Next:
     - *Outer Wilds* (Indie Adventure)
 
-### Processing 
-- Framework for Maximizing Life WIP.
+### Processing (WIP Stuff/Thinking About)
+- Framework for Maximizing Life 
+- Enlightenment and Art
 
 ### Creating 
 Tech: 
