@@ -25,6 +25,7 @@ TV Shows:
     - *Jojo Part 7* (Anime)
 
 Videogames:
+- *Hylics* (??)
 - Next:
     - *Outer Wilds* (Indie Adventure)
 
