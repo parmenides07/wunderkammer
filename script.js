@@ -99,18 +99,25 @@ async function init() {
     const parts = hash.split('/');
     let currentIndex = index;
     let currentPath = CONTENT_PATH;
-    for (const part of parts) {
+
+    for (let i = 0; i < parts.length; i++) {
+      const part = parts[i];
       if (currentIndex[part] === true) {
-        const parentParts = parts.slice(0, parts.indexOf(part));
-        const parentPath = `${CONTENT_PATH}${parentParts.length ? '/' + parentParts.join('/') : ''}`;
-        navigate(parentPath, currentIndex);
+        // it's a file — build parent links then render file
+        navigate(currentPath, currentIndex);
         renderContent(`${CONTENT_PATH}/${hash}`);
         break;
-      } else if (currentIndex[part]) {
+      } else if (typeof currentIndex[part] === 'object') {
+        // it's a folder — go deeper
         currentIndex = currentIndex[part];
         currentPath = `${currentPath}/${part}`;
+      } else {
+        // not found
+        navigate(CONTENT_PATH, index);
+        break;
       }
     }
+
     if (!hash.includes('.md')) {
       navigate(currentPath, currentIndex);
     }

@@ -35,4 +35,4 @@ Videogames:
 
 ### Creating 
 Tech: 
-- Relational Notetaking Framework: [ZION][https://parmenides07.github.io/wunderkammer/#techBech/creations/zion/zion.md]
+- Relational Notetaking Framework: [ZION](https://parmenides07.github.io/wunderkammer/#techBech/creations/zion/zion.md)
