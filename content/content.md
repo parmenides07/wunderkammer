@@ -14,7 +14,8 @@ Books:
 - *World War Z* by Max Brooks (Audiobook)
 - *JJBA: Golden Wind* by Hirohiko Araki (Manga)
 - Next:
-    - *Blood Merdian* by Cormac McCarthy (Western Epic)
+    - *Blood Meridian* by Cormac McCarthy (Western Epic)
+    - *ASOIF: A Way of Kings* by George R. Martin (Fantasy Epic)
 
 TV Shows:
 - *Seinfeld* (Sitcom) 
@@ -26,3 +27,10 @@ TV Shows:
 Videogames:
 - Next:
     - *Outer Wilds* (Indie Adventure)
+
+### Processing 
+- Framework for Maximizing Life WIP.
+
+### Creating 
+Tech: 
+- Relational Notetaking Framework: [ZION][https://parmenides07.github.io/wunderkammer/#techBech/creations/zion/zion.md]
