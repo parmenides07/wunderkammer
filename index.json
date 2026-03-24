@@ -16,6 +16,7 @@
       "zion": {
         "devblog1.md": true,
         "devblog2.md": true,
+        "devblog3.md": true,
         "whatIsZion.md": true,
         "zion.md": true
       }
@@ -29,6 +30,7 @@
     "03-19-26_TheStandUserCouldBeAnyone.md": true,
     "03-20-26_WhyTheVisual.md": true,
     "03-21-26_EmergentComplexityAndControl.md": true,
+    "03-23-26_ChefsInCS.md": true,
     "theMindfill.md": true
   }
 }
