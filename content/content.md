@@ -8,8 +8,9 @@ Join me in my journey of maximizing life.
 
 ### Consuming:
 
+#### Media 
+
 Books:
-- *Godel, Escher, and Bach* by Douglass Hofstadter (???)
 - *Steve Jobs* by Walter Isaacson (Biography)
 - *World War Z* by Max Brooks (Audiobook)
 - *JJBA: Golden Wind* by Hirohiko Araki (Manga)
@@ -18,16 +19,24 @@ Books:
     - *ASOIF: A Way of Kings* by George R. Martin (Fantasy Epic)
 
 TV Shows:
-- *Seinfeld* (Sitcom) 
-- *Knight of the Seven Kingdoms* (Fantasy)
+- *Cowboy Bebop* (Anime) 
 - Next:
-    - *Ergo Proxy* (Anime)
-    - *Jojo Part 7* (Anime)
+  - *Knight of the Seven Kingdoms* (Fantasy)
+  - *Ergo Proxy* (Anime)
+  - *Jojo Part 7* (Anime)
 
 Videogames:
 - *Hylics* (??)
 - Next:
     - *Outer Wilds* (Indie Adventure)
+
+#### Education:
+
+Language:
+- *Sanskrit* (Devaginiri Script)
+
+Misc:
+- *Godel, Escher, and Bach* by Douglass Hofstadter (???)
 
 ### Processing (WIP Stuff/Thinking About)
 - Framework for Maximizing Life 
@@ -36,3 +45,5 @@ Videogames:
 ### Creating 
 Tech: 
 - Relational Notetaking Framework: [ZION](https://parmenides07.github.io/wunderkammer/#techBech/creations/zion/zion.md)
+- Next: 
+  - Modular, Recursive, Macropad
