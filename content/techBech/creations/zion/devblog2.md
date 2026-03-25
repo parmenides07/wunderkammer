@@ -51,6 +51,7 @@ Okay that's enough of the technicals, I would like to share a large change or di
 ![game15](assets/game15.jpg)
 
 </div>
+
 - Synonymously, I'm also talking about hardware and creations in the physical realm. Some companies like Nothing and Teenage Engineering are definately headed in the right direction and trying to innovate in terms of design, but even they too are reluctant and safe in their designs, appealing to a large demographic. Our world is so beautfiul and full of artisans that create such amazing things. Look at the following images I collected, imagine a product that took into account any of the textures, colors, or shapes you see present. Feel free to think of creations beyond even electronics. 
 
 <div class="grid">

@@ -16,26 +16,42 @@ function formatName(name) {
 }
 
 async function renderContent(path) {
-  window.location.hash = path.replace('content/', '');
-  if (cache[path]) {
-    document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
-  } else {
-    const res = await fetch(path);
-    let text = await res.text();
-    const folder = path.substring(0, path.lastIndexOf('/'));
-    text = text.replace(
-      /!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
-      `![$1](${folder}/$2)`
-    );
-    cache[path] = marked.parse(text);
-    document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
-  }
-  const hasImages = document.querySelector('.content img');
-  if (!hasImages) {
-    document.querySelector('.content').classList.add('text-only');
-  } else {
-    document.querySelector('.content').classList.remove('text-only');
-  }
+    window.location.hash = path.replace('content/', '');
+    if (cache[path]) {
+        document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
+    } else {
+        const res = await fetch(path);
+        let text = await res.text();
+        const folder = path.substring(0, path.lastIndexOf('/'));
+        text = text.replace(
+            /!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
+            `![$1](${folder}/$2)`
+        );
+        cache[path] = marked.parse(text);
+        document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
+    }
+    const content = document.querySelector('.content');
+    const nodes = [...content.childNodes];
+    content.innerHTML = '';
+
+    let textWrapper = null;
+
+    nodes.forEach(node => {
+        const isImage = node.nodeName === 'IMG';
+        const containsImage = node.querySelector && node.querySelector('img');
+
+        if (!isImage && !containsImage) {
+            if (!textWrapper) {
+                textWrapper = document.createElement('div');
+                textWrapper.classList.add('content-text');
+                content.appendChild(textWrapper);
+            }
+            textWrapper.appendChild(node);
+        } else {
+            textWrapper = null;
+            content.appendChild(node);
+        }
+    });
 }
 
 async function navigate(path, index) {
