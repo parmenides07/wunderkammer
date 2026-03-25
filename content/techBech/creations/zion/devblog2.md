@@ -112,7 +112,7 @@ Okay that's enough of the technicals, I would like to share a large change or di
 ![album](assets/gdex9.jpg)
 *Relies heavily on old asethetics but nice*
 
-![album](assets/gdex10.jpg)
+![album](assets/gedex10.jpg)
 *AI but imagine an environemntal simulations sw*
 
 ![album](assets/graphic2.jpg)
