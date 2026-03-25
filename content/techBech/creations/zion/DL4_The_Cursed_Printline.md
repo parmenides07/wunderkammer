@@ -6,11 +6,11 @@
 
 - This is a GIF of the version with the print statement:
 
-![lowfps]{assets/beforechange.gif}
+![lowfps](assets/beforechange.gif)
 
 - This is a GIF of after having changed it: 
 
-![highfps]{assets/afterchange.gif}
+![highfps](assets/afterchange.gif)
 
 - The GIFs are kinda jank because I screen recorded it then turned it into a MP4 and then into a GIF and then compressed that. 
 
