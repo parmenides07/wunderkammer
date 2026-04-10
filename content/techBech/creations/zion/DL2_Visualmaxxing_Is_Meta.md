@@ -69,6 +69,7 @@ Okay that's enough of the technicals, I would like to share a large change or di
 </div>
 
 - Overall a lot of these issues are very nuanced and have many causes, wiuth the obvious one being the setup of the global economies but beyond that I believe the way in which we view art as a society is deeply limiting the power of the visual medium and its application in everything. Art is also seen as such a high-brow pretentious thing that only these quirky inventive brands that make products that cost an arm and a leg are capable of selling. No, beauty and the visuals should come along with the product at a reasonable price (I understand that artistry should have a slight markup) and shouldn't be viewed as something only consumable by these specific groups of people or created by these imcomprehensible geniuses.
+- TLDR: Products should exist as a medium for form and function exploration, an attempt at creating something great and innovating. The product that forms should be a byproduct. 
 
 - If you couldn't use your imagination, here are some very interesting, inspring, yet direct examples of attention to UNIQUE visuals in digital and physical creation. Note: this may be AI but I have a lot of intriguing thoughts on this and rationale behind it, but yes, I am aware one of them is an AI generated image. 
 

@@ -12,11 +12,9 @@ Join me in my journey of maximizing life.
 
 Books:
 - *Steve Jobs* by Walter Isaacson (Biography)
-- *World War Z* by Max Brooks (Audiobook)
-- *JJBA: Golden Wind* by Hirohiko Araki (Manga)
 - Next:
-    - *Blood Meridian* by Cormac McCarthy (Western Epic)
     - *ASOIF: A Way of Kings* by George R. Martin (Fantasy Epic)
+    - *Land of the Lustrous* by Haruko Ichikawa (Manga)
 
 TV Shows:
 - *Cowboy Bebop* (Anime) 
