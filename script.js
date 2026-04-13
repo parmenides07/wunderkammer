@@ -21,39 +21,38 @@ async function renderContent(path, created, modified) {
   const fileName = path.split('/').pop();
   const displayName = formatName(fileName);
 
-    const header = `<div class="doc-header">
+  const header = `<div class="doc-header">
     <em class="doc-dates">created: ${created || ''} &nbsp;&nbsp; modified: ${modified || ''}</em>
-    <br>
-    <br>
+    <br><br>
     <h2>${displayName}</h2>
     <br>
-    </div>`;
+  </div>`;
 
-  let parsed;
   const res = await fetch(path);
   let text = await res.text();
   const folder = path.substring(0, path.lastIndexOf('/'));
 
+  const isWip = text.startsWith('wip: true');
+  if (isWip) {
+    text = text.replace('wip: true\n', '').trimStart();
+    document.querySelector('.wip-sticker').style.display = 'block';
+  } else {
+    document.querySelector('.wip-sticker').style.display = 'none';
+  }
+
   const bannerMatch = text.match(/^banner: (.+)\n/);
-  if (bannerMatch) {
+    if (bannerMatch) {
     text = text.replace(bannerMatch[0], '');
     const banner = document.querySelector('.banner');
     banner.src = `${folder}/${bannerMatch[1].trim()}`;
     banner.style.display = 'block';
-  } else {
+    document.querySelector('.content').style.paddingTop = '22cqh';
+    } else {
     document.querySelector('.banner').style.display = 'none';
-  }
+    document.querySelector('.content').style.paddingTop = '4cqw';
+    }
 
-const isWip = text.startsWith('wip: true');
-if (isWip) {
-  text = text.replace('wip: true\n', '').trimStart();
-  document.querySelector('.wip-sticker').style.display = 'block';
-} else {
-  document.querySelector('.wip-sticker').style.display = 'none';
-}
-
-const bannerMatch = text.match(/^banner: (.+)\n/);
-
+  let parsed;
   if (cache[path]) {
     parsed = cache[path];
   } else {

@@ -1,5 +1,5 @@
 wip: true
-banner: assets/test.jpg
+banner: assets/hello.jpg
 
 ## My Inventory!: 
 ### Everyday Carry
