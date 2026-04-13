@@ -6,10 +6,14 @@ function buildIndex(dir) {
   const items = fs.readdirSync(dir);
   items.forEach(item => {
     const fullPath = path.join(dir, item);
-    if (fs.statSync(fullPath).isDirectory() && item !== 'assets') {
+    const stats = fs.statSync(fullPath);
+    if (stats.isDirectory() && item !== 'assets') {
       result[item] = buildIndex(fullPath);
     } else if (item.endsWith('.md')) {
-      result[item] = true;
+      result[item] = {
+        created: stats.birthtime.toLocaleDateString(),
+        modified: stats.mtime.toLocaleDateString()
+      };
     }
   });
   return result;

@@ -9,64 +9,106 @@ marked.use({ breaks: true });
 
 function formatName(name) {
   return name
-  .replace('.md', '')
-  .replace(/_/g, ' ')
-  .replace(/([a-z])([A-Z])/g, '$1 $2')
-  .replace(/^./, str => str.toUpperCase());
+    .replace('.md', '')
+    .replace(/_/g, ' ')
+    .replace(/([a-z])([A-Z])/g, '$1 $2')
+    .replace(/^./, str => str.toUpperCase());
 }
 
-async function renderContent(path) {
-    window.location.hash = path.replace('content/', '');
-    if (cache[path]) {
-        document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
+async function renderContent(path, created, modified) {
+  window.location.hash = path.replace('content/', '');
+
+  const fileName = path.split('/').pop();
+  const displayName = formatName(fileName);
+
+    const header = `<div class="doc-header">
+    <em class="doc-dates">created: ${created || ''} &nbsp;&nbsp; modified: ${modified || ''}</em>
+    <br>
+    <br>
+    <h2>${displayName}</h2>
+    <br>
+    </div>`;
+
+  let parsed;
+  const res = await fetch(path);
+  let text = await res.text();
+  const folder = path.substring(0, path.lastIndexOf('/'));
+
+  const bannerMatch = text.match(/^banner: (.+)\n/);
+  if (bannerMatch) {
+    text = text.replace(bannerMatch[0], '');
+    const banner = document.querySelector('.banner');
+    banner.src = `${folder}/${bannerMatch[1].trim()}`;
+    banner.style.display = 'block';
+  } else {
+    document.querySelector('.banner').style.display = 'none';
+  }
+
+const isWip = text.startsWith('wip: true');
+if (isWip) {
+  text = text.replace('wip: true\n', '').trimStart();
+  document.querySelector('.wip-sticker').style.display = 'block';
+} else {
+  document.querySelector('.wip-sticker').style.display = 'none';
+}
+
+const bannerMatch = text.match(/^banner: (.+)\n/);
+
+  if (cache[path]) {
+    parsed = cache[path];
+  } else {
+    text = text.replace(
+      /!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
+      `![$1](${folder}/$2)`
+    );
+    cache[path] = marked.parse(text);
+    parsed = cache[path];
+  }
+
+  document.querySelector('.content').innerHTML = header + parsed + '<br>'.repeat(9);
+
+  const content = document.querySelector('.content');
+  const nodes = [...content.childNodes];
+  content.innerHTML = '';
+
+  let textWrapper = null;
+  nodes.forEach(node => {
+    const isImage = node.nodeName === 'IMG';
+    const containsImage = node.querySelector && node.querySelector('img');
+    if (!isImage && !containsImage) {
+      if (!textWrapper) {
+        textWrapper = document.createElement('div');
+        textWrapper.classList.add('content-text');
+        content.appendChild(textWrapper);
+      }
+      textWrapper.appendChild(node);
     } else {
-        const res = await fetch(path);
-        let text = await res.text();
-        const folder = path.substring(0, path.lastIndexOf('/'));
-        text = text.replace(
-            /!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
-            `![$1](${folder}/$2)`
-        );
-        cache[path] = marked.parse(text);
-        document.querySelector('.content').innerHTML = cache[path] + '<br>'.repeat(9);
+      textWrapper = null;
+      content.appendChild(node);
     }
-    const content = document.querySelector('.content');
-    const nodes = [...content.childNodes];
-    content.innerHTML = '';
+  });
 
-    let textWrapper = null;
-
-    nodes.forEach(node => {
-        const isImage = node.nodeName === 'IMG';
-        const containsImage = node.querySelector && node.querySelector('img');
-
-        if (!isImage && !containsImage) {
-            if (!textWrapper) {
-                textWrapper = document.createElement('div');
-                textWrapper.classList.add('content-text');
-                content.appendChild(textWrapper);
-            }
-            textWrapper.appendChild(node);
-        } else {
-            textWrapper = null;
-            content.appendChild(node);
-        }
-    });
+  const hasImages = document.querySelector('.content img');
+  if (!hasImages) {
+    content.classList.add('text-only');
+  } else {
+    content.classList.remove('text-only');
+  }
 }
 
 async function navigate(path, index) {
   history.push(path);
   window.location.hash = path.replace('content/', '');
 
-  const folders = Object.keys(index).filter(k => typeof index[k] === 'object' && k !== 'assets');
-  const files = Object.keys(index).filter(k => index[k] === true);
+  const files = Object.keys(index).filter(k => typeof index[k] === 'object' && index[k].created);
+  const folders = Object.keys(index).filter(k => typeof index[k] === 'object' && !index[k].created && k !== 'assets');
   const folderName = path.split('/').pop();
   const indexFile = files.find(f => f === `${folderName}.md`);
 
-  if (indexFile) renderContent(`${path}/${indexFile}`);
+  if (indexFile) renderContent(`${path}/${indexFile}`, index[indexFile].created, index[indexFile].modified);
 
   if (files.length === 1 && folders.length === 0) {
-    renderContent(`${path}/${files[0]}`);
+    renderContent(`${path}/${files[0]}`, index[files[0]].created, index[files[0]].modified);
     return;
   }
 
@@ -98,7 +140,7 @@ async function navigate(path, index) {
       e.preventDefault();
       clickSound.currentTime = 0;
       clickSound.play();
-      renderContent(`${path}/${file}`);
+      renderContent(`${path}/${file}`, index[file].created, index[file].modified);
     });
     a.addEventListener('mouseenter', () => {
       hoverSound.cloneNode().play();
@@ -118,26 +160,20 @@ async function init() {
     let currentPath = CONTENT_PATH;
 
     for (let i = 0; i < parts.length; i++) {
-      const part = parts[i];
-      if (currentIndex[part] === true) {
-        // it's a file — build parent links then render file
+      const part = decodeURIComponent(parts[i]);
+      if (typeof currentIndex[part] === 'object' && currentIndex[part].created) {
         navigate(currentPath, currentIndex);
-        renderContent(`${CONTENT_PATH}/${hash}`);
-        break;
+        renderContent(`${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`, currentIndex[part].created, currentIndex[part].modified);
+        return;
       } else if (typeof currentIndex[part] === 'object') {
-        // it's a folder — go deeper
         currentIndex = currentIndex[part];
         currentPath = `${currentPath}/${part}`;
       } else {
-        // not found
         navigate(CONTENT_PATH, index);
-        break;
+        return;
       }
     }
-
-    if (!hash.includes('.md')) {
-      navigate(currentPath, currentIndex);
-    }
+    navigate(currentPath, currentIndex);
   } else {
     navigate(CONTENT_PATH, index);
   }

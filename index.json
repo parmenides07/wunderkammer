@@ -1,42 +1,120 @@
 {
   "Miscellany": {
-    "inventory.md": true
+    "inventory.md": {
+      "created": "3/19/2026",
+      "modified": "4/13/2026"
+    }
   },
   "art": {
-    "art.md": true,
-    "inspirations.md": true,
-    "whyArtEssay.md": true
+    "art.md": {
+      "created": "3/16/2026",
+      "modified": "4/6/2026"
+    },
+    "inspirations.md": {
+      "created": "3/16/2026",
+      "modified": "3/19/2026"
+    },
+    "whyArtEssay.md": {
+      "created": "3/17/2026",
+      "modified": "3/19/2026"
+    }
   },
-  "content.md": true,
-  "moreAboutMe.md": true,
+  "content.md": {
+    "created": "3/14/2026",
+    "modified": "4/5/2026"
+  },
+  "moreAboutMe.md": {
+    "created": "3/24/2026",
+    "modified": "4/10/2026"
+  },
   "pandorasBox": {
-    "currents.md": true
+    "currents.md": {
+      "created": "3/16/2026",
+      "modified": "3/23/2026"
+    }
   },
   "techBech": {
     "creations": {
       "zion": {
-        "DL1_Precipice_Of_Insanity.md": true,
-        "DL2_Visualmaxxing_Is_Meta.md": true,
-        "DL3_BORING.md": true,
-        "DL4_The_Cursed_Printline.md": true,
-        "DL5_Distros_and_Architecture.md": true,
-        "whatIsZion.md": true,
-        "zion.md": true
+        "DL1_Precipice_Of_Insanity.md": {
+          "created": "3/19/2026",
+          "modified": "3/19/2026"
+        },
+        "DL2_Visualmaxxing_Is_Meta.md": {
+          "created": "3/24/2026",
+          "modified": "4/10/2026"
+        },
+        "DL3_BORING.md": {
+          "created": "3/24/2026",
+          "modified": "3/24/2026"
+        },
+        "DL4_The_Cursed_Printline.md": {
+          "created": "3/24/2026",
+          "modified": "3/24/2026"
+        },
+        "DL5_Distros_and_Architecture.md": {
+          "created": "3/27/2026",
+          "modified": "3/27/2026"
+        },
+        "whatIsZion.md": {
+          "created": "3/24/2026",
+          "modified": "3/24/2026"
+        },
+        "zion.md": {
+          "created": "3/18/2026",
+          "modified": "3/19/2026"
+        }
       }
     },
-    "linuxBTW.md": true,
-    "notetakingAndProductivitySystem.md": true,
-    "techBech.md": true
+    "linuxBTW.md": {
+      "created": "3/16/2026",
+      "modified": "3/19/2026"
+    },
+    "notetakingAndProductivitySystem.md": {
+      "created": "3/16/2026",
+      "modified": "3/19/2026"
+    },
+    "techBech.md": {
+      "created": "3/16/2026",
+      "modified": "3/19/2026"
+    }
   },
   "theMindfill": {
-    "03-18-26_CalculusKellogsAnd Knowledge.md": true,
-    "03-19-26_TheStandUserCouldBeAnyone.md": true,
-    "03-20-26_WhyTheVisual.md": true,
-    "03-21-26_EmergentComplexityAndControl.md": true,
-    "03-23-26_ChefsInCS.md": true,
-    "04-07-26_Bodybuilding_But_For_The_Mind.md": true,
-    "04-08-26_Why_I_Do_What_I_Do.md": true,
-    "04-10-26_How_To_Lifemaxx.md": true,
-    "theMindfill.md": true
+    "03-18-26_CalculusKellogsAnd Knowledge.md": {
+      "created": "3/18/2026",
+      "modified": "3/19/2026"
+    },
+    "03-19-26_TheStandUserCouldBeAnyone.md": {
+      "created": "3/21/2026",
+      "modified": "3/21/2026"
+    },
+    "03-20-26_WhyTheVisual.md": {
+      "created": "3/20/2026",
+      "modified": "3/20/2026"
+    },
+    "03-21-26_EmergentComplexityAndControl.md": {
+      "created": "3/21/2026",
+      "modified": "3/23/2026"
+    },
+    "03-23-26_ChefsInCS.md": {
+      "created": "3/24/2026",
+      "modified": "3/24/2026"
+    },
+    "04-07-26_Bodybuilding_But_For_The_Mind.md": {
+      "created": "4/10/2026",
+      "modified": "4/12/2026"
+    },
+    "04-08-26_Why_I_Do_What_I_Do.md": {
+      "created": "4/10/2026",
+      "modified": "4/12/2026"
+    },
+    "04-10-26_How_To_Lifemaxx.md": {
+      "created": "4/10/2026",
+      "modified": "4/11/2026"
+    },
+    "theMindfill.md": {
+      "created": "3/16/2026",
+      "modified": "3/19/2026"
+    }
   }
 }
