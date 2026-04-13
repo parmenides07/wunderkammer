@@ -101,6 +101,7 @@ p, h1, h2, h3, .content {
 .doc-header h2 {
   margin: 0;
   font-size: 2.5cqw;
+  line-height: 100%;
 }
 
 .content {
