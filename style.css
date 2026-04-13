@@ -70,15 +70,14 @@ p, h1, h2, h3, .content {
   box-sizing: border-box;
   padding-left: 6cqw;
   padding-top: 4cqw;
-  padding-right: 2.4cqw;
-  font-size: 1.5cqw;
-  line-height: 96%;
+  padding-right: 2.6cqw;
+  font-size: 1.1cqw;
+  line-height: 105%;
   overflow-y: auto;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 410;
   color: #4a4440;
   z-index: 2;
-  text-align: justify;
   filter: blur(0.2 px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.2));
 }
 
