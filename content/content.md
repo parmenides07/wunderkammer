@@ -1,3 +1,5 @@
+banner: assets/test1.jpg
+
 *ambition is bestowed upon those who can achieve it.*
 
 ### Welcome to My Wunderkammer!

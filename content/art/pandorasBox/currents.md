@@ -1,4 +1,4 @@
-banner: assets/music1.jpg
+banner: assets/music3.jpeg
 
 Every month, I will try to update this page with some records/tracks I've been frequenting.
 
