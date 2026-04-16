@@ -5,46 +5,41 @@ banner: assets/test1.jpg
 
 ## Welcome 
 
-Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science. I love all things art, technology, and philosophy. 
+Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science and hoping to enter the field of quantam computing materials. I love all things art, literature, and technology. 
 
 Join me in my journey of maximizing life.
 
-## Consuming:
+## Input:
 
-## Media 
-
-Books:
-- *Steve Jobs* by Walter Isaacson (Biography)
+### Media 
+Literature:
+- *ASOIF: Clash of Kings* by George R. Martin (Fantasy Epic)
 - Next:
-    - *ASOIF: A Way of Kings* by George R. Martin (Fantasy Epic)
     - *Land of the Lustrous* by Haruko Ichikawa (Manga)
 
-TV Shows:
-- *Cowboy Bebop* (Anime) 
+Film/Television:
 - Next:
-  - *Knight of the Seven Kingdoms* (Fantasy)
   - *Ergo Proxy* (Anime)
-  - *Jojo Part 7* (Anime)
 
 Videogames:
 - *Hylics* (??)
 - Next:
     - *Outer Wilds* (Indie Adventure)
 
-## Education:
-
+### Education:
 Language:
 - *Sanskrit* (Devaginiri Script)
 
 Misc:
 - *Godel, Escher, and Bach* by Douglass Hofstadter (???)
 
-### Processing (WIP Stuff/Thinking About)
+## Processing (WIP Stuff/Thinking About)
 - Framework for Maximizing Life 
 - Enlightenment and Art
 
-### Creating 
-Tech: 
-- Relational Notetaking Framework: [ZION](https://parmenides07.github.io/wunderkammer/#techBech/creations/zion/zion.md)
-- Next: 
-  - Modular, Recursive, Macropad
+## Output
+Code/Circuits: 
+- Zion 
+  - Relational, emergent database system.
+- Oforis
+  - Key input sampler and sequencer board.

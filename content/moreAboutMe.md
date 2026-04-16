@@ -1,9 +1,11 @@
 ### Why Do I Enjoy Art, Electronics, and Philosophy?
+- The thing I'm best at and enjoy the most is a specific flavor of thinking and creating. Visual art, how I practice it, and electronics, especially software, provides me the perfect boundless context to practice this specific flavor that I enjoy so much. As for philosophy, it's pretty much just thinking so, yeah. You can read more about this here: [Why I Do What I Do](https://parmenides07.github.io/wunderkammer/#whenItRainsItProse/philosophy/04-08-26_Why_I_Do_What_I_Do.md)
 
-- The thing I'm best at and enjoy the most is a specific flavor of thinking and creating. Visual art, how I practice it, and electronics, especially software, provides me the perfect boundless context to practice this specific flavor that I enjoy so much. As for philosophy, it's pretty much just thinking so, yeah.
-
-### Why EE?
-
+## Why EE?
 - I chose electrical engineering because I love software. This might seem counterintuitive, but, it makes perfect sense. I love software for its ability to bring abstract concepts to fruition. Its a context free from the shackles and constraints of reality and physics. Its the perfect medium to engage with these concepts and exact immense power and potential. This is all well and good but software is improsined in the realm of the digital. To bridge the gap between digital and real, we need hardware. That is what I am interested in studying and contributing to: summoning forth the nigh-infinite power of the digital dimension to the physical plane.
 
-This sounds more like computer engineering which you could make the case for. An education in electrical engineering gives me a much better understanding of the hardware concepts which are much harder to learn than their software counterparts. 
+- This sounds more like computer engineering which you could make the case for. An education in electrical engineering gives me a much better understanding of the hardware concepts which are much harder to learn than their software counterparts. 
+- Additionally, I've really come to love physics. Its the perfect example of an emergent system. Abstraction as a means to an end. An abstract system modeling tangible components (unlike math which is abstraction as a means for more abstraction). 
+
+## Quantam Computing 
+- After my bachelors, I'll most likely try to pursue grad school in low level systems engineering for quantam computing. Essentially, I want to enter semiconductor design for the quantam computing field. I'm a believer in our place within our species as either creating or discovering and in a pure career sense, I'd most be able to fulfill the discovery aspect. In this specialization, I'll be able to pursue the field I like the most at its very forefront and on the most burgeoning of levels. Then again, this might all change in the next week lmao.
