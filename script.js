@@ -46,7 +46,10 @@ async function renderContent(path, created, modified) {
     const banner = document.querySelector('.banner');
     banner.src = `${folder}/${bannerMatch[1].trim()}`;
     banner.style.display = 'block';
-    document.querySelector('.content').style.paddingTop = '22cqh';
+    // wait for image to load so offsetHeight is accurate
+    banner.onload = () => {
+      document.querySelector('.content').style.paddingTop = `calc(${banner.offsetHeight}px + 2cqh)`;
+    };
     } else {
     document.querySelector('.banner').style.display = 'none';
     document.querySelector('.content').style.paddingTop = '4cqw';
@@ -110,6 +113,9 @@ async function navigate(path, index) {
     renderContent(`${path}/${files[0]}`, index[files[0]].created, index[files[0]].modified);
     return;
   }
+
+  document.querySelector('.content').scrollTop = 0;
+  document.querySelector('.banner').style.transform = '';
 
   const cardLinks = document.querySelector('.card-links');
   cardLinks.innerHTML = '';
@@ -177,6 +183,21 @@ async function init() {
     navigate(CONTENT_PATH, index);
   }
 }
+
+const contentEl = document.querySelector('.content');
+contentEl.addEventListener('scroll', () => {
+  const banner = document.querySelector('.banner');
+  if (banner.style.display === 'none') return;
+  const bannerH = banner.offsetHeight;
+  const scrolled = Math.min(contentEl.scrollTop, bannerH);
+  banner.style.transform = `translateY(-${scrolled}px)`;
+});
+
+let resizeTimer;
+window.addEventListener('resize', () => {
+  clearTimeout(resizeTimer);
+  resizeTimer = setTimeout(() => location.reload(), 300);
+});
 
 init();
 
