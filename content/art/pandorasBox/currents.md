@@ -1,4 +1,4 @@
-banner: assets/music3.jpeg
+banner: assets/yves2.png
 
 Every month, I will try to update this page with some records/tracks I've been frequenting.
 

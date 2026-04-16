@@ -1,4 +1,4 @@
-banner: assets/red.jpg
+banner: assets/sensornode1.webp
 
 ## Form AND Function 
 - The bigger thing I want to talk about is a shift in direction for the idea itself.

@@ -1,4 +1,3 @@
-# Document Title
 - So my previous post was about mindbuilding and discovering how I think and what I'm most profecient at. Doing this, I realized something very interesting about the things I love to do (hobbies/passions). What kinda eluded me before is very clear now. 
 - On a cognitive level, I've fundamentally loved creation and analysis. Specific types of problem solving were enjoyable not because I like solving problems themselves but because they serve as a medium for me to evaluate and innovate. 
 - But over the years, I've collected these few practices, subconciously gravitating towards them. The passions I carry today — the ones that actually define me — turn out to be the most optimal mediums for the cognitive processes I most enjoy and excel at. There's other stuff I like obviously, but these three are the most defining:

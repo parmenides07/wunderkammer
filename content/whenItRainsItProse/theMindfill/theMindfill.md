@@ -1,1 +1,1 @@
-This is The Mindfill (like a landfill, get it?), where I'd like to just flesh out and archive interesting things I think of. Kind of like a blog and digital journal mixed. 
+This is The Mindfill (like a landfill, get it?), similar to a digital journal or blog. I'd just like to share interesting things I think about or come across here.

@@ -1,10 +1,4 @@
 {
-  "Miscellany": {
-    "inventory.md": {
-      "created": "3/19/2026",
-      "modified": "4/13/2026"
-    }
-  },
   "art": {
     "art.md": {
       "created": "3/16/2026",
@@ -13,20 +7,20 @@
     "pandorasBox": {
       "currents.md": {
         "created": "3/16/2026",
-        "modified": "4/15/2026"
+        "modified": "4/16/2026"
       }
     }
   },
   "circuitsAndCode": {
     "circuitsAndCode.md": {
       "created": "3/16/2026",
-      "modified": "3/19/2026"
+      "modified": "4/15/2026"
     },
     "creations": {
       "zion": {
         "DL2_Visualmaxxing_Is_Meta.md": {
           "created": "3/24/2026",
-          "modified": "4/15/2026"
+          "modified": "4/16/2026"
         },
         "DL5_Distros_and_Architecture.md": {
           "created": "3/27/2026",
@@ -37,15 +31,11 @@
           "modified": "4/15/2026"
         }
       }
-    },
-    "notetakingAndProductivitySystem.md": {
-      "created": "3/16/2026",
-      "modified": "3/19/2026"
     }
   },
   "content.md": {
     "created": "3/14/2026",
-    "modified": "4/5/2026"
+    "modified": "4/16/2026"
   },
   "moreAboutMe.md": {
     "created": "3/24/2026",
@@ -63,17 +53,9 @@
         "created": "3/18/2026",
         "modified": "3/19/2026"
       },
-      "03-19-26_TheStandUserCouldBeAnyone.md": {
-        "created": "3/21/2026",
-        "modified": "3/21/2026"
-      },
-      "03-20-26_WhyTheVisual.md": {
-        "created": "3/20/2026",
-        "modified": "3/20/2026"
-      },
       "03-21-26_EmergentComplexityAndControl.md": {
         "created": "3/21/2026",
-        "modified": "3/23/2026"
+        "modified": "4/16/2026"
       },
       "03-23-26_ChefsInCS.md": {
         "created": "3/24/2026",
@@ -85,7 +67,7 @@
       },
       "04-08-26_Why_I_Do_What_I_Do.md": {
         "created": "4/10/2026",
-        "modified": "4/12/2026"
+        "modified": "4/16/2026"
       },
       "04-10-26_How_To_Lifemaxx.md": {
         "created": "4/10/2026",
@@ -93,8 +75,12 @@
       },
       "theMindfill.md": {
         "created": "3/16/2026",
-        "modified": "3/19/2026"
+        "modified": "4/16/2026"
       }
+    },
+    "whenItRainsItProse.md": {
+      "created": "4/16/2026",
+      "modified": "4/16/2026"
     }
   }
 }

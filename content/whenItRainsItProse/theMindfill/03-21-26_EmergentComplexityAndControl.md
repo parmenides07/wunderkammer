@@ -1,3 +1,5 @@
+banner: assets/factorio.webp
+
 ### High Skill Ceiling, Low Skill Floor
 Something I've always been fascinated with is simple building blocks that come together to form complex systems or products. A concept that I've tried applying to as much as I could is the idea of a subject having a low skill floor and high skill ceiling. For those unfamiliar, this term originates from the videogame community. Low skill floor means a game is very easy to pick up, typically quite simple. But, a high skill ceiling means the game has very complex mechanics that can be mastered. 
 
