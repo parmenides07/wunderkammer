@@ -61,6 +61,27 @@ p, h1, h2, h3, .content {
   z-index: 0;
 }
 
+.sub-links {
+  display: flex;
+  flex-direction: column;
+  padding-left: 2cqw;
+}
+
+.file-link {
+  font-size: 3.8cqw;
+  opacity: 0.75;
+}
+
+.folder-link::before {
+  content: '► ';
+  font-size: 4cqw;
+  display: inline-block;
+  transition: transform 0.5s ease;
+}
+
+.folder-link.open::before {
+  content: '▼ ';
+}
 
 .banner {
   display: none;

@@ -29,6 +29,31 @@ banner: assets/lifemaxxing.jpg
 
 - These three work together to build feedback loops that compound on themselves — your beliefs warp your perception, your perception shapes your output, your output reshapes your reality, which feeds back into new input. Get that loop running in the right direction and success becomes self-reinforcing.
 
+## Beyond Yourself
+- Maximizing life has two halves. Everything above is the internal half — living your life as fully as possible. But the external half is just as important: making the largest impact with that life.
+
+### What's that Mean?
+- Impacting with life means changing that which is outside of you (remember change is the thing we are trying to bring about as time is the backdrop for all).
+- You could impact the world directly. Put things into it, create things, alter the state of existence in some material way. But people are the more efficient bet. People are living, and the impacts you make on them ripple outward to other people, who ripple outward to other people, compounding over time in a way that directly changing the world never could. And on top of that, those people will go on to directly impact the material world too. So impacting people gets you both.
+Callback to input/output — a lot of a lot. Impact a lot of people very deeply.
+- A big understanding that needs to be drawn is the idea of everything and everyone being interconnected. Essentially the butterfly effect.
+
+### How?
+- Well, how perfect. We already defined life as input, processing, output. So maximizing someone else's life means maximizing their input, processing, and output too. 
+
+#### Examples
+- For me personally, here's what that looks like:
+1. Get good enough at art and design to teach it.
+   - Become a source of input for people who want to learn.
+2. Use code and circuitry to build tools that help people bring their visions to life
+   - Close the gap between processing and output as noted above. 
+3. Pursue philosophy seriously enough that I can put out ideas that change the way people think.
+   - Provide input so people can change their processing to improve their livelihood.
+4. I want to enter research (as opposed to industry focused on creation), I want to expand the frontier of what's possible on a fundamental level. This has the potentital to improve the input, processing, and output of humanity at large rather than just a handful of people.
+
+## The Ideology
+- Being lazy is selfish. You have skills and potential meant to be developed to help people outside of yourself. To squander that isn't just dissapointing rather its a failing of all those people. Maybe because you stopped working on that rudimentary python program, the next Steve Jobs never saw it on some archived forum and was never inspired to make the next world-defining medical software that saved the life of the next Mother Teresa. You have a part to play in this world. Play it.
+
 
 
 Okay, now for the long drawn out explanation...

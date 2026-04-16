@@ -2,6 +2,7 @@ const CONTENT_PATH = 'content';
 const backSound = new Audio('assets/holepunch.mp3');
 const clickSound = new Audio('assets/page-flip-01a.mp3');
 const hoverSound = new Audio('assets/boxclick1.mp3');
+const fileSound = new Audio('assets/printer2.mp3');
 const cache = {};
 const history = [];
 
@@ -119,44 +120,69 @@ async function navigate(path, index) {
     return;
   }
 
-  document.querySelector('.content').scrollTop = 0;
-  document.querySelector('.banner').style.transform = '';
-
   const cardLinks = document.querySelector('.card-links');
   cardLinks.innerHTML = '';
 
-  folders.forEach(folder => {
-    const a = document.createElement('a');
-    a.href = '#';
-    a.textContent = formatName(folder);
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      clickSound.currentTime = 0;
-      clickSound.play();
-      navigate(`${path}/${folder}`, index[folder]);
-    });
-    a.addEventListener('mouseenter', () => {
-      hoverSound.cloneNode().play();
-    });
-    cardLinks.appendChild(a);
-  });
+  function buildLinks(containerEl, currentPath, currentIndex) {
+    const subFiles = Object.keys(currentIndex).filter(k => typeof currentIndex[k] === 'object' && currentIndex[k].created);
+    const subFolders = Object.keys(currentIndex).filter(k => typeof currentIndex[k] === 'object' && !currentIndex[k].created && k !== 'assets');
+    const currentFolderName = currentPath.split('/').pop();
 
-  files.forEach(file => {
-    if (file === `${folderName}.md`) return;
-    const a = document.createElement('a');
-    a.href = '#';
-    a.textContent = formatName(file);
-    a.addEventListener('click', (e) => {
-      e.preventDefault();
-      clickSound.currentTime = 0;
-      clickSound.play();
-      renderContent(`${path}/${file}`, index[file].created, index[file].modified);
+    subFolders.forEach(folder => {
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = formatName(folder);
+      a.classList.add('folder-link');
+
+      const subContainer = document.createElement('div');
+      subContainer.classList.add('sub-links');
+      subContainer.style.display = 'none';
+
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        clickSound.currentTime = 0;
+        clickSound.play();
+        const isOpen = subContainer.style.display === 'flex';
+        subContainer.style.display = isOpen ? 'none' : 'flex';
+        a.classList.toggle('open', !isOpen);
+        if (!isOpen) {
+          buildLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
+          // render index file if it exists
+          const subIndex = currentIndex[folder];
+          const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
+          if (indexFile) {
+            fileSound.currentTime = 0;
+            fileSound.play();
+            renderContent(`${currentPath}/${folder}/${indexFile}`, subIndex[indexFile].created, subIndex[indexFile].modified);
+          }
+        } else {
+          subContainer.innerHTML = '';
+        }
+      });
+      a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
+
+      containerEl.appendChild(a);
+      containerEl.appendChild(subContainer);
     });
-    a.addEventListener('mouseenter', () => {
-      hoverSound.cloneNode().play();
+
+    subFiles.forEach(file => {
+      if (file === `${currentFolderName}.md`) return;
+      const a = document.createElement('a');
+      a.href = '#';
+      a.textContent = formatName(file);
+      a.classList.add('file-link');
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        fileSound.currentTime = 0;
+        fileSound.play();
+        renderContent(`${currentPath}/${file}`, currentIndex[file].created, currentIndex[file].modified);
+      });
+      a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
+      containerEl.appendChild(a);
     });
-    cardLinks.appendChild(a);
-  });
+  }
+
+  buildLinks(cardLinks, path, index);
 }
 
 async function init() {
