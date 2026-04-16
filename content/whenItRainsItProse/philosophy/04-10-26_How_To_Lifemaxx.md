@@ -1,3 +1,5 @@
+banner: assets/lifemaxxing.jpg
+
 # Sparknotes Version
 ## What's the Point?
 - Being alive is an incomprehensible miracle. The odds of this universe existing, life emerging from it, and your soul being born into that life are so astronomically small that every moment you're alive is something that should not exist. So you can bet I'm going to make the most of it. This whole system is my means of doing exactly that

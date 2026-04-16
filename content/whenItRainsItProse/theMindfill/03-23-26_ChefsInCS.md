@@ -1,8 +1,10 @@
+banner: assets/simpson.png
+
 *I came across a really interesting youtube video that I would like to talk about. I seem to have lost the video but if I find it I'll link it here.*
 
 - It addressed something that's being said a lot: CS Majors are cooked. Now, the points the video brought are more in line with that statement and why though it might be true, CS as a field is still very much alive. That argument has its own gravitas however I would like to detail a point that the author brought up. 
 
-### Chef Analogy
+## Chef Analogy
 - Lets set up the metaphor of two chefs. I'm sure you're very familiar wtih all those cooking videos where there is the level 1 chef, the level 2 chef, and the level 3 chef. 
 
 1. So in level 1, the chef is a complete amateur. They have very little experience with cooking and so they follow a recipe. They typically follow recipes to a tee but depending on the recipes, the final food in the end is not always perfect. However, when they do use the same recipe, they are able to get the same food produced over and over. 
@@ -19,4 +21,4 @@ I'm not sure if I made it subtle enough or clear enough but this can be likened 
 - Now, an interesting thing to note is that currently, many CS majors work on writing those recipes. As in, they write the code that drives the computer. As we can see, this past year or two, the number of recipe-writers needed has decreased as we have progressed into the 2nd stage of the technology. So this begs the question, what role will CS and CS graduates play when recipes are no longer needed? What qualifications will they have over others to tell the master chef what to cook?
 
 
-*Well I hope you enjoyed this blog post and found the material as interesting as I did. I'm sure a missed quite a bit of nuance in my explanation and the analogy I set up but it definately brought up some ideas in a way I hadn't previously thought of.*
+*Well I hope you enjoyed this blog post and found the material as interesting as I did. I'm sure I missed quite a bit of nuance in my explanation and the analogy I set up but, it definately brought up some ideas in a way I hadn't previously thought of.*

@@ -2,7 +2,7 @@
   "art": {
     "art.md": {
       "created": "3/16/2026",
-      "modified": "4/15/2026"
+      "modified": "4/16/2026"
     },
     "pandorasBox": {
       "currents.md": {
@@ -14,22 +14,20 @@
   "circuitsAndCode": {
     "circuitsAndCode.md": {
       "created": "3/16/2026",
-      "modified": "4/15/2026"
+      "modified": "4/16/2026"
     },
-    "creations": {
-      "zion": {
-        "DL2_Visualmaxxing_Is_Meta.md": {
-          "created": "3/24/2026",
-          "modified": "4/16/2026"
-        },
-        "DL5_Distros_and_Architecture.md": {
-          "created": "3/27/2026",
-          "modified": "4/15/2026"
-        },
-        "whatIsZion.md": {
-          "created": "3/24/2026",
-          "modified": "4/15/2026"
-        }
+    "zion": {
+      "DL2_Visualmaxxing_Is_Meta.md": {
+        "created": "3/24/2026",
+        "modified": "4/16/2026"
+      },
+      "DL5_Distros_and_Architecture.md": {
+        "created": "3/27/2026",
+        "modified": "4/15/2026"
+      },
+      "zion.md": {
+        "created": "3/24/2026",
+        "modified": "4/16/2026"
       }
     }
   },
@@ -42,6 +40,24 @@
     "modified": "4/10/2026"
   },
   "whenItRainsItProse": {
+    "philosophy": {
+      "04-07-26_Bodybuilding_But_For_The_Mind.md": {
+        "created": "4/10/2026",
+        "modified": "4/16/2026"
+      },
+      "04-08-26_Why_I_Do_What_I_Do.md": {
+        "created": "4/10/2026",
+        "modified": "4/16/2026"
+      },
+      "04-10-26_How_To_Lifemaxx.md": {
+        "created": "4/10/2026",
+        "modified": "4/16/2026"
+      },
+      "philosophy.md": {
+        "created": "4/16/2026",
+        "modified": "4/16/2026"
+      }
+    },
     "schoolEssays": {
       "whyArtEssay.md": {
         "created": "3/17/2026",
@@ -51,7 +67,7 @@
     "theMindfill": {
       "03-18-26_CalculusKellogsAnd Knowledge.md": {
         "created": "3/18/2026",
-        "modified": "3/19/2026"
+        "modified": "4/16/2026"
       },
       "03-21-26_EmergentComplexityAndControl.md": {
         "created": "3/21/2026",
@@ -59,19 +75,7 @@
       },
       "03-23-26_ChefsInCS.md": {
         "created": "3/24/2026",
-        "modified": "3/24/2026"
-      },
-      "04-07-26_Bodybuilding_But_For_The_Mind.md": {
-        "created": "4/10/2026",
-        "modified": "4/12/2026"
-      },
-      "04-08-26_Why_I_Do_What_I_Do.md": {
-        "created": "4/10/2026",
         "modified": "4/16/2026"
-      },
-      "04-10-26_How_To_Lifemaxx.md": {
-        "created": "4/10/2026",
-        "modified": "4/11/2026"
       },
       "theMindfill.md": {
         "created": "3/16/2026",

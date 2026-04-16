@@ -1,16 +1,17 @@
+title: WUNDERKAMMER
 banner: assets/test1.jpg
 
 *ambition is bestowed upon those who can achieve it.*
 
-### Welcome to My Wunderkammer!
+## Welcome 
 
 Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science. I love all things art, technology, and philosophy. 
 
 Join me in my journey of maximizing life.
 
-### Consuming:
+## Consuming:
 
-#### Media 
+## Media 
 
 Books:
 - *Steve Jobs* by Walter Isaacson (Biography)
@@ -30,7 +31,7 @@ Videogames:
 - Next:
     - *Outer Wilds* (Indie Adventure)
 
-#### Education:
+## Education:
 
 Language:
 - *Sanskrit* (Devaginiri Script)

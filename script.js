@@ -19,18 +19,17 @@ async function renderContent(path, created, modified) {
   window.location.hash = path.replace('content/', '');
 
   const fileName = path.split('/').pop();
-  const displayName = formatName(fileName);
-
-  const header = `<div class="doc-header">
-    <em class="doc-dates">created: ${created || ''} &nbsp;&nbsp; modified: ${modified || ''}</em>
-    <br><br>
-    <h2>${displayName}</h2>
-    <br>
-  </div>`;
 
   const res = await fetch(path);
   let text = await res.text();
   const folder = path.substring(0, path.lastIndexOf('/'));
+
+  let displayName = formatName(fileName);
+  const titleMatch = text.match(/^title: (.+)\n/);
+  if (titleMatch) {
+    text = text.replace(titleMatch[0], '');
+    displayName = titleMatch[1].trim();
+  }
 
   const isWip = text.startsWith('wip: true');
   if (isWip) {
@@ -41,19 +40,25 @@ async function renderContent(path, created, modified) {
   }
 
   const bannerMatch = text.match(/^banner: (.+)\n/);
-    if (bannerMatch) {
+  if (bannerMatch) {
     text = text.replace(bannerMatch[0], '');
     const banner = document.querySelector('.banner');
     banner.src = `${folder}/${bannerMatch[1].trim()}`;
     banner.style.display = 'block';
-    // wait for image to load so offsetHeight is accurate
     banner.onload = () => {
       document.querySelector('.content').style.paddingTop = `calc(${banner.offsetHeight}px + 2cqh)`;
     };
-    } else {
+  } else {
     document.querySelector('.banner').style.display = 'none';
     document.querySelector('.content').style.paddingTop = '4cqw';
-    }
+  }
+
+  const header = `<div class="doc-header">
+    <em class="doc-dates">created: ${created || ''} &nbsp;&nbsp; modified: ${modified || ''}</em>
+    <br><br>
+    <h2>${displayName}</h2>
+    <br>
+  </div>`;
 
   let parsed;
   if (cache[path]) {
