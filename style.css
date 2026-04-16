@@ -243,9 +243,9 @@ p, h1, h2, h3, .content {
 
 .frame {
   position: absolute;
-  bottom: 0;
+  bottom: -1.65cqw;
   right: 0;
-  width: 56%;
+  width: 46%;
   z-index: 10;
   pointer-events: none;
   filter: drop-shadow(7px -2px 5px rgba(0,0,0,0.3));

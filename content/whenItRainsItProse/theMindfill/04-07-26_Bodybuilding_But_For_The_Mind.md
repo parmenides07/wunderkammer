@@ -1,0 +1,12 @@
+# Mindbuilding
+This one's gonna be shorter than usual.
+- Recently I've gotten really into the idea of IQ and intelligence. This led me to something called analogical reasoning which, according to some scholars, is the most fluid form of intelligence and the greatest indicator of IQ.
+- What I found cool about it wasn't really the IQ part though. It was that it put a name to something abstract I'd always enjoyed. I've always loved analogies — always kind of thought in them — and just chalked it up to enjoying language. Turns out there's actually a term for it.
+- That sent me down a rabbit hole of trying to find terms for the more abstract thinking tendencies I naturally gravitate towards. Started as curiosity, ended up being something I realized I should've done way sooner. Here's a few I found I'm especially proficient in:
+- Analogical & Structural Reasoning, Abstraction, Metacognition, Systems Thinking
+  - *(Disclaimer: I'm not trying to say I'm so great at these things and some kind of genius. That's not really my point and not what I mean either. I'm good at these things relative to mylself. Amongst all of my own cognitive skills, these are the ones that come the most natural to me. It is relative to myself.)*
+- Pinpointing what you're actually good at on a softer, more abstract level — not just "I'm good at math" but identifying these more transferable cognitive tendencies — is genuinely useful. It tells you what skills and activities you'll get the most out of and how to approach the ones you're not as strong in.
+- But beyond the practical, naming these things made me weirdly more motivated to actually develop them. Which brought me to the idea I actually want to talk about: **mindbuilding**.
+- Think about it like bodybuilding. When someone tells you that you have great bicep insertions or capped deltoids, you get hyped to train. You start seeing your body as something with specific components to develop. I want to apply that same lens to cognitive skills — identifying specific mental "muscles," figuring out which ones are underdeveloped, and actually training them with intention.
+- Just like you balance your physique — hitting triceps as hard as biceps to avoid looking weird — you have to do the same mentally. Pinpoint the imbalances. Treat abstract skills as concrete and trainable rather than vague personality traits you either have or don't.
+- This reframe alone changed a lot for me.
