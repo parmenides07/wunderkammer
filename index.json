@@ -4,14 +4,243 @@
       "created": "3/16/2026",
       "modified": "4/16/2026"
     },
+    "assets": {
+      "hello copy.jpg": {
+        "asset": true
+      },
+      "hello.jpg": {
+        "asset": true
+      }
+    },
     "pandorasBox": {
+      "assets": {
+        "antpile.mp3": {
+          "asset": true
+        },
+        "bricolage.png": {
+          "asset": true
+        },
+        "businessmen.jpg": {
+          "asset": true
+        },
+        "bythehand.mp3": {
+          "asset": true
+        },
+        "choke.jpg": {
+          "asset": true
+        },
+        "cujo.jpg": {
+          "asset": true
+        },
+        "easy.jpg": {
+          "asset": true
+        },
+        "easy.mp3": {
+          "asset": true
+        },
+        "fragile.jpg": {
+          "asset": true
+        },
+        "girl.mp3": {
+          "asset": true
+        },
+        "greg.jpg": {
+          "asset": true
+        },
+        "halo.jpg": {
+          "asset": true
+        },
+        "heart.mp3": {
+          "asset": true
+        },
+        "hex.jpg": {
+          "asset": true
+        },
+        "let.jpg": {
+          "asset": true
+        },
+        "maria.mp3": {
+          "asset": true
+        },
+        "music.jpg": {
+          "asset": true
+        },
+        "music1.jpg": {
+          "asset": true
+        },
+        "music2.jpg": {
+          "asset": true
+        },
+        "music3.jpeg": {
+          "asset": true
+        },
+        "pacifico.mp3": {
+          "asset": true
+        },
+        "pandora.jpg": {
+          "asset": true
+        },
+        "pandora.mp3": {
+          "asset": true
+        },
+        "portals.jpg": {
+          "asset": true
+        },
+        "screaming.mp3": {
+          "asset": true
+        },
+        "sunburn.jpg": {
+          "asset": true
+        },
+        "unakkul.png": {
+          "asset": true
+        },
+        "varthamanam.png": {
+          "asset": true
+        },
+        "yves.png": {
+          "asset": true
+        },
+        "yves1.png": {
+          "asset": true
+        },
+        "yves2.png": {
+          "asset": true
+        }
+      },
       "currents.md": {
         "created": "3/16/2026",
-        "modified": "4/16/2026"
+        "modified": "4/17/2026"
+      }
+    },
+    "photography": {
+      "assets": {
+        "edge.jpg": {
+          "asset": true
+        },
+        "photos": {
+          "_DSC3055.jpg": {
+            "asset": true
+          },
+          "_DSC3676_01.jpg": {
+            "asset": true
+          },
+          "_DSC3759withoutpeople.jpg": {
+            "asset": true
+          },
+          "_DSC3788.jpg": {
+            "asset": true
+          },
+          "border": {
+            "BikeCanalShot.png": {
+              "asset": true
+            },
+            "BridgeUndersideSun.png": {
+              "asset": true
+            },
+            "DramaticLightingRoadwayMountain.png": {
+              "asset": true
+            },
+            "DramaticMarsLookingPlace.png": {
+              "asset": true
+            },
+            "GenuinelyInsaneColorsIdekHowIGotThis.png": {
+              "asset": true
+            },
+            "GreenAhGoofyCar.png": {
+              "asset": true
+            },
+            "RainbowMountain.png": {
+              "asset": true
+            },
+            "SunlitAlley.png": {
+              "asset": true
+            }
+          },
+          "heyo.jpg": {
+            "asset": true
+          },
+          "test.jpg": {
+            "asset": true
+          },
+          "wildwood": {
+            "_DSC8052.jpg": {
+              "asset": true
+            },
+            "_DSC8069.jpg": {
+              "asset": true
+            },
+            "_DSC8128.jpg": {
+              "asset": true
+            },
+            "_DSC8187.jpg": {
+              "asset": true
+            },
+            "_DSC8240.jpg": {
+              "asset": true
+            },
+            "_DSC8243_01.jpg": {
+              "asset": true
+            },
+            "_DSC8251.jpg": {
+              "asset": true
+            },
+            "_DSC8257.jpg": {
+              "asset": true
+            },
+            "_DSC8260.jpg": {
+              "asset": true
+            },
+            "_DSC8284.jpg": {
+              "asset": true
+            },
+            "_DSC8318.jpg": {
+              "asset": true
+            },
+            "_DSC8550.jpg": {
+              "asset": true
+            },
+            "_DSC8677.jpg": {
+              "asset": true
+            },
+            "_DSC8919_01.jpg": {
+              "asset": true
+            },
+            "_DSC8964.jpg": {
+              "asset": true
+            }
+          }
+        }
+      },
+      "photography.md": {
+        "created": "4/17/2026",
+        "modified": "4/17/2026"
       }
     }
   },
+  "assets": {
+    "test.jpg": {
+      "asset": true
+    },
+    "test1.jpg": {
+      "asset": true
+    }
+  },
   "circuitsAndCode": {
+    "assets": {
+      "56e2e3114fb7845aa46f8e92963ae2f0-fotor-enhance-2026041695149 copy.jpg": {
+        "asset": true
+      },
+      "56e2e3114fb7845aa46f8e92963ae2f0-fotor-enhance-2026041695149.jpg": {
+        "asset": true
+      },
+      "circuit-fotor-enhance-2026041695323.jpg": {
+        "asset": true
+      },
+      "circuit.jpg": {
+        "asset": true
+      }
+    },
     "circuitsAndCode.md": {
       "created": "3/16/2026",
       "modified": "4/16/2026"
@@ -19,11 +248,166 @@
     "zion": {
       "DL2_Visualmaxxing_Is_Meta.md": {
         "created": "3/24/2026",
-        "modified": "4/16/2026"
+        "modified": "4/17/2026"
       },
       "DL5_Distros_and_Architecture.md": {
         "created": "3/27/2026",
         "modified": "4/15/2026"
+      },
+      "assets": {
+        "afterchange.gif": {
+          "asset": true
+        },
+        "beforechange.gif": {
+          "asset": true
+        },
+        "blue.jpg": {
+          "asset": true
+        },
+        "blue1.jpg": {
+          "asset": true
+        },
+        "datalook.jpg": {
+          "asset": true
+        },
+        "dataorg.jpg": {
+          "asset": true
+        },
+        "fullview.jpg": {
+          "asset": true
+        },
+        "game1.jpg": {
+          "asset": true
+        },
+        "game10.jpg": {
+          "asset": true
+        },
+        "game11.jpg": {
+          "asset": true
+        },
+        "game12.jpg": {
+          "asset": true
+        },
+        "game13.jpg": {
+          "asset": true
+        },
+        "game14.jpg": {
+          "asset": true
+        },
+        "game15.jpg": {
+          "asset": true
+        },
+        "game2.jpg": {
+          "asset": true
+        },
+        "game3.jpg": {
+          "asset": true
+        },
+        "game4.jpg": {
+          "asset": true
+        },
+        "game5.jpg": {
+          "asset": true
+        },
+        "game6.jpg": {
+          "asset": true
+        },
+        "game7.jpg": {
+          "asset": true
+        },
+        "game8.jpg": {
+          "asset": true
+        },
+        "game9.jpg": {
+          "asset": true
+        },
+        "gdex.jpg": {
+          "asset": true
+        },
+        "gdex.webp": {
+          "asset": true
+        },
+        "gdex3.jpg": {
+          "asset": true
+        },
+        "gdex4.jpg": {
+          "asset": true
+        },
+        "gdex5.jpg": {
+          "asset": true
+        },
+        "gdex6.jpg": {
+          "asset": true
+        },
+        "gdex7.jpg": {
+          "asset": true
+        },
+        "gdex9.jpg": {
+          "asset": true
+        },
+        "gedex10.jpg": {
+          "asset": true
+        },
+        "graphic1.jpg": {
+          "asset": true
+        },
+        "graphic2.jpg": {
+          "asset": true
+        },
+        "id.jpg": {
+          "asset": true
+        },
+        "id2.jpg": {
+          "asset": true
+        },
+        "id3.jpg": {
+          "asset": true
+        },
+        "id4.jpg": {
+          "asset": true
+        },
+        "id5.jpg": {
+          "asset": true
+        },
+        "idex.jpg": {
+          "asset": true
+        },
+        "idex1.jpg": {
+          "asset": true
+        },
+        "idex2.jpg": {
+          "asset": true
+        },
+        "idex3.jpg": {
+          "asset": true
+        },
+        "idex4.jpg": {
+          "asset": true
+        },
+        "red.jpg": {
+          "asset": true
+        },
+        "rellook.jpg": {
+          "asset": true
+        },
+        "relorg.jpg": {
+          "asset": true
+        },
+        "sensornode.webp": {
+          "asset": true
+        },
+        "sensornode1.webp": {
+          "asset": true
+        },
+        "zion.jpg": {
+          "asset": true
+        },
+        "zion1.jpg": {
+          "asset": true
+        },
+        "zionexample.png": {
+          "asset": true
+        }
       },
       "zion.md": {
         "created": "3/24/2026",
@@ -33,14 +417,39 @@
   },
   "content.md": {
     "created": "3/14/2026",
-    "modified": "4/16/2026"
+    "modified": "4/17/2026"
   },
   "moreAboutMe.md": {
     "created": "3/24/2026",
     "modified": "4/16/2026"
   },
   "whenItRainsItProse": {
+    "assets": {
+      "duneaura.jpg": {
+        "asset": true
+      }
+    },
     "philosophy": {
+      "assets": {
+        "castle.jpg": {
+          "asset": true
+        },
+        "crudemockup.png": {
+          "asset": true
+        },
+        "eccentrism.png": {
+          "asset": true
+        },
+        "him.jpg": {
+          "asset": true
+        },
+        "lifemaxxing.jpg": {
+          "asset": true
+        },
+        "thinking.jpg": {
+          "asset": true
+        }
+      },
       "bodybuilding_But_For_The_Mind.md": {
         "created": "4/10/2026",
         "modified": "4/16/2026"
@@ -59,6 +468,11 @@
       }
     },
     "schoolEssays": {
+      "assets": {
+        "kgi.jpg": {
+          "asset": true
+        }
+      },
       "whyArtEssay.md": {
         "created": "3/17/2026",
         "modified": "4/15/2026"
@@ -80,6 +494,53 @@
       "04-16-26_PursuingGreatness.md": {
         "created": "4/16/2026",
         "modified": "4/16/2026"
+      },
+      "assets": {
+        "dab.jpg": {
+          "asset": true
+        },
+        "dab2.jpg": {
+          "asset": true
+        },
+        "dab22.jpg": {
+          "asset": true
+        },
+        "dab3.jpg": {
+          "asset": true
+        },
+        "dab33.jpg": {
+          "asset": true
+        },
+        "emergent.jpg": {
+          "asset": true
+        },
+        "factorio.webp": {
+          "asset": true
+        },
+        "noita.gif": {
+          "asset": true
+        },
+        "noita2.gif": {
+          "asset": true
+        },
+        "noita3.gif": {
+          "asset": true
+        },
+        "noita4.gif": {
+          "asset": true
+        },
+        "noita5.gif": {
+          "asset": true
+        },
+        "simpson.png": {
+          "asset": true
+        },
+        "sparth.jpg": {
+          "asset": true
+        },
+        "tree.jpg": {
+          "asset": true
+        }
       },
       "theMindfill.md": {
         "created": "3/16/2026",

@@ -62,12 +62,50 @@ async function renderContent(path, created, modified) {
     <br>
   </div>`;
 
+  // 🔥 UPDATED images{} parsing with flags
+  const imagesFolderMatches = [...text.matchAll(/images\{([^}]+)\}/g)];
+  for (const match of imagesFolderMatches) {
+    // split by comma → folder + flags
+    const parts = match[1].split(',').map(s => s.trim());
+    const imgFolder = parts[0];
+    const flags = parts.slice(1);
+
+    const isFullWidth = flags.includes('full');
+
+    const fullFolder = imgFolder.startsWith('http') ? imgFolder : `${folder}/${imgFolder}`;
+
+    try {
+      const idxRes = await fetch('index.json');
+      const idx = await idxRes.json();
+
+      const partsPath = fullFolder.replace('content/', '').split('/').filter(Boolean);
+      let node = idx;
+      for (const part of partsPath) {
+        if (node[part]) node = node[part];
+      }
+
+      const imageExts = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
+      const imageFiles = Object.keys(node).filter(k => imageExts.test(k));
+
+      const replacement = imageFiles.map(f => {
+        const src = `${fullFolder}/${f}`;
+        return isFullWidth
+          ? `<img src="${src}" class="full-width-img">`
+          : `![](${src})`;
+      }).join('\n\n');
+
+      text = text.replace(match[0], replacement);
+    } catch {
+      text = text.replace(match[0], '');
+    }
+  }
+
   let parsed;
   if (cache[path]) {
     parsed = cache[path];
   } else {
     text = text.replace(
-      /!\[([^\]]*)\]\((?!http)([^)]+)\)/g,
+      /!\[([^\]]*)\]\((?!http)(?!content\/)([^)]+)\)/g,
       `![$1](${folder}/$2)`
     );
     cache[path] = marked.parse(text);
