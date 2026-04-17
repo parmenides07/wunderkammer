@@ -3,6 +3,8 @@ banner: assets/test1.jpg
 
 *ambition is bestowed upon those who can achieve it.*
 
+## Not Supported On Safari Browser or Mobile Aspct Ratio
+
 ## Welcome 
 
 Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science and hoping to enter the field of quantam computing materials. I love all things art, literature, and technology. 
