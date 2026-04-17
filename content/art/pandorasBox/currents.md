@@ -5,22 +5,22 @@ Every month, I will try to update this page with some records/tracks I've been f
 ## Mid-April 2026:
 <div class="grid">
 
-![album](assets/halo.jpg)
+![sound:assets/girl.mp3](assets/halo.jpg)
 *Halo - Tiffany Day*
 
-![album](assets/choke.jpg)
+![sound:assets/bythehand.mp3](assets/choke.jpg)
 *choke enough - Oklou*
 
-![album](assets/sunburn.jpg)
+![sound:assets/antpile.mp3](assets/sunburn.jpg)
 *Sunburn - Dominic Fike*
 
-![album](assets/portals.jpg)
+![sound:assets/pacifico.mp3](assets/portals.jpg)
 *portals//polarities - Night Tapes*
 
-![album](assets/let.jpg)
+![sound:assets/screaming.mp3](assets/let.jpg)
 *I Let It in and It Took Everything - Loathe*
 
-![album](assets/pandora.jpg)
+![sound:assets/pandora.mp3](assets/pandora.jpg)
 *Pandora - Wisp*
 
 </div>

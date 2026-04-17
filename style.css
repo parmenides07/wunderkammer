@@ -390,15 +390,11 @@ p, h1, h2, h3, .content {
   font-size: 4.6cqw;
 }
 
-@media not all and (min-resolution: 0.001dpcm) {
-  @supports (-webkit-appearance: none) {
-    .content,
-    .content-text h1, .content-text h2, .content-text h3,
-    .content-text h4, .content-text h5, .content-text h6,
-    .content-text p, .content-text blockquote,
-    .content-text ul, .content-text ol,
-    .card a {
-      filter: none;
-    }
-  }
+.safari .content,
+.safari .content-text h1, .safari .content-text h2, .safari .content-text h3,
+.safari .content-text h4, .safari .content-text h5, .safari .content-text h6,
+.safari .content-text p, .safari .content-text blockquote,
+.safari .content-text ul, .safari .content-text ol,
+.safari .card a {
+  filter: none;
 }

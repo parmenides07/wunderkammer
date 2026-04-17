@@ -5,6 +5,7 @@ const hoverSound = new Audio('assets/boxclick1.mp3');
 const fileSound = new Audio('assets/printer2.mp3');
 const cache = {};
 const history = [];
+let currentSound = null;
 
 marked.use({ breaks: true });
 
@@ -96,6 +97,22 @@ async function renderContent(path, created, modified) {
     }
   });
 
+  content.querySelectorAll('img[alt^="sound:"]').forEach(img => {
+    const rawSrc = img.alt.replace('sound:', '').trim();
+    const soundSrc = rawSrc.startsWith('http') ? rawSrc : `${folder}/${rawSrc}`;
+    img.style.cursor = 'pointer';
+    img.addEventListener('click', () => {
+      if (currentSound) {
+        currentSound.pause();
+        currentSound.currentTime = 0;
+      }
+      const s = new Audio(soundSrc);
+      currentSound = s;
+      s.play();
+    });
+    img.alt = '';
+  });
+
   const hasImages = document.querySelector('.content img');
   if (!hasImages) {
     content.classList.add('text-only');
@@ -147,7 +164,6 @@ async function navigate(path, index) {
         a.classList.toggle('open', !isOpen);
         if (!isOpen) {
           buildLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
-          // render index file if it exists
           const subIndex = currentIndex[folder];
           const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
           if (indexFile) {
@@ -252,3 +268,7 @@ document.querySelector('.cardicon').addEventListener('click', () => {
     });
   }
 });
+
+if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+  document.body.classList.add('safari');
+}
