@@ -113,6 +113,19 @@ async function renderContent(path, created, modified) {
     img.alt = '';
   });
 
+  content.querySelectorAll('img:not([alt^="sound:"])').forEach(img => {
+    img.addEventListener('click', (e) => {
+      if (e.ctrlKey || e.metaKey) {
+        document.getElementById('lightbox-img').src = img.src;
+        document.getElementById('lightbox').classList.add('active');
+      }
+    });
+  });
+
+  document.getElementById('lightbox').addEventListener('click', () => {
+    document.getElementById('lightbox').classList.remove('active');
+  });
+
   const hasImages = document.querySelector('.content img');
   if (!hasImages) {
     content.classList.add('text-only');

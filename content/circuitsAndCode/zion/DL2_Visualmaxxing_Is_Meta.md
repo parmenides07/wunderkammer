@@ -1,5 +1,7 @@
 banner: assets/sensornode1.webp
 
+**Note: CTRL+click on any image to view it blown up**
+
 ## Form AND Function 
 - The bigger thing I want to talk about is a shift in direction for the idea itself.
 - Something I really want to enforce in the development of this program is a heavy emphasis on visuals alongside functional design. Form AND function, not one as an afterthought of the other.
