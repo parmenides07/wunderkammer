@@ -3,7 +3,7 @@ banner: assets/test1.jpg
 
 *ambition is bestowed upon those who can achieve it.*
 
-## Not Supported On Safari Browser or Mobile Aspct Ratio
+**This site is not supported on Safari Browser or Mobile aspct ratio**
 
 ## Welcome 
 

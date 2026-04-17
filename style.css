@@ -8,6 +8,9 @@
   .content-text ul, .content-text ol {
     filter: none;
   }
+  .card a {
+    filter: none;
+  }
 }
 
 html, body {

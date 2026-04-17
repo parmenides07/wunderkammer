@@ -1,4 +1,4 @@
-banner: assets/dab.jpg
+banner: assets/dab33.jpg
 
 ## Process Vs Result
 - Something I've been going back and forth on for a while is whether to focus on the process of learning or the result of actually shipping something. And I think I've landed somewhere.

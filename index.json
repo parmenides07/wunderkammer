@@ -41,20 +41,20 @@
   },
   "whenItRainsItProse": {
     "philosophy": {
-      "04-07-26_Bodybuilding_But_For_The_Mind.md": {
+      "bodybuilding_But_For_The_Mind.md": {
         "created": "4/10/2026",
         "modified": "4/16/2026"
       },
-      "04-08-26_Why_I_Do_What_I_Do.md": {
-        "created": "4/10/2026",
-        "modified": "4/16/2026"
-      },
-      "04-10-26_How_To_Lifemaxx.md": {
+      "how_To_Lifemaxx.md": {
         "created": "4/10/2026",
         "modified": "4/16/2026"
       },
       "philosophy.md": {
         "created": "4/16/2026",
+        "modified": "4/16/2026"
+      },
+      "why_I_Do_What_I_Do.md": {
+        "created": "4/10/2026",
         "modified": "4/16/2026"
       }
     },
@@ -75,6 +75,10 @@
       },
       "03-23-26_ChefsInCS.md": {
         "created": "3/24/2026",
+        "modified": "4/16/2026"
+      },
+      "04-16-26_PursuingGreatness.md": {
+        "created": "4/16/2026",
         "modified": "4/16/2026"
       },
       "theMindfill.md": {
