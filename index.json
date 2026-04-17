@@ -119,18 +119,6 @@
           "asset": true
         },
         "photos": {
-          "_DSC3055.jpg": {
-            "asset": true
-          },
-          "_DSC3676_01.jpg": {
-            "asset": true
-          },
-          "_DSC3759withoutpeople.jpg": {
-            "asset": true
-          },
-          "_DSC3788.jpg": {
-            "asset": true
-          },
           "border": {
             "BikeCanalShot.png": {
               "asset": true
@@ -160,55 +148,67 @@
           "heyo.jpg": {
             "asset": true
           },
+          "heyy.jpg": {
+            "asset": true
+          },
+          "te.jpg": {
+            "asset": true
+          },
+          "tea.jpg": {
+            "asset": true
+          },
           "test.jpg": {
             "asset": true
           },
           "wildwood": {
-            "_DSC8052.jpg": {
-              "asset": true
-            },
-            "_DSC8069.jpg": {
-              "asset": true
-            },
-            "_DSC8128.jpg": {
-              "asset": true
-            },
-            "_DSC8187.jpg": {
-              "asset": true
-            },
-            "_DSC8240.jpg": {
-              "asset": true
-            },
-            "_DSC8243_01.jpg": {
-              "asset": true
-            },
-            "_DSC8251.jpg": {
-              "asset": true
-            },
-            "_DSC8257.jpg": {
-              "asset": true
-            },
-            "_DSC8260.jpg": {
-              "asset": true
-            },
-            "_DSC8284.jpg": {
-              "asset": true
-            },
             "_DSC8318.jpg": {
               "asset": true
             },
-            "_DSC8550.jpg": {
+            "blue.jpg": {
               "asset": true
             },
-            "_DSC8677.jpg": {
+            "bw.jpg": {
               "asset": true
             },
-            "_DSC8919_01.jpg": {
+            "fen.jpg": {
               "asset": true
             },
-            "_DSC8964.jpg": {
+            "forteth.jpg": {
+              "asset": true
+            },
+            "he.jpg": {
+              "asset": true
+            },
+            "horizontal.jpg": {
+              "asset": true
+            },
+            "hot.jpg": {
+              "asset": true
+            },
+            "hotel.jpg": {
+              "asset": true
+            },
+            "light.jpg": {
+              "asset": true
+            },
+            "palm.jpg": {
+              "asset": true
+            },
+            "sky.jpg": {
+              "asset": true
+            },
+            "te.jpg": {
+              "asset": true
+            },
+            "window.jpg": {
+              "asset": true
+            },
+            "yel.jpg": {
               "asset": true
             }
+          },
+          "yooho.jpg": {
+            "asset": true
           }
         }
       },

@@ -1,6 +1,6 @@
 banner: assets/sensornode1.webp
 
-**Note: CTRL+click on any image to view it blown up**
+*Note: CTRL+click on any image on the site to view it blown up*
 
 ## Form AND Function 
 - The bigger thing I want to talk about is a shift in direction for the idea itself.

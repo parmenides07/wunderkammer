@@ -432,6 +432,7 @@ p, h1, h2, h3, .content {
 }
 
 /* links */
+/* links */
 .card a {
   transition: all 0.15s ease;
   text-decoration: none;
@@ -450,12 +451,14 @@ p, h1, h2, h3, .content {
   letter-spacing: -0.045em;
   filter: blur(0.53px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.25));
   mix-blend-mode: multiply;
+  transition: all 0.18s ease;
 }
 
 
 .card a:hover {
   color: #8b4513;
   font-size: 4.6cqw;
+  text-decoration: underline;
 }
 
 .safari .content,
