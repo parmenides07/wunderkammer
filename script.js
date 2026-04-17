@@ -62,38 +62,31 @@ async function renderContent(path, created, modified) {
     <br>
   </div>`;
 
-  // 🔥 UPDATED images{} parsing with flags
+  // expand images{} shorthand with optional flags e.g. images{assets/, full}
   const imagesFolderMatches = [...text.matchAll(/images\{([^}]+)\}/g)];
   for (const match of imagesFolderMatches) {
-    // split by comma → folder + flags
     const parts = match[1].split(',').map(s => s.trim());
     const imgFolder = parts[0];
     const flags = parts.slice(1);
-
     const isFullWidth = flags.includes('full');
-
     const fullFolder = imgFolder.startsWith('http') ? imgFolder : `${folder}/${imgFolder}`;
 
     try {
       const idxRes = await fetch('index.json');
       const idx = await idxRes.json();
-
       const partsPath = fullFolder.replace('content/', '').split('/').filter(Boolean);
       let node = idx;
       for (const part of partsPath) {
         if (node[part]) node = node[part];
       }
-
       const imageExts = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
       const imageFiles = Object.keys(node).filter(k => imageExts.test(k));
-
       const replacement = imageFiles.map(f => {
         const src = `${fullFolder}/${f}`;
         return isFullWidth
           ? `<img src="${src}" class="full-width-img">`
           : `![](${src})`;
       }).join('\n\n');
-
       text = text.replace(match[0], replacement);
     } catch {
       text = text.replace(match[0], '');
@@ -104,6 +97,7 @@ async function renderContent(path, created, modified) {
   if (cache[path]) {
     parsed = cache[path];
   } else {
+    // only rewrite paths that are relative (don't start with http or content/)
     text = text.replace(
       /!\[([^\]]*)\]\((?!http)(?!content\/)([^)]+)\)/g,
       `![$1](${folder}/$2)`
@@ -140,7 +134,6 @@ async function renderContent(path, created, modified) {
     const soundSrc = rawSrc.startsWith('http') ? rawSrc : `${folder}/${rawSrc}`;
     img.style.cursor = 'pointer';
     img.addEventListener('mousedown', (e) => {
-    // 🖱️ Middle click → sound
       if (e.button === 2) {
         if (currentSound) {
           currentSound.pause();
@@ -155,14 +148,17 @@ async function renderContent(path, created, modified) {
   });
 
   content.querySelectorAll('img:not([alt^="sound:"])').forEach(img => {
-    img.addEventListener('click', (e) => {
-        document.getElementById('lightbox-img').src = img.src;
-        document.getElementById('lightbox').classList.add('active');
+    img.addEventListener('click', () => {
+      const lightbox = document.getElementById('lightbox');
+      const lightboxImg = document.getElementById('lightbox-img');
+      lightboxImg.src = img.src;
+      // reset scale so transition always replays
+      lightbox.classList.remove('active');
+      lightboxImg.style.transform = 'scale(0.96)';
+      void lightboxImg.offsetHeight; // force reflow
+      lightboxImg.style.transform = '';
+      lightbox.classList.add('active');
     });
-  });
-
-  document.getElementById('lightbox').addEventListener('click', () => {
-    document.getElementById('lightbox').classList.remove('active');
   });
 
   const hasImages = document.querySelector('.content img');
@@ -287,17 +283,19 @@ const contentEl = document.querySelector('.content');
 contentEl.addEventListener('scroll', () => {
   const banner = document.querySelector('.banner');
   const sticker = document.querySelector('.wip-sticker');
-
-  if (banner.style.display === 'none') return;
-
   const bannerH = banner.offsetHeight;
-  const scrolled = Math.min(contentEl.scrollTop, bannerH);
+  const scrolled = contentEl.scrollTop;
 
-  banner.style.transform = `translateY(-${scrolled}px)`;
+  if (banner.style.display !== 'none') {
+    const bannerScrolled = Math.min(scrolled, bannerH);
+    banner.style.transform = `translateY(-${bannerScrolled}px)`;
+  }
 
-  // 👇 NEW: move sticker with banner
   if (sticker && sticker.style.display !== 'none') {
-    sticker.style.transform = `translateY(-${scrolled}px)`;
+    const stickerScrolled = Math.min(scrolled, sticker.offsetTop + sticker.offsetHeight);
+    const fade = Math.max(0, 1 - scrolled / 150);
+    sticker.style.transform = `translateY(-${stickerScrolled}px)`;
+    sticker.style.opacity = fade;
   }
 });
 
@@ -308,6 +306,11 @@ window.addEventListener('resize', () => {
 });
 
 init();
+
+// lightbox close — registered once globally
+document.getElementById('lightbox').addEventListener('click', () => {
+  document.getElementById('lightbox').classList.remove('active');
+});
 
 document.querySelector('.cardicon').addEventListener('click', () => {
   backSound.currentTime = 0;

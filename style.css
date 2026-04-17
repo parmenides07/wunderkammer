@@ -107,6 +107,7 @@ p, h1, h2, h3, .content {
   z-index: 20;
   pointer-events: none;
   filter: drop-shadow(2px 3px 10px rgba(0,0,0,0.7));
+  transition: opacity 0.1s ease
 }
 
 .doc-header {
