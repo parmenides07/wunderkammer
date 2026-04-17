@@ -139,24 +139,25 @@ async function renderContent(path, created, modified) {
     const rawSrc = img.alt.replace('sound:', '').trim();
     const soundSrc = rawSrc.startsWith('http') ? rawSrc : `${folder}/${rawSrc}`;
     img.style.cursor = 'pointer';
-    img.addEventListener('click', () => {
-      if (currentSound) {
-        currentSound.pause();
-        currentSound.currentTime = 0;
+    img.addEventListener('mousedown', (e) => {
+    // 🖱️ Middle click → sound
+      if (e.button === 2) {
+        if (currentSound) {
+          currentSound.pause();
+          currentSound.currentTime = 0;
+        }
+        const s = new Audio(soundSrc);
+        currentSound = s;
+        s.play();
       }
-      const s = new Audio(soundSrc);
-      currentSound = s;
-      s.play();
     });
     img.alt = '';
   });
 
   content.querySelectorAll('img:not([alt^="sound:"])').forEach(img => {
     img.addEventListener('click', (e) => {
-      if (e.ctrlKey || e.metaKey) {
         document.getElementById('lightbox-img').src = img.src;
         document.getElementById('lightbox').classList.add('active');
-      }
     });
   });
 
@@ -285,10 +286,19 @@ async function init() {
 const contentEl = document.querySelector('.content');
 contentEl.addEventListener('scroll', () => {
   const banner = document.querySelector('.banner');
+  const sticker = document.querySelector('.wip-sticker');
+
   if (banner.style.display === 'none') return;
+
   const bannerH = banner.offsetHeight;
   const scrolled = Math.min(contentEl.scrollTop, bannerH);
+
   banner.style.transform = `translateY(-${scrolled}px)`;
+
+  // 👇 NEW: move sticker with banner
+  if (sticker && sticker.style.display !== 'none') {
+    sticker.style.transform = `translateY(-${scrolled}px)`;
+  }
 });
 
 let resizeTimer;
