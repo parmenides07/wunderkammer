@@ -38,8 +38,13 @@ Misc:
 - Enlightenment and Art
 
 ## Output
-Code/Circuits: 
+**Prose:**
+- Mindscape
+  - Worldbuilding/power system exploration.
+**Code/Circuits:** 
 - Zion 
   - Relational, emergent database system.
 - Oforis
   - Key input sampler and sequencer board.
+**Art:**
+- Locked tf out.
