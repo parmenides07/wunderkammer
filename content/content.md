@@ -3,8 +3,6 @@ banner: assets/test1.jpg
 
 *ambition is bestowed upon those who can achieve it.*
 
-**This site is not supported on Safari Browser or Mobile aspct ratio**
-
 ## Welcome 
 
 Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science and hoping to enter the field of quantam computing materials. I love all things art, literature, and technology. 
@@ -12,7 +10,8 @@ Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Scien
 Join me in my journey of maximizing life.
 
 ### Site Notes
-1. **CTRL+click on any image on the site to view it blown up.**
+1. **Click on any image on the site to view it blown up.**
+2. **Right click on certain images to play sound or open link**
 2. This website is **best viewed on desktop using any browser other than safari.** It will still work on mobile but the aspect ratio isn't great and for it to work on safari I removed the text effects.
 
 ## Input:

@@ -1,7 +1,7 @@
 wip: true
 banner: assets/edge.jpg
 
-The following are a bunch of photos I've taken. I'm yet to organize them. **Remember, you can ctrl-click to enlarge any image.**
+The following are a bunch of photos I've taken. I'm yet to organize them. **Remember, you can left-click to enlarge any image.**
 
 ## Senior Trip
 
