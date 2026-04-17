@@ -12,25 +12,25 @@ Join me in my journey of maximizing life.
 ## Input:
 
 ### Media 
-Literature:
+#### Literature:
 - *ASOIF: Clash of Kings* by George R. Martin (Fantasy Epic)
 - Next:
     - *Land of the Lustrous* by Haruko Ichikawa (Manga)
 
-Film/Television:
+#### Film/Television:
 - Next:
   - *Ergo Proxy* (Anime)
 
-Videogames:
+#### Videogames:
 - *Hylics* (??)
 - Next:
     - *Outer Wilds* (Indie Adventure)
 
 ### Education:
-Language:
+#### Language:
 - *Sanskrit* (Devaginiri Script)
 
-Misc:
+#### Misc:
 - *Godel, Escher, and Bach* by Douglass Hofstadter (???)
 
 ## Processing (WIP Stuff/Thinking About)
@@ -38,13 +38,13 @@ Misc:
 - Enlightenment and Art
 
 ## Output
-**Prose:**
+### Prose
 - Mindscape
   - Worldbuilding/power system exploration.
-**Code/Circuits:** 
+### Code/Circuits
 - Zion 
   - Relational, emergent database system.
 - Oforis
   - Key input sampler and sequencer board.
-**Art:**
+### Art
 - Locked tf out.
