@@ -2,6 +2,8 @@ banner: assets/yves2.png
 
 Every month, I will try to update this page with some records/tracks I've been frequenting.
 
+(Click on the album covers to hear my favorite song on each album) 
+
 ## Mid-April 2026:
 <div class="grid">
 
@@ -28,13 +30,13 @@ Every month, I will try to update this page with some records/tracks I've been f
 ## Late-March 2026:
 <div class="grid">
 
-![album](assets/easy.jpg)
+![sound:assets/easy.mp3](assets/easy.jpg)
 *Easy - Bleary Eyed*
 
-![album](assets/hex.jpg)
+![sound:assets/heart.mp3](assets/hex.jpg)
 *Hex Dealer - Lip Critic*
 
-![album](assets/greg.jpg)
+![sound:assets/maria.mp3](assets/greg.jpg)
 *Self Titled - Greg Mendez*
 
 </div>
