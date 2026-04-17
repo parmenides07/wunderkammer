@@ -1,18 +1,3 @@
-@supports (-webkit-hyphens: none) {
-  .content {
-    filter: none;
-  }
-  .content-text h1, .content-text h2, .content-text h3,
-  .content-text h4, .content-text h5, .content-text h6,
-  .content-text p, .content-text blockquote,
-  .content-text ul, .content-text ol {
-    filter: none;
-  }
-  .card a {
-    filter: none;
-  }
-}
-
 html, body {
   margin: 0;
   height: 100%;
@@ -403,4 +388,17 @@ p, h1, h2, h3, .content {
 .card a:hover {
   color: #8b4513;
   font-size: 4.6cqw;
+}
+
+@media not all and (min-resolution: 0.001dpcm) {
+  @supports (-webkit-appearance: none) {
+    .content,
+    .content-text h1, .content-text h2, .content-text h3,
+    .content-text h4, .content-text h5, .content-text h6,
+    .content-text p, .content-text blockquote,
+    .content-text ul, .content-text ol,
+    .card a {
+      filter: none;
+    }
+  }
 }
