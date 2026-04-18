@@ -19,6 +19,7 @@ function formatName(name) {
 
 async function renderContent(path, created, modified) {
   window.location.hash = path.replace('content/', '');
+  document.querySelector('.content').scrollTop = 0;
 
   const fileName = path.split('/').pop();
 
