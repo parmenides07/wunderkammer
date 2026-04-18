@@ -11,7 +11,7 @@ Before anything let me preface a few things:
 
 ## Hyperrealism is Lame (Mostly)
 - A common idea that starts to form when I explain my goals in art is that I must love hyperrealism. Wrong. I am staunchly against most forms of hyperrealism. The nature of art as a whole is making possible the impossible. Why create that which can be so easily seen naturally? 
-- To embark on the journey of improving one's technical skills, you must chart a course for something beyond realism: post-realism (Great video on this: https://www.youtube.com/watch?v=UozmOJajIgo). Here, the true mastery of skills like perspective and color and anatomy can shine, free from the shackles of reality and all its constraints. 
+- To embark on the journey of improving one's technical skills, you must chart a course for something beyond realism: post-realism (Great video by Sinix on this: [Post-Realism](https://www.youtube.com/watch?v=UozmOJajIgo)). Here, the true mastery of skills like perspective and color and anatomy can shine, free from the shackles of reality and all its constraints. 
 - You might bring up the point of old masters and their pursuit of realism. Even they observed some principles of post-realism and making something look more real than reality. Hyperrealism does away with even this approach.  
 
 ## TLDR

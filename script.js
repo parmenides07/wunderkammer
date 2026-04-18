@@ -107,11 +107,12 @@ async function renderContent(path, created, modified) {
     parsed = cache[path];
   }
 
-  document.querySelector('.content').innerHTML = header + parsed + '<br>'.repeat(9);
+  document.querySelector('.content').innerHTML = `<div class="content-bg">${header + parsed}</div>`;
 
   const content = document.querySelector('.content');
-  const nodes = [...content.childNodes];
-  content.innerHTML = '';
+  const contentBg = content.querySelector('.content-bg');
+  const nodes = [...contentBg.childNodes];
+  contentBg.innerHTML = '';
 
   let textWrapper = null;
   nodes.forEach(node => {
@@ -121,15 +122,15 @@ async function renderContent(path, created, modified) {
       if (!textWrapper) {
         textWrapper = document.createElement('div');
         textWrapper.classList.add('content-text');
-        content.appendChild(textWrapper);
+        contentBg.appendChild(textWrapper);
       }
       textWrapper.appendChild(node);
     } else {
       textWrapper = null;
-      content.appendChild(node);
+      contentBg.appendChild(node);
     }
   });
-
+  
   content.querySelectorAll('img[alt^="sound:"]').forEach(img => {
     const rawSrc = img.alt.replace('sound:', '').trim();
     const soundSrc = rawSrc.startsWith('http') ? rawSrc : `${folder}/${rawSrc}`;

@@ -2,7 +2,7 @@
   "art": {
     "art.md": {
       "created": "3/16/2026",
-      "modified": "4/16/2026"
+      "modified": "4/18/2026"
     },
     "assets": {
       "hello copy.jpg": {
@@ -10,7 +10,14 @@
       },
       "hello.jpg": {
         "asset": true
+      },
+      "wes.jpg": {
+        "asset": true
       }
+    },
+    "lets_Talk_About_AI_Art.md": {
+      "created": "4/18/2026",
+      "modified": "4/18/2026"
     },
     "pandorasMusicbox": {
       "assets": {
@@ -110,7 +117,7 @@
       },
       "currents.md": {
         "created": "3/16/2026",
-        "modified": "4/17/2026"
+        "modified": "4/18/2026"
       }
     },
     "photography": {
@@ -421,7 +428,7 @@
   },
   "moreAboutMe.md": {
     "created": "3/24/2026",
-    "modified": "4/16/2026"
+    "modified": "4/17/2026"
   },
   "whenItRainsItProse": {
     "assets": {

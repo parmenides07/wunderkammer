@@ -1,8 +1,12 @@
 banner: assets/yves2.png
 
-Every month, I will try to update this page with some records/tracks I've been frequenting.
+- Every month, I will try to update this page with some records/tracks I've been frequenting.
 
-**(Remember you can right-click on the album covers to hear my favorite song on each album)** 
+    - heyo
+
+        - test
+
+- **(Remember you can right-click on the album covers to hear my favorite song on each album)** 
 
 ## Mid-April 2026:
 <div class="grid">

@@ -127,6 +127,16 @@ p, h1, h2, h3, .content {
   line-height: 100%;
 }
 
+.content-bg {
+  min-height: 100%;
+  border-radius: 3px;
+  background: rgba(248, 246, 246, 0.91);
+  padding: 2cqw 2cqw 1cqw 2cqw;
+  margin: 0 -1.69cqw;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  outline: 3.2px solid rgba(64, 56, 51, 1);
+}
+
 .content {
   position: absolute;
   top: 0;
@@ -136,9 +146,10 @@ p, h1, h2, h3, .content {
   box-sizing: border-box;
   padding-left: 7.7cqw;
   padding-top: 4cqw;
+  padding-bottom: 5cqw;
   padding-right: 4.9cqw;
   font-size: 0.96cqw;
-  line-height: 105%;
+  line-height: 123.8%;
   overflow-y: auto;
   font-family: 'JetBrains Mono', monospace;
   font-weight: 410;
@@ -155,8 +166,9 @@ p, h1, h2, h3, .content {
   margin-right: auto;
   height: 26cqw;
   opacity: 1;
-  border: 2.6px solid rgba(33, 33, 33, 0.88);
-  filter: drop-shadow(4px 0px 23px rgba(0,0,0,0.35))
+  border-radius: 3px;
+  border: 2.4px solid rgba(33, 33, 33, 0.74);
+  filter: drop-shadow(4px 0px 15px rgba(0,0,0,0.14))
     drop-shadow(0px 0px 35px rgba(0,0,0,0.15));
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
@@ -177,6 +189,18 @@ p, h1, h2, h3, .content {
 
 .content a {
   color: #ad5147;
+}
+
+.content .video {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border: none;
+  display: block;
+  margin: 1cqw auto;
+  border-radius: 4px;
+  border: 2.6px solid rgba(33, 33, 33, 0.88);
+  filter: drop-shadow(4px 0px 23px rgba(0,0,0,0.35))
+    drop-shadow(0px 0px 35px rgba(0,0,0,0.15));
 }
 
 .content .grid {
@@ -215,6 +239,11 @@ p, h1, h2, h3, .content {
   display: contents;
 }
 
+.content-text li p {
+  filter: none;
+  opacity: 1;
+}
+
 .content-text {
   mix-blend-mode: multiply;
 }
@@ -228,9 +257,9 @@ p, h1, h2, h3, .content {
 .content-text blockquote { color: #4a4440; opacity: 0.88; filter: blur(0.10px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.183)); }
 .content-text blockquote blockquote { color: #4a4440; opacity: 0.87; filter: blur(0.10px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.178)); }
 .content-text blockquote blockquote blockquote { color: #4a4440; opacity: 0.86; filter: blur(0.10px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.175)); }
-.content-text ul, .content-text ol { color: #4a4440; opacity: 0.88; filter: blur(0.10px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.183)); }
-.content-text ul ul, .content-text ol ol { color: #4a4440; opacity: 0.87; filter: blur(0.10px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.178)); }
-.content-text ul ul ul, .content-text ol ol ol { color: #4a4440; opacity: 0.86; filter: blur(0.10px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.175)); }
+.content-text ul, .content-text ol { color: #4a4440; opacity: 0.88; filter: blur(0.08px) drop-shadow(0px 0px 2.8px rgba(0,0,0,0.15)); }
+.content-text ul ul, .content-text ol ol { color: #4a4440; opacity: 0.87; filter: blur(0.07px) drop-shadow(0px 0px 2.6px rgba(0,0,0,0.14)); }
+.content-text ul ul ul, .content-text ol ol ol { color: #4a4440; opacity: 0.86; filter: blur(0.07px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.13)); }
 /*
 .leftbgblur {
   position: absolute;
