@@ -4,6 +4,8 @@ banner: assets/wes.jpg
 - I thought I'd make this post to sum up my thoughts on AI art. 
 
 - So I'll start with this: AI art kinda sucks and it's a net negative in the way it has been implemented. I'm not saying all non-human generated art is trash and provides no value but I'm specifically addressing the image-making, generative AI as we know it is.
+- Another disclaimer is that I'm talking about AI in a larger sense and in the future as well. Currently it's a simple copier that jumbles input and produces output. It lacks the ability to think or truly innovate in the way that a human could. However I think in the next 10 to 15 years it will begin to show signs of this innovation. That sets the scope of this discussion. 
+  - Yes, in 20 or so years it may even be able to simulate emotion and deeper human meaning via true human-like intillegence and cognition but that's very far away and not in the scope of this.
 ## Can AI Do it?
 
 - The best way to analyze the impacts of AI art is to ground it in the defined context of art's 3 functions: expression of emotion, depiction of concept, and aesthetic exploration. 

@@ -15,9 +15,113 @@
         "asset": true
       }
     },
+    "darkroom": {
+      "assets": {
+        "edge.jpg": {
+          "asset": true
+        },
+        "photos": {
+          "border": {
+            "BikeCanalShot.png": {
+              "asset": true
+            },
+            "BridgeUndersideSun.png": {
+              "asset": true
+            },
+            "DramaticLightingRoadwayMountain.png": {
+              "asset": true
+            },
+            "DramaticMarsLookingPlace.png": {
+              "asset": true
+            },
+            "GenuinelyInsaneColorsIdekHowIGotThis.png": {
+              "asset": true
+            },
+            "GreenAhGoofyCar.png": {
+              "asset": true
+            },
+            "RainbowMountain.png": {
+              "asset": true
+            },
+            "SunlitAlley.png": {
+              "asset": true
+            }
+          },
+          "heyo.jpg": {
+            "asset": true
+          },
+          "heyy.jpg": {
+            "asset": true
+          },
+          "te.jpg": {
+            "asset": true
+          },
+          "tea.jpg": {
+            "asset": true
+          },
+          "test.jpg": {
+            "asset": true
+          },
+          "wildwood": {
+            "blue.jpg": {
+              "asset": true
+            },
+            "bw.jpg": {
+              "asset": true
+            },
+            "car.jpg": {
+              "asset": true
+            },
+            "fen.jpg": {
+              "asset": true
+            },
+            "forteth.jpg": {
+              "asset": true
+            },
+            "he.jpg": {
+              "asset": true
+            },
+            "horizontal.jpg": {
+              "asset": true
+            },
+            "hot.jpg": {
+              "asset": true
+            },
+            "hotel.jpg": {
+              "asset": true
+            },
+            "light.jpg": {
+              "asset": true
+            },
+            "palm.jpg": {
+              "asset": true
+            },
+            "sky.jpg": {
+              "asset": true
+            },
+            "te.jpg": {
+              "asset": true
+            },
+            "window.jpg": {
+              "asset": true
+            },
+            "yel.jpg": {
+              "asset": true
+            }
+          },
+          "yooho.jpg": {
+            "asset": true
+          }
+        }
+      },
+      "darkroom.md": {
+        "created": "4/17/2026",
+        "modified": "4/17/2026"
+      }
+    },
     "lets_Talk_About_AI_Art.md": {
       "created": "4/18/2026",
-      "modified": "4/18/2026"
+      "modified": "4/20/2026"
     },
     "pandorasMusicbox": {
       "assets": {
@@ -118,110 +222,6 @@
       "currents.md": {
         "created": "3/16/2026",
         "modified": "4/18/2026"
-      }
-    },
-    "photography": {
-      "assets": {
-        "edge.jpg": {
-          "asset": true
-        },
-        "photos": {
-          "border": {
-            "BikeCanalShot.png": {
-              "asset": true
-            },
-            "BridgeUndersideSun.png": {
-              "asset": true
-            },
-            "DramaticLightingRoadwayMountain.png": {
-              "asset": true
-            },
-            "DramaticMarsLookingPlace.png": {
-              "asset": true
-            },
-            "GenuinelyInsaneColorsIdekHowIGotThis.png": {
-              "asset": true
-            },
-            "GreenAhGoofyCar.png": {
-              "asset": true
-            },
-            "RainbowMountain.png": {
-              "asset": true
-            },
-            "SunlitAlley.png": {
-              "asset": true
-            }
-          },
-          "heyo.jpg": {
-            "asset": true
-          },
-          "heyy.jpg": {
-            "asset": true
-          },
-          "te.jpg": {
-            "asset": true
-          },
-          "tea.jpg": {
-            "asset": true
-          },
-          "test.jpg": {
-            "asset": true
-          },
-          "wildwood": {
-            "blue.jpg": {
-              "asset": true
-            },
-            "bw.jpg": {
-              "asset": true
-            },
-            "car.jpg": {
-              "asset": true
-            },
-            "fen.jpg": {
-              "asset": true
-            },
-            "forteth.jpg": {
-              "asset": true
-            },
-            "he.jpg": {
-              "asset": true
-            },
-            "horizontal.jpg": {
-              "asset": true
-            },
-            "hot.jpg": {
-              "asset": true
-            },
-            "hotel.jpg": {
-              "asset": true
-            },
-            "light.jpg": {
-              "asset": true
-            },
-            "palm.jpg": {
-              "asset": true
-            },
-            "sky.jpg": {
-              "asset": true
-            },
-            "te.jpg": {
-              "asset": true
-            },
-            "window.jpg": {
-              "asset": true
-            },
-            "yel.jpg": {
-              "asset": true
-            }
-          },
-          "yooho.jpg": {
-            "asset": true
-          }
-        }
-      },
-      "photography.md": {
-        "created": "4/17/2026",
-        "modified": "4/17/2026"
       }
     }
   },
