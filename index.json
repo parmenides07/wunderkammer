@@ -234,25 +234,7 @@
     }
   },
   "circuitsAndCode": {
-    "assets": {
-      "56e2e3114fb7845aa46f8e92963ae2f0-fotor-enhance-2026041695149 copy.jpg": {
-        "asset": true
-      },
-      "56e2e3114fb7845aa46f8e92963ae2f0-fotor-enhance-2026041695149.jpg": {
-        "asset": true
-      },
-      "circuit-fotor-enhance-2026041695323.jpg": {
-        "asset": true
-      },
-      "circuit.jpg": {
-        "asset": true
-      }
-    },
-    "circuitsAndCode.md": {
-      "created": "3/16/2026",
-      "modified": "4/16/2026"
-    },
-    "zion": {
+    "akashoma": {
       "DL2_Visualmaxxing_Is_Meta.md": {
         "created": "3/24/2026",
         "modified": "4/17/2026"
@@ -261,8 +243,24 @@
         "created": "3/27/2026",
         "modified": "4/15/2026"
       },
+      "akashoma.md": {
+        "created": "3/24/2026",
+        "modified": "4/24/2026"
+      },
       "assets": {
         "afterchange.gif": {
+          "asset": true
+        },
+        "akasha.jpg": {
+          "asset": true
+        },
+        "akasha1.jpg": {
+          "asset": true
+        },
+        "akasha2.jpeg": {
+          "asset": true
+        },
+        "akasha3.jpeg": {
           "asset": true
         },
         "beforechange.gif": {
@@ -416,15 +414,33 @@
           "asset": true
         }
       },
-      "zion.md": {
-        "created": "3/24/2026",
-        "modified": "4/16/2026"
+      "visualTrailerWithoutTheVisual.md": {
+        "created": "4/23/2026",
+        "modified": "4/24/2026"
       }
+    },
+    "assets": {
+      "56e2e3114fb7845aa46f8e92963ae2f0-fotor-enhance-2026041695149 copy.jpg": {
+        "asset": true
+      },
+      "56e2e3114fb7845aa46f8e92963ae2f0-fotor-enhance-2026041695149.jpg": {
+        "asset": true
+      },
+      "circuit-fotor-enhance-2026041695323.jpg": {
+        "asset": true
+      },
+      "circuit.jpg": {
+        "asset": true
+      }
+    },
+    "circuitsAndCode.md": {
+      "created": "3/16/2026",
+      "modified": "4/16/2026"
     }
   },
   "content.md": {
     "created": "3/14/2026",
-    "modified": "4/17/2026"
+    "modified": "4/24/2026"
   },
   "moreAboutMe.md": {
     "created": "3/24/2026",
@@ -500,7 +516,7 @@
       },
       "04-16-26_PursuingGreatness.md": {
         "created": "4/16/2026",
-        "modified": "4/16/2026"
+        "modified": "4/21/2026"
       },
       "assets": {
         "dab.jpg": {

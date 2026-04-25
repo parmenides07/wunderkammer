@@ -17,4 +17,9 @@ banner: assets/dab33.jpg
     
 - The idea is that when striving for perfection, even in the process of adding those last few details and polishing it and pushing it further to perfection, you are learning horizontally, picking up things you never would have otherwise. Beyond this you are honing that which you know, repition of the application of concepts solidifies the concepts.
 
+### I've Always Had the Same Idealogy
+- I find it interesting that I've always had the same idealogy of just wanting too perfect and hone even if it means I'll never actually finish something. Before I wanted to practice and hone my craft so I could one day make something. Now, I learn while working on something, perfecting and honing and stopping at nothing short of attainable greatness and complete innovation. 
+- I really never saw the point in making stuff to make stuff, before I'd prefer to just practice and now I prefer to set my sights higher, even if the cost of that is never finishing it.
+  - If I truly believe in the idea and its potential, I will do everything in my power to exact it.
+
 

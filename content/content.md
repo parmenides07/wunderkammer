@@ -47,7 +47,7 @@ Join me in my journey of maximizing life.
 - Mindscape
   - Worldbuilding/power system exploration.
 ### Code/Circuits
-- Zion 
+- Akashoma 
   - Relational, emergent database system.
 - Oforis
   - Key input sampler and sequencer board.
