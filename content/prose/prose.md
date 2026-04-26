@@ -1,3 +1,4 @@
+title: When It Rains It Prose
 banner: assets/duneaura.jpg
 
 - An interest of mine for a while has been prose, whether that be fictional or relating to philosophy. Like I've mentioned, thinking and creating is what I most enjoy and language serves as an incredibly effecient medium for expressing this thinking. 

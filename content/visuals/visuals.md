@@ -1,4 +1,7 @@
+title: Harnessing Visuals With Art
 banner: assets/hello.jpg
+
+Sight is the most powerful sense. Immensely detailed and unrelenting. Independent of time. Art is our attempt at harnessing the power of the visual.
 
 Before anything let me preface a few things: 
 

@@ -38,7 +38,7 @@ Join me in my journey of maximizing life.
   - Relational, emergent database system.
 - **C&C:** Oforis
   - Key input sampler and sequencer board.
-### Art (Asethetics, Concepts, etc)
+### Visuals (Art: Asethetics, Concepts, etc)
 - **Asethetics:** Stickers and Blobs Proj IDK
   - Something that attaches art to reality.
 - **Concepts:** Mindscape 

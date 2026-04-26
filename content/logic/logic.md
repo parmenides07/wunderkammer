@@ -1,3 +1,4 @@
+title: Logic-Composed Emergent Systems for Problem-Solving
 banner: assets/circuit.jpg
 
 I absolutely love logic and emergent system. So few things give me the context for abstract thinking as a means for problem solving like circuits and code do. 
