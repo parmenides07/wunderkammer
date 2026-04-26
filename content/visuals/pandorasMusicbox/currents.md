@@ -1,10 +1,7 @@
 banner: assets/yves2.png
 
-- Every month, I will try to update this page with some records/tracks I've been frequenting.
-
-    - heyo
-
-        - test
+- I know music isn't really visual but this is my website so piss off lol. 
+- Every month, I will try to update this page with some records/tracks I've been frequenting. 
 
 - **(Remember you can right-click on the album covers to hear my favorite song on each album)** 
 

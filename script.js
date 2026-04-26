@@ -22,6 +22,7 @@ async function renderContent(path, created, modified) {
   document.querySelector('.content').scrollTop = 0;
 
   const fileName = path.split('/').pop();
+
   const res = await fetch(path);
   let text = await res.text();
   const folder = path.substring(0, path.lastIndexOf('/'));
@@ -37,8 +38,6 @@ async function renderContent(path, created, modified) {
   if (isWip) {
     text = text.replace('wip: true\n', '').trimStart();
     document.querySelector('.wip-sticker').style.display = 'block';
-    document.querySelector('.wip-sticker').style.opacity = '1';
-    document.querySelector('.wip-sticker').style.transform = '';
   } else {
     document.querySelector('.wip-sticker').style.display = 'none';
   }
@@ -49,7 +48,6 @@ async function renderContent(path, created, modified) {
     const banner = document.querySelector('.banner');
     banner.src = `${folder}/${bannerMatch[1].trim()}`;
     banner.style.display = 'block';
-    banner.style.transform = '';
     banner.onload = () => {
       document.querySelector('.content').style.paddingTop = `calc(${banner.offsetHeight}px + 2cqh)`;
     };
@@ -65,6 +63,7 @@ async function renderContent(path, created, modified) {
     <br>
   </div>`;
 
+  // expand images{} shorthand with optional flags e.g. images{assets/, full}
   const imagesFolderMatches = [...text.matchAll(/images\{([^}]+)\}/g)];
   for (const match of imagesFolderMatches) {
     const parts = match[1].split(',').map(s => s.trim());
@@ -99,6 +98,7 @@ async function renderContent(path, created, modified) {
   if (cache[path]) {
     parsed = cache[path];
   } else {
+    // only rewrite paths that are relative (don't start with http or content/)
     text = text.replace(
       /!\[([^\]]*)\]\((?!http)(?!content\/)([^)]+)\)/g,
       `![$1](${folder}/$2)`
@@ -130,7 +130,7 @@ async function renderContent(path, created, modified) {
       contentBg.appendChild(node);
     }
   });
-
+  
   content.querySelectorAll('img[alt^="sound:"]').forEach(img => {
     const rawSrc = img.alt.replace('sound:', '').trim();
     const soundSrc = rawSrc.startsWith('http') ? rawSrc : `${folder}/${rawSrc}`;
@@ -154,9 +154,10 @@ async function renderContent(path, created, modified) {
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
       lightboxImg.src = img.src;
+      // reset scale so transition always replays
       lightbox.classList.remove('active');
       lightboxImg.style.transform = 'scale(0.96)';
-      void lightboxImg.offsetHeight;
+      void lightboxImg.offsetHeight; // force reflow
       lightboxImg.style.transform = '';
       lightbox.classList.add('active');
     });
@@ -170,9 +171,9 @@ async function renderContent(path, created, modified) {
   }
 }
 
-async function navigate(path, index) {
+async function navigate(path, index, updateHash = true) {
   history.push(path);
-  window.location.hash = path.replace('content/', '');
+  if (updateHash) window.location.hash = path.replace('content/', '');
 
   const files = Object.keys(index).filter(k => typeof index[k] === 'object' && index[k].created);
   const folders = Object.keys(index).filter(k => typeof index[k] === 'object' && !index[k].created && k !== 'assets');
@@ -263,7 +264,7 @@ async function init() {
     for (let i = 0; i < parts.length; i++) {
       const part = decodeURIComponent(parts[i]);
       if (typeof currentIndex[part] === 'object' && currentIndex[part].created) {
-        await navigate(currentPath, currentIndex);
+        await navigate(currentPath, currentIndex, false);
         await renderContent(`${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`, currentIndex[part].created, currentIndex[part].modified);
         return;
       } else if (typeof currentIndex[part] === 'object') {
@@ -308,6 +309,7 @@ window.addEventListener('resize', () => {
 
 init();
 
+// lightbox close — registered once globally
 document.getElementById('lightbox').addEventListener('click', () => {
   document.getElementById('lightbox').classList.remove('active');
 });
