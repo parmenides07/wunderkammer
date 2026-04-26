@@ -1,4 +1,5 @@
 wip: true
+title: What is the form of Akashoma?
 banner: assets/akasha.jpg
 
 ## The Form
