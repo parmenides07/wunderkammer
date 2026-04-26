@@ -1,10 +1,11 @@
 banner: assets/circuit.jpg
 
 I absolutely love logic and emergent system. So few things give me the context for abstract thinking as a means for problem solving like circuits and code do. 
-
 Concretely, my interests most emerge in software. It provides me the freedom to solve problems incredibly abstractly and hardware grants me the power to bring that into the physical world. 
 
 As of late, however, physics and, to a smaller degree, math have also begun to scratch that itch.
+
+This logic category is composed of Code, Circuits, and Physics (for now)...
 
 ## Projects
 - Note that I approach projects in two stages. 

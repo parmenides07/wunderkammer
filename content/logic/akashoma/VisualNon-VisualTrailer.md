@@ -1,9 +1,9 @@
-wip: true
 title: What is the form of Akashoma?
+wip: true
 banner: assets/akasha.jpg
 
-## The Form
-*This is a trailer for the program meant to depict the form of the program in an abstract manner. Let yourself be swept up by your imagination and let go of all preconceived notions.*
+## The Story Begins...
+*This is a trailer for the program meant to depict the visuals/usage (form) of the program in an abstract manner. Allow yourself to be swept up by your imagination and let go of all preconceived notions.*
 
 You open your eyes. What was once dark is light and one blindness replaces the other. You adjust though. You start to see these things occupy the foreground. They ooze, they pulse. And to a mere mortal like I, you can only express that which you see as raw knowledge taken form. What I'd know as letters and words. As time passes though, it seems as if the knowledge itself morphs and warps. The letters that comprise it crumble and reassemble in new forms. Letters jump and gravitate, almost engaged in a kind of tango with one another. One overlaps another, blurring into the last, altogether forming almost a haze of distant and close moving characters. The components of knowledge accumulating and shifting. Even individually, they possess an almost ethereal quality, what with their translucent body and aquamarine tint. A beautiful tint. One that seems to pulse hues of green and purple periodically. The edges of those in your peripheral even guilty of experiencing aberrations of incredible, saturated pink and yellow. It's unclear where one letter ends and another starts. And that's if they remain still long enough to be examined. They move slow but constantly, in perpetual motion, their movements too sporadic to track and their destinations too difficult to tell.
 

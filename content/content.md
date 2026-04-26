@@ -43,10 +43,10 @@ Join me in my journey of maximizing life.
 - Enlightenment and Art
 
 ## Output
-### Prose
+### Prose (Worldbuilding, Philosophy, etc)
 - Mindscape
   - Worldbuilding/power system exploration.
-### Logic 
+### Logic (Code, Circuit, Physics)
 - Akashoma 
   - Relational, emergent database system.
 - Oforis
