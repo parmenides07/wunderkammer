@@ -233,7 +233,11 @@
       "asset": true
     }
   },
-  "circuitsAndCode": {
+  "content.md": {
+    "created": "3/14/2026",
+    "modified": "4/25/2026"
+  },
+  "logic": {
     "akashoma": {
       "DL2_Visualmaxxing_Is_Meta.md": {
         "created": "3/24/2026",
@@ -416,7 +420,7 @@
       },
       "visualTrailerWithoutTheVisual.md": {
         "created": "4/23/2026",
-        "modified": "4/24/2026"
+        "modified": "4/25/2026"
       }
     },
     "assets": {
@@ -433,18 +437,14 @@
         "asset": true
       }
     },
-    "circuitsAndCode.md": {
+    "logic.md": {
       "created": "3/16/2026",
-      "modified": "4/16/2026"
+      "modified": "4/25/2026"
     }
-  },
-  "content.md": {
-    "created": "3/14/2026",
-    "modified": "4/24/2026"
   },
   "moreAboutMe.md": {
     "created": "3/24/2026",
-    "modified": "4/17/2026"
+    "modified": "4/25/2026"
   },
   "whenItRainsItProse": {
     "assets": {
@@ -487,7 +487,7 @@
       },
       "why_I_Do_What_I_Do.md": {
         "created": "4/10/2026",
-        "modified": "4/16/2026"
+        "modified": "4/25/2026"
       }
     },
     "schoolEssays": {
@@ -559,6 +559,9 @@
           "asset": true
         },
         "sparth.jpg": {
+          "asset": true
+        },
+        "tree copy copy.jpg": {
           "asset": true
         },
         "tree.jpg": {

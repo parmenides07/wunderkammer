@@ -46,7 +46,7 @@ Join me in my journey of maximizing life.
 ### Prose
 - Mindscape
   - Worldbuilding/power system exploration.
-### Code/Circuits
+### Logic 
 - Akashoma 
   - Relational, emergent database system.
 - Oforis

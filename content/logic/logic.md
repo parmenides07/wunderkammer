@@ -1,6 +1,10 @@
 banner: assets/circuit.jpg
 
-I absolutely love circuits and code. Nothing else can give me the context for abstract thinking and problem solving that they can. Software provide me the freedom to solve problems incredibly abstractly and hardware grants me the power to bring that into the physical world. I just love thinking and solving and nothing enables that more than computers and electronics. 
+I absolutely love logic and emergent system. So few things give me the context for abstract thinking as a means for problem solving like circuits and code do. 
+
+Concretely, my interests most emerge in software. It provides me the freedom to solve problems incredibly abstractly and hardware grants me the power to bring that into the physical world. 
+
+As of late, however, physics and, to a smaller degree, math have also begun to scratch that itch.
 
 ## Projects
 - Note that I approach projects in two stages. 
