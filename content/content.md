@@ -14,42 +14,32 @@ Join me in my journey of maximizing life.
 2. **Right click on certain images to play sound or open link**
 2. This website is **best viewed on desktop using any browser other than safari.** It will still work on mobile but the aspect ratio isn't great and for it to work on safari I removed the text effects.
 
-## Input:
+## Current Input:
 
 ### Media 
 #### Literature:
-- *ASOIF: Clash of Kings* by George R. Martin (Fantasy Epic)
-- Next:
-    - *Land of the Lustrous* by Haruko Ichikawa (Manga)
-
+- *ASOIF: Storm of Swords* by George R. Martin (Fantasy Epic)
+- *Chainsaw Man* by Tatsuki Fujimoto (Manga)
 #### Film/Television:
-- Next:
-  - *Ergo Proxy* (Anime)
-
+- *Cowboy Bebop* by Shinichiro Watanabe (Sci-Fi Western Anime)
 #### Videogames:
-- *Hylics* (??)
-- Next:
-    - *Outer Wilds* (Indie Adventure)
-
+- *Disco Elysium* by Za/Um studios (RPG)
 ### Education:
-#### Language:
 - *Sanskrit* (Devaginiri Script)
 
-#### Misc:
-- *Godel, Escher, and Bach* by Douglass Hofstadter (???)
-
-## Processing (WIP Stuff/Thinking About)
-- Framework for Maximizing Life 
-- Enlightenment and Art
-
-## Output
+## Current Output
 ### Prose (Worldbuilding, Philosophy, Journaling, etc)
-- Mindscape/
-  - Worldbuilding/power system exploration.
+- **Worldbuilding:** Mindscape
+  - Power system exploration.
+- **Philosophy:** Enlightenment and the Visual
+- (**Journaling** is passive)
 ### Logic (Code, Circuit, Physics)
-- Akashoma 
+- **Code:** Akashoma 
   - Relational, emergent database system.
-- Oforis
+- **C&C:** Oforis
   - Key input sampler and sequencer board.
 ### Art (Asethetics, Concepts, etc)
-- Locked tf out.
+- **Asethetics:** Stickers and Blobs Proj IDK
+  - Something that attaches art to reality.
+- **Concepts:** Mindscape 
+  - Worldbuilding depiction.

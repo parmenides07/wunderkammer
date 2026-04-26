@@ -127,6 +127,13 @@ p, h1, h2, h3, .content {
   line-height: 100%;
 }
 
+.content-text h1, .content-text h2, .content-text h3,
+.content-text h4, .content-text h5, .content-text h6,
+.doc-header h2 {
+  font-family: 'Baskerville', serif;
+  /*playfair display could work too*/
+}
+
 .content-bg {
   min-height: 100%;
   border-radius: 3px;
@@ -467,13 +474,13 @@ p, h1, h2, h3, .content {
   text-decoration: none;
   color: #2d2d2d;
 
-  font-family: Baskerville, serif;
-  font-weight: 370;
+  font-family: 'Baskerville', serif;
+  font-weight: 385;
 
   font-size: 4.3cqw; /* WAIT EUREKA, THE SOLUTION TO THE ISSUE WHERE THE RESIZING OF WINDOW WOULD MESS EVERYTHING UP. The isseu would be that the window height would change the line height and since the card is tied to the lines of text, it will also expand but it is cropped not scaled so it will not scale up it will just add more lines adn teh lines of text will be bigger but not the same spacing as the image so thats where teh drift occurs. However if we can restrict the spacing to the width of the paper (thats teh part that changes) then we can make this thing work.
   */
   /* okay that was part of the solution. IT WAS FUCKASS GAP IN CARD LINKS ALL ALONG THAT WAS ADDING EXTRA SHIT AND IT WAS TIED TO qcH FUCKK*/
-  opacity: 0.8;
+  opacity: 0.78;
 
   line-height: 1.068;
 

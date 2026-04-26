@@ -226,12 +226,40 @@
     }
   },
   "assets": {
+    "acok.jpg": {
+      "asset": true
+    },
+    "blade.jpg": {
+      "asset": true
+    },
+    "ffa.jpg": {
+      "asset": true
+    },
+    "phm.jpg": {
+      "asset": true
+    },
+    "phmbook.jpg": {
+      "asset": true
+    },
+    "shoot.jpg": {
+      "asset": true
+    },
+    "sj.jpg": {
+      "asset": true
+    },
     "test.jpg": {
       "asset": true
     },
     "test1.jpg": {
       "asset": true
+    },
+    "wwz.jpg": {
+      "asset": true
     }
+  },
+  "consumptionLog.md": {
+    "created": "4/26/2026",
+    "modified": "4/26/2026"
   },
   "content.md": {
     "created": "3/14/2026",
@@ -512,6 +540,10 @@
         "created": "4/16/2026",
         "modified": "4/21/2026"
       },
+      "04-26-26_TheStandUserCouldBeAnyone.md": {
+        "created": "4/26/2026",
+        "modified": "4/26/2026"
+      },
       "assets": {
         "castle.jpg": {
           "asset": true
@@ -538,6 +570,9 @@
           "asset": true
         },
         "him.jpg": {
+          "asset": true
+        },
+        "jojo.jpg": {
           "asset": true
         },
         "noita.gif": {
