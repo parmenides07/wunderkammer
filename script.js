@@ -253,11 +253,12 @@ async function navigate(path, index) {
 
 async function init() {
   if (!window.location.search.includes('r=1')) {
-    const newUrl = window.location.href + (window.location.search ? '&r=1' : '?r=1');
-    window.location.replace(newUrl);
+    const hash = window.location.hash;
+    const base = window.location.href.split('#')[0];
+    window.location.replace(base + '?r=1' + hash);
     return;
   }
-  
+
   const res = await fetch('index.json');
   const index = await res.json();
 
