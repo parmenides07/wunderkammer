@@ -170,6 +170,7 @@ async function renderContent(path, created, modified) {
     content.classList.remove('text-only');
   }
 }
+
 async function navigate(path, index) {
   history.push(path);
   window.location.hash = path.replace('content/', '');
@@ -179,10 +180,10 @@ async function navigate(path, index) {
   const folderName = path.split('/').pop();
   const indexFile = files.find(f => f === `${folderName}.md`);
 
-  if (indexFile) await renderContent(`${path}/${indexFile}`, index[indexFile].created, index[indexFile].modified);
+  if (indexFile) renderContent(`${path}/${indexFile}`, index[indexFile].created, index[indexFile].modified);
 
   if (files.length === 1 && folders.length === 0) {
-    await renderContent(`${path}/${files[0]}`, index[files[0]].created, index[files[0]].modified);
+    renderContent(`${path}/${files[0]}`, index[files[0]].created, index[files[0]].modified);
     return;
   }
 
@@ -225,6 +226,7 @@ async function navigate(path, index) {
         }
       });
       a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
+
       containerEl.appendChild(a);
       containerEl.appendChild(subContainer);
     });
@@ -262,24 +264,20 @@ async function init() {
     for (let i = 0; i < parts.length; i++) {
       const part = decodeURIComponent(parts[i]);
       if (typeof currentIndex[part] === 'object' && currentIndex[part].created) {
-        await navigate(currentPath, currentIndex);
-        await renderContent(
-          `${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`,
-          currentIndex[part].created,
-          currentIndex[part].modified
-        );
+        navigate(currentPath, currentIndex);
+        renderContent(`${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`, currentIndex[part].created, currentIndex[part].modified);
         return;
       } else if (typeof currentIndex[part] === 'object') {
         currentIndex = currentIndex[part];
         currentPath = `${currentPath}/${part}`;
       } else {
-        await navigate(CONTENT_PATH, index);
+        navigate(CONTENT_PATH, index);
         return;
       }
     }
-    await navigate(currentPath, currentIndex);
+    navigate(currentPath, currentIndex);
   } else {
-    await navigate(CONTENT_PATH, index);
+    navigate(CONTENT_PATH, index);
   }
 }
 
