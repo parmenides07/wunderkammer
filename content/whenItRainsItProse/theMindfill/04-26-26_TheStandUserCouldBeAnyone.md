@@ -2,8 +2,22 @@ title: The Stand User Could Be Anyone
 banner: assets/jojo1.jpg
 
 ## The Examined Life Looks Like Something
-- As of late I have fallen down a rabbit hole of sorts. I've always really liked  Pinterest which kinda opened up into something I've been trying to put in words.
-- There's this whole world or community of people online who are just different. They aren't performatively wierd or trying to be a character but like living in a way that feels considered. They make things, dress interestingly, listen to music you've never heard of and actually have opinions about it. Tumblr used to be where they all congregated.
+- As of late I have fallen down a rabbit hole of sorts. I've always really liked  Pinterest which kinda opened up into something I've been trying to put in words. This isn't a good example of what I mean regarding the people, more focus on the material but Pinterest is great at collecting really interesting cool things. Here is literally just my homepage (and a board)
+
+<div class="grid">
+
+![pinterest](assets/pinterest1.png)
+
+![pinterest](assets/pinterest2.png)
+
+![pinterest](assets/pinterest3.png)
+
+</div>
+
+![pinterest](assets/pinterest4.png)
+
+- The examples don't really explain what I'm saying but if you've ever been on pinterest ykw I'm talking about. These asethetic interesting people that are presented on there. These people with style and substance. Depictions of them are collected and curated on there. Saying it like this makes it feel oddly dystopian ngl but all I mean to say is Pinterest acts as a platform where they are presented. 
+- And seeing these people and what they interact with and how they look made me realize, "woah there's this whole world or community of people online who are just different." They aren't performatively wierd or trying to be a character but like living in a way that feels considered. They make things, dress interestingly, listen to music you've never heard of and actually have opinions about it. Tumblr used to be where they all congregated.
 - The words that kept coming to mind were creative or bohemian. Neither quite captures it but they're in the neighborhood. I'm a natural aesthete myself so I think I'm drawn to these people because I recognize something in them.
 
 ### Silknode
@@ -39,3 +53,34 @@ Someone who has done that interior work almost always shows it in how they put t
     - I'm drawn to cities because that's where you find them mostly. Makes sense, cities self-select for people who made a deliberate move somewhere and the density lets subcultures breathe. But the internet is increasingly its own version of that city and seemingly platforms like Silknode are trying to build the neighborhood.
 
 I'm still figuring out what all this means for me and how I can become like these people but figuring this out feels like the first step. Honestly making this site was a big part of consolidating my identiy and really forced me to define it in a lot of ways I wouldn't have otherwise. Reading through this site you can get a large part of me.
+
+
+## Art Share
+- This isn't really pertaining to the material but I wanted an excuse to share some interesting artists that I remembered when picking the banner for this post. 
+
+### Min Yum
+
+<div class="grid">
+
+images{assets/minyum/}
+
+</div>
+
+
+### Gary Vanaka
+
+<div class="grid">
+
+images{assets/gvanaka/}
+
+</div>
+
+### Kei Urana (Gachiakuta)
+
+<div class="grid">
+
+images{assets/keiurana/}
+
+</div>
+
+
