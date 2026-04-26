@@ -18,7 +18,7 @@
 - I'm not entirely sure about the specifics of how I will teach art but I know I want to do it.
 
 ### Entrepreneurship for Creation
-- I'd also like to build up my expertise with hardware and software to an extent where I can create products/creations that can make a great impact on people's lives. Things that really innovate and break the bounds of what's understood and possible. I have a long way to go but I intend to start aiming for greatness now. After a point, my visions will require more than just a single person to execute them at which point I will have to bring on more individuals to work underneath me and help me bring these creations to life.
+- I'd also like to build up my expertise with hardware and software to an extent where I can create products/creations that can make a great impact on people's lives. Things that really innovate and break the bounds of what's understood and possible. I want to create functional form. I have a long way to go but I intend to start aiming for greatness now. After a point, my visions will require more than just a single person to execute them at which point I will have to bring on more individuals to work underneath me and help me bring these creations to life.
 
 ### Impactful Writer
 - I want to contribute to the world of fiction and philosophy, introduce new ways of thinking and living life and the introduction of new concepts, stories, and worlds. This is much less defined than the others but I roughly want to do.

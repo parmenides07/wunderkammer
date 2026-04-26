@@ -1,15 +1,22 @@
 banner: assets/castle.jpg
 
 ## Context
-- So my previous post was about mindbuilding and discovering how I think and what I'm most profecient at. Doing this, I realized something very interesting about the things I love to do (hobbies/passions). What kinda eluded me before is very clear now. 
+- So my previous post was about mindbuilding and discovering how I think and what I'm most profecient at. Doing this, I mapped out how I think (which helped me with another huge thing I was undergoing). I Also realized something very interesting about the things I love to do (hobbies/passions). A lot of what kinda eluded me before is very clear now.
 
-## What I love
+## Mental Map
+- I've realized I think very.. interestingly. I have this way of approaching everything in my life — conversations, ideas, school, everything — in a very peculiar fashion. 
+- I have my own kind of mental language, though I'll be honest, I can't fully articulate what it actually is — only what it does and what it demands. It isn't quite visual, isn't quite verbal, but it has its own internal logic and structure. What I can say is that it's pattern-first and structure-first. 
+- Before I can really understand something I need to see its shape — how the pieces relate, what the underlying logic is, what it reduces to. When I'm learning something, I have to actively translate it into that language and build the knowledge from there. Most things translate easily and naturally, but others require more digging and questioning before they click. 
+   -  This is partially why I'm so obsessed with first principle thinking: breaking something down into its tiniest fundamental pieces makes each piece easier to translate individually, and then I can reconstruct and build upon it in my mind. 
+- The way I think is fundamentally founded on systems and structures, using abstraction and emergent complexity as tools. And that explains why I'm drawn to the things I am — and why I'm good at them.
+
+## Why I Do What I Do
 - On a cognitive level, I've fundamentally loved creation and analysis. Specific types of problem solving were enjoyable not because I like solving problems themselves but because they serve as a medium for me to evaluate and innovate. 
 - But over the years, I've collected a number of hobbies and skills I like pursuing, subconciously gravitating towards a few overarching practices that extend into all the hobbies I enjoyed. The passions I carry today — the ones that actually define me — turn out to be the most optimal mediums for the cognitive processes I most enjoy and excel at. There's other stuff I like obviously, but these three are the most defining:
 
 ### Analysis
 For each of these, its the function they play that has really captivated me, but the form of that function, the specific medium for the cognition it engages, has compelled me just as much. 
-You can really see the common thread amongst them all: all emergent systems grounding abstraction.
+You can really see the common thread amongst them all: I'm drawn to systems with emergent properties that utilize abstraction.
 1. **Logic (Code, Circuits, and Computers)**
    - Function: A playground for systems thinking and abstract reasoning. What is interesting isnt the problem solving itself but the sheer scope of waht can be built. It's a space like no other, engaging a unique sort of problem solving and requires application of abstract idea you'd struggle to find as effeciently channeled elsewhere.
    - Form: The elegeance of building hardware and software. That everything is reducible to logic and composed of tiny little parts. The emergent complexity is beautiful. (My enjoyment of the form and function is a bit blurred for this one)

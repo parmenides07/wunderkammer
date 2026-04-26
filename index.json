@@ -446,6 +446,9 @@
     "created": "3/24/2026",
     "modified": "4/25/2026"
   },
+  "theMindfill": {
+    "assets": {}
+  },
   "whenItRainsItProse": {
     "assets": {
       "duneaura.jpg": {
@@ -454,16 +457,10 @@
     },
     "philosophy": {
       "assets": {
-        "castle.jpg": {
-          "asset": true
-        },
         "crudemockup.png": {
           "asset": true
         },
         "eccentrism.png": {
-          "asset": true
-        },
-        "him.jpg": {
           "asset": true
         },
         "lifemaxxing.jpg": {
@@ -473,10 +470,6 @@
           "asset": true
         }
       },
-      "bodybuilding_But_For_The_Mind.md": {
-        "created": "4/10/2026",
-        "modified": "4/16/2026"
-      },
       "how_To_Lifemaxx.md": {
         "created": "4/10/2026",
         "modified": "4/16/2026"
@@ -484,10 +477,6 @@
       "philosophy.md": {
         "created": "4/16/2026",
         "modified": "4/16/2026"
-      },
-      "why_I_Do_What_I_Do.md": {
-        "created": "4/10/2026",
-        "modified": "4/25/2026"
       }
     },
     "schoolEssays": {
@@ -502,6 +491,14 @@
       }
     },
     "theMindfill": {
+      "03-16-26_MyMotherTongue.md": {
+        "created": "4/10/2026",
+        "modified": "4/25/2026"
+      },
+      "03-16-26_bodybuilding_But_For_The_Mind.md": {
+        "created": "4/10/2026",
+        "modified": "4/16/2026"
+      },
       "03-18-26_CalculusKellogsAnd Knowledge.md": {
         "created": "3/18/2026",
         "modified": "4/16/2026"
@@ -519,6 +516,9 @@
         "modified": "4/21/2026"
       },
       "assets": {
+        "castle.jpg": {
+          "asset": true
+        },
         "dab.jpg": {
           "asset": true
         },
@@ -538,6 +538,9 @@
           "asset": true
         },
         "factorio.webp": {
+          "asset": true
+        },
+        "him.jpg": {
           "asset": true
         },
         "noita.gif": {
@@ -570,7 +573,7 @@
       },
       "theMindfill.md": {
         "created": "3/16/2026",
-        "modified": "4/16/2026"
+        "modified": "4/25/2026"
       }
     },
     "whenItRainsItProse.md": {
