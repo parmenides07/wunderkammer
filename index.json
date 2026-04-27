@@ -1,37 +1,39 @@
 {
   "assets": {
-    "acok.jpg": {
-      "asset": true
-    },
-    "blade.jpg": {
-      "asset": true
-    },
-    "ffa.jpg": {
-      "asset": true
-    },
-    "phm.jpg": {
-      "asset": true
-    },
-    "phmbook.jpg": {
-      "asset": true
-    },
-    "shoot.jpg": {
-      "asset": true
-    },
-    "sj.jpg": {
-      "asset": true
-    },
     "test.jpg": {
       "asset": true
     },
     "test1.jpg": {
       "asset": true
-    },
-    "wwz.jpg": {
-      "asset": true
     }
   },
   "consumption": {
+    "assets": {
+      "acok.jpg": {
+        "asset": true
+      },
+      "blade.jpg": {
+        "asset": true
+      },
+      "ffa.jpg": {
+        "asset": true
+      },
+      "phm.jpg": {
+        "asset": true
+      },
+      "phmbook.jpg": {
+        "asset": true
+      },
+      "shoot.jpg": {
+        "asset": true
+      },
+      "sj.jpg": {
+        "asset": true
+      },
+      "wwz.jpg": {
+        "asset": true
+      }
+    },
     "consumption.md": {
       "created": "4/26/2026",
       "modified": "4/26/2026"
