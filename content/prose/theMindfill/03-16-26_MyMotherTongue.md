@@ -31,7 +31,7 @@ You can really see the common thread amongst them all: I'm drawn to systems with
 ### Principles of Productivity
 - Let me note that I do not do these 3 all in one day, everyday. One day I might heavily do one and maybe even for a whole week I might neglect another. The point is that these are just the larger genres for the input/output of my life.
    - In fact, trying to do all 3 of these in one day would be counterintuitive and go against the principles of focus and productivity. Parts of this are founded off of the lessons of Cal Newport's *Slow Productivty* and Odysseas's [*Hobby Season Concept*](https://www.youtube.com/watch?v=usOgvEPaW4k)
-   - You can even apply my idea of [expert of a few](https://parmenides07.github.io/wunderkammer/#whenItRainsItProse/philosophy/maximalistSoulDriver.md) to this, shrinking the scale down to a single day. Too many items and you can't focus and enter the flow state, but too little items and you reach diminishing returns for the day. 
+   - You can even apply my idea of [expert of a few](https://parmenides07.github.io/wunderkammer/#prose/philosophy/maximalistSoulDriver.md) to this, shrinking the scale down to a single day. Too many items and you can't focus and enter the flow state, but too little items and you reach diminishing returns for the day. 
 
 - What's really great about these are the skills I hone doing these are so transferrable and each of the practices are unique with their own unique communities. 
 
