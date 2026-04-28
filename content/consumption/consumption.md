@@ -3,6 +3,17 @@ banner: assets/shoot.jpg
 
 - This is meant to serve as a log of the media consumption I participate in.
 
+# Youtube Videos
+- Just cool videos I saw that I wanted to share.
+
+### April 28th, 2026
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/_20LePuDHJo?si=vD4W7TzIJnxkiiRd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### April 25th, 2026
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/hUryjdsJJYI?si=aWhZOJNKEJsIL_DT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 # Literature
 <div class="grid">
 

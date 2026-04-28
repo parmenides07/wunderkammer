@@ -3,7 +3,12 @@ banner: assets/hello.jpg
 
 Sight is the most powerful sense. Immensely detailed and unrelenting. Independent of time. Art is our attempt at harnessing the power of the visual.
 
-Before anything let me preface a few things: 
+Before anything though, let me give some context and preface a few things:
+
+## My Love for Art
+- Before anything else on this site, I pursued art. It was my single love and passion. Although, it now shares the spotlight with a few other practices, I'm so grateful for the impact its had on my life. 
+- The lessons I've learned are invaluable and have transformed the way in which I approach things. Its kind of a chicken and egg situation as in I'm not sure if I thought like this and approached life in this way because of art or I did this initially and that warped how I pursued art. 
+- One lesson I know for sure came from art. Its the motivation to figure out why I like things. Artists would always say to remember the reason you love art when it gets tough but for me, I never really knew my reason. And so as I got older, in art, and other things I became obssessed with the why I do things. Ultimately, this is just one of the many lessons I've learned but its been very beneficial in living an intentional life.
 
 ## Pure Asethetics
 - I do not believe art has has to have meaning. What I derive pleasure from in art is the asethetics and the potential for concept exploration. I want to try to refine the more technical aspects of art. This along with the ability to so naturally explore ideas is the most interesting part of the medium. 
