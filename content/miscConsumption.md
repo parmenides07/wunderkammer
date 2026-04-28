@@ -1,4 +1,4 @@
-title: Consumption Log
+title: Miscellaneous Consumption Log
 banner: assets/shoot.jpg
 
 - This is meant to serve as a log of the media consumption I participate in.

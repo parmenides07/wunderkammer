@@ -1,4 +1,6 @@
-This is meant to serve as cemetary for ideas in their infancy that I didn't feel confident enough to pursue. 
+title: Creation Idea Graveyard
+
+This is meant to serve as resting place for ideas in their infancy that I didn't feel confident enough to pursue. 
 
 ## Logic
 
