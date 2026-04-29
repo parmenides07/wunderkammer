@@ -5,7 +5,7 @@ banner: assets/test1.jpg
 
 ## Welcome 
 
-Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science and hoping to enter the field of quantam computing materials. I love all things art, literature, and technology. 
+Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science, hoping to later pursue grad school for applied physics. I love all things visual, prose, and logic. 
 
 Join me in my journey of maximizing life.
 
