@@ -172,7 +172,9 @@ p, h1, h2, h3, .content {
   margin-bottom: 0.1cqw;
   margin-left: auto;
   margin-right: auto;
-  height: 26cqw;
+  width: 100%;
+  height: auto;
+  /*height: 26cqw;*/
   opacity: 1;
   border-radius: 3px;
   border: 2.4px solid rgba(33, 33, 33, 0.74);
@@ -494,6 +496,12 @@ p, h1, h2, h3, .content {
 .card a:hover {
   color: #8b4513;
   font-size: 4.6cqw;
+  text-decoration: underline;
+}
+
+.card a.active-link {
+  color: #8b4513;
+  opacity: 1;
   text-decoration: underline;
 }
 

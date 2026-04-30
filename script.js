@@ -21,6 +21,13 @@ async function renderContent(path, created, modified) {
   window.location.hash = path.replace('content/', '');
   document.querySelector('.content').scrollTop = 0;
 
+  // highlight active link
+  document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
+    a.classList.remove('active-link');
+  });
+  const activeLink = [...document.querySelectorAll('.file-link')].find(a => a.dataset.path === path);
+  if (activeLink) activeLink.classList.add('active-link');
+
   const fileName = path.split('/').pop();
 
   const res = await fetch(path);
@@ -98,7 +105,6 @@ async function renderContent(path, created, modified) {
   if (cache[path]) {
     parsed = cache[path];
   } else {
-    // only rewrite paths that are relative (don't start with http or content/)
     text = text.replace(
       /!\[([^\]]*)\]\((?!http)(?!content\/)([^)]+)\)/g,
       `![$1](${folder}/$2)`
@@ -130,7 +136,7 @@ async function renderContent(path, created, modified) {
       contentBg.appendChild(node);
     }
   });
-  
+
   content.querySelectorAll('img[alt^="sound:"]').forEach(img => {
     const rawSrc = img.alt.replace('sound:', '').trim();
     const soundSrc = rawSrc.startsWith('http') ? rawSrc : `${folder}/${rawSrc}`;
@@ -154,10 +160,9 @@ async function renderContent(path, created, modified) {
       const lightbox = document.getElementById('lightbox');
       const lightboxImg = document.getElementById('lightbox-img');
       lightboxImg.src = img.src;
-      // reset scale so transition always replays
       lightbox.classList.remove('active');
       lightboxImg.style.transform = 'scale(0.96)';
-      void lightboxImg.offsetHeight; // force reflow
+      void lightboxImg.offsetHeight;
       lightboxImg.style.transform = '';
       lightbox.classList.add('active');
     });
@@ -237,6 +242,7 @@ async function navigate(path, index) {
       a.href = '#';
       a.textContent = formatName(file);
       a.classList.add('file-link');
+      a.dataset.path = `${currentPath}/${file}`; // ← correctly inside the loop
       a.addEventListener('click', (e) => {
         e.preventDefault();
         fileSound.currentTime = 0;
