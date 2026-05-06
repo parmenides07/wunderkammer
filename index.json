@@ -535,6 +535,20 @@
           "heyy.jpg": {
             "asset": true
           },
+          "mttam": {
+            "_DSC2302_02.jpg": {
+              "asset": true
+            },
+            "_DSC2330_04.jpg": {
+              "asset": true
+            },
+            "_DSC2342_01.jpg": {
+              "asset": true
+            },
+            "_DSC2358.jpg": {
+              "asset": true
+            }
+          },
           "te.jpg": {
             "asset": true
           },
@@ -598,7 +612,7 @@
       },
       "darkroom.md": {
         "created": "4/17/2026",
-        "modified": "4/28/2026"
+        "modified": "5/5/2026"
       }
     },
     "lets_Talk_About_AI_Art.md": {
