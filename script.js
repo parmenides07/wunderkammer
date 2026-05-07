@@ -25,7 +25,8 @@ async function renderContent(path, created, modified) {
   document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
     a.classList.remove('active-link');
   });
-  const activeLink = [...document.querySelectorAll('.file-link')].find(a => a.dataset.path === path);
+  const activeLink = [...document.querySelectorAll('.file-link, .folder-link')].find(a => a.dataset.path === path);  
+  
   if (activeLink) activeLink.classList.add('active-link');
 
   const fileName = path.split('/').pop();
@@ -205,6 +206,12 @@ async function navigate(path, index) {
       a.href = '#';
       a.textContent = formatName(folder);
       a.classList.add('folder-link');
+
+      const subIndex = currentIndex[folder];
+      const folderIndexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
+      if (folderIndexFile) {
+        a.dataset.path = `${currentPath}/${folder}/${folderIndexFile}`;
+      }
 
       const subContainer = document.createElement('div');
       subContainer.classList.add('sub-links');
