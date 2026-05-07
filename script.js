@@ -21,16 +21,13 @@ async function renderContent(path, created, modified) {
   window.location.hash = path.replace('content/', '');
   document.querySelector('.content').scrollTop = 0;
 
-  // highlight active link
   document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
     a.classList.remove('active-link');
   });
-  const activeLink = [...document.querySelectorAll('.file-link, .folder-link')].find(a => a.dataset.path === path);  
-  
+  const activeLink = [...document.querySelectorAll('.file-link, .folder-link')].find(a => a.dataset.path === path);
   if (activeLink) activeLink.classList.add('active-link');
 
   const fileName = path.split('/').pop();
-
   const res = await fetch(path);
   let text = await res.text();
   const folder = path.substring(0, path.lastIndexOf('/'));
@@ -71,7 +68,6 @@ async function renderContent(path, created, modified) {
     <br>
   </div>`;
 
-  // expand images{} shorthand with optional flags e.g. images{assets/, full}
   const imagesFolderMatches = [...text.matchAll(/images\{([^}]+)\}/g)];
   for (const match of imagesFolderMatches) {
     const parts = match[1].split(',').map(s => s.trim());
@@ -79,7 +75,6 @@ async function renderContent(path, created, modified) {
     const flags = parts.slice(1);
     const isFullWidth = flags.includes('full');
     const fullFolder = imgFolder.startsWith('http') ? imgFolder : `${folder}/${imgFolder}`;
-
     try {
       const idxRes = await fetch('index.json');
       const idx = await idxRes.json();
@@ -92,9 +87,7 @@ async function renderContent(path, created, modified) {
       const imageFiles = Object.keys(node).filter(k => imageExts.test(k));
       const replacement = imageFiles.map(f => {
         const src = `${fullFolder}/${f}`;
-        return isFullWidth
-          ? `<img src="${src}" class="full-width-img">`
-          : `![](${src})`;
+        return isFullWidth ? `<img src="${src}" class="full-width-img">` : `![](${src})`;
       }).join('\n\n');
       text = text.replace(match[0], replacement);
     } catch {
@@ -175,6 +168,8 @@ async function renderContent(path, created, modified) {
   } else {
     content.classList.remove('text-only');
   }
+
+  setTimeout(updateFrame, 100);
 }
 
 function updateFrame() {
@@ -196,10 +191,10 @@ async function navigate(path, index) {
   const folderName = path.split('/').pop();
   const indexFile = files.find(f => f === `${folderName}.md`);
 
-  if (indexFile) renderContent(`${path}/${indexFile}`, index[indexFile].created, index[indexFile].modified);
+  if (indexFile) await renderContent(`${path}/${indexFile}`, index[indexFile].created, index[indexFile].modified);
 
   if (files.length === 1 && folders.length === 0) {
-    renderContent(`${path}/${files[0]}`, index[files[0]].created, index[files[0]].modified);
+    await renderContent(`${path}/${files[0]}`, index[files[0]].created, index[files[0]].modified);
     return;
   }
 
@@ -227,7 +222,7 @@ async function navigate(path, index) {
       subContainer.classList.add('sub-links');
       subContainer.style.display = 'none';
 
-      a.addEventListener('click', (e) => {
+      a.addEventListener('click', async (e) => {
         e.preventDefault();
         clickSound.currentTime = 0;
         clickSound.play();
@@ -241,7 +236,7 @@ async function navigate(path, index) {
           if (indexFile) {
             fileSound.currentTime = 0;
             fileSound.play();
-            renderContent(`${currentPath}/${folder}/${indexFile}`, subIndex[indexFile].created, subIndex[indexFile].modified);
+            await renderContent(`${currentPath}/${folder}/${indexFile}`, subIndex[indexFile].created, subIndex[indexFile].modified);
           }
         } else {
           subContainer.innerHTML = '';
@@ -259,12 +254,12 @@ async function navigate(path, index) {
       a.href = '#';
       a.textContent = formatName(file);
       a.classList.add('file-link');
-      a.dataset.path = `${currentPath}/${file}`; // ← correctly inside the loop
-      a.addEventListener('click', (e) => {
+      a.dataset.path = `${currentPath}/${file}`;
+      a.addEventListener('click', async (e) => {
         e.preventDefault();
         fileSound.currentTime = 0;
         fileSound.play();
-        renderContent(`${currentPath}/${file}`, currentIndex[file].created, currentIndex[file].modified);
+        await renderContent(`${currentPath}/${file}`, currentIndex[file].created, currentIndex[file].modified);
       });
       a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
       containerEl.appendChild(a);
@@ -287,20 +282,24 @@ async function init() {
     for (let i = 0; i < parts.length; i++) {
       const part = decodeURIComponent(parts[i]);
       if (typeof currentIndex[part] === 'object' && currentIndex[part].created) {
-        navigate(currentPath, currentIndex);
-        renderContent(`${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`, currentIndex[part].created, currentIndex[part].modified);
+        await navigate(currentPath, currentIndex);
+        await renderContent(
+          `${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`,
+          currentIndex[part].created,
+          currentIndex[part].modified
+        );
         return;
       } else if (typeof currentIndex[part] === 'object') {
         currentIndex = currentIndex[part];
         currentPath = `${currentPath}/${part}`;
       } else {
-        navigate(CONTENT_PATH, index);
+        await navigate(CONTENT_PATH, index);
         return;
       }
     }
-    navigate(currentPath, currentIndex);
+    await navigate(currentPath, currentIndex);
   } else {
-    navigate(CONTENT_PATH, index);
+    await navigate(CONTENT_PATH, index);
   }
 }
 
@@ -333,7 +332,6 @@ window.addEventListener('resize', () => {
 
 init().then(() => setTimeout(updateFrame, 100));
 
-// lightbox close — registered once globally
 document.getElementById('lightbox').addEventListener('click', () => {
   document.getElementById('lightbox').classList.remove('active');
 });
