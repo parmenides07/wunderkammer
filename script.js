@@ -177,6 +177,16 @@ async function renderContent(path, created, modified) {
   }
 }
 
+function updateFrame() {
+  const frame = document.querySelector('.frame');
+  const contentEl = document.querySelector('.content');
+  const maxScroll = contentEl.scrollHeight - contentEl.clientHeight;
+  const distFromBottom = maxScroll - contentEl.scrollTop;
+  const frameH = frame.offsetHeight;
+  const frameSlide = Math.min(distFromBottom, frameH);
+  frame.style.transform = `translateY(${frameSlide}px)`;
+}
+
 async function navigate(path, index) {
   history.push(path);
   window.location.hash = path.replace('content/', '');
@@ -300,6 +310,7 @@ contentEl.addEventListener('scroll', () => {
   const sticker = document.querySelector('.wip-sticker');
   const bannerH = banner.offsetHeight;
   const scrolled = contentEl.scrollTop;
+  updateFrame();
 
   if (banner.style.display !== 'none') {
     const bannerScrolled = Math.min(scrolled, bannerH);
@@ -320,7 +331,7 @@ window.addEventListener('resize', () => {
   resizeTimer = setTimeout(() => location.reload(), 300);
 });
 
-init();
+init().then(() => setTimeout(updateFrame, 100));
 
 // lightbox close — registered once globally
 document.getElementById('lightbox').addEventListener('click', () => {
