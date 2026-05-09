@@ -55,10 +55,12 @@ async function renderContent(path, created, modified) {
     banner.style.display = 'block';
     banner.onload = () => {
       document.querySelector('.content').style.paddingTop = `calc(${banner.offsetHeight}px + 2cqh)`;
+      document.querySelector('.wip-sticker').style.top = (banner.offsetHeight - 146) + 'px';
     };
   } else {
     document.querySelector('.banner').style.display = 'none';
     document.querySelector('.content').style.paddingTop = '4cqw';
+    document.querySelector('.wip-sticker').style.top = '5cqh';
   }
 
   const header = `<div class="doc-header">
