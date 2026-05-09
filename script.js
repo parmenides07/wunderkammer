@@ -32,37 +32,6 @@ async function renderContent(path, created, modified) {
   let text = await res.text();
   const folder = path.substring(0, path.lastIndexOf('/'));
 
-  if (fileName.endsWith('.csv')) {
-    const rows = text.trim().split('\n').map(r => r.split(','));
-    const headers = rows[0];
-    const body = rows.slice(1);
-    const tableHtml = `
-      <div class="csv-table-wrapper">
-        <table class="csv-table">
-          <thead>
-            <tr>${headers.map(h => `<th>${h.trim()}</th>`).join('')}</tr>
-          </thead>
-          <tbody>
-            ${body.map(r => `<tr>${r.map(c => `<td>${c.trim()}</td>`).join('')}</tr>`).join('')}
-          </tbody>
-        </table>
-      </div>`;
-    document.querySelector('.content').innerHTML = `<div class="content-bg"><div class="content-text">${tableHtml}</div></div>`;
-    setTimeout(updateFrame, 100);
-    return;
-  }
-
-  if (fileName.endsWith('.html')) {
-    const blob = new Blob([text], { type: 'text/html' });
-    const url = URL.createObjectURL(blob);
-    document.querySelector('.content').innerHTML = `
-      <div class="content-bg">
-        <iframe src="${url}" class="html-embed"></iframe>
-      </div>`;
-    setTimeout(updateFrame, 100);
-    return;
-  }
-
   let displayName = formatName(fileName);
   const titleMatch = text.match(/^title: (.+)\n/);
   if (titleMatch) {
@@ -126,6 +95,37 @@ async function renderContent(path, created, modified) {
     }
   }
 
+  const embedResults = {};
+  const embedMatches = [...text.matchAll(/embed\{([^}]+)\}/g)];
+  for (const match of embedMatches) {
+    const embedFile = match[1].trim();
+    const placeholder = `EMBEDPLACEHOLDER${Object.keys(embedResults).length}`;
+    const embedPath = `${folder}/${embedFile}`;
+    const embedRes = await fetch(embedPath);
+    const embedText = await embedRes.text();
+
+    let embedHtml = '';
+    if (embedFile.endsWith('.csv')) {
+      const parsedCsv = Papa.parse(embedText, { skipEmptyLines: true });
+      const headers = parsedCsv.data[0];
+      const body = parsedCsv.data.slice(1);
+      embedHtml = `
+        <div class="csv-table-wrapper">
+          <table class="csv-table">
+            <thead><tr>${headers.map(h => `<th>${h}</th>`).join('')}</tr></thead>
+            <tbody>${body.map(r => `<tr>${r.map(c => `<td>${c}</td>`).join('')}</tr>`).join('')}</tbody>
+          </table>
+        </div>`;
+    } else if (embedFile.endsWith('.html')) {
+      const blob = new Blob([embedText], { type: 'text/html' });
+      const url = URL.createObjectURL(blob);
+      embedHtml = `<iframe src="${url}" class="html-embed"></iframe>`;
+    }
+
+    embedResults[placeholder] = embedHtml;
+    text = text.replace(match[0], placeholder);
+  }
+
   let parsed;
   if (cache[path]) {
     parsed = cache[path];
@@ -134,8 +134,12 @@ async function renderContent(path, created, modified) {
       /!\[([^\]]*)\]\((?!http)(?!content\/)([^)]+)\)/g,
       `![$1](${folder}/$2)`
     );
-    cache[path] = marked.parse(text);
-    parsed = cache[path];
+    let markedResult = marked.parse(text);
+    Object.entries(embedResults).forEach(([placeholder, html]) => {
+      markedResult = markedResult.replace(placeholder, html);
+    });
+    cache[path] = markedResult;
+    parsed = cache[path]; 
   }
 
   document.querySelector('.content').innerHTML = `<div class="content-bg">${header + parsed}</div>`;
@@ -233,7 +237,11 @@ async function navigate(path, index) {
   cardLinks.innerHTML = '';
 
   function buildLinks(containerEl, currentPath, currentIndex) {
-    const subFiles = Object.keys(currentIndex).filter(k => typeof currentIndex[k] === 'object' && currentIndex[k].created);
+    const subFiles = Object.keys(currentIndex).filter(k => 
+      typeof currentIndex[k] === 'object' && 
+      currentIndex[k].created && 
+      k.endsWith('.md')
+    );
     const subFolders = Object.keys(currentIndex).filter(k => typeof currentIndex[k] === 'object' && !currentIndex[k].created && k !== 'assets');
     const currentFolderName = currentPath.split('/').pop();
 

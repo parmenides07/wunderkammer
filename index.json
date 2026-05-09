@@ -258,6 +258,16 @@
         "asset": true
       }
     },
+    "flowOfConciousness": {
+      "proofOfConcept.md": {
+        "created": "5/8/2026",
+        "modified": "5/8/2026"
+      },
+      "proofof.csv": {
+        "created": "5/8/2026",
+        "modified": "5/8/2026"
+      }
+    },
     "philosophy": {
       "assets": {
         "crudemockup.png": {
@@ -479,17 +489,22 @@
       }
     },
     "worldbuilding": {
+      "assets": {
+        "city.jpg": {
+          "asset": true
+        }
+      },
       "projectMindscape.md": {
         "created": "4/26/2026",
-        "modified": "4/26/2026"
-      },
-      "testing.csv": {
-        "created": "5/8/2026",
-        "modified": "5/8/2026"
+        "modified": "5/9/2026"
       },
       "weatherman.html": {
         "created": "5/8/2026",
         "modified": "5/8/2026"
+      },
+      "weatherman.md": {
+        "created": "5/8/2026",
+        "modified": "5/9/2026"
       }
     }
   },

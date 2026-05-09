@@ -302,10 +302,10 @@ p, h1, h2, h3, .content {
 .csv-table td {
   padding: 0.3cqw 0.8cqw;
 }
-
+/*
 .csv-table tr:nth-child(even) td {
   background: rgba(74, 68, 64, 0.04);
-}
+}*/
 
 .csv-table-wrapper {
   overflow-x: auto;
