@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const MD_EXTS = /\.md$/;
+const MD_EXTS = /\.(md|csv|html)$/;
 const ASSET_EXTS = /\.(jpg|jpeg|png|gif|webp|svg|mp3|wav|ogg|mp4)$/i;
 
 function buildIndex(dir) {
