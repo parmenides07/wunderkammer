@@ -25,7 +25,7 @@ Before anything though, let me give some context and preface a few things:
 ## TLDR
 - I practice art for the pursuit of asethetic mastery (a goal that will never be accomplished) and use it as a medium for concept exploration. 
 
-- Thus, I love the concept art industry. It's a direct representation of my views on art and how I best like to practice it.
+- Thus, I love the concept art and illustration industries. They directly align with how I view art and how I enjoy practicing it.
 
 # Other Art Forms
 - Visual Art is the most effecient at expressing concept

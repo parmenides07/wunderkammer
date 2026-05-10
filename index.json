@@ -5,15 +5,34 @@
   },
   "visuals": {
     "assets": {
+      "garzo.jpg": {
+        "asset": true
+      },
       "hello copy.jpg": {
         "asset": true
       },
       "hello.jpg": {
         "asset": true
       },
+      "marine.jpg": {
+        "asset": true
+      },
+      "scholes.jpg": {
+        "asset": true
+      },
+      "the.jpg": {
+        "asset": true
+      },
+      "tob.jpg": {
+        "asset": true
+      },
       "wes.jpg": {
         "asset": true
       }
+    },
+    "currentInspirations.md": {
+      "created": "5/10/2026",
+      "modified": "5/10/2026"
     },
     "darkroom": {
       "assets": {
@@ -240,7 +259,7 @@
     },
     "visuals.md": {
       "created": "3/16/2026",
-      "modified": "4/28/2026"
+      "modified": "5/10/2026"
     }
   },
   "logic": {
@@ -493,9 +512,16 @@
         "hiromi.webp": {
           "asset": true
         },
+        "kitchen.jpg": {
+          "asset": true
+        },
         "traffic.jpg": {
           "asset": true
         }
+      },
+      "braise.md": {
+        "created": "5/10/2026",
+        "modified": "5/10/2026"
       },
       "lawoftheland.html": {
         "created": "5/9/2026",
@@ -503,7 +529,7 @@
       },
       "weatherman.html": {
         "created": "5/8/2026",
-        "modified": "5/9/2026"
+        "modified": "5/10/2026"
       }
     },
     "theMindfill": {
@@ -756,7 +782,7 @@
   },
   "miscConsumption.md": {
     "created": "4/26/2026",
-    "modified": "4/28/2026"
+    "modified": "5/10/2026"
   },
   "miscIdeas.md": {
     "created": "4/28/2026",

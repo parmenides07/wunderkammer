@@ -6,13 +6,31 @@ banner: assets/shoot.jpg
 # Youtube Videos
 - Just cool videos I saw that I wanted to share.
 
+### May 10th, 2026
+
+<iframe class="video" src="https://www.youtube.com/embed/FaoXajws7ks?si=iGzj33l4eAlkF_dT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### May 6th, 2026
+
+<iframe class="video" src="https://www.youtube.com/embed/VHLKm25-usI?si=K4E3Xf3EJoxHZU6B" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe class="video" src="https://www.youtube.com/embed/ZIYIm7lgUJU?si=2Gs5nKeNRwkssmLM" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### May 3rd, 2026
+
+<iframe class="video" src="https://www.youtube.com/embed/Zi4cd_w6jKw?si=7_MyVo4nLSSAQWpx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe class="video" src="https://www.youtube.com/embed/z0Hr2_uX73o?si=Xz9jKFtSODqg32Vd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+<iframe class="video" src="https://www.youtube.com/embed/FaoXajws7ks?si=iGzj33l4eAlkF_dT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ### April 28th, 2026
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/_20LePuDHJo?si=vD4W7TzIJnxkiiRd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe class="video" src="https://www.youtube.com/embed/_20LePuDHJo?si=vD4W7TzIJnxkiiRd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### April 25th, 2026
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/hUryjdsJJYI?si=aWhZOJNKEJsIL_DT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe class="video" src="https://www.youtube.com/embed/hUryjdsJJYI?si=aWhZOJNKEJsIL_DT" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 # Literature
 <div class="grid">
