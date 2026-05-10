@@ -138,7 +138,7 @@ p, h1, h2, h3, .content {
 .content-bg {
   min-height: 100%;
   border-radius: 3px;
-  background: rgba(248, 246, 246, 0.91);
+  background: rgba(248, 246, 246, 0.95);
   padding: 2cqw 2cqw 1cqw 2cqw;
   margin: 0 -1.69cqw;
   box-shadow: 0 10px 30px rgba(0,0,0,0.3);
@@ -154,7 +154,7 @@ p, h1, h2, h3, .content {
   box-sizing: border-box;
   padding-left: 7.7cqw;
   padding-top: 4cqw;
-  padding-bottom: 5cqw;
+  padding-bottom: 4.1cqw;
   padding-right: 4.9cqw;
   font-size: 0.96cqw;
   line-height: 123.8%;
@@ -355,11 +355,11 @@ p, h1, h2, h3, .content {
   position: absolute;
   bottom: -1.65cqw;
   right: 0;
-  width: 50%;
-  z-index: 10;
+  width: 100%;
+  z-index: -10;
   pointer-events: none;
   filter: drop-shadow(7px -2px 5px rgba(0,0,0,0.3));
-  transition: transform 0.03s ease-out;
+  /*transition: transform 0.03s ease-out;*/
 }
 /* =========================
    LIGHTBOX CONTAINER
@@ -462,25 +462,8 @@ p, h1, h2, h3, .content {
 
   filter: drop-shadow(4px 4px 7px rgba(0,0,0,0.45));
 }
-
+/*
 .cardicon {
-  transition: width 0.15s ease;
-  position: absolute;
-  top: 0.4cqw;
-  left: 8cqw;
-  width: 19cqw;
-  opacity: 0.94;
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
-  pointer-events: visibleFill;
-  z-index: 5;
-}
-
-.cardicon:hover {
-  width: 20cqw;
-  transition: width 0.15s ease;
-}
-
-.cardicon2 {
   transition: width 0.15s ease;
   position: absolute;
   bottom: -7cqw;
@@ -491,11 +474,46 @@ p, h1, h2, h3, .content {
   filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
 }
 
+.cardicon:hover {
+  width: 20cqw;
+  transition: width 0.15s ease;
+}*/
+
+.cardicon2 {
+  transition: width 0.15s ease;
+  position: absolute;
+  top: -6cqw;
+  left: 4cqw;
+  width: 19cqw;
+  opacity: 0.94;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
+  pointer-events: visibleFill;
+  z-index: 5;
+  transform: rotate(-13deg);
+}
+
 .cardicon2:hover {
   width: 20cqw;
   transition: width 0.15s ease;
 }
 
+.next-page-btn {
+  position: absolute;
+  bottom: 0.2cqw;
+  right: 5cqw;
+  width: 10.3cqw;
+  z-index: 11;
+  pointer-events: auto;
+  opacity: 1;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25)) drop-shadow(7px -2px 5px rgba(0,0,0,0.3));
+  transform: scaleX(-1) translateY(100%); /* flipped, hidden by default */
+  transition: width 0.15s ease;
+  cursor: pointer;
+}
+
+.next-page-btn:hover {
+  width: 10.7cqw;
+}
 /* link container */
 .card-links {
   display: flex;

@@ -6,12 +6,14 @@ const fileSound = new Audio('assets/printer2.mp3');
 const cache = {};
 const history = [];
 let currentSound = null;
+let fileList = [];
 
 marked.use({ breaks: true });
 
 function formatName(name) {
   return name
     .replace('.md', '')
+    .replace('.csv', '')
     .replace(/_/g, ' ')
     .replace(/([a-z])([A-Z])/g, '$1 $2')
     .replace(/^./, str => str.toUpperCase());
@@ -141,7 +143,7 @@ async function renderContent(path, created, modified) {
       markedResult = markedResult.replace(placeholder, html);
     });
     cache[path] = markedResult;
-    parsed = cache[path]; 
+    parsed = cache[path];
   }
 
   document.querySelector('.content').innerHTML = `<div class="content-bg">${header + parsed}</div>`;
@@ -199,6 +201,21 @@ async function renderContent(path, created, modified) {
     });
   });
 
+  // next page button
+  const nextBtn = document.getElementById('next-page-btn');
+  const fileIdx = fileList.findIndex(f => f.path === path);
+  if (fileIdx !== -1 && fileIdx < fileList.length - 1) {
+    const next = fileList[fileIdx + 1];
+    nextBtn.style.display = 'block';
+    nextBtn.onclick = async () => {
+      fileSound.currentTime = 0;
+      fileSound.play();
+      await renderContent(next.path, next.created, next.modified);
+    };
+  } else {
+    nextBtn.style.display = 'none';
+  }
+
   const hasImages = document.querySelector('.content img');
   if (!hasImages) {
     content.classList.add('text-only');
@@ -210,13 +227,19 @@ async function renderContent(path, created, modified) {
 }
 
 function updateFrame() {
-  const frame = document.querySelector('.frame');
   const contentEl = document.querySelector('.content');
   const maxScroll = contentEl.scrollHeight - contentEl.clientHeight;
   const distFromBottom = maxScroll - contentEl.scrollTop;
-  const frameH = frame.offsetHeight;
-  const frameSlide = Math.min(distFromBottom, frameH);
+
+  const frame = document.querySelector('.frame');
+  const frameSlide = Math.min(distFromBottom, frame.offsetHeight);
   frame.style.transform = `translateY(${frameSlide}px)`;
+
+  const nextBtn = document.getElementById('next-page-btn');
+  if (nextBtn && nextBtn.style.display !== 'none') {
+    const btnSlide = Math.min(distFromBottom, nextBtn.offsetHeight * 2);
+    nextBtn.style.transform = `scaleX(-1) translateY(${btnSlide}px)`;
+  }
 }
 
 async function navigate(path, index) {
@@ -238,10 +261,12 @@ async function navigate(path, index) {
   const cardLinks = document.querySelector('.card-links');
   cardLinks.innerHTML = '';
 
+  fileList = [];
+
   function buildLinks(containerEl, currentPath, currentIndex) {
-    const subFiles = Object.keys(currentIndex).filter(k => 
-      typeof currentIndex[k] === 'object' && 
-      currentIndex[k].created && 
+    const subFiles = Object.keys(currentIndex).filter(k =>
+      typeof currentIndex[k] === 'object' &&
+      currentIndex[k].created &&
       k.endsWith('.md')
     );
     const subFolders = Object.keys(currentIndex).filter(k => typeof currentIndex[k] === 'object' && !currentIndex[k].created && k !== 'assets');
@@ -296,6 +321,13 @@ async function navigate(path, index) {
       a.textContent = formatName(file);
       a.classList.add('file-link');
       a.dataset.path = `${currentPath}/${file}`;
+
+      fileList.push({
+        path: `${currentPath}/${file}`,
+        created: currentIndex[file].created,
+        modified: currentIndex[file].modified
+      });
+
       a.addEventListener('click', async (e) => {
         e.preventDefault();
         fileSound.currentTime = 0;
@@ -377,7 +409,7 @@ document.getElementById('lightbox').addEventListener('click', () => {
   document.getElementById('lightbox').classList.remove('active');
 });
 
-document.querySelector('.cardicon').addEventListener('click', () => {
+document.querySelector('.cardicon2').addEventListener('click', () => {
   backSound.currentTime = 0;
   backSound.play();
   history.pop();
