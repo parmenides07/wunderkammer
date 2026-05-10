@@ -170,6 +170,17 @@ async function renderContent(path, created, modified) {
     }
   });
 
+  content.querySelectorAll('img').forEach(img => {
+  if (img.src.includes('#multiply')) {
+    img.src = img.src.replace('#multiply', '');
+    img.style.mixBlendMode = 'multiply';
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('multiply-wrapper');
+    img.parentNode.insertBefore(wrapper, img);
+    wrapper.appendChild(img);
+  }
+});
+
   content.querySelectorAll('img[alt^="sound:"]').forEach(img => {
     const rawSrc = img.alt.replace('sound:', '').trim();
     const soundSrc = rawSrc.startsWith('http') ? rawSrc : `${folder}/${rawSrc}`;
@@ -274,6 +285,7 @@ async function navigate(path, index) {
 
     subFolders.forEach(folder => {
       const a = document.createElement('a');
+      a.setAttribute('tabindex', '-1');
       a.href = '#';
       a.textContent = formatName(folder);
       a.classList.add('folder-link');
@@ -317,6 +329,7 @@ async function navigate(path, index) {
     subFiles.forEach(file => {
       if (file === `${currentFolderName}.md`) return;
       const a = document.createElement('a');
+      a.setAttribute('tabindex', '-1');
       a.href = '#';
       a.textContent = formatName(file);
       a.classList.add('file-link');
