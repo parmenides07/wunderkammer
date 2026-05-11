@@ -8,6 +8,7 @@ const history = [];
 let currentSound = null;
 let siteMuted = false;
 let fileList = [];
+let globalIndex = null;
 
 marked.use({ breaks: true });
 
@@ -31,18 +32,15 @@ function folderHasUnread(currentPath, currentIndex) {
     !currentIndex[k].created &&
     k !== 'assets'
   );
-
   for (const file of subFiles) {
     const visitKey = `visited:${currentPath}/${file}`;
     const lastVisited = localStorage.getItem(visitKey);
     const modifiedDate = new Date(currentIndex[file].modified).getTime();
     if (!lastVisited || modifiedDate > parseInt(lastVisited)) return true;
   }
-
   for (const folder of subFolders) {
     if (folderHasUnread(`${currentPath}/${folder}`, currentIndex[folder])) return true;
   }
-
   return false;
 }
 
@@ -58,7 +56,6 @@ function collectAllFiles(currentPath, currentIndex) {
     k !== 'assets'
   );
   const folderName = currentPath.split('/').pop();
-
   subFiles.forEach(file => {
     if (file === `${folderName}.md`) return;
     fileList.push({
@@ -67,10 +64,142 @@ function collectAllFiles(currentPath, currentIndex) {
       modified: currentIndex[file].modified
     });
   });
-
   subFolders.forEach(folder => {
     collectAllFiles(`${currentPath}/${folder}`, currentIndex[folder]);
   });
+}
+
+function buildLinks(containerEl, currentPath, currentIndex) {
+  const subFiles = Object.keys(currentIndex).filter(k =>
+    typeof currentIndex[k] === 'object' &&
+    currentIndex[k].created &&
+    k.endsWith('.md')
+  );
+
+  // move index file to front
+  const currentFolderName = currentPath.split('/').pop();
+  const folderIndexName = `${currentFolderName}.md`;
+  const indexPos = subFiles.indexOf(folderIndexName);
+  if (indexPos > -1) {
+    subFiles.splice(indexPos, 1);
+    subFiles.unshift(folderIndexName);
+  }
+
+  const subFolders = Object.keys(currentIndex).filter(k =>
+    typeof currentIndex[k] === 'object' &&
+    !currentIndex[k].created &&
+    k !== 'assets'
+  );
+
+  subFolders.forEach(folder => {
+    const a = document.createElement('a');
+    a.setAttribute('tabindex', '-1');
+    a.href = '#';
+    a.textContent = formatName(folder);
+    a.classList.add('folder-link');
+    const subIndex = currentIndex[folder];
+    const folderIndexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
+    if (folderIndexFile) {
+      a.dataset.path = `${currentPath}/${folder}/${folderIndexFile}`;
+    }
+    if (folderHasUnread(`${currentPath}/${folder}`, currentIndex[folder])) {
+      a.classList.add('unread');
+    }
+    const subContainer = document.createElement('div');
+    subContainer.classList.add('sub-links');
+    subContainer.style.display = 'none';
+    a.addEventListener('click', async (e) => {
+      e.preventDefault();
+      clickSound.currentTime = 0;
+      clickSound.play();
+      const isOpen = subContainer.style.display === 'flex';
+      subContainer.style.display = isOpen ? 'none' : 'flex';
+      a.classList.toggle('open', !isOpen);
+      if (!isOpen) {
+        buildLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
+        const subIndex = currentIndex[folder];
+        const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
+        if (indexFile) {
+          fileSound.currentTime = 0;
+          fileSound.play();
+          await renderContent(`${currentPath}/${folder}/${indexFile}`, subIndex[indexFile].created, subIndex[indexFile].modified);
+        }
+      } else {
+        subContainer.innerHTML = '';
+      }
+    });
+    a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
+    containerEl.appendChild(a);
+    containerEl.appendChild(subContainer);
+  });
+
+  subFiles.forEach(file => {
+    const a = document.createElement('a');
+    a.setAttribute('tabindex', '-1');
+    a.href = '#';
+    a.textContent = formatName(file);
+    a.classList.add('file-link');
+    a.dataset.path = `${currentPath}/${file}`;
+
+    const visitKey = `visited:${currentPath}/${file}`;
+    const lastVisited = localStorage.getItem(visitKey);
+    const modifiedDate = new Date(currentIndex[file].modified).getTime();
+    if (!lastVisited || modifiedDate > parseInt(lastVisited)) {
+      a.classList.add('unread');
+    }
+
+    a.addEventListener('click', async (e) => {
+      e.preventDefault();
+      fileSound.currentTime = 0;
+      fileSound.play();
+      await renderContent(`${currentPath}/${file}`, currentIndex[file].created, currentIndex[file].modified);
+    });
+    a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
+    containerEl.appendChild(a);
+  });
+}
+
+async function syncCardToPath(path) {
+  if (!globalIndex) return;
+  const parts = path.replace('content/', '').split('/');
+  let currentIndex = globalIndex;
+  let currentPath = CONTENT_PATH;
+
+  for (let i = 0; i < parts.length - 1; i++) {
+    const part = parts[i];
+    if (currentIndex[part]) {
+      currentIndex = currentIndex[part];
+      currentPath = `${currentPath}/${part}`;
+    }
+  }
+
+  const cardLinks = document.querySelector('.card-links');
+  cardLinks.innerHTML = '';
+  fileList = [];
+  collectAllFiles(currentPath, currentIndex);
+  buildLinks(cardLinks, currentPath, currentIndex);
+
+  // mark active
+  setTimeout(() => {
+    document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
+      a.classList.remove('active-link');
+    });
+    const activeLink = [...document.querySelectorAll('.file-link, .folder-link')].find(a => a.dataset.path === path);
+    if (activeLink) {
+      activeLink.classList.add('active-link');
+      activeLink.classList.remove('unread');
+      // open parent folder if needed
+      let parent = activeLink.parentElement;
+      while (parent && !parent.classList.contains('card-links')) {
+        if (parent.classList.contains('sub-links')) {
+          parent.style.display = 'flex';
+          const folderLink = parent.previousElementSibling;
+          if (folderLink) folderLink.classList.add('open');
+        }
+        parent = parent.parentElement;
+      }
+    }
+  }, 50);
 }
 
 async function renderContent(path, created, modified) {
@@ -80,12 +209,7 @@ async function renderContent(path, created, modified) {
   const visitKey = `visited:${path}`;
   localStorage.setItem(visitKey, Date.now());
 
-  document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
-    a.classList.remove('active-link');
-  });
-
-  const activeLink = [...document.querySelectorAll('.file-link, .folder-link')].find(a => a.dataset.path === path);
-  if (activeLink) activeLink.classList.add('active-link');
+  await syncCardToPath(path);
 
   const fileName = path.split('/').pop();
   const res = await fetch(path);
@@ -354,108 +478,19 @@ async function navigate(path, index) {
 
   const cardLinks = document.querySelector('.card-links');
   cardLinks.innerHTML = '';
-
   fileList = [];
   collectAllFiles(path, index);
-
-  function buildLinks(containerEl, currentPath, currentIndex) {
-    const subFiles = Object.keys(currentIndex).filter(k =>
-      typeof currentIndex[k] === 'object' &&
-      currentIndex[k].created &&
-      k.endsWith('.md')
-    );
-    const subFolders = Object.keys(currentIndex).filter(k =>
-      typeof currentIndex[k] === 'object' &&
-      !currentIndex[k].created &&
-      k !== 'assets'
-    );
-    const currentFolderName = currentPath.split('/').pop();
-
-    subFolders.forEach(folder => {
-      const a = document.createElement('a');
-      a.setAttribute('tabindex', '-1');
-      a.href = '#';
-      a.textContent = formatName(folder);
-      a.classList.add('folder-link');
-
-      const subIndex = currentIndex[folder];
-      const folderIndexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
-      if (folderIndexFile) {
-        a.dataset.path = `${currentPath}/${folder}/${folderIndexFile}`;
-      }
-
-      if (folderHasUnread(`${currentPath}/${folder}`, currentIndex[folder])) {
-        a.classList.add('unread');
-      }
-
-      const subContainer = document.createElement('div');
-      subContainer.classList.add('sub-links');
-      subContainer.style.display = 'none';
-
-      a.addEventListener('click', async (e) => {
-        e.preventDefault();
-        clickSound.currentTime = 0;
-        clickSound.play();
-        const isOpen = subContainer.style.display === 'flex';
-        subContainer.style.display = isOpen ? 'none' : 'flex';
-        a.classList.toggle('open', !isOpen);
-        if (!isOpen) {
-          buildLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
-          const subIndex = currentIndex[folder];
-          const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
-          if (indexFile) {
-            fileSound.currentTime = 0;
-            fileSound.play();
-            await renderContent(`${currentPath}/${folder}/${indexFile}`, subIndex[indexFile].created, subIndex[indexFile].modified);
-          }
-        } else {
-          subContainer.innerHTML = '';
-        }
-      });
-      a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
-
-      containerEl.appendChild(a);
-      containerEl.appendChild(subContainer);
-    });
-
-    subFiles.forEach(file => {
-      if (file === `${currentFolderName}.md`) return;
-      const a = document.createElement('a');
-      a.setAttribute('tabindex', '-1');
-      a.href = '#';
-      a.textContent = formatName(file);
-      a.classList.add('file-link');
-      a.dataset.path = `${currentPath}/${file}`;
-
-      const visitKey = `visited:${currentPath}/${file}`;
-      const lastVisited = localStorage.getItem(visitKey);
-      const modifiedDate = new Date(currentIndex[file].modified).getTime();
-      if (!lastVisited || modifiedDate > parseInt(lastVisited)) {
-        a.classList.add('unread');
-      }
-
-      a.addEventListener('click', async (e) => {
-        e.preventDefault();
-        fileSound.currentTime = 0;
-        fileSound.play();
-        await renderContent(`${currentPath}/${file}`, currentIndex[file].created, currentIndex[file].modified);
-      });
-      a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
-      containerEl.appendChild(a);
-    });
-  }
-
   buildLinks(cardLinks, path, index);
 }
 
 async function init() {
   const res = await fetch('index.json');
-  const index = await res.json();
+  globalIndex = await res.json();
 
   const hash = window.location.hash.replace('#', '');
   if (hash) {
     const parts = hash.split('/');
-    let currentIndex = index;
+    let currentIndex = globalIndex;
     let currentPath = CONTENT_PATH;
 
     for (let i = 0; i < parts.length; i++) {
@@ -472,13 +507,13 @@ async function init() {
         currentIndex = currentIndex[part];
         currentPath = `${currentPath}/${part}`;
       } else {
-        await navigate(CONTENT_PATH, index);
+        await navigate(CONTENT_PATH, globalIndex);
         return;
       }
     }
     await navigate(currentPath, currentIndex);
   } else {
-    await navigate(CONTENT_PATH, index);
+    await navigate(CONTENT_PATH, globalIndex);
   }
 }
 
@@ -521,18 +556,14 @@ document.querySelector('.cardicon2').addEventListener('click', () => {
   history.pop();
   const previous = history.pop();
   if (previous) {
-    fetch('index.json').then(r => r.json()).then(index => {
-      const parts = previous.replace('content/', '').split('/');
-      let currentIndex = index;
-      for (const part of parts) {
-        if (currentIndex[part]) currentIndex = currentIndex[part];
-      }
-      navigate(previous, currentIndex);
-    });
+    const parts = previous.replace('content/', '').split('/');
+    let currentIndex = globalIndex;
+    for (const part of parts) {
+      if (currentIndex[part]) currentIndex = currentIndex[part];
+    }
+    navigate(previous, currentIndex);
   } else {
-    fetch('index.json').then(r => r.json()).then(index => {
-      navigate(CONTENT_PATH, index);
-    });
+    navigate(CONTENT_PATH, globalIndex);
   }
 });
 
@@ -559,10 +590,8 @@ document.querySelector('.content').addEventListener('click', async (e) => {
   e.preventDefault();
 
   const hash = href.replace('#', '');
-  const res = await fetch('index.json');
-  const index = await res.json();
   const parts = hash.split('/');
-  let currentIndex = index;
+  let currentIndex = globalIndex;
   let currentPath = CONTENT_PATH;
 
   for (let i = 0; i < parts.length; i++) {
@@ -579,7 +608,7 @@ document.querySelector('.content').addEventListener('click', async (e) => {
       currentIndex = currentIndex[part];
       currentPath = `${currentPath}/${part}`;
     } else {
-      await navigate(CONTENT_PATH, index);
+      await navigate(CONTENT_PATH, globalIndex);
       return;
     }
   }

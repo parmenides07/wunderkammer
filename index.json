@@ -768,18 +768,6 @@
       "modified": "4/26/2026"
     }
   },
-  "art": {
-    "pandorasBox": {
-      "assets": {
-        "angel.mp3": {
-          "asset": true
-        },
-        "angel1.mp3": {
-          "asset": true
-        }
-      }
-    }
-  },
   "assets": {
     "acok.jpg": {
       "asset": true
