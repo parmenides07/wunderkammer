@@ -5,6 +5,13 @@ html, body {
   background: #97867d;
 }
 
+@font-face {
+  font-family: 'Baskerville';
+  src: url('assets/Baskerville.woff2') format('woff2');
+  font-weight: 385;
+  font-style: normal;
+}
+
 * {
   cursor: url('assets/Precision\ Select\ G191.cur'), auto; /* ccursors: https://www.rw-designer.com/cursor-set/guest-191-s-hands*/
   }
@@ -550,8 +557,8 @@ p, h1, h2, h3, .content {
   text-decoration: none;
   color: #2d2d2d;
 
-  font-family: 'EB Garamond', serif;
-  font-weight: 100;
+  font-family: 'Noto Serif', serif;
+  font-weight: 300;
 
   font-size: 4.3cqw; /* WAIT EUREKA, THE SOLUTION TO THE ISSUE WHERE THE RESIZING OF WINDOW WOULD MESS EVERYTHING UP. The isseu would be that the window height would change the line height and since the card is tied to the lines of text, it will also expand but it is cropped not scaled so it will not scale up it will just add more lines adn teh lines of text will be bigger but not the same spacing as the image so thats where teh drift occurs. However if we can restrict the spacing to the width of the paper (thats teh part that changes) then we can make this thing work.
   */

@@ -1,9 +1,9 @@
-banner: assets/hiromi.webp
+banner: assets/traffic.jpg
 
 Very rough ideation on another pilot character.
 
 ## Rough Idea
-- This character is extremely controlling. She believes everyone should conform to them and has a raging form of OCD. 
+- This character is extremely controlling. She believes everyone should conform to her rules and has a raging mutation of OCD. 
 - Thus, her mindscape takes on a form that represents this strong adherance to self imposed rules. 
 - It takes on the form of traffic. Imagine a vast land with urban and rural areas and cars traveling, each the representation of thought. The urban representing hubs of active, current, recent thought. They are very chaotic. Governing all of this movement is traffic signs and lights. 
 - She can bring these traffic lights and signs into the real world, forcing reality to bend to her will. 

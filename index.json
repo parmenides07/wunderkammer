@@ -495,15 +495,15 @@
     "worldbuilding": {
       "projectMindscape.md": {
         "created": "4/26/2026",
-        "modified": "5/9/2026"
+        "modified": "5/10/2026"
       },
       "weatherman.md": {
         "created": "5/8/2026",
-        "modified": "5/9/2026"
+        "modified": "5/10/2026"
       },
       "lawOfTheLand.md": {
         "created": "5/9/2026",
-        "modified": "5/9/2026"
+        "modified": "5/10/2026"
       },
       "assets": {
         "city.jpg": {
@@ -516,6 +516,12 @@
           "asset": true
         },
         "traffic.jpg": {
+          "asset": true
+        },
+        "weather.jpg": {
+          "asset": true
+        },
+        "weather1.jpg": {
           "asset": true
         }
       },
@@ -707,9 +713,17 @@
       }
     },
     "flowOfConciousness": {
+      "assets": {
+        "sunga.jpg": {
+          "asset": true
+        },
+        "test.jpg": {
+          "asset": true
+        }
+      },
       "proofOfConcept.md": {
         "created": "5/8/2026",
-        "modified": "5/8/2026"
+        "modified": "5/10/2026"
       },
       "proofof.csv": {
         "created": "5/8/2026",
@@ -744,6 +758,7 @@
       "modified": "4/26/2026"
     }
   },
+  ".obsidian": {},
   "assets": {
     "acok.jpg": {
       "asset": true
