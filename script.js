@@ -20,6 +20,59 @@ function formatName(name) {
     .replace(/^./, str => str.toUpperCase());
 }
 
+function folderHasUnread(currentPath, currentIndex) {
+  const subFiles = Object.keys(currentIndex).filter(k =>
+    typeof currentIndex[k] === 'object' &&
+    currentIndex[k].created &&
+    k.endsWith('.md')
+  );
+  const subFolders = Object.keys(currentIndex).filter(k =>
+    typeof currentIndex[k] === 'object' &&
+    !currentIndex[k].created &&
+    k !== 'assets'
+  );
+
+  for (const file of subFiles) {
+    const visitKey = `visited:${currentPath}/${file}`;
+    const lastVisited = localStorage.getItem(visitKey);
+    const modifiedDate = new Date(currentIndex[file].modified).getTime();
+    if (!lastVisited || modifiedDate > parseInt(lastVisited)) return true;
+  }
+
+  for (const folder of subFolders) {
+    if (folderHasUnread(`${currentPath}/${folder}`, currentIndex[folder])) return true;
+  }
+
+  return false;
+}
+
+function collectAllFiles(currentPath, currentIndex) {
+  const subFiles = Object.keys(currentIndex).filter(k =>
+    typeof currentIndex[k] === 'object' &&
+    currentIndex[k].created &&
+    k.endsWith('.md')
+  );
+  const subFolders = Object.keys(currentIndex).filter(k =>
+    typeof currentIndex[k] === 'object' &&
+    !currentIndex[k].created &&
+    k !== 'assets'
+  );
+  const folderName = currentPath.split('/').pop();
+
+  subFiles.forEach(file => {
+    if (file === `${folderName}.md`) return;
+    fileList.push({
+      path: `${currentPath}/${file}`,
+      created: currentIndex[file].created,
+      modified: currentIndex[file].modified
+    });
+  });
+
+  subFolders.forEach(folder => {
+    collectAllFiles(`${currentPath}/${folder}`, currentIndex[folder]);
+  });
+}
+
 async function renderContent(path, created, modified) {
   window.location.hash = path.replace('content/', '');
   document.querySelector('.content').scrollTop = 0;
@@ -30,6 +83,7 @@ async function renderContent(path, created, modified) {
   document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
     a.classList.remove('active-link');
   });
+
   const activeLink = [...document.querySelectorAll('.file-link, .folder-link')].find(a => a.dataset.path === path);
   if (activeLink) activeLink.classList.add('active-link');
 
@@ -201,15 +255,15 @@ async function renderContent(path, created, modified) {
   });
 
   content.querySelectorAll('img').forEach(img => {
-  if (img.src.includes('#multiply')) {
-    img.src = img.src.replace('#multiply', '');
-    img.style.mixBlendMode = 'multiply';
-    const wrapper = document.createElement('div');
-    wrapper.classList.add('multiply-wrapper');
-    img.parentNode.insertBefore(wrapper, img);
-    wrapper.appendChild(img);
-  }
-});
+    if (img.src.includes('#multiply')) {
+      img.src = img.src.replace('#multiply', '');
+      img.style.mixBlendMode = 'multiply';
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('multiply-wrapper');
+      img.parentNode.insertBefore(wrapper, img);
+      wrapper.appendChild(img);
+    }
+  });
 
   content.querySelectorAll('img[alt^="sound:"]').forEach(img => {
     const rawSrc = img.alt.replace('sound:', '').trim();
@@ -242,7 +296,6 @@ async function renderContent(path, created, modified) {
     });
   });
 
-  // next page button
   const nextBtn = document.getElementById('next-page-btn');
   const fileIdx = fileList.findIndex(f => f.path === path);
   if (fileIdx !== -1 && fileIdx < fileList.length - 1) {
@@ -303,6 +356,7 @@ async function navigate(path, index) {
   cardLinks.innerHTML = '';
 
   fileList = [];
+  collectAllFiles(path, index);
 
   function buildLinks(containerEl, currentPath, currentIndex) {
     const subFiles = Object.keys(currentIndex).filter(k =>
@@ -310,7 +364,11 @@ async function navigate(path, index) {
       currentIndex[k].created &&
       k.endsWith('.md')
     );
-    const subFolders = Object.keys(currentIndex).filter(k => typeof currentIndex[k] === 'object' && !currentIndex[k].created && k !== 'assets');
+    const subFolders = Object.keys(currentIndex).filter(k =>
+      typeof currentIndex[k] === 'object' &&
+      !currentIndex[k].created &&
+      k !== 'assets'
+    );
     const currentFolderName = currentPath.split('/').pop();
 
     subFolders.forEach(folder => {
@@ -324,6 +382,10 @@ async function navigate(path, index) {
       const folderIndexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
       if (folderIndexFile) {
         a.dataset.path = `${currentPath}/${folder}/${folderIndexFile}`;
+      }
+
+      if (folderHasUnread(`${currentPath}/${folder}`, currentIndex[folder])) {
+        a.classList.add('unread');
       }
 
       const subContainer = document.createElement('div');
@@ -371,12 +433,6 @@ async function navigate(path, index) {
       if (!lastVisited || modifiedDate > parseInt(lastVisited)) {
         a.classList.add('unread');
       }
-
-      fileList.push({
-        path: `${currentPath}/${file}`,
-        created: currentIndex[file].created,
-        modified: currentIndex[file].modified
-      });
 
       a.addEventListener('click', async (e) => {
         e.preventDefault();
@@ -499,9 +555,9 @@ document.querySelector('.content').addEventListener('click', async (e) => {
   if (!link) return;
   const href = link.getAttribute('href');
   if (!href || href.startsWith('http') || href.startsWith('mailto')) return;
-  
+
   e.preventDefault();
-  
+
   const hash = href.replace('#', '');
   const res = await fetch('index.json');
   const index = await res.json();
