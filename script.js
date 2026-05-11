@@ -493,3 +493,39 @@ document.getElementById('mute-btn').addEventListener('click', () => {
 if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
   document.body.classList.add('safari');
 }
+
+document.querySelector('.content').addEventListener('click', async (e) => {
+  const link = e.target.closest('a');
+  if (!link) return;
+  const href = link.getAttribute('href');
+  if (!href || href.startsWith('http') || href.startsWith('mailto')) return;
+  
+  e.preventDefault();
+  
+  const hash = href.replace('#', '');
+  const res = await fetch('index.json');
+  const index = await res.json();
+  const parts = hash.split('/');
+  let currentIndex = index;
+  let currentPath = CONTENT_PATH;
+
+  for (let i = 0; i < parts.length; i++) {
+    const part = decodeURIComponent(parts[i]);
+    if (typeof currentIndex[part] === 'object' && currentIndex[part].created) {
+      await navigate(currentPath, currentIndex);
+      await renderContent(
+        `${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`,
+        currentIndex[part].created,
+        currentIndex[part].modified
+      );
+      return;
+    } else if (typeof currentIndex[part] === 'object') {
+      currentIndex = currentIndex[part];
+      currentPath = `${currentPath}/${part}`;
+    } else {
+      await navigate(CONTENT_PATH, index);
+      return;
+    }
+  }
+  await navigate(currentPath, currentIndex);
+});
