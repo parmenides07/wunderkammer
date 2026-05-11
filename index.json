@@ -497,15 +497,25 @@
         "created": "4/26/2026",
         "modified": "5/10/2026"
       },
-      "weatherman.md": {
+      "prayForRain.md": {
         "created": "5/8/2026",
-        "modified": "5/10/2026"
+        "modified": "5/11/2026"
       },
-      "lawOfTheLand.md": {
+      "lawralai.md": {
         "created": "5/9/2026",
         "modified": "5/10/2026"
       },
+      "braise.md": {
+        "created": "5/10/2026",
+        "modified": "5/11/2026"
+      },
       "assets": {
+        "angel.mp3": {
+          "asset": true
+        },
+        "angel1.mp3": {
+          "asset": true
+        },
         "city.jpg": {
           "asset": true
         },
@@ -525,13 +535,13 @@
           "asset": true
         }
       },
-      "braise.md": {
-        "created": "5/10/2026",
-        "modified": "5/10/2026"
-      },
       "lawoftheland.html": {
         "created": "5/9/2026",
         "modified": "5/9/2026"
+      },
+      "prayfor.html": {
+        "created": "5/11/2026",
+        "modified": "5/11/2026"
       },
       "weatherman.html": {
         "created": "5/8/2026",
@@ -758,7 +768,18 @@
       "modified": "4/26/2026"
     }
   },
-  ".obsidian": {},
+  "art": {
+    "pandorasBox": {
+      "assets": {
+        "angel.mp3": {
+          "asset": true
+        },
+        "angel1.mp3": {
+          "asset": true
+        }
+      }
+    }
+  },
   "assets": {
     "acok.jpg": {
       "asset": true

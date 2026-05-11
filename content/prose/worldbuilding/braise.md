@@ -12,5 +12,8 @@ banner: assets/kitchen.jpg
 - 2 SIDES EVERY OBJECT: This serves as a good introduction to the idea that everything in reality has 2 aspects. One aspect is affected by reality and the other affects reality. This is beyond just a physics sense, even our memory of the object would be effected. (this is somewhere I need to explain something a bit paradoxical. Mindscape and reality are 2 different layers on the same experience. Time is what transcends both and holds them together) Although, it wouldn't be like the memory from the past has changed. It would be like going forward everything you know about that object has been affected.
 - If you brought in only one aspect of the object and cut it up or mixed it, thats exactly what would happen in reality it would get cut and mixed. But if you brought in both aspects of the object, the various kitchen operations would affect the fundamental existance of the object so the form and function would change via the ingredients added and cooking procedures undergone.
 
+- Wait maybe he can mess things up adn botch them.
+- Recipe idea is strong
+
 ## Character
 - This character used to be a woodworker. Now he makes furniture.

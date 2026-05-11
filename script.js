@@ -6,6 +6,7 @@ const fileSound = new Audio('assets/printer2.mp3');
 const cache = {};
 const history = [];
 let currentSound = null;
+let siteMuted = false;
 let fileList = [];
 
 marked.use({ breaks: true });
@@ -63,6 +64,32 @@ async function renderContent(path, created, modified) {
     document.querySelector('.banner').style.display = 'none';
     document.querySelector('.content').style.paddingTop = '4cqw';
     document.querySelector('.wip-sticker').style.top = '5cqh';
+  }
+
+  const soundMatch = text.match(/^sound: (.+)\n/);
+  if (soundMatch) {
+    text = text.replace(soundMatch[0], '');
+    const soundSrc = `${folder}/${soundMatch[1].trim()}`;
+    if (currentSound) {
+      currentSound.pause();
+      currentSound.currentTime = 0;
+    }
+    if (!siteMuted) {
+      const s = new Audio(soundSrc);
+      s.loop = true;
+      currentSound = s;
+      s.play().catch(() => {});
+    } else {
+      const s = new Audio(soundSrc);
+      s.loop = true;
+      currentSound = s;
+    }
+  } else {
+    if (currentSound) {
+      currentSound.pause();
+      currentSound.currentTime = 0;
+      currentSound = null;
+    }
   }
 
   const header = `<div class="doc-header">
@@ -440,6 +467,16 @@ document.querySelector('.cardicon2').addEventListener('click', () => {
     fetch('index.json').then(r => r.json()).then(index => {
       navigate(CONTENT_PATH, index);
     });
+  }
+});
+
+document.getElementById('mute-btn').addEventListener('click', () => {
+  siteMuted = !siteMuted;
+  document.getElementById('mute-btn').classList.toggle('muted', siteMuted);
+  if (siteMuted && currentSound) {
+    currentSound.pause();
+  } else if (!siteMuted && currentSound) {
+    currentSound.play().catch(() => {});
   }
 });
 
