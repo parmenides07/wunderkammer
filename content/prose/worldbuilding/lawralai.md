@@ -13,6 +13,9 @@ Very rough ideation on another pilot character.
 - You can begin to see the extent of her power. This plays into the idea of actions and their weight on conciousness when transporting from mindscape to reality. Since she has so many self imposed rules and mindsets, she views all that she does as just and neccesary and so the perceived magnitude of her actions are very little and so that allows the literal weight of her actions on her conciousness to be less. So yes she can do incredible things but its because she only does certain things that she deems fit.
 - DAEMONS: This serves as the introduction of having aspects of conciousness working autonomosly of the concious mind. The watchman acts as this manifestation of a subconcious mindscape process. 
 
+OMG WAIT I GOTTA HOP ON NICHEFYING THESE GUYS putting on constraints for the sake of nicheifying and making more interesting: 
+okay so what if instead of spawning signs. SHe can manipulate the signs in the real world. the interesting thing is instead of that sign in the real world dictating something of reality it would mirror something from the mindscape and dicate another thing fo reality. The interesting thing is however much people would have adhered to that sign or text in the real world is the same effect the new verison of the sign would have. This kinda reminds me of like chainsaw man demons where different demons are more powerful. Idk i think this is an interesting self imposed limit.
+
 ## Character 
 - HR Corporate vibes but currently a vigilante.
 - Mindscape has the visual elements of the commute she made everyday from her home in the suburbs to the corporate office in the city.

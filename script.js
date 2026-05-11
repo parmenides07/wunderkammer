@@ -24,6 +24,9 @@ async function renderContent(path, created, modified) {
   window.location.hash = path.replace('content/', '');
   document.querySelector('.content').scrollTop = 0;
 
+  const visitKey = `visited:${path}`;
+  localStorage.setItem(visitKey, Date.now());
+
   document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
     a.classList.remove('active-link');
   });
@@ -361,6 +364,13 @@ async function navigate(path, index) {
       a.textContent = formatName(file);
       a.classList.add('file-link');
       a.dataset.path = `${currentPath}/${file}`;
+
+      const visitKey = `visited:${currentPath}/${file}`;
+      const lastVisited = localStorage.getItem(visitKey);
+      const modifiedDate = new Date(currentIndex[file].modified).getTime();
+      if (!lastVisited || modifiedDate > parseInt(lastVisited)) {
+        a.classList.add('unread');
+      }
 
       fileList.push({
         path: `${currentPath}/${file}`,

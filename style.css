@@ -617,6 +617,16 @@ p, h1, h2, h3, .content {
   text-decoration: underline;
 }
 
+.card a.unread {
+  color: #4e108d;
+}
+
+.card a.unread::after {
+  content: ' •';
+  color: #4e108d;
+  font-size: 3cqw;
+}
+
 .safari .content,
 .safari .content-text h1, .safari .content-text h2, .safari .content-text h3,
 .safari .content-text h4, .safari .content-text h5, .safari .content-text h6,
