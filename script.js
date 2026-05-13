@@ -71,7 +71,6 @@ function collectAllFiles(currentPath, currentIndex) {
   });
 }
 
-// Folders card — shows folder tree with dropdowns, clicking a folder updates file card
 function buildFolderLinks(containerEl, currentPath, currentIndex) {
   const subFolders = Object.keys(currentIndex).filter(k =>
     typeof currentIndex[k] === 'object' &&
@@ -108,15 +107,11 @@ function buildFolderLinks(containerEl, currentPath, currentIndex) {
       a.classList.toggle('open', !isOpen);
       if (!isOpen) {
         buildFolderLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
-
-        // update file card to show files in this folder
         currentFolderPath = `${currentPath}/${folder}`;
         currentFolderIndex = currentIndex[folder];
         fileList = [];
         collectAllFiles(currentFolderPath, currentFolderIndex);
         buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex);
-
-        // render index file if exists
         const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
         if (indexFile) {
           fileSound.currentTime = 0;
@@ -133,7 +128,6 @@ function buildFolderLinks(containerEl, currentPath, currentIndex) {
   });
 }
 
-// Files card — shows only flat list of .md files in the current folder
 function buildFileLinks(containerEl, currentPath, currentIndex) {
   containerEl.innerHTML = '';
   const currentFolderName = currentPath.split('/').pop();
@@ -144,7 +138,6 @@ function buildFileLinks(containerEl, currentPath, currentIndex) {
     k.endsWith('.md')
   );
 
-  // put index file first
   const folderIndexName = `${currentFolderName}.md`;
   const indexPos = subFiles.indexOf(folderIndexName);
   if (indexPos > -1) {
@@ -180,8 +173,6 @@ function buildFileLinks(containerEl, currentPath, currentIndex) {
 
 async function syncCardToPath(path) {
   if (!globalIndex) return;
-
-  // walk index to find parent folder of the current file
   const parts = path.replace('content/', '').split('/');
   let currentIndex = globalIndex;
   let currentPath = CONTENT_PATH;
@@ -194,7 +185,6 @@ async function syncCardToPath(path) {
     }
   }
 
-  // update file card to show files in that folder
   currentFolderPath = currentPath;
   currentFolderIndex = currentIndex;
   fileList = [];
@@ -202,14 +192,12 @@ async function syncCardToPath(path) {
   buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex);
 
   setTimeout(() => {
-    // highlight active file link
     document.querySelectorAll('.file-link').forEach(a => a.classList.remove('active-link'));
     const activeLink = [...document.querySelectorAll('.file-link')].find(a => a.dataset.path === path);
     if (activeLink) {
       activeLink.classList.add('active-link');
       activeLink.classList.remove('unread');
     }
-    // highlight active folder link
     document.querySelectorAll('.folder-link').forEach(a => a.classList.remove('active-folder-link'));
     const activeFolderLink = [...document.querySelectorAll('.folder-link')].find(a => a.dataset.path === path);
     if (activeFolderLink) activeFolderLink.classList.add('active-folder-link');
@@ -488,12 +476,10 @@ async function navigate(path, index) {
     return;
   }
 
-  // always rebuild folder card from root
   const folderLinks = document.querySelector('.card-folder-links');
   folderLinks.innerHTML = '';
   buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex);
 
-  // file card shows files at current path
   currentFolderPath = path;
   currentFolderIndex = index;
   fileList = [];
@@ -506,7 +492,6 @@ async function init() {
   globalIndex = await res.json();
   currentFolderIndex = globalIndex;
 
-  // init folder card
   const folderLinks = document.querySelector('.card-folder-links');
   folderLinks.innerHTML = '';
   buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex);
@@ -552,7 +537,7 @@ function makeDraggable(panelEl) {
     startY = e.clientY;
     startLeft = panelEl.offsetLeft;
     startTop = panelEl.offsetTop;
-    panelEl.style.transition = 'none';
+    panelEl.classList.add('dragging');
     e.preventDefault();
   });
 
@@ -565,7 +550,7 @@ function makeDraggable(panelEl) {
   document.addEventListener('mouseup', () => {
     if (isDragging) {
       isDragging = false;
-      panelEl.style.transition = '';
+      panelEl.classList.remove('dragging');
     }
   });
 }

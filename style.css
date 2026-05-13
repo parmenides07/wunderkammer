@@ -86,7 +86,6 @@ p, h1, h2, h3, .content {
 #card-files-panel {
   top: 5cqh;
   left: 48cqw;
-  overflow: hidden;
 }
 
 .tuck-btn {
@@ -104,7 +103,10 @@ p, h1, h2, h3, .content {
   width: 3.2cqw;
 }
 
-/* base card */
+/* ========================
+   FOLDER CARD — unchanged
+======================== */
+
 .card {
   position: relative;
   width: 42.8cqw;
@@ -117,17 +119,6 @@ p, h1, h2, h3, .content {
   filter: drop-shadow(4px 4px 7px rgba(0,0,0,0.45));
 }
 
-/* file card — shrinks to fit content horizontally */
-.card-files {
-  max-width: 42.8cqw;
-  padding-right: 4cqw;
-
-  overflow: hidden;
-
-  background-size:cover;
-  background-position: left top;
-}
-
 .card-folder-links {
   display: flex;
   flex-direction: column;
@@ -138,18 +129,6 @@ p, h1, h2, h3, .content {
   outline: none;
 }
 
-.card-file-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  margin-top: 13cqw;
-  margin-left: 11.2cqw;
-  margin-bottom: 3.65cqw;
-  outline: none;
-  white-space: nowrap;
-}
-
-/* links */
 .card a {
   transition: all 0.18s ease;
   text-decoration: none;
@@ -198,11 +177,6 @@ p, h1, h2, h3, .content {
   padding-left: 2cqw;
 }
 
-.file-link {
-  font-size: 3.8cqw;
-  opacity: 0.75;
-}
-
 .folder-link::before {
   content: '► ';
   font-size: 4cqw;
@@ -230,6 +204,75 @@ p, h1, h2, h3, .content {
 .cardicon2:hover {
   width: 20cqw;
 }
+
+/* ========================
+   RECEIPT — files panel
+======================== */
+
+.receipt {
+  background-image: url('assets/receipt.png');
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+  background-position: top left;
+  width: 24cqw;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(6px 9px 5.5px rgba(0,0,0,0.23));
+}
+
+.card-file-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 3cqw;
+  margin-left: 2.5cqw;
+  margin-right: 2.5cqw;
+  margin-bottom: 2cqw;
+  outline: none;
+}
+
+.card-file-links a {
+  transition: all 0.18s ease;
+  text-decoration: none;
+  color: #434040;
+  font-family: 'Azeret Mono', monospace;
+  font-weight: 400;
+  font-size: 1cqw;
+  opacity: 0.8;
+  text-shadow: 0 0 0.5px rgba(93, 74, 150, 0.4);
+  line-height: 1.08;
+  outline: none;
+  letter-spacing: -0.02em;
+  mix-blend-mode: multiply;
+  text-rendering: optimizeSpeed;
+  display: block;
+  transform: rotate(-0.8deg);
+  filter: blur(0.07px) contrast(106%);
+}
+
+.card-file-links a:hover {
+  color: #8b5713;
+  opacity: 0.77;
+}
+
+.card-file-links a.active-link {
+  color: #8b2113;
+  opacity: 0.77;
+}
+
+.card-file-links a.unread {
+  color: #4e108d;
+}
+
+.card-file-links a.unread::after {
+  content: ' •';
+  color: #4e108d;
+  font-size: 1cqw;
+}
+
+/* ========================
+   CONTENT AREA
+======================== */
 
 .banner {
   display: none;
