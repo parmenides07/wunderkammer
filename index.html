@@ -23,22 +23,30 @@
       <img src="assets/wip.png" class="wip-sticker" />
       <img src="assets/bottomframe.png" class="frame" />
       <div class="content">
-        <p>wunderkammer!</p> 
+        <p>wunderkammer!</p>
       </div>
     </div>
     <img src="assets/topframe.png" class="topframe" />
     <img src="assets/leftbg.png" class="leftbgblur" />
-    <div class="links">
-      <!-- <img src="linedpaper.png" class="linedpaper" /> -->
-      <div class="card">
+
+    <div class="card-panel" id="card-folders-panel">
+      <img src="assets/tuck-placeholder.png" class="tuck-btn" id="tuck-folders-btn" />
+      <div class="card card-folders">
         <img src="assets/backbuttonsite.png" class="cardicon2"/>
-        <div class="card-links">
-        </div>
+        <div class="card-links card-folder-links"></div>
       </div>
     </div>
+
+    <div class="card-panel" id="card-files-panel">
+      <img src="assets/tuck-placeholder.png" class="tuck-btn" id="tuck-files-btn" />
+      <div class="card card-files">
+        <div class="card-links card-file-links"></div>
+      </div>
+    </div>
+
   </div>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="script.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
