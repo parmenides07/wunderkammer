@@ -12,11 +12,12 @@ html, body {
   font-style: normal;
 }
 
+/*
 * {
   cursor: url('assets/Precision\ Select\ G191.cur'), auto;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-}
+}*/
 
 .wrapper {
   position: relative;
@@ -42,13 +43,14 @@ html, body {
   mix-blend-mode: overlay;
 }
 
+/*
 a, button, .cardicon2, .tuck-btn, .mute-btn {
   cursor: url('assets/Normal\ Select\ G191.cur'), pointer;
 }
 
 p, h1, h2, h3, .content {
   cursor: url('assets/Text\ Select\ G191.cur'), text;
-}
+}*/
 
 .material {
   position: absolute;
@@ -84,8 +86,8 @@ p, h1, h2, h3, .content {
 }
 
 #card-files-panel {
-  top: 5cqh;
-  left: 48cqw;
+  top: 6.4cqh;   /* starting position — adjust to taste */
+  left: 26.5cqw;  /* starting position — adjust to taste */
 }
 
 .tuck-btn {
@@ -104,7 +106,7 @@ p, h1, h2, h3, .content {
 }
 
 /* ========================
-   FOLDER CARD — unchanged
+   FOLDER CARD
 ======================== */
 
 .card {
@@ -123,10 +125,25 @@ p, h1, h2, h3, .content {
   display: flex;
   flex-direction: column;
   gap: 0;
-  margin-top: 13cqw;
+  margin-top: 7.65cqw;
   margin-left: 11.2cqw;
   margin-bottom: 3.65cqw;
   outline: none;
+}
+
+/* header label inside folder card */
+.card-section-header {
+  text-decoration: none;
+  color: #2d2d2d;
+  font-family: 'Noto Serif', serif;
+  font-weight: 400;
+  font-size: 4.9cqw;
+  opacity: 0.715;
+  line-height: 1.068;
+  outline: none;
+  letter-spacing: -0.045em;
+  filter: blur(0.53px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.25));
+  mix-blend-mode: multiply;
 }
 
 .card a {
@@ -142,6 +159,7 @@ p, h1, h2, h3, .content {
   letter-spacing: -0.045em;
   filter: blur(0.53px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.25));
   mix-blend-mode: multiply;
+  display: block;
 }
 
 .card a:hover {
@@ -193,16 +211,16 @@ p, h1, h2, h3, .content {
   position: absolute;
   top: -6cqw;
   left: 4cqw;
-  width: 19cqw;
+  width: 16cqw;
   opacity: 0.94;
   filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
   pointer-events: visibleFill;
   z-index: 5;
-  transform: rotate(-13deg);
+  transform: rotate(-28deg);
 }
 
 .cardicon2:hover {
-  width: 20cqw;
+  width: 17cqw;
 }
 
 /* ========================
@@ -231,6 +249,55 @@ p, h1, h2, h3, .content {
   outline: none;
 }
 
+/* ENTRIES: header at top of receipt */
+.receipt-header {
+  font-family: 'Azeret Mono', monospace;
+  font-weight: 300;
+  font-size: 1.5cqw;
+  color: #434040;
+  opacity: 0.815;
+  text-shadow: 0 0 0.5px rgba(93, 74, 150, 0.4);
+  letter-spacing: -0.07em;
+  margin-bottom: -0.3cqw;
+  transform: rotate(-0.4deg);
+  filter: blur(0.07px) contrast(106%);
+}
+
+.receipt-divider {
+  font-family: 'Azeret Mono', monospace;
+  font-weight: 300;
+  font-size: 0.95cqw;
+  color: #434040;
+  opacity: 0.815;
+  text-shadow: 0 0 0.5px rgba(93, 74, 150, 0.4);
+  letter-spacing: -0.07em;
+  transform: rotate(-0.4deg);
+  filter: blur(0.07px) contrast(106%);
+  margin-top: 0.2cqw;
+  margin-bottom: 0cqw;
+  user-select: none;
+}
+
+.receipt-total {
+  margin-top: 0cqw;
+  transition: all 0.18s ease;
+  text-decoration: none;
+  color: #434040;
+  font-family: 'Azeret Mono', monospace;
+  font-weight: 400;
+  font-size: 1cqw;
+  opacity: 0.8;
+  text-shadow: 0 0 0.5px rgba(93, 74, 150, 0.4);
+  line-height: 1.08;
+  outline: none;
+  letter-spacing: -0.065em;
+  mix-blend-mode: multiply;
+  text-rendering: optimizeSpeed;
+  display: block;
+  transform: rotate(-0.8deg);
+  filter: blur(0.07px) contrast(106%);
+}
+
 .card-file-links a {
   transition: all 0.18s ease;
   text-decoration: none;
@@ -242,7 +309,7 @@ p, h1, h2, h3, .content {
   text-shadow: 0 0 0.5px rgba(93, 74, 150, 0.4);
   line-height: 1.08;
   outline: none;
-  letter-spacing: -0.02em;
+  letter-spacing: -0.065em;
   mix-blend-mode: multiply;
   text-rendering: optimizeSpeed;
   display: block;

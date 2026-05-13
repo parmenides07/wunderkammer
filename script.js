@@ -71,7 +71,14 @@ function collectAllFiles(currentPath, currentIndex) {
   });
 }
 
-function buildFolderLinks(containerEl, currentPath, currentIndex) {
+function buildFolderLinks(containerEl, currentPath, currentIndex, isRoot = false) {
+  if (isRoot) {
+    const header = document.createElement('div');
+    header.classList.add('card-section-header');
+    header.textContent = 'Sections:';
+    containerEl.appendChild(header);
+  }
+
   const subFolders = Object.keys(currentIndex).filter(k =>
     typeof currentIndex[k] === 'object' &&
     !currentIndex[k].created &&
@@ -132,6 +139,17 @@ function buildFileLinks(containerEl, currentPath, currentIndex) {
   containerEl.innerHTML = '';
   const currentFolderName = currentPath.split('/').pop();
 
+  // header
+  const header = document.createElement('div');
+  header.classList.add('receipt-header');
+  header.textContent = 'Entries \n';
+  containerEl.appendChild(header);
+
+  const topDivider = document.createElement('div');
+  topDivider.classList.add('receipt-divider');
+  topDivider.textContent = '***********************************';
+  containerEl.appendChild(topDivider);
+
   const subFiles = Object.keys(currentIndex).filter(k =>
     typeof currentIndex[k] === 'object' &&
     currentIndex[k].created &&
@@ -145,11 +163,11 @@ function buildFileLinks(containerEl, currentPath, currentIndex) {
     subFiles.unshift(folderIndexName);
   }
 
-  subFiles.forEach(file => {
+  subFiles.forEach((file, i) => {
     const a = document.createElement('a');
     a.setAttribute('tabindex', '-1');
     a.href = '#';
-    a.textContent = formatName(file);
+    a.textContent = `${i + 1}  ${formatName(file)}`;
     a.classList.add('file-link');
     a.dataset.path = `${currentPath}/${file}`;
 
@@ -169,6 +187,16 @@ function buildFileLinks(containerEl, currentPath, currentIndex) {
     a.addEventListener('mouseenter', () => hoverSound.cloneNode().play());
     containerEl.appendChild(a);
   });
+
+  const bottomDivider = document.createElement('div');
+  bottomDivider.classList.add('receipt-divider');
+  bottomDivider.textContent = '===================================';
+  containerEl.appendChild(bottomDivider);
+
+  const total = document.createElement('div');
+  total.classList.add('receipt-total');
+  total.textContent = `Total: ${subFiles.length + "$"}`;
+  containerEl.appendChild(total);
 }
 
 async function syncCardToPath(path) {
@@ -478,7 +506,7 @@ async function navigate(path, index) {
 
   const folderLinks = document.querySelector('.card-folder-links');
   folderLinks.innerHTML = '';
-  buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex);
+  buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex, true);
 
   currentFolderPath = path;
   currentFolderIndex = index;
@@ -494,7 +522,7 @@ async function init() {
 
   const folderLinks = document.querySelector('.card-folder-links');
   folderLinks.innerHTML = '';
-  buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex);
+  buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex, true);
 
   const hash = window.location.hash.replace('#', '');
   if (hash) {
@@ -591,11 +619,9 @@ init().then(() => {
     const panel = document.getElementById('card-folders-panel');
     if (panel.dataset.tucked === 'true') {
       panel.style.left = panel.dataset.savedLeft || '2cqw';
-      panel.style.top = panel.dataset.savedTop || '5cqh';
       panel.dataset.tucked = 'false';
     } else {
-      panel.dataset.savedLeft = panel.style.left;
-      panel.dataset.savedTop = panel.style.top;
+      panel.dataset.savedLeft = panel.style.left || '2cqw';
       panel.style.left = '-' + (panel.offsetWidth - 20) + 'px';
       panel.dataset.tucked = 'true';
     }
@@ -605,11 +631,9 @@ init().then(() => {
     const panel = document.getElementById('card-files-panel');
     if (panel.dataset.tucked === 'true') {
       panel.style.left = panel.dataset.savedLeft || '48cqw';
-      panel.style.top = panel.dataset.savedTop || '5cqh';
       panel.dataset.tucked = 'false';
     } else {
-      panel.dataset.savedLeft = panel.style.left;
-      panel.dataset.savedTop = panel.style.top;
+      panel.dataset.savedLeft = panel.style.left || '48cqw';
       panel.style.left = '-' + (panel.offsetWidth - 20) + 'px';
       panel.dataset.tucked = 'true';
     }
