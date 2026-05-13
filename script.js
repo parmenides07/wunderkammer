@@ -9,6 +9,8 @@ let currentSound = null;
 let siteMuted = false;
 let fileList = [];
 let globalIndex = null;
+let currentFolderPath = CONTENT_PATH;
+let currentFolderIndex = null;
 
 marked.use({ breaks: true });
 
@@ -69,26 +71,13 @@ function collectAllFiles(currentPath, currentIndex) {
   });
 }
 
-function buildLinks(containerEl, currentPath, currentIndex) {
-  const subFiles = Object.keys(currentIndex).filter(k =>
-    typeof currentIndex[k] === 'object' &&
-    currentIndex[k].created &&
-    k.endsWith('.md')
-  );
-
-  // move index file to front
-  const currentFolderName = currentPath.split('/').pop();
-  const folderIndexName = `${currentFolderName}.md`;
-  const indexPos = subFiles.indexOf(folderIndexName);
-  if (indexPos > -1) {
-    subFiles.splice(indexPos, 1);
-    subFiles.unshift(folderIndexName);
-  }
-
+// Folders card — shows folder tree with dropdowns, clicking a folder updates file card
+function buildFolderLinks(containerEl, currentPath, currentIndex) {
   const subFolders = Object.keys(currentIndex).filter(k =>
     typeof currentIndex[k] === 'object' &&
     !currentIndex[k].created &&
-    k !== 'assets'
+    k !== 'assets' &&
+    k !== '.obsidian'
   );
 
   subFolders.forEach(folder => {
@@ -105,9 +94,11 @@ function buildLinks(containerEl, currentPath, currentIndex) {
     if (folderHasUnread(`${currentPath}/${folder}`, currentIndex[folder])) {
       a.classList.add('unread');
     }
+
     const subContainer = document.createElement('div');
     subContainer.classList.add('sub-links');
     subContainer.style.display = 'none';
+
     a.addEventListener('click', async (e) => {
       e.preventDefault();
       clickSound.currentTime = 0;
@@ -116,8 +107,16 @@ function buildLinks(containerEl, currentPath, currentIndex) {
       subContainer.style.display = isOpen ? 'none' : 'flex';
       a.classList.toggle('open', !isOpen);
       if (!isOpen) {
-        buildLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
-        const subIndex = currentIndex[folder];
+        buildFolderLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
+
+        // update file card to show files in this folder
+        currentFolderPath = `${currentPath}/${folder}`;
+        currentFolderIndex = currentIndex[folder];
+        fileList = [];
+        collectAllFiles(currentFolderPath, currentFolderIndex);
+        buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex);
+
+        // render index file if exists
         const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
         if (indexFile) {
           fileSound.currentTime = 0;
@@ -132,6 +131,26 @@ function buildLinks(containerEl, currentPath, currentIndex) {
     containerEl.appendChild(a);
     containerEl.appendChild(subContainer);
   });
+}
+
+// Files card — shows only flat list of .md files in the current folder
+function buildFileLinks(containerEl, currentPath, currentIndex) {
+  containerEl.innerHTML = '';
+  const currentFolderName = currentPath.split('/').pop();
+
+  const subFiles = Object.keys(currentIndex).filter(k =>
+    typeof currentIndex[k] === 'object' &&
+    currentIndex[k].created &&
+    k.endsWith('.md')
+  );
+
+  // put index file first
+  const folderIndexName = `${currentFolderName}.md`;
+  const indexPos = subFiles.indexOf(folderIndexName);
+  if (indexPos > -1) {
+    subFiles.splice(indexPos, 1);
+    subFiles.unshift(folderIndexName);
+  }
 
   subFiles.forEach(file => {
     const a = document.createElement('a');
@@ -161,6 +180,8 @@ function buildLinks(containerEl, currentPath, currentIndex) {
 
 async function syncCardToPath(path) {
   if (!globalIndex) return;
+
+  // walk index to find parent folder of the current file
   const parts = path.replace('content/', '').split('/');
   let currentIndex = globalIndex;
   let currentPath = CONTENT_PATH;
@@ -173,32 +194,25 @@ async function syncCardToPath(path) {
     }
   }
 
-  const cardLinks = document.querySelector('.card-links');
-  cardLinks.innerHTML = '';
+  // update file card to show files in that folder
+  currentFolderPath = currentPath;
+  currentFolderIndex = currentIndex;
   fileList = [];
-  collectAllFiles(currentPath, currentIndex);
-  buildLinks(cardLinks, currentPath, currentIndex);
+  collectAllFiles(currentFolderPath, currentFolderIndex);
+  buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex);
 
-  // mark active
   setTimeout(() => {
-    document.querySelectorAll('.card-links .file-link, .card-links .folder-link').forEach(a => {
-      a.classList.remove('active-link');
-    });
-    const activeLink = [...document.querySelectorAll('.file-link, .folder-link')].find(a => a.dataset.path === path);
+    // highlight active file link
+    document.querySelectorAll('.file-link').forEach(a => a.classList.remove('active-link'));
+    const activeLink = [...document.querySelectorAll('.file-link')].find(a => a.dataset.path === path);
     if (activeLink) {
       activeLink.classList.add('active-link');
       activeLink.classList.remove('unread');
-      // open parent folder if needed
-      let parent = activeLink.parentElement;
-      while (parent && !parent.classList.contains('card-links')) {
-        if (parent.classList.contains('sub-links')) {
-          parent.style.display = 'flex';
-          const folderLink = parent.previousElementSibling;
-          if (folderLink) folderLink.classList.add('open');
-        }
-        parent = parent.parentElement;
-      }
     }
+    // highlight active folder link
+    document.querySelectorAll('.folder-link').forEach(a => a.classList.remove('active-folder-link'));
+    const activeFolderLink = [...document.querySelectorAll('.folder-link')].find(a => a.dataset.path === path);
+    if (activeFolderLink) activeFolderLink.classList.add('active-folder-link');
   }, 50);
 }
 
@@ -315,7 +329,6 @@ async function renderContent(path, created, modified) {
     const embedPath = `${folder}/${embedFile}`;
     const embedRes = await fetch(embedPath);
     const embedText = await embedRes.text();
-
     let embedHtml = '';
     if (embedFile.endsWith('.csv')) {
       const parsedCsv = Papa.parse(embedText, { skipEmptyLines: true });
@@ -333,7 +346,6 @@ async function renderContent(path, created, modified) {
       const url = URL.createObjectURL(blob);
       embedHtml = `<iframe src="${url}" class="html-embed"></iframe>`;
     }
-
     embedResults[placeholder] = embedHtml;
     text = text.replace(match[0], placeholder);
   }
@@ -476,16 +488,28 @@ async function navigate(path, index) {
     return;
   }
 
-  const cardLinks = document.querySelector('.card-links');
-  cardLinks.innerHTML = '';
+  // always rebuild folder card from root
+  const folderLinks = document.querySelector('.card-folder-links');
+  folderLinks.innerHTML = '';
+  buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex);
+
+  // file card shows files at current path
+  currentFolderPath = path;
+  currentFolderIndex = index;
   fileList = [];
   collectAllFiles(path, index);
-  buildLinks(cardLinks, path, index);
+  buildFileLinks(document.querySelector('.card-file-links'), path, index);
 }
 
 async function init() {
   const res = await fetch('index.json');
   globalIndex = await res.json();
+  currentFolderIndex = globalIndex;
+
+  // init folder card
+  const folderLinks = document.querySelector('.card-folder-links');
+  folderLinks.innerHTML = '';
+  buildFolderLinks(folderLinks, CONTENT_PATH, globalIndex);
 
   const hash = window.location.hash.replace('#', '');
   if (hash) {
@@ -496,7 +520,6 @@ async function init() {
     for (let i = 0; i < parts.length; i++) {
       const part = decodeURIComponent(parts[i]);
       if (typeof currentIndex[part] === 'object' && currentIndex[part].created) {
-        await navigate(currentPath, currentIndex);
         await renderContent(
           `${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`,
           currentIndex[part].created,
@@ -515,6 +538,36 @@ async function init() {
   } else {
     await navigate(CONTENT_PATH, globalIndex);
   }
+}
+
+function makeDraggable(panelEl) {
+  let isDragging = false;
+  let startX, startY, startLeft, startTop;
+
+  panelEl.addEventListener('mousedown', (e) => {
+    if (e.target.classList.contains('tuck-btn')) return;
+    if (e.target.tagName === 'A') return;
+    isDragging = true;
+    startX = e.clientX;
+    startY = e.clientY;
+    startLeft = panelEl.offsetLeft;
+    startTop = panelEl.offsetTop;
+    panelEl.style.transition = 'none';
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (!isDragging) return;
+    panelEl.style.left = `${startLeft + (e.clientX - startX)}px`;
+    panelEl.style.top = `${startTop + (e.clientY - startY)}px`;
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      panelEl.style.transition = '';
+    }
+  });
 }
 
 const contentEl = document.querySelector('.content');
@@ -544,7 +597,39 @@ window.addEventListener('resize', () => {
   resizeTimer = setTimeout(() => location.reload(), 300);
 });
 
-init().then(() => setTimeout(updateFrame, 100));
+init().then(() => {
+  setTimeout(updateFrame, 100);
+  makeDraggable(document.getElementById('card-folders-panel'));
+  makeDraggable(document.getElementById('card-files-panel'));
+
+  document.getElementById('tuck-folders-btn').addEventListener('click', () => {
+    const panel = document.getElementById('card-folders-panel');
+    if (panel.dataset.tucked === 'true') {
+      panel.style.left = panel.dataset.savedLeft || '2cqw';
+      panel.style.top = panel.dataset.savedTop || '5cqh';
+      panel.dataset.tucked = 'false';
+    } else {
+      panel.dataset.savedLeft = panel.style.left;
+      panel.dataset.savedTop = panel.style.top;
+      panel.style.left = '-' + (panel.offsetWidth - 20) + 'px';
+      panel.dataset.tucked = 'true';
+    }
+  });
+
+  document.getElementById('tuck-files-btn').addEventListener('click', () => {
+    const panel = document.getElementById('card-files-panel');
+    if (panel.dataset.tucked === 'true') {
+      panel.style.left = panel.dataset.savedLeft || '48cqw';
+      panel.style.top = panel.dataset.savedTop || '5cqh';
+      panel.dataset.tucked = 'false';
+    } else {
+      panel.dataset.savedLeft = panel.style.left;
+      panel.dataset.savedTop = panel.style.top;
+      panel.style.left = '-' + (panel.offsetWidth - 20) + 'px';
+      panel.dataset.tucked = 'true';
+    }
+  });
+});
 
 document.getElementById('lightbox').addEventListener('click', () => {
   document.getElementById('lightbox').classList.remove('active');
@@ -577,9 +662,10 @@ document.getElementById('mute-btn').addEventListener('click', () => {
   }
 });
 
-if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
-  document.body.classList.add('safari');
-}
+const isWebKit = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
+  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
+  /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+if (isWebKit) document.body.classList.add('safari');
 
 document.querySelector('.content').addEventListener('click', async (e) => {
   const link = e.target.closest('a');
@@ -597,7 +683,6 @@ document.querySelector('.content').addEventListener('click', async (e) => {
   for (let i = 0; i < parts.length; i++) {
     const part = decodeURIComponent(parts[i]);
     if (typeof currentIndex[part] === 'object' && currentIndex[part].created) {
-      await navigate(currentPath, currentIndex);
       await renderContent(
         `${CONTENT_PATH}/${parts.map(decodeURIComponent).join('/')}`,
         currentIndex[part].created,

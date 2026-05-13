@@ -13,17 +13,16 @@ html, body {
 }
 
 * {
-  cursor: url('assets/Precision\ Select\ G191.cur'), auto; /* ccursors: https://www.rw-designer.com/cursor-set/guest-191-s-hands*/
-  }
+  cursor: url('assets/Precision\ Select\ G191.cur'), auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 
-/* wrapper becomes the viewport container */
 .wrapper {
   position: relative;
   width: 100vw;
   height: 100vh;
-
   overflow: hidden;
-
   container-type: size;
 }
 
@@ -37,13 +36,13 @@ html, body {
   pointer-events: none;
   z-index: 999;
   opacity: 0.17;
-  background-image: url('assets/noise.png'); /* watercolor paper texture*/
+  background-image: url('assets/noise.png');
   background-size: 200px 200px;
   background-repeat: repeat;
   mix-blend-mode: overlay;
 }
 
-a, button, .cardicon {
+a, button, .cardicon2, .tuck-btn, .mute-btn {
   cursor: url('assets/Normal\ Select\ G191.cur'), pointer;
 }
 
@@ -51,21 +50,146 @@ p, h1, h2, h3, .content {
   cursor: url('assets/Text\ Select\ G191.cur'), text;
 }
 
-/* right grid paper region */
 .material {
   position: absolute;
   top: 0;
   right: 0;
-
   width: 58%;
   height: 100%;
-
   background-image: url("assets/gridpapercropped.jpg");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   z-index: 0;
+}
+
+/* ========================
+   TWO CARD PANELS
+======================== */
+
+.card-panel {
+  position: absolute;
+  z-index: 10;
+  transition: left 0.35s ease, top 0.35s ease;
+  user-select: none;
+}
+
+.card-panel.dragging {
+  transition: none;
+}
+
+#card-folders-panel {
+  top: 5cqh;
+  left: 2cqw;
+}
+
+#card-files-panel {
+  top: 5cqh;
+  left: 48cqw;
+  overflow: hidden;
+}
+
+.tuck-btn {
+  position: absolute;
+  right: -3cqw;
+  top: 2cqw;
+  width: 3cqw;
+  z-index: 11;
+  pointer-events: visibleFill;
+  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
+  transition: width 0.15s ease;
+}
+
+.tuck-btn:hover {
+  width: 3.2cqw;
+}
+
+/* base card */
+.card {
+  position: relative;
+  width: 42.8cqw;
+  container-type: inline-size;
+  background-image: url("assets/linedpapergraffiti.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+  filter: drop-shadow(4px 4px 7px rgba(0,0,0,0.45));
+}
+
+/* file card — shrinks to fit content horizontally */
+.card-files {
+  max-width: 42.8cqw;
+  padding-right: 4cqw;
+
+  overflow: hidden;
+
+  background-size:cover;
+  background-position: left top;
+}
+
+.card-folder-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 13cqw;
+  margin-left: 11.2cqw;
+  margin-bottom: 3.65cqw;
+  outline: none;
+}
+
+.card-file-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: 13cqw;
+  margin-left: 11.2cqw;
+  margin-bottom: 3.65cqw;
+  outline: none;
+  white-space: nowrap;
+}
+
+/* links */
+.card a {
+  transition: all 0.18s ease;
+  text-decoration: none;
+  color: #2d2d2d;
+  font-family: 'Noto Serif', serif;
+  font-weight: 300;
+  font-size: 4.3cqw;
+  opacity: 0.715;
+  line-height: 1.068;
+  outline: none;
+  letter-spacing: -0.045em;
+  filter: blur(0.53px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.25));
+  mix-blend-mode: multiply;
+}
+
+.card a:hover {
+  color: #8b4513;
+  font-size: 4.6cqw;
+  text-decoration: underline;
+}
+
+.card a.active-link {
+  color: #8b4513;
+  opacity: 1;
+  text-decoration: underline;
+}
+
+.card a.active-folder-link {
+  color: #8b4513;
+  opacity: 1;
+}
+
+.card a.unread {
+  color: #4e108d;
+}
+
+.card a.unread::after {
+  content: ' •';
+  color: #4e108d;
+  font-size: 3cqw;
 }
 
 .sub-links {
@@ -90,6 +214,23 @@ p, h1, h2, h3, .content {
   content: '▼ ';
 }
 
+.cardicon2 {
+  transition: width 0.15s ease;
+  position: absolute;
+  top: -6cqw;
+  left: 4cqw;
+  width: 19cqw;
+  opacity: 0.94;
+  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
+  pointer-events: visibleFill;
+  z-index: 5;
+  transform: rotate(-13deg);
+}
+
+.cardicon2:hover {
+  width: 20cqw;
+}
+
 .banner {
   display: none;
   position: absolute;
@@ -102,7 +243,6 @@ p, h1, h2, h3, .content {
   pointer-events: none;
   border-bottom: 3.2px solid rgba(64, 56, 51, 1);
   filter: drop-shadow(0px 0px 10px rgba(0,0,0,0.45));
-  /*TRANSTION REMOVED LOOKS SMOOTHER W/Otransition: transform 0.08s ease-out;*/
 }
 
 .wip-sticker {
@@ -115,7 +255,7 @@ p, h1, h2, h3, .content {
   opacity: 0.96;
   pointer-events: none;
   filter: drop-shadow(2px 3px 10px rgba(0,0,0,0.7));
-  transition: opacity 0.1s ease
+  transition: opacity 0.1s ease;
 }
 
 .doc-header {
@@ -139,7 +279,6 @@ p, h1, h2, h3, .content {
 .content-text h4, .content-text h5, .content-text h6,
 .doc-header h2 {
   font-family: 'Baskerville', serif;
-  /*playfair display could work too*/
 }
 
 .content-bg {
@@ -181,7 +320,6 @@ p, h1, h2, h3, .content {
   margin-right: auto;
   width: 100%;
   height: auto;
-  /*height: 26cqw;*/
   opacity: 1;
   border-radius: 3px;
   border: 2.4px solid rgba(33, 33, 33, 0.74);
@@ -191,8 +329,12 @@ p, h1, h2, h3, .content {
   cursor: pointer;
 }
 
+.content img:hover {
+  transform: scale(1.035);
+}
+
 .multiply-wrapper {
-  background: rgb(248, 246, 246); /* match your content-bg exactly */
+  background: rgb(248, 246, 246);
   display: block;
   width: 100%;
   isolation: isolate;
@@ -202,9 +344,6 @@ p, h1, h2, h3, .content {
   mix-blend-mode: multiply;
   width: 100%;
   height: auto;
-}
-.content img:hover {
-  transform: scale(1.035);
 }
 
 .content p {
@@ -276,6 +415,7 @@ p, h1, h2, h3, .content {
 .content-text {
   mix-blend-mode: multiply;
 }
+
 .content-text h1 { color: #4a4440; opacity: 0.97; filter: blur(0.07px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.215)); }
 .content-text h2 { color: #4a4440; opacity: 0.94; filter: blur(0.09px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.22)); }
 .content-text h3 { color: #4a4440; opacity: 0.90; filter: blur(0.11px) drop-shadow(0px 0px 3.6px rgba(0,0,0,0.225)); }
@@ -289,19 +429,6 @@ p, h1, h2, h3, .content {
 .content-text ul, .content-text ol { color: #4a4440; opacity: 0.88; filter: blur(0.08px) drop-shadow(0px 0px 2.8px rgba(0,0,0,0.15)); }
 .content-text ul ul, .content-text ol ol { color: #4a4440; opacity: 0.87; filter: blur(0.07px) drop-shadow(0px 0px 2.6px rgba(0,0,0,0.14)); }
 .content-text ul ul ul, .content-text ol ol ol { color: #4a4440; opacity: 0.86; filter: blur(0.07px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.13)); }
-/*
-.leftbgblur {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 44%;
-  height: 100%;
-  opacity: 1;
-  object-fit: fill;
-  pointer-events: none;
-  z-index: 3;
-  filter: drop-shadow(20px 0px 50px rgba(0,0,0,1));
-}*/
 
 .csv-table {
   width: 100%;
@@ -321,10 +448,6 @@ p, h1, h2, h3, .content {
 .csv-table td {
   padding: 0.3cqw 0.8cqw;
 }
-/*
-.csv-table tr:nth-child(even) td {
-  background: rgba(74, 68, 64, 0.04);
-}*/
 
 .csv-table-wrapper {
   overflow-x: auto;
@@ -347,20 +470,11 @@ p, h1, h2, h3, .content {
 .mute-btn:hover {
   opacity: 1;
   width: 9.07cqw;
-  transition: width 0.14s ease;
 }
 
 .mute-btn.muted {
   opacity: 0.6;
-  transition: opacity 0.4s ease;
 }
-
-.mute-btn.muted:hover {
-  opacity: 0.7;
-  width: 9.07cqw;
-  transition: width 0.14s ease;
-}
-
 
 .html-embed {
   width: 100%;
@@ -377,7 +491,7 @@ p, h1, h2, h3, .content {
 }
 
 .top {
-  top:  -3.5px;
+  top: -3.5px;
   left: 0;
   position: absolute;
   background: linear-gradient(to bottom, rgba(0,0,0,0.08) 0%, transparent 100%);
@@ -388,19 +502,6 @@ p, h1, h2, h3, .content {
   mix-blend-mode: multiply;
 }
 
-/*
-.topframe {
-  position: absolute;
-  top: -1%;
-  left: 0;
-  width: 100%;
-  height: 40%;
-  opacity: 1;
-  object-fit: fill;
-  pointer-events: none;
-  z-index: 5;
-}*/
-
 .frame {
   position: absolute;
   bottom: -1.65cqw;
@@ -409,148 +510,66 @@ p, h1, h2, h3, .content {
   z-index: -10;
   pointer-events: none;
   filter: drop-shadow(7px -2px 5px rgba(0,0,0,0.3));
-  /*transition: transform 0.03s ease-out;*/
 }
-/* =========================
-   LIGHTBOX CONTAINER
-========================= */
+
 .lightbox {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-
   background: rgba(0,0,0,0.75);
   z-index: 100;
-
   display: flex;
   justify-content: center;
   align-items: center;
-
   cursor: pointer;
-
-  /* 🔥 replace display:none system */
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-
   transition: opacity 200ms ease, visibility 200ms ease;
 }
 
-/* active state */
 .lightbox.active {
   opacity: 1;
   visibility: visible;
   pointer-events: auto;
 }
 
-/* =========================
-   LIGHTBOX IMAGE
-========================= */
 #lightbox-img {
   max-width: 80%;
   max-height: 80%;
   object-fit: contain;
-
   border: 22px solid rgb(255, 255, 255);
   filter: drop-shadow(0 0 30px rgba(0,0,0,0.8));
-
   transform: scale(0.96);
-
   transition: transform 260ms cubic-bezier(0.2, 0.9, 0.2, 1);
 }
 
-/* zoom in when active */
 .lightbox.active #lightbox-img {
   transform: scale(1);
 }
 
 .leftbg {
   position: relative;
-  top: 0; /* start just below card */
+  top: 0;
   left: 0;
-  width: 44.1%; /* extend to card edge */
+  width: 44.1%;
   height: 100%;
   background-image: url("assets/leftbg.png");
   background-size: 100% 100%;
   background-position: right center;
   z-index: 5;
-  filter: drop-shadow(5px 0px 23px rgba(0,0,0,0.3)); /* chefs kiss drop shadow*/
+  filter: drop-shadow(5px 0px 23px rgba(0,0,0,0.3));
 }
 
 .leftbg img {
-  position: absolute; 
+  position: absolute;
   bottom: 0;
   left: 3px;
   width: 94.7%;
   object-fit: cover;
   mix-blend-mode: multiply;
-}
-
-/* link card anchor */
-.links {
-  position: absolute;
-
-  top: 7.5cqh;
-  left: 2.9cqw;
-
-  z-index: 10;
-}
-
-* {
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* notebook card */
-.card {
-  position: relative;
-  width: 42.8cqw;
-  container-type: inline-size;
-  background-image: url("assets/linedpapergraffiti.png");
-  background-size: cover;
-  background-repeat: no-repeat;
-
-  display: flex;
-  flex-direction: column;
-
-  filter: drop-shadow(4px 4px 7px rgba(0,0,0,0.45));
-}
-
-/*
-.cardicon {
-  transition: width 0.15s ease;
-  position: absolute;
-  bottom: -7cqw;
-  rotate: -40deg;
-  right: 4cqw;
-  width: 19cqw;
-  opacity: 0.94;
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
-}
-
-.cardicon:hover {
-  width: 20cqw;
-  transition: width 0.15s ease;
-}*/
-
-.cardicon2 {
-  transition: width 0.15s ease;
-  position: absolute;
-  top: -6cqw;
-  left: 4cqw;
-  width: 19cqw;
-  opacity: 0.94;
-  filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25));
-  pointer-events: visibleFill;
-  z-index: 5;
-  transform: rotate(-13deg);
-}
-
-.cardicon2:hover {
-  width: 20cqw;
-  transition: width 0.15s ease;
 }
 
 .next-page-btn {
@@ -562,69 +581,13 @@ p, h1, h2, h3, .content {
   pointer-events: auto;
   opacity: 1;
   filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.25)) drop-shadow(7px -2px 5px rgba(0,0,0,0.3));
-  transform: scaleX(-1) translateY(100%); /* flipped, hidden by default */
+  transform: scaleX(-1) translateY(100%);
   transition: width 0.15s ease;
   cursor: pointer;
 }
 
 .next-page-btn:hover {
   width: 10.7cqw;
-}
-/* link container */
-.card-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0cqw; /* FUCK GAP THIS WAS THE ISSUE ALL ALONG*/
-  margin-top: 13cqw; /* 13.8 should be multiple of line heigh cqw, set this to 0 and then change line heights till you get something on every line then push everything down*/
-  margin-left: 11.2cqw;
-  margin-bottom: 3.65cqw;
-  outline: none;
-}
-
-/* links */
-/* links */
-.card a {
-  transition: all 0.15s ease;
-  text-decoration: none;
-  color: #2d2d2d;
-
-  font-family: 'Noto Serif', serif;
-  font-weight: 300;
-
-  font-size: 4.3cqw; /* WAIT EUREKA, THE SOLUTION TO THE ISSUE WHERE THE RESIZING OF WINDOW WOULD MESS EVERYTHING UP. The isseu would be that the window height would change the line height and since the card is tied to the lines of text, it will also expand but it is cropped not scaled so it will not scale up it will just add more lines adn teh lines of text will be bigger but not the same spacing as the image so thats where teh drift occurs. However if we can restrict the spacing to the width of the paper (thats teh part that changes) then we can make this thing work.
-  */
-  /* okay that was part of the solution. IT WAS FUCKASS GAP IN CARD LINKS ALL ALONG THAT WAS ADDING EXTRA SHIT AND IT WAS TIED TO qcH FUCKK*/
-  opacity: 0.715;
-
-  line-height: 1.068;
-  outline: none;
-
-  letter-spacing: -0.045em;
-  filter: blur(0.53px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.25));
-  mix-blend-mode: multiply;
-  transition: all 0.18s ease;
-}
-
-.card a:hover {
-  color: #8b4513;
-  font-size: 4.6cqw;
-  text-decoration: underline;
-}
-
-.card a.active-link {
-  color: #8b4513;
-  opacity: 1;
-  text-decoration: underline;
-}
-
-.card a.unread {
-  color: #4e108d;
-}
-
-.card a.unread::after {
-  content: ' •';
-  color: #4e108d;
-  font-size: 3cqw;
 }
 
 .safari .content,
