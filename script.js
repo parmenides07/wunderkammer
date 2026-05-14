@@ -58,14 +58,24 @@ function collectAllFiles(currentPath, currentIndex) {
     k !== 'assets'
   );
   const folderName = currentPath.split('/').pop();
+  const folderIndexName = `${folderName}.md`;
+
+  // put index file first if it exists
+  const indexPos = subFiles.indexOf(folderIndexName);
+  if (indexPos > -1) {
+    subFiles.splice(indexPos, 1);
+    subFiles.unshift(folderIndexName);
+  }
+
+  // include ALL files including index
   subFiles.forEach(file => {
-    if (file === `${folderName}.md`) return;
     fileList.push({
       path: `${currentPath}/${file}`,
       created: currentIndex[file].created,
       modified: currentIndex[file].modified
     });
   });
+
   subFolders.forEach(folder => {
     collectAllFiles(`${currentPath}/${folder}`, currentIndex[folder]);
   });
@@ -195,7 +205,7 @@ function buildFileLinks(containerEl, currentPath, currentIndex) {
 
   const total = document.createElement('div');
   total.classList.add('receipt-total');
-  total.textContent = `Total: ${subFiles.length + "00$"}`;
+  total.textContent = `Total: ${subFiles.length + ".00$"}`;
   containerEl.appendChild(total);
 }
 
@@ -226,8 +236,15 @@ async function syncCardToPath(path) {
       activeLink.classList.add('active-link');
       activeLink.classList.remove('unread');
     }
+
+    // highlight folder whose path is a parent of the current file
     document.querySelectorAll('.folder-link').forEach(a => a.classList.remove('active-folder-link'));
-    const activeFolderLink = [...document.querySelectorAll('.folder-link')].find(a => a.dataset.path === path);
+    const parentFolder = path.substring(0, path.lastIndexOf('/'));
+    const activeFolderLink = [...document.querySelectorAll('.folder-link')].find(a => {
+      if (!a.dataset.path) return false;
+      const folderPath = a.dataset.path.substring(0, a.dataset.path.lastIndexOf('/'));
+      return folderPath === parentFolder || a.dataset.path.startsWith(parentFolder);
+    });
     if (activeFolderLink) activeFolderLink.classList.add('active-folder-link');
   }, 50);
 }

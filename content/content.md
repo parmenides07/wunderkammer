@@ -9,10 +9,18 @@ Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Scien
 
 Join me in my journey of maximizing life.
 
-### Site Notes
-1. **Click on any image on the site to view it blown up.**
-2. **Right click on certain images to play sound or open link**
-2. This website is **best viewed on desktop using any browser other than safari.** It will still work on mobile but the aspect ratio isn't great and for it to work on safari I removed the text effects.
+### Site Operation
+**NOTE: This site looks horrible on safari based browsers and does not support mobile at all.**
+
+Navigate folders by clicking on the lined paper links. Then you can view the files that show up on the receipt by clicking.
+
+The blue file/folder is the currently selected one while the red one is any unread ones (since last modified). 
+
+You can drag the papers to move them out of the way. You can also just press the red arrows to tuck them away completely. 
+
+The green arrow will bring you back to the home folder. The swirl at the bottom right toggles on and off site music. 
+
+Click any image to view it blown up and right click to play sound associated with it. 
 
 ## Current Input:
 

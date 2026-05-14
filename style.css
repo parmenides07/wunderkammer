@@ -100,15 +100,11 @@ p, h1, h2, h3, .content {
   transform: rotate(5deg);
 }
 
-.tuck-btn:hover {
-  width: 5.4cqh;
-}
-
 #card-folders-panel .tuck-btn {
   width: 4.8cqw; /* bigger */
   right: -1.4cqw;
-  top: 2.2cqh;
-  filter: drop-shadow(0px 5.5px 3.9px rgba(0,0,0,0.4));
+  top: 1.2cqw;
+  filter: drop-shadow(0px 5.5px 2.6px rgba(0,0,0,0.5));
 }
 
 #card-folders-panel .tuck-btn:hover {
@@ -116,14 +112,14 @@ p, h1, h2, h3, .content {
 }
 
 #card-files-panel .tuck-btn {
-  width: 5.3cqh; /* smaller */
+  width: 2.8cqw; /* smaller */
   right: -0.6cqw;
-  top: 2.6cqh;
+  top: 1.9cqw;
   filter: drop-shadow(0px 3.1px 3.2px rgba(0,0,0,0.44));
 }
 
 #card-files-panel .tuck-btn:hover {
-  width: 5.7cqh;
+  width: 3cqw;
 }
 
 /* ========================
@@ -190,13 +186,13 @@ p, h1, h2, h3, .content {
 }
 
 .card a.active-link {
-  color: #58649d;
+  color: #566acf;
   opacity: 1;
   text-decoration: underline;
 }
 
 .card a.active-folder-link {
-  color: #58649d;
+  color: #566acf;
   opacity: 1;
 }
 
@@ -343,12 +339,12 @@ p, h1, h2, h3, .content {
 }
 
 .card-file-links a:hover {
-  color: #5c3286;
+  color: #512e74;
   opacity: 0.77;
 }
 
 .card-file-links a.active-link {
-  color: #233164;
+  color: #213786;
   opacity: 0.77;
 }
 
