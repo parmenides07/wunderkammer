@@ -195,7 +195,7 @@ function buildFileLinks(containerEl, currentPath, currentIndex) {
 
   const total = document.createElement('div');
   total.classList.add('receipt-total');
-  total.textContent = `Total: ${subFiles.length + "$"}`;
+  total.textContent = `Total: ${subFiles.length + "00$"}`;
   containerEl.appendChild(total);
 }
 
@@ -622,7 +622,7 @@ init().then(() => {
       panel.dataset.tucked = 'false';
     } else {
       panel.dataset.savedLeft = panel.style.left || '2cqw';
-      panel.style.left = '-' + (panel.offsetWidth - 20) + 'px';
+      panel.style.left = '-' + (panel.offsetWidth - 55) + 'px';
       panel.dataset.tucked = 'true';
     }
   });
@@ -634,7 +634,7 @@ init().then(() => {
       panel.dataset.tucked = 'false';
     } else {
       panel.dataset.savedLeft = panel.style.left || '48cqw';
-      panel.style.left = '-' + (panel.offsetWidth - 20) + 'px';
+      panel.style.left = '-' + (panel.offsetWidth - 38) + 'px';
       panel.dataset.tucked = 'true';
     }
   });

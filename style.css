@@ -74,10 +74,12 @@ p, h1, h2, h3, .content {
   z-index: 10;
   transition: left 0.35s ease, top 0.35s ease;
   user-select: none;
+  cursor: grab;
 }
 
 .card-panel.dragging {
   transition: none;
+  cursor: grabbing;
 }
 
 #card-folders-panel {
@@ -92,17 +94,36 @@ p, h1, h2, h3, .content {
 
 .tuck-btn {
   position: absolute;
-  right: -3cqw;
-  top: 2cqw;
-  width: 3cqw;
   z-index: 11;
   pointer-events: visibleFill;
-  filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.3));
   transition: width 0.15s ease;
+  transform: rotate(5deg);
 }
 
 .tuck-btn:hover {
-  width: 3.2cqw;
+  width: 5.4cqh;
+}
+
+#card-folders-panel .tuck-btn {
+  width: 4.8cqw; /* bigger */
+  right: -1.4cqw;
+  top: 2.2cqh;
+  filter: drop-shadow(0px 5.5px 3.9px rgba(0,0,0,0.4));
+}
+
+#card-folders-panel .tuck-btn:hover {
+  width: 5cqw;
+}
+
+#card-files-panel .tuck-btn {
+  width: 5.3cqh; /* smaller */
+  right: -0.6cqw;
+  top: 2.6cqh;
+  filter: drop-shadow(0px 3.1px 3.2px rgba(0,0,0,0.44));
+}
+
+#card-files-panel .tuck-btn:hover {
+  width: 5.7cqh;
 }
 
 /* ========================
@@ -163,31 +184,35 @@ p, h1, h2, h3, .content {
 }
 
 .card a:hover {
-  color: #8b4513;
+  color: #5c3286;
   font-size: 4.6cqw;
   text-decoration: underline;
 }
 
 .card a.active-link {
-  color: #8b4513;
+  color: #58649d;
   opacity: 1;
   text-decoration: underline;
 }
 
 .card a.active-folder-link {
-  color: #8b4513;
+  color: #58649d;
   opacity: 1;
 }
 
 .card a.unread {
-  color: #4e108d;
+  color: #832e23;
 }
 
 .card a.unread::after {
   content: ' •';
-  color: #4e108d;
+  color: #832e23;
   font-size: 3cqw;
 }
+
+/*4e108d purple
+
+*/
 
 .sub-links {
   display: flex;
@@ -318,22 +343,22 @@ p, h1, h2, h3, .content {
 }
 
 .card-file-links a:hover {
-  color: #8b5713;
+  color: #5c3286;
   opacity: 0.77;
 }
 
 .card-file-links a.active-link {
-  color: #8b2113;
+  color: #233164;
   opacity: 0.77;
 }
 
 .card-file-links a.unread {
-  color: #4e108d;
+  color: #832e23;
 }
 
 .card-file-links a.unread::after {
   content: ' •';
-  color: #4e108d;
+  color: #832e23;
   font-size: 1cqw;
 }
 
