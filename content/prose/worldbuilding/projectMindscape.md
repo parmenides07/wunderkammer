@@ -3,7 +3,7 @@ banner: assets/city.jpg
 
 This is a very early stage worldbuilding project. All I have are some very very old notes on the system. Take them with a grain of salt. I haven't even reread them ngl.
 
-TLDR: Pretty much all you need to know is its my attempt at bridging western fantasy worldbuilding and eastern power systems. Its like JJK but w/ physics and JoJo's but with environments. However, the characters and writing style and everything is rooted in western fantasy. Oddly, Game of Thrones is my biggest inspiration for this project.
+TLDR: Pretty much all you need to know is its my attempt at bridging western fantasy worldbuilding and eastern power systems. Its like JJK but w/ physics and JoJo's but with environments. However, the characters and writing style and everything is rooted in western fantasy. Oddly, Game of Thrones is my biggest inspiration for this project. I intend to write stories for each of the characters detailing their experience and interaction with this crazy world on a very grounded level. I may not even have an overarching story/plot, it may just be an anthology.
 
 On top of all of that its much more technical and bizzare. Or at least that's what I'm aiming for.
 

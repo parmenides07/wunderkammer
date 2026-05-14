@@ -22,9 +22,25 @@ The green arrow will bring you back to the home folder. The swirl at the bottom 
 
 Click any image to view it blown up and right click to play sound associated with it. 
 
-## Current Input:
-
-### Media 
+## Current Input/Output
+### Prose (Worldbuilding, Philosophy, Journaling, etc)
+- **Worldbuilding:** Project Mindscape (Name TBD)
+  - Power system exploration.
+- **Philosophy:** Enlightenment and the Visual
+- (**Journaling** is passive)
+### Logic (Code, Circuit, Physics)
+- **Code:** Akashom
+  - Relational, emergent database system.
+- **C&C:** Oforis
+  - Key input sampler and sequencer board.
+- **Circuits:** Self-Studying *Electric Circuits* by Nilsson & Riedel (Textbook)
+- **Physics** Self-Studying *Electricity and Magnetism* by Griffiths (Textbook)
+### Visuals (Art: Asethetics, Concepts, etc)
+- **Asethetics:** Stickers and Blobs Proj IDK
+  - Something that attaches art to reality.
+- **Concepts:** Mindscape 
+  - Worldbuilding depiction.
+### Misc 
 #### Literature:
 - *ASOIF: Storm of Swords* by George R. Martin (Fantasy Epic)
 - *Chainsaw Man* by Tatsuki Fujimoto (Manga)
@@ -32,22 +48,3 @@ Click any image to view it blown up and right click to play sound associated wit
 - *Cowboy Bebop* by Shinichiro Watanabe (Sci-Fi Western Anime)
 #### Videogames:
 - *Disco Elysium* by Za/Um studios (RPG)
-### Education:
-- *Sanskrit* (Devaginiri Script)
-
-## Current Output
-### Prose (Worldbuilding, Philosophy, Journaling, etc)
-- **Worldbuilding:** Mindscape
-  - Power system exploration.
-- **Philosophy:** Enlightenment and the Visual
-- (**Journaling** is passive)
-### Logic (Code, Circuit, Physics)
-- **Code:** Akashoma 
-  - Relational, emergent database system.
-- **C&C:** Oforis
-  - Key input sampler and sequencer board.
-### Visuals (Art: Asethetics, Concepts, etc)
-- **Asethetics:** Stickers and Blobs Proj IDK
-  - Something that attaches art to reality.
-- **Concepts:** Mindscape 
-  - Worldbuilding depiction.

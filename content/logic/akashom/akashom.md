@@ -1,8 +1,8 @@
-title: What is the function of Akashoma?
+title: What is the function of Akashom?
 banner: assets/zion1.jpg
 
-- This is a mere introduction to the functional aspect of Akashoma. It's meant to be very concise. 
-- April 24th: ## As of today, I have changed the name to Akashoma. The name is composed of the Sanskrit word Akasha meaning ether and space, the fifth element and invisible fabric of universe. The suffix is built from the greek word soma meaning physical body of an organism or cell.
+- This is a mere introduction to the functional aspect of Akashom. It's meant to be very concise. 
+- April 24th: ## As of today, I have changed the name to Akashom (\ ə-ˈkä-shəm \ or uh-kah-shum). The name is composed of the Sanskrit word Akasha meaning ether and space, the fifth element and invisible fabric of universe. The suffix is built from the greek word soma meaning physical body of an organism or cell.
 
 ## Context
 - I'll start with some context, I've always felt that other notetaking apps were too limiting like Obsidian or notion or Emacs Org mode. What I'd constantly come back to was just using paper and drawing these very abstract relationships between information. Having that spatial freedom really helped with refining ideas and ideating but one thing I missed was the digital ability to query for information. This is where zion began: as a spatial notetaking software. However, as I continued development, I noticed another flaw of many note taking apps. Most text editors would have a heading (the parent) and then children but these children can only have that one parent. I found this incredibly limiting and forced me into this linear way of storing information. So this brought me to where the development of zion is heading now.
