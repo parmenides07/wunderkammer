@@ -3,6 +3,7 @@ const backSound = new Audio('assets/holepunch.mp3');
 const clickSound = new Audio('assets/page-flip-01a.mp3');
 const hoverSound = new Audio('assets/boxclick1.mp3');
 const fileSound = new Audio('assets/printer2.mp3');
+const tuckSound = new Audio('assets/tuck1.mp3');
 const cache = {};
 const history = [];
 let currentSound = null;
@@ -633,6 +634,8 @@ init().then(() => {
   makeDraggable(document.getElementById('card-files-panel'));
 
   document.getElementById('tuck-folders-btn').addEventListener('click', () => {
+    tuckSound.currentTime = 0;
+    tuckSound.play();
     const panel = document.getElementById('card-folders-panel');
     if (panel.dataset.tucked === 'true') {
       panel.style.left = panel.dataset.savedLeft || '2cqw';
@@ -645,6 +648,8 @@ init().then(() => {
   });
 
   document.getElementById('tuck-files-btn').addEventListener('click', () => {
+    tuckSound.currentTime = 0;
+    tuckSound.play();
     const panel = document.getElementById('card-files-panel');
     if (panel.dataset.tucked === 'true') {
       panel.style.left = panel.dataset.savedLeft || '48cqw';
