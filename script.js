@@ -575,30 +575,53 @@ function makeDraggable(panelEl) {
   let isDragging = false;
   let startX, startY, startLeft, startTop;
 
-  panelEl.addEventListener('mousedown', (e) => {
-    if (e.target.classList.contains('tuck-btn')) return;
-    if (e.target.tagName === 'A') return;
+  function dragStart(clientX, clientY) {
     isDragging = true;
-    startX = e.clientX;
-    startY = e.clientY;
+    startX = clientX;
+    startY = clientY;
     startLeft = panelEl.offsetLeft;
     startTop = panelEl.offsetTop;
     panelEl.classList.add('dragging');
-    e.preventDefault();
-  });
+  }
 
-  document.addEventListener('mousemove', (e) => {
+  function dragMove(clientX, clientY) {
     if (!isDragging) return;
-    panelEl.style.left = `${startLeft + (e.clientX - startX)}px`;
-    panelEl.style.top = `${startTop + (e.clientY - startY)}px`;
-  });
+    panelEl.style.left = `${startLeft + (clientX - startX)}px`;
+    panelEl.style.top = `${startTop + (clientY - startY)}px`;
+  }
 
-  document.addEventListener('mouseup', () => {
+  function dragEnd() {
     if (isDragging) {
       isDragging = false;
       panelEl.classList.remove('dragging');
     }
+  }
+
+  // mouse
+  panelEl.addEventListener('mousedown', (e) => {
+    if (e.target.classList.contains('tuck-btn')) return;
+    if (e.target.tagName === 'A') return;
+    dragStart(e.clientX, e.clientY);
+    e.preventDefault();
   });
+  document.addEventListener('mousemove', (e) => dragMove(e.clientX, e.clientY));
+  document.addEventListener('mouseup', dragEnd);
+
+  // touch
+  panelEl.addEventListener('touchstart', (e) => {
+    if (e.target.classList.contains('tuck-btn')) return;
+    if (e.target.tagName === 'A') return;
+    const t = e.touches[0];
+    dragStart(t.clientX, t.clientY);
+  }, { passive: true });
+
+  panelEl.addEventListener('touchmove', (e) => {
+    const t = e.touches[0];
+    dragMove(t.clientX, t.clientY);
+    e.preventDefault(); // stop page scrolling while dragging
+  }, { passive: false });
+
+  panelEl.addEventListener('touchend', dragEnd);
 }
 
 const contentEl = document.querySelector('.content');
