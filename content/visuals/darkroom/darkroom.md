@@ -12,6 +12,14 @@ This is meant to serve as a hub for my attempts at pursuing photography.
 
 **Remember, you can left-click to enlarge any image.**
 
+## Jamesburg, NJ
+
+<div class="grid">
+
+images{assets/photos/jamesburg}
+
+</div>
+
 ## Hike w/ Friends
 
 <div class="grid">
