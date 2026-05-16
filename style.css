@@ -729,3 +729,36 @@ p, h1, h2, h3, .content {
 .safari .card a {
   filter: none;
 }
+
+.compat-warning {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  z-index: 1000;
+  justify-content: center;
+  align-items: center;
+}
+
+.compat-warning.active {
+  display: flex;
+}
+
+.compat-postit {
+  position: relative;
+  width: 30cqw;
+  filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.4));
+}
+
+.compat-ok {
+  position: absolute;
+  /* adjust these to line up with your drawn ok box */
+  top: 51cqh;
+  left:45cqw;
+  width: 12.6cqw;
+  height: 7cqh;
+  cursor: pointer;
+}

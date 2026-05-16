@@ -696,7 +696,16 @@ document.getElementById('mute-btn').addEventListener('click', () => {
 const isWebKit = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
   (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
   /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 if (isWebKit) document.body.classList.add('safari');
+if (isWebKit || isMobile) {
+  document.getElementById('compat-warning').classList.add('active');
+}
+
+document.getElementById('compat-ok').addEventListener('click', () => {
+  document.getElementById('compat-warning').style.display = 'none';
+});
 
 document.querySelector('.content').addEventListener('click', async (e) => {
   const link = e.target.closest('a');
