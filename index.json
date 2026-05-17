@@ -171,11 +171,14 @@
           "yooho.jpg": {
             "asset": true
           }
+        },
+        "vanished.mp3": {
+          "asset": true
         }
       },
       "darkroom.md": {
         "created": "4/17/2026",
-        "modified": "5/15/2026"
+        "modified": "5/16/2026"
       }
     },
     "lets_Talk_About_AI_Art.md": {
@@ -525,13 +528,19 @@
       },
       "lawralai.md": {
         "created": "5/9/2026",
-        "modified": "5/11/2026"
+        "modified": "5/16/2026"
       },
       "braise.md": {
         "created": "5/10/2026",
-        "modified": "5/11/2026"
+        "modified": "5/16/2026"
       },
-      ".obsidian": {},
+      ".obsidian": {
+        "themes": {
+          "Primary": {},
+          "Sanctum": {},
+          "Typomagical": {}
+        }
+      },
       "assets": {
         "angel.mp3": {
           "asset": true
@@ -540,6 +549,12 @@
           "asset": true
         },
         "city.jpg": {
+          "asset": true
+        },
+        "cloud.jpg": {
+          "asset": true
+        },
+        "cloudgpt.png": {
           "asset": true
         },
         "hiromi.webp": {
@@ -552,6 +567,9 @@
           "asset": true
         },
         "traffic.jpg": {
+          "asset": true
+        },
+        "tree.jpg": {
           "asset": true
         },
         "weather.jpg": {
@@ -571,7 +589,7 @@
       },
       "praferin.md": {
         "created": "5/8/2026",
-        "modified": "5/16/2026"
+        "modified": "5/17/2026"
       },
       "prayfor.html": {
         "created": "5/11/2026",

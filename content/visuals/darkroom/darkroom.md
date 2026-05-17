@@ -1,5 +1,6 @@
 wip: true
 banner: assets/edge.jpg
+sound: assets/vanished.mp3
 
 This is meant to serve as a hub for my attempts at pursuing photography. 
 
