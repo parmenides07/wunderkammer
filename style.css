@@ -820,10 +820,10 @@ p, h1, h2, h3, .content {
 .compat-ok {
   position: absolute;
   /* now % is relative to the image size, easier to line up */
-  bottom: 8%;
-  right: 10%;
-  width: 20%;
-  height: 10%;
+  bottom: 17%;
+  right: 24.8%;
+  width: 43%;
+  height: 27%;
   cursor: pointer;
 }
 

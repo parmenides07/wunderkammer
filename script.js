@@ -885,16 +885,11 @@ if (isWebKit || isMobile) {
   showOverlay('info-card');
 }
 
-// temporarily force just info card
-showOverlay('info-card');
-
-document.getElementById('compat-warning').addEventListener('click', (e) => {
-  if (!e.target.closest('.compat-postit')) hideOverlay('compat-warning');
-});
 document.getElementById('compat-ok').addEventListener('click', () => hideOverlay('compat-warning'));
 document.getElementById('info-card').addEventListener('click', (e) => {
   if (!e.target.closest('.info-card-img')) hideOverlay('info-card');
 });
+
 document.querySelector('.content').addEventListener('click', async (e) => {
   const link = e.target.closest('a');
   if (!link) return;
