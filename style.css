@@ -802,6 +802,31 @@ p, h1, h2, h3, .content {
   opacity: 1;
 }
 
+.compat-inner {
+  position: relative;
+  display: inline-block;
+}
+
+.compat-postit {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 45vw;
+  max-height: 80vh;
+  object-fit: contain;
+  filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.4));
+}
+
+.compat-ok {
+  position: absolute;
+  /* now % is relative to the image size, easier to line up */
+  bottom: 8%;
+  right: 10%;
+  width: 20%;
+  height: 10%;
+  cursor: pointer;
+}
+
 .info-card {
   position: fixed;
   top: 0;
@@ -824,11 +849,12 @@ p, h1, h2, h3, .content {
 .info-card.visible {
   opacity: 1;
 }
+
 .info-card-img {
   width: auto;
   height: auto;
-  max-width: 45cqw;
-  max-height: 80cqh;
+  max-width: 45vw;
+  max-height: 80vh;
   object-fit: contain;
   filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.4));
   cursor: default;
