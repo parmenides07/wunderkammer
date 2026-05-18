@@ -4,15 +4,23 @@
   <meta charset="UTF-8">
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&family=EB+Garamond:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500;1,600;1,700;1,800&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&family=JetBrains+Mono&family=Playfair+Display:wght@400;600&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400&family=JetBrains+Mono&family=Playfair+Display:wght@400;600&family=Cormorant+Garamond:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+
+  <!-- outside wrapper so nothing inside can cover them -->
+  <div class="compat-warning" id="compat-warning">
+    <img src="assets/indexcard.png" class="compat-postit" />
+    <div class="compat-ok" id="compat-ok"></div>
+  </div>
+
+  <div class="info-card" id="info-card">
+    <img src="assets/siteoperation.png" class="info-card-img" />
+  </div>
+
   <div class="wrapper">
     <svg id="folder-line" style="position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9;overflow:visible;"></svg>
-    <div class="compat-warning" id="compat-warning">
-      <img src="assets/indexcard.png" class="compat-postit" />
-      <div class="compat-ok" id="compat-ok"></div>
-    </div>
     <img src="assets/mutebutton1.png" class="mute-btn" id="mute-btn" />
     <div class="lightbox" id="lightbox">
       <img id="lightbox-img" src="" />
@@ -32,7 +40,6 @@
     </div>
     <img src="assets/topframe.png" class="topframe" />
     <img src="assets/leftbg.png" class="leftbgblur" />
-
     <div class="card-panel" id="card-folders-panel">
       <img src="assets/tuck.png" class="tuck-btn" id="tuck-folders-btn" />
       <div class="card card-folders">
@@ -40,15 +47,14 @@
         <div class="card-links card-folder-links"></div>
       </div>
     </div>
-
     <div class="card-panel" id="card-files-panel">
       <img src="assets/tuck.png" class="tuck-btn" id="tuck-files-btn" />
       <div class="receipt">
         <div class="card-file-links"></div>
       </div>
     </div>
-
   </div>
+
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.4.1/papaparse.min.js"></script>
   <script src="script.js"></script>

@@ -1,7 +1,56 @@
 {
-  "moreAboutMe.md": {
-    "created": "3/24/2026",
-    "modified": "4/29/2026"
+  "home": {
+    "assets": {
+      "acok.jpg": {
+        "asset": true
+      },
+      "agatha.jpg": {
+        "asset": true
+      },
+      "blade.jpg": {
+        "asset": true
+      },
+      "ffa.jpg": {
+        "asset": true
+      },
+      "phm.jpg": {
+        "asset": true
+      },
+      "phmbook.jpg": {
+        "asset": true
+      },
+      "shoot.jpg": {
+        "asset": true
+      },
+      "sj.jpg": {
+        "asset": true
+      },
+      "test.jpg": {
+        "asset": true
+      },
+      "test1.jpg": {
+        "asset": true
+      },
+      "wwz.jpg": {
+        "asset": true
+      }
+    },
+    "home.md": {
+      "created": "5/18/2026",
+      "modified": "5/17/2026"
+    },
+    "miscConsumption.md": {
+      "created": "5/18/2026",
+      "modified": "5/18/2026"
+    },
+    "miscIdeas.md": {
+      "created": "5/18/2026",
+      "modified": "4/28/2026"
+    },
+    "moreAboutMe.md": {
+      "created": "5/18/2026",
+      "modified": "4/29/2026"
+    }
   },
   "visuals": {
     "assets": {
@@ -505,6 +554,9 @@
         "mediasetup.png": {
           "asset": true
         },
+        "nazar0199.jpg": {
+          "asset": true
+        },
         "workshopbuild.png": {
           "asset": true
         },
@@ -897,5 +949,9 @@
   "miscIdeas.md": {
     "created": "4/28/2026",
     "modified": "4/28/2026"
+  },
+  "moreAboutMe.md": {
+    "created": "3/24/2026",
+    "modified": "4/29/2026"
   }
 }

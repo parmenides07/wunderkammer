@@ -870,6 +870,21 @@ if (isWebKit) document.body.classList.add('safari');
 if (isWebKit || isMobile) {
   document.getElementById('compat-warning').classList.add('active');
 }
+else {
+  document.getElementById('info-card').classList.add('active');
+}
+
+document.getElementById('compat-warning').addEventListener('click', (e) => {
+  if (!e.target.closest('.compat-box')) {
+    document.getElementById('compat-warning').style.display = 'none';
+  }
+});
+
+document.getElementById('info-card').addEventListener('click', (e) => {
+  if (!e.target.closest('.info-card-img')) {
+    document.getElementById('info-card').classList.remove('active');
+  }
+});
 
 document.getElementById('compat-ok').addEventListener('click', () => {
   document.getElementById('compat-warning').style.display = 'none';
