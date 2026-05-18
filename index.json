@@ -491,6 +491,32 @@
         "asset": true
       }
     },
+    "cornocupia": {
+      "assets": {
+        "groceryingredient.png": {
+          "asset": true
+        },
+        "grocerypantry.png": {
+          "asset": true
+        },
+        "medialog.png": {
+          "asset": true
+        },
+        "mediasetup.png": {
+          "asset": true
+        },
+        "workshopbuild.png": {
+          "asset": true
+        },
+        "workshopbuildentry.png": {
+          "asset": true
+        }
+      },
+      "cornocupia.md": {
+        "created": "5/18/2026",
+        "modified": "5/18/2026"
+      }
+    },
     "logic.md": {
       "created": "3/16/2026",
       "modified": "4/26/2026"
@@ -866,7 +892,7 @@
   },
   "miscConsumption.md": {
     "created": "4/26/2026",
-    "modified": "5/16/2026"
+    "modified": "5/18/2026"
   },
   "miscIdeas.md": {
     "created": "4/28/2026",
