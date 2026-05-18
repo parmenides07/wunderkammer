@@ -866,30 +866,35 @@ const isWebKit = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
   /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
-if (isWebKit) document.body.classList.add('safari');
+// showing — add active first, then visible on next frame so transition fires
+function showOverlay(id) {
+  const el = document.getElementById(id);
+  el.classList.add('active');
+  requestAnimationFrame(() => el.classList.add('visible'));
+}
+
+function hideOverlay(id) {
+  const el = document.getElementById(id);
+  el.classList.remove('visible');
+  el.addEventListener('transitionend', () => el.classList.remove('active'), { once: true });
+}
+
 if (isWebKit || isMobile) {
-  document.getElementById('compat-warning').classList.add('active');
+  showOverlay('compat-warning');
+} else {
+  showOverlay('info-card');
 }
-else {
-  document.getElementById('info-card').classList.add('active');
-}
+
+// temporarily force just info card
+showOverlay('info-card');
 
 document.getElementById('compat-warning').addEventListener('click', (e) => {
-  if (!e.target.closest('.compat-box')) {
-    document.getElementById('compat-warning').style.display = 'none';
-  }
+  if (!e.target.closest('.compat-postit')) hideOverlay('compat-warning');
 });
-
+document.getElementById('compat-ok').addEventListener('click', () => hideOverlay('compat-warning'));
 document.getElementById('info-card').addEventListener('click', (e) => {
-  if (!e.target.closest('.info-card-img')) {
-    document.getElementById('info-card').classList.remove('active');
-  }
+  if (!e.target.closest('.info-card-img')) hideOverlay('info-card');
 });
-
-document.getElementById('compat-ok').addEventListener('click', () => {
-  document.getElementById('compat-warning').style.display = 'none';
-});
-
 document.querySelector('.content').addEventListener('click', async (e) => {
   const link = e.target.closest('a');
   if (!link) return;
