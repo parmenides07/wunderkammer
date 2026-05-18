@@ -227,6 +227,29 @@ p, h1, h2, h3, .content {
   content: '▼ ';
 }
 
+.folder-arrow-indicator::before {
+  content: '' !important;
+}
+
+.folder-arrow-indicator {
+  pointer-events: none !important;
+  text-decoration: none !important;
+  cursor: default !important;
+  opacity: 0.45;
+}
+
+@keyframes receiptBob {
+  0%   { transform: translateY(0px); }
+  25%  { transform: translateY(-6px); }
+  50%  { transform: translateY(2px); }
+  75%  { transform: translateY(-3px); }
+  100% { transform: translateY(0px); }
+}
+
+.receipt-bob {
+  animation: receiptBob 0.45s ease;
+}
+
 .cardicon2 {
   transition: width 0.15s ease;
   position: absolute;

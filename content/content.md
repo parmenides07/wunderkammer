@@ -15,7 +15,7 @@ Join me in my journey of maximizing life.
 1. Navigate folders by clicking on the lined paper links. Then you can view the files that show up on the receipt by clicking.
 2. The blue file/folder is the currently selected one while the red one is any unread ones (since last modified). 
 3. You can drag the papers to move them out of the way. You can also just press the red arrows to tuck them away completely. 
-4. The green arrow will bring you back to the home folder. The swirl at the bottom right toggles on and off site music. 
+4. The green arrow will bring you back to the home folder. The swirl on the bottom left toggles on and off site music. 
 5. Click any image to view it blown up and right click to play sound associated with it. 
 
 ## Current Input/Output (I/O)
@@ -40,6 +40,7 @@ Join me in my journey of maximizing life.
 #### (I) Literature:
 - *ASOIF: Storm of Swords* by George R. Martin (Fantasy Epic)
 - *Chainsaw Man* by Tatsuki Fujimoto (Manga)
+- *Perfect Health Diet* by Paul Jaminet and Shou-Ching Jaminet (Nutrition)
 #### (I) Film/Television:
 - *Cowboy Bebop* by Shinichiro Watanabe (Sci-Fi Western Anime)
 #### (I) Videogames:

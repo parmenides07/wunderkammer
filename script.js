@@ -12,6 +12,7 @@ let fileList = [];
 let globalIndex = null;
 let currentFolderPath = CONTENT_PATH;
 let currentFolderIndex = null;
+let currentArrowEl = null;
 
 marked.use({ breaks: true });
 
@@ -101,6 +102,7 @@ function buildFolderLinks(containerEl, currentPath, currentIndex, isRoot = false
     const a = document.createElement('a');
     a.setAttribute('tabindex', '-1');
     a.href = '#';
+    a.dataset.folderName = formatName(folder); // store clean name for toggling
     a.textContent = formatName(folder);
     a.classList.add('folder-link');
     const subIndex = currentIndex[folder];
@@ -123,13 +125,14 @@ function buildFolderLinks(containerEl, currentPath, currentIndex, isRoot = false
       const isOpen = subContainer.style.display === 'flex';
       subContainer.style.display = isOpen ? 'none' : 'flex';
       a.classList.toggle('open', !isOpen);
+
       if (!isOpen) {
         buildFolderLinks(subContainer, `${currentPath}/${folder}`, currentIndex[folder]);
         currentFolderPath = `${currentPath}/${folder}`;
         currentFolderIndex = currentIndex[folder];
         fileList = [];
         collectAllFiles(currentFolderPath, currentFolderIndex);
-        buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex);
+        buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex, formatName(folder));
         const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
         if (indexFile) {
           fileSound.currentTime = 0;
@@ -146,14 +149,22 @@ function buildFolderLinks(containerEl, currentPath, currentIndex, isRoot = false
   });
 }
 
-function buildFileLinks(containerEl, currentPath, currentIndex) {
+function buildFileLinks(containerEl, currentPath, currentIndex, folderDisplayName = null) {
   containerEl.innerHTML = '';
   const currentFolderName = currentPath.split('/').pop();
 
-  // header
+  // bob the receipt panel
+  const receiptPanel = document.getElementById('card-files-panel');
+  if (receiptPanel) {
+    receiptPanel.classList.remove('receipt-bob');
+    void receiptPanel.offsetHeight; // force reflow to restart animation
+    receiptPanel.classList.add('receipt-bob');
+  }
+
+  // header — just the folder name, or fallback
   const header = document.createElement('div');
   header.classList.add('receipt-header');
-  header.textContent = 'Entries \n';
+  header.textContent = folderDisplayName || 'Entries';
   containerEl.appendChild(header);
 
   const topDivider = document.createElement('div');
@@ -228,7 +239,10 @@ async function syncCardToPath(path) {
   currentFolderIndex = currentIndex;
   fileList = [];
   collectAllFiles(currentFolderPath, currentFolderIndex);
-  buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex);
+
+  // derive display name from path for the receipt header
+  const folderDisplayName = formatName(currentPath.split('/').pop());
+  buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex, folderDisplayName);
 
   setTimeout(() => {
     document.querySelectorAll('.file-link').forEach(a => a.classList.remove('active-link'));
@@ -530,7 +544,8 @@ async function navigate(path, index) {
   currentFolderIndex = index;
   fileList = [];
   collectAllFiles(path, index);
-  buildFileLinks(document.querySelector('.card-file-links'), path, index);
+  const folderDisplayName = formatName(path.split('/').pop());
+  buildFileLinks(document.querySelector('.card-file-links'), path, index, folderDisplayName);
 }
 
 async function init() {
@@ -618,7 +633,7 @@ function makeDraggable(panelEl) {
   panelEl.addEventListener('touchmove', (e) => {
     const t = e.touches[0];
     dragMove(t.clientX, t.clientY);
-    e.preventDefault(); // stop page scrolling while dragging
+    e.preventDefault();
   }, { passive: false });
 
   panelEl.addEventListener('touchend', dragEnd);
