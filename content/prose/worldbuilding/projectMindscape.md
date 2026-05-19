@@ -1,3 +1,4 @@
+title: Project Mindscape
 wip: true
 banner: assets/city.jpg
 

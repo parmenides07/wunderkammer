@@ -262,10 +262,14 @@ function buildFolderLinks(containerEl, currentPath, currentIndex, isRoot = false
         collectAllFiles(currentFolderPath, currentFolderIndex);
         buildFileLinks(document.querySelector('.card-file-links'), currentFolderPath, currentFolderIndex, formatName(folder));
         const indexFile = Object.keys(subIndex).find(f => f === `${folder}.md`);
-        if (indexFile) {
+        const firstFile = Object.keys(subIndex).find(k => 
+          typeof subIndex[k] === 'object' && subIndex[k].created && k.endsWith('.md')
+        );
+        const fileToOpen = indexFile || firstFile;
+        if (fileToOpen) {
           fileSound.currentTime = 0;
           fileSound.play();
-          await renderContent(`${currentPath}/${folder}/${indexFile}`, subIndex[indexFile].created, subIndex[indexFile].modified);
+          await renderContent(`${currentPath}/${folder}/${fileToOpen}`, subIndex[fileToOpen].created, subIndex[fileToOpen].modified);
         }
         setTimeout(() => drawFolderLine(a), 10);
       } else {

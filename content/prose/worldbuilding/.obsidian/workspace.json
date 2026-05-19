@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "braise.md",
+                "file": "premise.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "braise"
+              "title": "premise"
             }
           }
         ]
@@ -185,15 +185,28 @@
   },
   "active": "d4112dc915dd70be",
   "lastOpenFiles": [
-    "assets/cloudgpt.png",
-    "assets/tree.jpg",
-    "assets/cloud.jpg",
-    "praferin.md",
-    "lawralai.md",
-    "braise.md",
-    "leviathan.md",
-    "riabKaj.md",
     "projectMindscape.md",
-    "assets/sini.png"
+    "worldbuilding.md",
+    "assets/city.jpg",
+    "assets/weather.jpg",
+    "assets",
+    "mindscapeExamples/assets/weather1.jpg",
+    "mindscapeExamples/assets/weather.jpg",
+    "mindscapeExamples/assets/tree.jpg",
+    "mindscapeExamples/assets/traffic.jpg",
+    "mindscapeExamples/assets/sini.png",
+    "mindscapeExamples/assets/kitchen.jpg",
+    "mindscapeExamples/assets/hiromi.webp",
+    "mindscapeExamples/assets/cloudgpt.png",
+    "mindscapeExamples/assets/angel1.mp3",
+    "mindscapeExamples/assets/angel.mp3",
+    "mindscapeExamples/assets",
+    "theLeviathan.md",
+    "premise.md",
+    "mindscapeExamples/praferin.md",
+    "mindscapeExamples/riabKaj.md",
+    "mindscapeExamples",
+    "mindscapeExamples/braise.md",
+    "mindscapeExamples/lawralai.md"
   ]
 }

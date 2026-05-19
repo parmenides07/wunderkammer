@@ -15,4 +15,4 @@ banner: assets/kitchen.jpg
 - Perhaps when combining elements, the combined taste could be worse than previous thus reducing function or something can go wrong in the kitchen like it typically does. (perhaps emotion drives this or subconscious thought drives uncontrollable kitchen catastrophe)
 - I like the idea of him having a bunch of recipes based on objects he just carries around with him on the fly.
 ## Character
-- This character used to be a woodworker. Now he makes furniture.
+- This character used to be a woodworker. Now he is a deep sea fisherman who hunts and cooks aquatic mindscape spawned creatures.
