@@ -623,10 +623,6 @@
           "asset": true
         }
       },
-      "lawoftheland.html": {
-        "created": "5/9/2026",
-        "modified": "5/9/2026"
-      },
       "mindscapeExamples": {
         "assets": {
           "angel.mp3": {
@@ -670,6 +666,10 @@
           "created": "5/10/2026",
           "modified": "5/18/2026"
         },
+        "lawoftheland.html": {
+          "created": "5/9/2026",
+          "modified": "5/9/2026"
+        },
         "lawralai.md": {
           "created": "5/9/2026",
           "modified": "5/16/2026"
@@ -678,14 +678,18 @@
           "created": "5/8/2026",
           "modified": "5/17/2026"
         },
+        "prayfor.html": {
+          "created": "5/11/2026",
+          "modified": "5/11/2026"
+        },
         "riabKaj.md": {
           "created": "5/12/2026",
           "modified": "5/19/2026"
+        },
+        "weatherman.html": {
+          "created": "5/8/2026",
+          "modified": "5/10/2026"
         }
-      },
-      "prayfor.html": {
-        "created": "5/11/2026",
-        "modified": "5/11/2026"
       },
       "premise.md": {
         "created": "5/19/2026",
@@ -694,10 +698,6 @@
       "theLeviathan.md": {
         "created": "5/14/2026",
         "modified": "5/19/2026"
-      },
-      "weatherman.html": {
-        "created": "5/8/2026",
-        "modified": "5/10/2026"
       }
     },
     "theMindfill": {
