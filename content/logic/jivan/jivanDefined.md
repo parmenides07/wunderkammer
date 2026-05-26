@@ -14,6 +14,10 @@ banner: assets/cell1.jpg
         3. Defining space — you can declare relationships spatially by splitting the cell. Split vertically to place a cell below, making it a child. Split horizontally to place a cell beside, making it a spouse. Keep splitting within any child cell to create more children and spatially arrange them. To see a child cell's own children and its Shoma,4 you press into it and it becomes your current view. This splitting replicates the look of mitosis and functions similarly to tiling window managers — over time it begins to look like a living mosaic. It also supports folding to collapse and obscure parts of the layout when needed.
 
         ![cell](assets/cell.jpg)
+
+        You can mess around with this splitting behavior in a prototype I've developed just to see if it feels nice or not. 
+        
+        embed{akashom.html}
         
     2. Akasha (Right Side)
         1. Where Shoma focuses on one cell and its immediate world, Akasha is the entire database — every cell that exists, all their content, and all their relationships in one place. This is where the relational intelligence of everything you have built becomes interrogatable.

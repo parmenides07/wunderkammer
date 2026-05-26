@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Akashoma — Tiling Prototype</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@300;400&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #F5F0E8;
+    --ink: #1A1612;
+    --ink-muted: #6B6158;
+    --ink-faint: #B8B0A4;
+    --cell-bg: #EDE8DF;
+    --cell-border: #C8BFB0;
+    --cell-active-border: #1D9E75;
+    --cell-active-bg: #EBF7F3;
+    --accent: #1D9E75;
+    --accent-glow: rgba(29, 158, 117, 0.15);
+    --divider: #D4CCBF;
+  }
+
+  html, body {
+    width: 100%; height: 100%;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'DM Sans', sans-serif;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  /* TOP BAR */
+  #topbar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 40px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--divider);
+    display: flex;
+    align-items: center;
+    padding: 0 20px;
+    gap: 16px;
+    z-index: 100;
+  }
+
+  #breadcrumb {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    color: var(--ink-muted);
+    text-transform: uppercase;
+    flex: 1;
+  }
+
+  #breadcrumb span { color: var(--accent); }
+
+  #hint {
+    font-size: 11px;
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+  }
+
+  /* ROOT */
+  #root {
+    position: fixed;
+    top: 40px; left: 0; right: 0; bottom: 0;
+  }
+
+  /* CELL */
+  .cell {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid var(--cell-border);
+    background: var(--cell-bg);
+    transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+    overflow: hidden;
+  }
+
+  .cell.focused {
+    border-color: var(--cell-active-border);
+    background: var(--cell-active-bg);
+    box-shadow: 0 0 0 3px var(--accent-glow);
+    z-index: 10;
+  }
+
+  .cell.writing {
+    border-color: var(--accent);
+    background: #F0FAF6;
+    box-shadow: 0 0 0 4px var(--accent-glow);
+    z-index: 20;
+  }
+
+  .cell-inner {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cell-textarea {
+    position: absolute;
+    inset: 0;
+    width: 100%; height: 100%;
+    background: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+    padding: 12px 14px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px;
+    font-weight: 300;
+    color: var(--ink);
+    line-height: 1.7;
+    cursor: default;
+    caret-color: var(--accent);
+    user-select: none;
+  }
+
+  .cell-textarea::placeholder {
+    color: var(--ink-faint);
+    font-style: italic;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 15px;
+  }
+
+  .cell.writing .cell-textarea {
+    cursor: text;
+    user-select: text;
+  }
+
+  /* EMPTY CELL INDICATOR */
+  .empty-indicator {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: none;
+  }
+
+  .empty-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    background: var(--ink-faint);
+    opacity: 0.4;
+  }
+
+  .cell.focused .empty-dot { background: var(--accent); opacity: 0.6; }
+
+  /* HELP PANEL */
+  #help {
+    position: fixed;
+    bottom: 16px; right: 16px;
+    background: var(--bg);
+    border: 1px solid var(--divider);
+    border-radius: 10px;
+    padding: 14px 18px;
+    font-size: 11.5px;
+    color: var(--ink-muted);
+    line-height: 2;
+    z-index: 100;
+    min-width: 220px;
+  }
+
+  #help .help-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 6px;
+    letter-spacing: 0.05em;
+  }
+
+  #help kbd {
+    display: inline-block;
+    background: var(--cell-bg);
+    border: 1px solid var(--cell-border);
+    border-radius: 4px;
+    padding: 0 5px;
+    font-size: 10px;
+    font-family: monospace;
+    color: var(--ink);
+    line-height: 1.6;
+    margin-right: 2px;
+  }
+
+  /* MODE BADGE */
+  #mode-badge {
+    position: fixed;
+    bottom: 16px; left: 16px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    background: var(--bg);
+    border: 1px solid var(--divider);
+    border-radius: 6px;
+    padding: 4px 12px;
+    z-index: 100;
+    transition: color 0.2s, border-color 0.2s;
+  }
+
+  #mode-badge.writing {
+    color: var(--accent);
+    border-color: var(--accent);
+  }
+</style>
+</head>
+<body>
+
+<div id="topbar">
+  <div id="breadcrumb">Akashoma <span>/ root</span></div>
+  <div id="hint">press ? for help</div>
+</div>
+
+<div id="root"></div>
+<div id="mode-badge">navigate</div>
+
+<div id="help">
+  <div class="help-title">Akashoma Prototype</div>
+  <div><kbd>h</kbd><kbd>j</kbd><kbd>k</kbd><kbd>l</kbd> navigate cells</div>
+  <div><kbd>Enter</kbd> write into cell</div>
+  <div><kbd>Esc</kbd> stop writing</div>
+  <div><kbd>J</kbd> split below</div>
+  <div><kbd>L</kbd> split right</div>
+  <div><kbd>X</kbd> delete cell</div>
+  <div><kbd>ctrl+h/l</kbd> resize ←→</div>
+  <div><kbd>ctrl+j/k</kbd> resize ↑↓</div>
+  <div><kbd>?</kbd> toggle help</div>
+</div>
+
+<script>
+let idCounter = 0;
+
+function makeCell(content = '') {
+  return {
+    id: ++idCounter,
+    content,
+    children: [],
+    split: null,
+    flex: 1,
+    el: null,
+    parent: null,
+  };
+}
+
+const root = makeCell();
+let focused = root;
+let writing = false;
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+
+function render() {
+  const container = document.getElementById('root');
+  container.innerHTML = '';
+  renderCell(root, container);
+  updateFocusHighlight();
+  updateBreadcrumb();
+  updateModeBadge();
+}
+
+function renderCell(cell, container) {
+  const el = document.createElement('div');
+  el.className = 'cell';
+  el.dataset.id = cell.id;
+  el.style.position = 'absolute';
+  el.style.inset = '0';
+  cell.el = el;
+
+  if (cell.children.length === 0) {
+    if (cell.content.length === 0) {
+      const emptyInd = document.createElement('div');
+      emptyInd.className = 'empty-indicator';
+      const dot = document.createElement('div');
+      dot.className = 'empty-dot';
+      emptyInd.appendChild(dot);
+      el.appendChild(emptyInd);
+    }
+
+    const inner = document.createElement('div');
+    inner.className = 'cell-inner';
+
+    const ta = document.createElement('textarea');
+    ta.className = 'cell-textarea';
+    ta.placeholder = 'empty cell';
+    ta.value = cell.content;
+    ta.readOnly = true;
+    ta.spellcheck = false;
+
+    ta.addEventListener('input', () => {
+      cell.content = ta.value;
+      const ei = el.querySelector('.empty-indicator');
+      if (ei) ei.style.display = ta.value ? 'none' : 'flex';
+    });
+
+    ta.addEventListener('mousedown', (e) => {
+      if (!writing || focused !== cell) {
+        e.preventDefault();
+        focused = cell;
+        updateFocusHighlight();
+        updateBreadcrumb();
+      }
+    });
+
+    inner.appendChild(ta);
+    el.appendChild(inner);
+
+  } else {
+    const childContainer = document.createElement('div');
+    childContainer.style.position = 'absolute';
+    childContainer.style.inset = '0';
+    childContainer.style.display = 'flex';
+    childContainer.style.flexDirection = cell.split === 'vertical' ? 'column' : 'row';
+
+    cell.children.forEach((child, i) => {
+      const wrapper = document.createElement('div');
+      wrapper.style.flex = child.flex;
+      wrapper.style.position = 'relative';
+      wrapper.style.minWidth = '0';
+      wrapper.style.minHeight = '0';
+      wrapper.style.overflow = 'hidden';
+      renderCell(child, wrapper);
+      childContainer.appendChild(wrapper);
+
+      if (i < cell.children.length - 1) {
+        const handle = document.createElement('div');
+        const isVert = cell.split === 'vertical';
+        handle.style.flexShrink = '0';
+        handle.style.background = 'var(--divider)';
+        handle.style.transition = 'background 0.2s';
+        handle.style.cursor = isVert ? 'ns-resize' : 'ew-resize';
+        if (isVert) { handle.style.height = '3px'; handle.style.width = '100%'; }
+        else        { handle.style.width  = '3px'; handle.style.height = '100%'; }
+        handle.addEventListener('mouseenter', () => handle.style.background = 'var(--accent)');
+        handle.addEventListener('mouseleave', () => handle.style.background = 'var(--divider)');
+        setupResizeHandle(handle, cell, i, isVert);
+        childContainer.appendChild(handle);
+      }
+    });
+
+    el.appendChild(childContainer);
+  }
+
+  container.appendChild(el);
+}
+
+// ── RESIZE HANDLES ────────────────────────────────────────────────────────────
+
+function setupResizeHandle(handle, parentCell, index, isVertical) {
+  handle.addEventListener('mousedown', (e) => {
+    e.preventDefault();
+    const startPos = isVertical ? e.clientY : e.clientX;
+    const startFlexA = parentCell.children[index].flex;
+    const startFlexB = parentCell.children[index + 1].flex;
+    const totalFlex = startFlexA + startFlexB;
+    const rect = handle.parentElement.getBoundingClientRect();
+    const totalSize = isVertical ? rect.height : rect.width;
+
+    const onMove = (e) => {
+      const delta = (isVertical ? e.clientY : e.clientX) - startPos;
+      const deltaFlex = (delta / totalSize) * totalFlex;
+      parentCell.children[index].flex     = Math.max(0.05, startFlexA + deltaFlex);
+      parentCell.children[index+1].flex   = Math.max(0.05, totalFlex - parentCell.children[index].flex);
+      render();
+    };
+    const onUp = () => {
+      document.removeEventListener('mousemove', onMove);
+      document.removeEventListener('mouseup', onUp);
+    };
+    document.addEventListener('mousemove', onMove);
+    document.addEventListener('mouseup', onUp);
+  });
+}
+
+// ── FOCUS ─────────────────────────────────────────────────────────────────────
+
+function updateFocusHighlight() {
+  document.querySelectorAll('.cell').forEach(el => el.classList.remove('focused','writing'));
+  if (!focused || !focused.el) return;
+  if (writing) {
+    focused.el.classList.add('writing');
+    const ta = focused.el.querySelector('.cell-textarea');
+    if (ta) { ta.readOnly = false; ta.focus(); const l = ta.value.length; ta.setSelectionRange(l,l); }
+  } else {
+    focused.el.classList.add('focused');
+    const ta = focused.el.querySelector('.cell-textarea');
+    if (ta) { ta.readOnly = true; ta.blur(); }
+  }
+}
+
+// ── NAVIGATION ────────────────────────────────────────────────────────────────
+
+function getAllLeaves(cell, result = []) {
+  if (cell.children.length === 0) result.push(cell);
+  else cell.children.forEach(c => getAllLeaves(c, result));
+  return result;
+}
+
+function navigateTo(dir) {
+  const leaves = getAllLeaves(root);
+  if (!leaves.length) return;
+  if (!focused || !leaves.includes(focused)) { focused = leaves[0]; return; }
+  const cr = focused.el.getBoundingClientRect();
+  const cx = cr.left + cr.width/2, cy = cr.top + cr.height/2;
+  let best = null, bestScore = Infinity;
+  leaves.forEach(leaf => {
+    if (leaf === focused) return;
+    const r = leaf.el.getBoundingClientRect();
+    const lx = r.left + r.width/2, ly = r.top + r.height/2;
+    const dx = lx-cx, dy = ly-cy;
+    let primary, secondary, valid = false;
+    if (dir==='l' && dx<-5) { primary=-dx; secondary=Math.abs(dy); valid=true; }
+    if (dir==='r' && dx> 5) { primary= dx; secondary=Math.abs(dy); valid=true; }
+    if (dir==='k' && dy<-5) { primary=-dy; secondary=Math.abs(dx); valid=true; }
+    if (dir==='j' && dy> 5) { primary= dy; secondary=Math.abs(dx); valid=true; }
+    if (valid) { const score = secondary*3 - primary; if (score < bestScore) { bestScore=score; best=leaf; } }
+  });
+  if (best) focused = best;
+}
+
+// ── SPLIT ─────────────────────────────────────────────────────────────────────
+
+function splitCell(cell, direction) {
+  const newCell = makeCell();
+
+  if (cell.parent === null) {
+    const existing = makeCell(cell.content);
+    existing.flex = 1; existing.parent = cell;
+    newCell.flex = 1;  newCell.parent = cell;
+    cell.content = '';
+    cell.children = [existing, newCell];
+    cell.split = direction;
+  } else {
+    const parent = cell.parent;
+    const idx = parent.children.indexOf(cell);
+
+    if (parent.split === direction) {
+      newCell.flex = cell.flex / 2;
+      cell.flex    = cell.flex / 2;
+      newCell.parent = parent;
+      parent.children.splice(idx+1, 0, newCell);
+    } else {
+      const wrapper = makeCell();
+      wrapper.flex = cell.flex;
+      wrapper.parent = parent;
+      wrapper.split = direction;
+      const clone = makeCell(cell.content);
+      clone.flex = 1; clone.parent = wrapper;
+      newCell.flex = 1; newCell.parent = wrapper;
+      wrapper.children = [clone, newCell];
+      parent.children[idx] = wrapper;
+    }
+  }
+
+  focused = newCell;
+  render();
+}
+
+// ── DELETE ────────────────────────────────────────────────────────────────────
+
+function deleteCell(cell) {
+  if (cell === root) return;
+  const parent = cell.parent;
+  const idx = parent.children.indexOf(cell);
+  if (idx === -1) return;
+  parent.children.splice(idx, 1);
+
+  if (parent.children.length === 1 && parent !== root) {
+    const only = parent.children[0];
+    parent.content = only.content;
+    parent.children = only.children;
+    parent.split = only.split;
+    parent.children.forEach(c => c.parent = parent);
+    focused = parent;
+  } else if (parent.children.length === 0) {
+    parent.split = null; focused = parent;
+  } else {
+    let f = parent.children[Math.max(0, idx-1)];
+    const leaves = getAllLeaves(f);
+    focused = leaves.length ? leaves[0] : f;
+  }
+  render();
+}
+
+// ── RESIZE VIA KEYBOARD ───────────────────────────────────────────────────────
+
+function resizeCell(cell, dir) {
+  if (!cell.parent) return;
+  const parent = cell.parent;
+  const idx = parent.children.indexOf(cell);
+  const isVert = parent.split === 'vertical';
+  const step = 0.15;
+  if (dir==='l' && !isVert && idx>0)                          { parent.children[idx].flex+=step; parent.children[idx-1].flex-=step; }
+  else if (dir==='r' && !isVert && idx<parent.children.length-1) { parent.children[idx].flex+=step; parent.children[idx+1].flex-=step; }
+  else if (dir==='k' && isVert  && idx>0)                     { parent.children[idx].flex+=step; parent.children[idx-1].flex-=step; }
+  else if (dir==='j' && isVert  && idx<parent.children.length-1) { parent.children[idx].flex+=step; parent.children[idx+1].flex-=step; }
+  render();
+}
+
+// ── BREADCRUMB ────────────────────────────────────────────────────────────────
+
+function updateBreadcrumb() {
+  const el = document.getElementById('breadcrumb');
+  const path = [];
+  let cur = focused;
+  while (cur) {
+    const label = cur.content ? cur.content.split('\n')[0].slice(0,20) : (cur===root ? 'root' : 'cell');
+    path.unshift(label);
+    cur = cur.parent;
+  }
+  el.innerHTML = 'Akashoma ' + path.map((p,i) =>
+    i===path.length-1 ? `<span>/ ${p}</span>` : `/ ${p} `
+  ).join('');
+}
+
+function updateModeBadge() {
+  const badge = document.getElementById('mode-badge');
+  badge.textContent = writing ? 'writing' : 'navigate';
+  badge.classList.toggle('writing', writing);
+}
+
+// ── KEYBOARD ──────────────────────────────────────────────────────────────────
+
+document.addEventListener('keydown', (e) => {
+  if (writing) {
+    if (e.key === 'Escape') { writing=false; updateFocusHighlight(); updateModeBadge(); e.preventDefault(); }
+    return;
+  }
+  const ctrl = e.ctrlKey || e.metaKey;
+  switch(e.key) {
+    case 'h': if(ctrl) resizeCell(focused,'l'); else { navigateTo('l'); updateFocusHighlight(); updateBreadcrumb(); } e.preventDefault(); break;
+    case 'l': if(ctrl) resizeCell(focused,'r'); else { navigateTo('r'); updateFocusHighlight(); updateBreadcrumb(); } e.preventDefault(); break;
+    case 'j': if(ctrl) resizeCell(focused,'j'); else { navigateTo('j'); updateFocusHighlight(); updateBreadcrumb(); } e.preventDefault(); break;
+    case 'k': if(ctrl) resizeCell(focused,'k'); else { navigateTo('k'); updateFocusHighlight(); updateBreadcrumb(); } e.preventDefault(); break;
+    case 'J': splitCell(focused,'vertical');   e.preventDefault(); break;
+    case 'L': splitCell(focused,'horizontal'); e.preventDefault(); break;
+    case 'Enter':
+      if (focused && focused.children.length===0) { writing=true; updateFocusHighlight(); updateModeBadge(); }
+      e.preventDefault(); break;
+    case 'x': case 'X': deleteCell(focused); e.preventDefault(); break;
+    case '?':
+      const h = document.getElementById('help');
+      h.style.display = h.style.display==='none' ? 'block' : 'none';
+      e.preventDefault(); break;
+  }
+});
+
+document.getElementById('root').addEventListener('mousedown', (e) => {
+  if (writing) return;
+  const leaves = getAllLeaves(root);
+  for (const leaf of leaves) {
+    if (leaf.el && leaf.el.contains(e.target)) {
+      focused = leaf; updateFocusHighlight(); updateBreadcrumb(); break;
+    }
+  }
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+focused = root;
+render();
+</script>
+</body>
+</html>
