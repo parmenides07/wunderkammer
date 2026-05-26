@@ -569,6 +569,20 @@
         "modified": "5/18/2026"
       }
     },
+    "jivan": {
+      "assets": {
+        "cell.jpg": {
+          "asset": true
+        },
+        "cell1.jpg": {
+          "asset": true
+        }
+      },
+      "jivanDefined.md": {
+        "created": "5/25/2026",
+        "modified": "5/25/2026"
+      }
+    },
     "logic.md": {
       "created": "3/16/2026",
       "modified": "4/26/2026"
@@ -597,107 +611,6 @@
       "philosophy.md": {
         "created": "4/16/2026",
         "modified": "4/26/2026"
-      }
-    },
-    "worldbuilding": {
-      "projectMindscape.md": {
-        "created": "4/26/2026",
-        "modified": "5/19/2026"
-      },
-      ".obsidian": {
-        "themes": {
-          "Mulled Wine": {},
-          "Primary": {},
-          "Sanctum": {},
-          "Sanctum reborn": {},
-          "Typomagical": {},
-          "Wikipedia": {},
-          "deep submerge": {}
-        }
-      },
-      "assets": {
-        "city.jpg": {
-          "asset": true
-        },
-        "weather.jpg": {
-          "asset": true
-        }
-      },
-      "mindscapeExamples": {
-        "assets": {
-          "angel.mp3": {
-            "asset": true
-          },
-          "angel1.mp3": {
-            "asset": true
-          },
-          "city.jpg": {
-            "asset": true
-          },
-          "cloud.jpg": {
-            "asset": true
-          },
-          "cloudgpt.png": {
-            "asset": true
-          },
-          "hiromi.webp": {
-            "asset": true
-          },
-          "kitchen.jpg": {
-            "asset": true
-          },
-          "sini.png": {
-            "asset": true
-          },
-          "traffic.jpg": {
-            "asset": true
-          },
-          "tree.jpg": {
-            "asset": true
-          },
-          "weather.jpg": {
-            "asset": true
-          },
-          "weather1.jpg": {
-            "asset": true
-          }
-        },
-        "braise.md": {
-          "created": "5/10/2026",
-          "modified": "5/18/2026"
-        },
-        "lawoftheland.html": {
-          "created": "5/9/2026",
-          "modified": "5/9/2026"
-        },
-        "lawralai.md": {
-          "created": "5/9/2026",
-          "modified": "5/16/2026"
-        },
-        "praferin.md": {
-          "created": "5/8/2026",
-          "modified": "5/17/2026"
-        },
-        "prayfor.html": {
-          "created": "5/11/2026",
-          "modified": "5/11/2026"
-        },
-        "riabKaj.md": {
-          "created": "5/12/2026",
-          "modified": "5/19/2026"
-        },
-        "weatherman.html": {
-          "created": "5/8/2026",
-          "modified": "5/10/2026"
-        }
-      },
-      "premise.md": {
-        "created": "5/19/2026",
-        "modified": "5/19/2026"
-      },
-      "theLeviathan.md": {
-        "created": "5/14/2026",
-        "modified": "5/19/2026"
       }
     },
     "theMindfill": {
@@ -913,6 +826,111 @@
     "assets": {
       "duneaura.jpg": {
         "asset": true
+      }
+    },
+    "pm_02": {
+      "projectMindscape.md": {
+        "created": "4/26/2026",
+        "modified": "5/19/2026"
+      },
+      ".obsidian": {
+        "themes": {
+          "Mulled Wine": {},
+          "Primary": {},
+          "Sanctum": {},
+          "Sanctum reborn": {},
+          "Typomagical": {},
+          "Wikipedia": {},
+          "deep submerge": {}
+        }
+      },
+      "Jivan Defined.md": {
+        "created": "5/25/2026",
+        "modified": "5/25/2026"
+      },
+      "assets": {
+        "city.jpg": {
+          "asset": true
+        },
+        "weather.jpg": {
+          "asset": true
+        }
+      },
+      "mindscapeExamples": {
+        "assets": {
+          "angel.mp3": {
+            "asset": true
+          },
+          "angel1.mp3": {
+            "asset": true
+          },
+          "city.jpg": {
+            "asset": true
+          },
+          "cloud.jpg": {
+            "asset": true
+          },
+          "cloudgpt.png": {
+            "asset": true
+          },
+          "hiromi.webp": {
+            "asset": true
+          },
+          "kitchen.jpg": {
+            "asset": true
+          },
+          "sini.png": {
+            "asset": true
+          },
+          "traffic.jpg": {
+            "asset": true
+          },
+          "tree.jpg": {
+            "asset": true
+          },
+          "weather.jpg": {
+            "asset": true
+          },
+          "weather1.jpg": {
+            "asset": true
+          }
+        },
+        "braise.md": {
+          "created": "5/10/2026",
+          "modified": "5/18/2026"
+        },
+        "lawoftheland.html": {
+          "created": "5/9/2026",
+          "modified": "5/9/2026"
+        },
+        "lawralai.md": {
+          "created": "5/9/2026",
+          "modified": "5/16/2026"
+        },
+        "praferin.md": {
+          "created": "5/8/2026",
+          "modified": "5/17/2026"
+        },
+        "prayfor.html": {
+          "created": "5/11/2026",
+          "modified": "5/11/2026"
+        },
+        "riabKaj.md": {
+          "created": "5/12/2026",
+          "modified": "5/19/2026"
+        },
+        "weatherman.html": {
+          "created": "5/8/2026",
+          "modified": "5/10/2026"
+        }
+      },
+      "premise.md": {
+        "created": "5/19/2026",
+        "modified": "5/21/2026"
+      },
+      "theLeviathan.md": {
+        "created": "5/14/2026",
+        "modified": "5/24/2026"
       }
     },
     "prose.md": {
