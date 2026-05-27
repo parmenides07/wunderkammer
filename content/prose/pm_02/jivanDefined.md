@@ -5,23 +5,43 @@
 - Jivan allows you to write the content of these cells and define the space they take up. Doing these, you can declare relationships between these cells.
     - A cell can have a hundred parents, a thousand children, and millions of spouses.
     - This is because cells are just manifestations of information. They can spatially and textually exist in many places at once, yet when the information is changed in one place it will change in all — all of them are just manifestations of the same piece of knowledge.
-- Jivan has two views:
-    1. Shoma (Left Side)
-        1. This is where you work with a single cell. It will look like a single box with text in it — similar to a traditional text editor but fundamentally different.
-        2. Writing content — you change the text of the cell. When you write headings, body text, and indented bullet points, those are parent and child relationships being declared on the spot. A heading is a parent, its body text a child, a sub-bullet a child of the bullet above it. You can also declare spousal relationships inline by typing the name of another cell — it will autofill and link. Both children and spouses are clickable and navigable directly from the text. Note that text relationships can reach anywhere across the entire Akasha — unlike spatial relationships which are always relative to the current cell.
-        3. Defining space — you can declare relationships spatially by splitting the cell. Split vertically to place a cell below, making it a child. Split horizontally to place a cell beside, making it a spouse. Keep splitting within any child cell to create more children and spatially arrange them. To see a child cell's own children and its Shoma,4 you press into it and it becomes your current view. This splitting replicates the look of mitosis and functions similarly to tiling window managers — over time it begins to look like a living mosaic. It also supports folding to collapse and obscure parts of the layout when needed.
-    2. Akasha (Right Side)
-        1. Where Shoma focuses on one cell and its immediate world, Akasha is the entire database — every cell that exists, all their content, and all their relationships in one place. This is where the relational intelligence of everything you have built becomes interrogatable.
-        2. This is where you see as a list all the parents, children, and spouses of any cell.
-        3. This is where you query. You can ask for any relational combination — children of a cell, spouses of a cell, grandparents, siblings, aunts. For example: query for all children of Tasks spoused to "incomplete" and every unfinished task across your entire project surfaces instantly. Query further by spousing certain tasks to "Birthday" and now ask for children of Tasks spoused to both "incomplete" and "Birthday" — every outstanding birthday task in one pull. You only ever declare two relationship types — parent/child and spouse. Sibling, grandparent, aunt/uncle, nephew — all emerge automatically and are all queryable.
-- You can declare relationships between cells in two ways:
-    1. In Text (Writing content):
-        1. Type a cell name inline → spousal relationship
-        2. Headings, body text, and indentation → parent/child relationships
-    2. Spatially (Defining space):
-        1. Split vertically and place a cell below → child relationship
-        2. Split horizontally and place a cell beside → spouse relationship
-- The implications are endless because you can query for these cells based on relationships. Declare only parent/child and spouse — sibling, grandparent, aunt/uncle, and nephew relationships will all emerge and be queryable.
+## The Model
+- Fundamentally, the spatial rules of a cell are as follows: above is parents, below is children, horizontal is spouse. Every keystroke and interaction just updates the underlying model and the relationships are derived from that. The view is always downstream of the model.
+- Splitting is what declares a relationship. Placing a cell without splitting is just arrangement — it carries no relational meaning. The act of splitting is the declaration.
+    - Split vertically downward → child relationship
+    - Split vertically upward → parent relationship
+    - Split horizontally → spouse relationship
+    - Place without splitting → meaningless arrangement, just layout organization
+## Shoma
+- The main view of Jivan is made up of a bunch of Shoma. Each Shoma is relative to a singular cell. It will look like a single box with text in it — similar to a traditional text editor but fundamentally different.
+- Each Shoma has two ways of interacting with it:
+    1. Writing content — you change the text of the cell. When you write headings, body text, and indented bullet points, those are parent and child relationships being declared on the spot. A heading is a parent, its body text a child, a sub-bullet a child of the bullet above it. You can also declare spousal relationships inline by typing the name of another cell — it will autofill and link. Both children and spouses are clickable and navigable directly from the text.
+        - Note: text relationships can reach anywhere across the entire project — unlike spatial relationships which are always relative to the current cell.
+    2. Defining space — you declare relationships spatially by splitting the cell following the model above. Every further split adds another relationship to the cell you split from. This splitting replicates the look of mitosis and functions similarly to tiling window managers — over time it begins to look like a living mosaic. It also supports folding to collapse and obscure parts of the layout when needed.
+- To see a child cell's own Shoma — its content and its related cells — you open it as a new Shoma in your viewport.
+
+## Viewport
+- Your viewport is a bunch of Shoma arranged freeformly. These Shoma have no bearing on the underlying data — you just pull them into your view and move them around as you please, like tabs of a workspace.
+- This also means you can have multiple cells open simultaneously, referencing one while writing in another, without any of that arrangement affecting the cells or their relationships.
+
+## Querying
+- You query using Shoma itself. You create an empty Shoma and build the query spatially using the same splitting interactions you already know — split for children, split for spouses, navigate depth for grandchildren. Then press Ctrl+Enter and it returns every cell that fits that relationship structure.
+    - There is no separate query language to learn. The interface for building structure is the interface for querying it.
+- You only ever declare two relationship types — parent/child and spouse. Sibling, grandparent, aunt/uncle, nephew — all emerge automatically from what you declared and are all queryable.
+- For example: build a Shoma with Tasks as the root, split to a child cell marked "incomplete," press Ctrl+Enter — every unfinished task across your entire project surfaces instantly. Add another split spousing "Birthday" to that child and now you are querying for incomplete birthday tasks specifically.
+
+## Relationships at a Glance
+- In Text:
+    - Type a cell name inline → spousal relationship
+    - Headings, body text, and indentation → parent/child relationships
+- Spatially:
+    - Split vertically downward → child relationship
+    - Split vertically upward → parent relationship
+    - Split horizontally → spouse relationship
+    - Place without splitting → layout only, no relationship declared
+
+## Application Examples
+- These are all examples of what is possible with the principles of Jivan established above.
 ## Application Examples
 - These are all examples of what is possible with the principles of Jivan established above. 
 ### D&D Campaign Library
