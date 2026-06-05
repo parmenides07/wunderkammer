@@ -838,6 +838,9 @@
         "modified": "5/19/2026"
       },
       ".obsidian": {
+        "plugins": {
+          "obsidian-style-settings": {}
+        },
         "themes": {
           "Mulled Wine": {},
           "Primary": {},
@@ -848,58 +851,117 @@
           "deep submerge": {}
         }
       },
-      "Jivan Defined.md": {
-        "created": "5/27/2026",
-        "modified": "5/25/2026"
-      },
-      "Pasted image 20260527115700.png": {
-        "asset": true
-      },
-      "Pasted image 20260527115749.png": {
-        "asset": true
-      },
-      "Pasted image 20260527120009.png": {
-        "asset": true
-      },
-      "Pasted image 20260527120020.png": {
-        "asset": true
-      },
-      "Pasted image 20260527140433.png": {
-        "asset": true
-      },
-      "Pasted image 20260527140451.png": {
-        "asset": true
-      },
-      "Pasted image 20260527143145.png": {
-        "asset": true
-      },
-      "Pasted image 20260527144121.png": {
-        "asset": true
-      },
-      "Pasted image 20260527144432.png": {
-        "asset": true
-      },
-      "Pasted image 20260527144511.png": {
-        "asset": true
-      },
-      "Pasted image 20260527144616.png": {
-        "asset": true
-      },
-      "Pasted image 20260527144709.png": {
-        "asset": true
-      },
-      "Pasted image 20260527144810.png": {
-        "asset": true
-      },
-      "Pasted image 20260527162106.png": {
-        "asset": true
-      },
-      "Pasted image 20260527162110.png": {
+      "Pasted image 20260602182535.png": {
         "asset": true
       },
       "assets": {
+        "Pasted image 20260527115700.png": {
+          "asset": true
+        },
+        "Pasted image 20260527115749.png": {
+          "asset": true
+        },
+        "Pasted image 20260527120009.png": {
+          "asset": true
+        },
+        "Pasted image 20260527120020.png": {
+          "asset": true
+        },
+        "Pasted image 20260527140433.png": {
+          "asset": true
+        },
+        "Pasted image 20260527140451.png": {
+          "asset": true
+        },
+        "Pasted image 20260527143145.png": {
+          "asset": true
+        },
+        "Pasted image 20260527144121.png": {
+          "asset": true
+        },
+        "Pasted image 20260527144432.png": {
+          "asset": true
+        },
+        "Pasted image 20260527144511.png": {
+          "asset": true
+        },
+        "Pasted image 20260527144616.png": {
+          "asset": true
+        },
+        "Pasted image 20260527144709.png": {
+          "asset": true
+        },
+        "Pasted image 20260527144810.png": {
+          "asset": true
+        },
+        "Pasted image 20260527162106.png": {
+          "asset": true
+        },
+        "Pasted image 20260527162110.png": {
+          "asset": true
+        },
+        "Pasted image 20260527235604.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000020.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000056.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000418.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000452.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000501.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000826.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000838.png": {
+          "asset": true
+        },
+        "Pasted image 20260528000935.png": {
+          "asset": true
+        },
+        "Pasted image 20260528001012.png": {
+          "asset": true
+        },
         "city.jpg": {
           "asset": true
+        },
+        "notForWunderkammer": {
+          "jivanDefined.md": {
+            "created": "5/25/2026",
+            "modified": "5/27/2026"
+          },
+          "jivanVisualMaxxing 1.md": {
+            "created": "5/27/2026",
+            "modified": "5/27/2026"
+          },
+          "jivanVisualMaxxing.md": {
+            "created": "5/26/2026",
+            "modified": "5/27/2026"
+          },
+          "jivanVisualMaxxingActual.md": {
+            "created": "5/27/2026",
+            "modified": "5/27/2026"
+          },
+          "jivanVisualsThoughtsDillema.md": {
+            "created": "5/27/2026",
+            "modified": "5/28/2026"
+          },
+          "jivanWorkingDocument.md": {
+            "created": "5/29/2026",
+            "modified": "5/31/2026"
+          },
+          "utilitarianButAvanteGarde.md": {
+            "created": "6/1/2026",
+            "modified": "6/2/2026"
+          }
         },
         "test.jpg": {
           "asset": true
@@ -910,22 +972,6 @@
         "weather.jpg": {
           "asset": true
         }
-      },
-      "jivanDefined.md": {
-        "created": "5/25/2026",
-        "modified": "5/27/2026"
-      },
-      "jivanVisualMaxxing 1.md": {
-        "created": "5/27/2026",
-        "modified": "5/27/2026"
-      },
-      "jivanVisualMaxxing.md": {
-        "created": "5/26/2026",
-        "modified": "5/27/2026"
-      },
-      "jivanVisualMaxxingActual.md": {
-        "created": "5/27/2026",
-        "modified": "5/27/2026"
       },
       "mindscapeExamples": {
         "assets": {

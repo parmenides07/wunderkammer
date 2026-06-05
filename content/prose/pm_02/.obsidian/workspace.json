@@ -27,12 +27,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "jivanVisualMaxxing 1.md",
+                "file": "assets/notForWunderkammer/utilitarianButAvanteGarde.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "jivanVisualMaxxing 1"
+              "title": "utilitarianButAvanteGarde"
             }
           }
         ],
@@ -93,8 +93,7 @@
       }
     ],
     "direction": "horizontal",
-    "width": 300,
-    "collapsed": true
+    "width": 300
   },
   "right": {
     "id": "8c84a5b456aaebe2",
@@ -201,26 +200,30 @@
   },
   "active": "f2c1357eaaea9b2f",
   "lastOpenFiles": [
-    "Pasted image 20260527162110.png",
-    "Pasted image 20260527162106.png",
-    "Pasted image 20260527144810.png",
-    "Pasted image 20260527144709.png",
-    "Pasted image 20260527144616.png",
-    "Pasted image 20260527144511.png",
-    "Pasted image 20260527144432.png",
-    "Pasted image 20260527144121.png",
-    "jivanVisualMaxxingActual.md",
-    "jivanVisualMaxxing 1.md",
-    "jivanVisualMaxxing.md",
-    "Pasted image 20260527143145.png",
-    "Pasted image 20260527140451.png",
-    "Pasted image 20260527140433.png",
+    "Pasted image 20260602182535.png",
+    "assets/notForWunderkammer/utilitarianButAvanteGarde.md",
+    "Untitled.canvas",
+    "assets/notForWunderkammer/jivanWorkingDocument.md",
+    "assets/notForWunderkammer/jivanVisualsThoughtsDillema.md",
+    "assets/notForWunderkammer/jivanVisualMaxxing.md",
+    "assets/notForWunderkammer",
+    "assets/notForWunderkammer/jivanVisualMaxxing 1.md",
+    "assets/notForWunderkammer/jivanDefined.md",
     "Jivan Defined.md",
-    "jivanDefined.md",
+    "assets/notForWunderkammer/jivanVisualMaxxingActual.md",
+    "assets/Pasted image 20260527115700.png",
+    "assets/Pasted image 20260527120020.png",
+    "assets/Pasted image 20260527120009.png",
+    "assets/Pasted image 20260527115749.png",
+    "assets/Pasted image 20260528001012.png",
+    "assets/Pasted image 20260528000935.png",
+    "assets/Pasted image 20260528000838.png",
+    "assets/Pasted image 20260528000826.png",
+    "assets/Pasted image 20260528000501.png",
+    "assets/Pasted image 20260528000452.png",
     "premise.md",
     "theLeviathan.md",
     "projectMindscape.md",
-    "Untitled.canvas",
     "mindscapeExamples/lawoftheland.html",
     "mindscapeExamples/weatherman.html",
     "mindscapeExamples/prayfor.html",

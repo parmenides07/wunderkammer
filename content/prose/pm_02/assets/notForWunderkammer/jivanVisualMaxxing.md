@@ -2,7 +2,7 @@
 - I think the solution to this is having customizable visuals. Both manual and emergent visual development. Maybe the user initially seeds a few colors and frrom there as the Shoma grow and evolve they change color. These are just for the cells. For the rest of the UI there is only 2 options: a light and dark mode. The idea is that these would be simple and timeless, classic. Serifs and creams and inks. Then these cells would amazing bursts of color and motion amidst the simplicity. Color and motion unique to you jivan.
 	- Perhaps, on the start the user seeds a number of cell behaviors like their squash and stretch and their blur factor and bubbliness everything that makes up the cell visuals. And then over time this can change. But change as a result of what exactly?? Oh my god imagine how amazing it would be if one person's shomas looked all wispy like
 	 ![[Pasted image 20260527115700.png|700]]
-	 and another person's looked all defined but clear with lines connecting them rather than right next to each other.
+	 and another person's looked all defined but clear with lines connecting them rather than right next to each other. 
 	 ![[Pasted image 20260527120020.png]]
 	 and another person's looked like a jawbreaker split open with moss growing on it 
 	  ![[Pasted image 20260527115749.png]]
