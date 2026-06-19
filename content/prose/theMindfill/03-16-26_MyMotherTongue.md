@@ -20,6 +20,7 @@ You can really see the common thread amongst them all: I'm drawn to systems with
 1. **Logic (Code, Circuits, Computers, Physics)**
    - Function: A playground for systems thinking and abstract reasoning. What is interesting isnt the problem solving itself but the sheer scope of waht can be built. It's a space like no other, engaging a unique sort of problem solving and requires application of abstract idea you'd struggle to find as effeciently channeled elsewhere. Physics and math have also begun to fulfill this.
    - Form: The elegeance of building hardware and software. That everything is reducible to logic and composed of tiny little parts. The emergent complexity is beautiful. As is the same for the abstract language of mathematics and its beautiful application in physics to model reality. (My enjoyment of the form and function is a bit blurred for this one)
+      - In the case of code and circuits, the form the function takes on is the sandbox it develops. A sandbox where anything is possible, a realm removed from the constraints of reality. Code harnesses the power of this digital realm and circuits bring it to fruition in the physical.
 2. **Visual Art (Asethetics, Concept Art)**
    - Function: Visualization of concept. Taking something that exists only as an idea and giving it a concrete visual identity (the most powerful sesne).
    - Form: The intricacies of the visual medium and pursuit of ultimate asethetic. There's a whole language to image-making, one that's infinite in its complexity and potential for application.

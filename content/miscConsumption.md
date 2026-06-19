@@ -6,6 +6,24 @@ banner: assets/shoot.jpg
 # Youtube Videos
 - Just cool videos I saw that I wanted to share.
 
+### June 14th, 2026
+<iframe class="video" src="https://www.youtube.com/embed/MJSlTrFgZAI?si=DJXwUvwBOHH_uodw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### June 13th, 2026
+<iframe class="video" src="https://www.youtube.com/embed/OESXpxUH_jI?si=jSb0UV75hff4UJdk" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### June 11th, 2026
+<iframe class="video" src="https://www.youtube.com/embed/0IPEqrYueMY?si=ZSW1z3J0URZcbhJJ" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### June 9th, 2026
+<iframe class="video" src="https://www.youtube.com/embed/V02kT3aEyaE?si=A31AAsLD4VNAgSZw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### June 2nd, 2026
+<iframe class="video" src="https://www.youtube.com/embed/a3afI692X1Q?si=6AWADEcd6BIuDbgd" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
+### May 20th, 2026
+<iframe class="video" src="https://www.youtube.com/embed/I_UTgP9Lsrg?si=qUHRzy9yzeRqR9dx" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ### May 18th, 2026
 <iframe class="video" src="https://www.youtube.com/embed/q5dqCeNEIFU?si=k4kgy8i8-KRx39DL" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 

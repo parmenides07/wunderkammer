@@ -13,6 +13,7 @@
 		1. You are editing only whichever cell you have clicked on
 6. Query Engine 
 7. Themes and Animations
+	1. TONS OF WRITING 
 
 # Phase 1: Backend
 Cell Struct
@@ -90,3 +91,125 @@ When are we going to impliment folding of cells, resizing with mouse, and long f
 3. Clean up the theme and visual quirks 
 	1. Maybe add blinking cursor 
 	2. Every cell has a drop shadow very subtle but when you highlight the drop shadow becomes very noticeable looks almost like that cell has risen up.
+
+june 9th:
+Okay more stuff happened than even conceievable and lots and lots of features and technical changes (for the better).
+However it got to a point where the tehcnical usage felt great and within cells felt pretty nice too just there were some bugs yes and some performance but more than that it didnt feel reliable and just didnt feel that anchoreed or grounded and i think that is because ofhte canvas
+
+this grounded feeling i feel the most from a notepad or emacs and a little bit less with obsidian but its still there but with this i really didn't
+
+it needs to be raw grounded anchored but also accurate and reliable 
+
+make these first few versions without any drop shadows or pretty rendering
+
+i really like dense space and informationa dn immediate feedback and response just simplciity in teh visuals. 
+It needs to be something safe. my everything program. reliable and simple but powerful and accurate
+
+1. groundedness canvasses Ive always disliked for feeling not anchored in teh case of akashom the canvas was the raltionships and space but it seperated away hte heart of any notetaking app: teh content we need to anchor the content by having a deliberate text editor on the right side just a 2nd flat thing 
+2. reliability and data permanence feeling with obsidian things are autosaved and so saving feels little bit off with emacs it feels a bit more delibarate but still off its definately about the permanecen of data which the canvases can also hurt
+3. performance i dislike notion for being cluncky and buggy and slow and that hurts my usage of it 
+4. theme honestly i dont like the layered dimensional blurred rounded drop shadow effect i want it to be flat and tgrustable and usable like emacs or even obsidian 
+
+all the possible types of cells in a shoma 
+annotated positioned placed structural associated central
+1 central 
+	core
+1 both cnetral and others
+	orbital 
+1 neither central and others
+	oriented
+1 just central
+	bound
+1 just others
+	drifting 
+1 not even a cell really
+	????
+
+so teh visual by default will be accurate and the layout by default accurate but the user can change it and it becomes not so acccurate layout wise but its terminology is still accurate 
+
+once selection is implimented have it that everything you select you can set a relationship with teh focused. so you could have one focused an dselect anothoer nad mke it spouse child parent whatever and this would obviosuly update the tpye of cell they are
+in tranient message and internally it should be aclled marriage adoption and birth
+
+shift q should make a bar fill up and then when it gets to the end it does the query it feels kinda nice idk and it should be a dotted bar
+
+also the focusec cell maybe have a little triangle in the top right corner so it looks like a little page sdimple triangle just same color as border so it sits flush
+
+**some kind of akasha graph or birds eye view of everything**
+**i want something high level but also abstract because thats what i think is missing i think we nailed the mid level shoma (space) and the low level (content) but now we need something high level (relationships) what do you think**
+- It should be a like a constellation minimap that sits in the top righ tof the canvas like a compass
+- family tree type like see great grandather but also 2nd nephew etc 
+	- Maybe this is a seprate layer on top of the graph compass
+
+**just an optional idea very high level feature: what if while in a shoma you can declare a new axis just for runtime just for sake of creating relationships rather than the core being the core you just aritfiically temporarily make something else the core so this way you could be off somewhere else in a shoma and be setting relationships with that other thing, yes its abstracted a bit from the core which should be the core of the shoma but idk i think itsvery powerful and helpfuil**
+
+**relationship compass**, not a full graph.
+
+fundamentally the content is covered by the right pane, the relationships are coveredby the minimap akasha and the shoma middle canvas is the middle layer and bridges together relationships and content with space.
+- On a conceptual level, we've innovated in terms of relationships (linking to 3 relationship types and emergence) and same with space (reaching a middleground between grid/linear and free space) but **how are we innovating with content?** I'd say vim binds are innovation in content but how is that me bringing anything to the table. The akasha will come in v1.5, and the content innovation in v2.0
+	- What brings all this together is reliability (of data), performance, and visuals. The top bottom and middle layer automatically achieve both worms eye, humans eye, and birds eye view giving ultimate feeling (grounded yet aware etc) 
+
+Your mental model sounds right:
+
+```
+             parents                ↑spouses ← focused cell → spouses                ↓             children
+```
+
+Then each visible related Cell also shows its own immediate parents / children / spouses, but only one more layer. So the minimap becomes:
+
+```
+center Cell  direct family/relationship ring    second-order relationship echoes
+```
+
+That is feasible, understandable, and useful.
+
+The important constraint is:
+
+```
+Never show the whole Akasha by default.Show the current relationship field.
+```
+
+So even if the Akasha has 10,000 Cells, the constellation might show:
+
+```
+1 focused Cell5–15 direct relationships20–60 second-order relationshipsextra lines only between already-visible nodes
+```
+
+That is fine.
+
+## Lines are okay, but they should not feel like Obsidian
+
+Drawing lines is not automatically copying Obsidian. Lines are just the natural visual language for relationships.
+
+What would make it feel like Obsidian is:
+
+```
+random force-directed hairballsame node style for every notesame edge style for every linkglobal graph as the main visual identity
+```
+
+What would make Akashom different is:
+
+```
+parents live abovechildren live belowspouses live sidewaysShoma/core context is shown as a soft field/cloudlinks/transclusions/proxies have different line stylescurrent Cell is treated like the gravitational centerthe graph is ambient and local, not global by default
+```
+
+So instead of an Obsidian graph, it becomes a **semantic compass**.
+
+## I would avoid pure force-directed layout
+
+Force layout looks cool but often destroys meaning. For Akashom, relationship direction matters.
+
+I would use a deterministic layout:
+
+```
+parents: upper arc / top bandchildren: lower arc / bottom bandspouses: left/right orbittext links: faint diagonal/satellite edgestransclusions: thicker containment-like edgeproxy targets: small hollow node or ghost edge
+```
+
+Then for second-order nodes, place them just beyond their first-order owner, still respecting direction.
+
+Example:
+
+```
+        parent of parent       parent                \              /                  [ Parent ]                      |[Spouse] —— [ Focused Cell ] —— [Spouse]                      |                  [ Child ]                /          \        child’s child     child’s spouse
+```
+
+That has graph lines, but it is not Obsidian. It is Akashom’s relationship grammar.

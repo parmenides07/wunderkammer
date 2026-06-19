@@ -23,6 +23,8 @@ banner: assets/wes.jpg
 ### Expression of Emotion
 - The expression of deeper meaning and human emotion through art. 
 - Obviously, AI cannot do this. It can feign it sure, but likely never be as good at expressing human emotion like, well a human.
+### Conveyance of Idea
+- This is a mix of the previous two points. It can fake the conveyance of an idea but it dosent truly have any ideas. However, from a pure visual standpoint, idea can be recieved and thus, I must concede this point to the tin cans. 
 ## The Ethical Concern
 - So even if AI can fulfill aspects of art's role to varying degrees, the concern of ethics still remains. This is the largest concern and what stands between me and truly enjoying AI art. 
 	- For those uninformed, AI art is trained on the scraped art of millions of artists. Dead or alive, without consent, their art was stolen and fed into a machine created to replace them. A machine that cannot run without them (via the obvious ouroborus effect that will soon arise as artists are driven out of the public eye) 
