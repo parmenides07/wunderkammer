@@ -6,7 +6,11 @@ banner: assets/shoot.jpg
 # Youtube Videos
 - Just cool videos I saw that I wanted to share.
 
+### June 15th, 2026
+<iframe class="video" src="https://www.youtube.com/embed/W_Ekun0WDIk?si=DTZFS4qqUxJsHvkt" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+
 ### June 14th, 2026
+<iframe class="video" src="https://www.youtube.com/embed/JHApRRthYgQ?si=qFgDC9erJAXrW2sj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 <iframe class="video" src="https://www.youtube.com/embed/MJSlTrFgZAI?si=DJXwUvwBOHH_uodw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 ### June 13th, 2026

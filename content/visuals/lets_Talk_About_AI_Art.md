@@ -38,6 +38,4 @@ banner: assets/wes.jpg
 	- Concept art especially is so far out of the mainstream that this will kill it in the eyes of the public.
 - Art is such a communal craft, required is taking in stimulus and studying the work of others to create new things; and for burgeoning artists to lose access and exposure to the already small community we have would be devastating for the craft as a whole.
 - So, if not being able to easily create a cool image is the cost to continue seeing the work of Sergey Kolesov or Darren Quach, so be it. 
- 
-Fuck AI art and what its doing. 
 

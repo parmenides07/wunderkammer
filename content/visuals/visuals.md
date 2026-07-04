@@ -31,3 +31,6 @@ Before anything though, let me give some context and preface a few things:
 - Visual Art is the most effecient at expressing concept
 - Music is the most effecient at expressing emotion
 - Prose is the most effecient at expressing idea
+- Film is the most effecient at the combination of this. (In an immaterial world, animation would be the next level of this)
+
+- All art is is a vehicle through which to express concept, emotion, and idea. And yes, concept and idea mean two different things.

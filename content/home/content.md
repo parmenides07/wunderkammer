@@ -22,26 +22,30 @@ Join me in my journey of maximizing life.
 ### Prose (Worldbuilding, Philosophy, Journaling, etc)
 - **(O) Worldbuilding:** Project Mindscape (Name TBD)
   - Power system exploration.
-- **(O) Philosophy:** Enlightenment and the Visual
+- **(O) Philosophy:** Theory of Concept & Cognitive Science
 - (**(O) Journaling** is passive)
 ### Logic (Code, Circuit, Physics)
-- **(O) Code:** Akashom
-  - Relational, emergent database system.
-- **(O) C&C:** Oforis
-  - Key input sampler and sequencer board.
-- **(I) Circuits:** *Electric Circuits* by Nilsson & Riedel (Textbook)
-- **(I) Physics** *Electricity and Magnetism* by Griffiths (Textbook)
+- **(O) Code:** Akasha
+  - Relational spatial layer atop files and information.
+- **(O) Code/Physics:** Computational Physics
+  - Learning C++ and understanding field.
+- **(I) Code:** Artifical Intelligence
+  - Learning about current climate and technology.
+- **(O) Circuit:** Oforis
+  - Custom split keyboard.
+- **(O) Circuits:** Neuromorphic Computing
+  - Exploring digital logic design.
 ### Visuals (Art: Asethetics, Concepts, etc)
-- **(O) Concepts:** Mindscape 
-  - Worldbuilding depiction.
+- **(O) Concepts:** Drawing From Imagination
+  - Practicing to draw like Peter Han and KGI.
 - **(I) Asethetics:** Heavy Digital Effects 
   - Using photoshop and the digital medium to the max.
 ### Misc 
 #### (I) Literature:
 - *ASOIF: Storm of Swords* by George R. Martin (Fantasy Epic)
 - *Chainsaw Man* by Tatsuki Fujimoto (Manga)
-- *Perfect Health Diet* by Paul Jaminet and Shou-Ching Jaminet (Nutrition)
 #### (I) Film/Television:
-- *Cowboy Bebop* by Shinichiro Watanabe (Sci-Fi Western Anime)
+- *Dexter* by Michael Cuesta (Crime/Drama)
 #### (I) Videogames:
 - *Disco Elysium* by Za/Um studios (RPG)
+- *Opus Magnum* by Zachtronics (Puzzle/Programming)
