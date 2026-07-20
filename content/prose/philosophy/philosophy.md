@@ -7,5 +7,6 @@ banner: assets/thinking.jpg
 
 ## How I've Used Philosophy 
 - I have this larger life philosophy that I adopt to [maximize life](https://parmenides07.github.io/wunderkammer/#prose/philosophy/maximalistSoulDriver.md). 
-- I then have these [genres of my life](https://parmenides07.github.io/wunderkammer/#prose/theMindfill/03-16-26_MyMotherTongue.md) that I focus most of my effort into. Almost everything I do should be doing these or facilitating doing these. These are the genres of my output and input.
+- In this larger life philosophy I then have different cateogires/purposes for each stage. For the output stage, I've categorized the different ouputs into creation, exploration, discovery, solving, etc. 
+- I then have these [genres of my life](https://parmenides07.github.io/wunderkammer/#prose/theMindfill/03-16-26_MyMotherTongue.md) that I focus most of my effort into. These serve as "mediums" that I fulfill the above categories through. Different aspects/applications of visual art, for example, allows me exploration, expression, and creation. These are the predominant genres of my output and input.
 - In each of these I have adopted a specific [style of approaching it](https://parmenides07.github.io/wunderkammer/#prose/theMindfill/04-16-26_PursuingGreatness.md) to maximize my output and input and be the most fulfilled.

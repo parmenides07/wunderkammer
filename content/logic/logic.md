@@ -1,33 +1,22 @@
 title: Logic-Composed Emergent Systems for Problem-Solving
 banner: assets/circuit.jpg
 
-I absolutely love logic and emergent system. So few things give me the context for abstract thinking as a means for problem solving like circuits and code do. 
-Concretely, my interests most emerge in software. It provides me the freedom to solve problems incredibly abstractly and hardware grants me the power to bring that into the physical world. 
+## Updated AO May 10th 
+I love all generative abstraction through architectures, systems, and rulesets. This is quite verbose so I simply name it logic. This is a major misnaming but the things logic involves and I can define related to, also include this generative abstraction. Bear with me lol. 
 
-As of late, however, physics and, to a smaller degree, math have also begun to scratch that itch.
+What I enjoy most is working with abstraction. Especially reducing a system to its primitives, rules, and constraints. I like construction at this level of abstraction, understanding how a system work, epxanding it, questioning its architecture, changing its rules, and implementing new ideas to see what they make possible.
 
-This logic category is composed of Code, Circuits, and Physics (for now)...
+I have realized that I do not dislike implementation. What I dislike is implementation that only fills in the details of someone else's already completed design. I most enjoy the creation of abstract systems and rule sets and architectures either from scratch or as models of existing things. I especially like when a small set of primitives can generate a much larger space of possibilities. From there, I enjoy implementing the system, testing it against reality, and using it to optimize, expand, or build something further. 
+
+I hope this gives a vague understanding of what I really enjoy.
+
+So far, this has concretely translated to enjoying Pure Math, Computer Science, and Logical Foundations in Philosophy.
 
 ## Projects
 - Note that I approach projects in two stages. 
     1. The first stage being implimentation of raw function and technicals to make it all work. Code wise, this would be writing all the functions and data structure implimentation, essentially getting an MVP. 
     2. The 2nd stage is the fun part. This is where I impliment the innovative form and function, using the written base. The code written here will be most likely for the user experience and visual implimentation rather than any root function or software architecture change.
 - I should also note that fundamentally, I am an asethete meaning I really place high value on the form of things sometimes even more so than function.
-    
-## Current Undertakings
-1. **Zion** (NAME TBD)
-    - A relational, emergent database system meant to be used for brain dumping and abstract notetaking. 
-    - *Status:* Phase 1 almost complete. Phase 2 in early stages. 
-2. **Ofori** (NAME TBD)
-    - A modular macropad capable of sampling keystrokes and composing sequential input patterns at runtime.
-        - Heavily inspired by music production devices (synthesizers and samplers) like the Akai sampler and OP-1.
-    - *Status:* Phase 1 in infancy. Phase 2 still living its previous life.
-
-
-
-
-
-
 
 
 

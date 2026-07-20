@@ -5,7 +5,7 @@ banner: assets/test1.jpg
 
 ## Welcome 
 
-Hello! I'm Param, an Electrical Engineering student, minoring in Cognitive Science, hoping to later pursue grad school for applied physics. I love all things visual, prose, and logic. 
+Hello! I'm Param, a computer engineering student, minoring in mathematics, hoping to later pursue grad school for computer science and work on quantum computing algorithms. I love all generative abstraction through architectures, systems, and rulesets. More simply though, I like logic, art, prose. 
 
 Join me in my journey of maximizing life.
 
@@ -18,34 +18,29 @@ Join me in my journey of maximizing life.
 4. The green arrow will bring you back to the home folder. The swirl on the bottom left toggles on and off site music. 
 5. Click any image to view it blown up and right click to play sound associated with it. 
 
+I plan on restructuring the site to not be categorized into logic, visuals, and prose. 
+
 ## Current Input/Output (I/O)
-### Prose (Worldbuilding, Philosophy, Journaling, etc)
+### Prose 
 - **(O) Worldbuilding:** Project Mindscape (Name TBD)
   - Power system exploration.
 - **(O) Philosophy:** Theory of Concept & Cognitive Science
-- (**(O) Journaling** is passive)
-### Logic (Code, Circuit, Physics)
+### Logic (Math/CS)
 - **(O) Code:** Akasha
   - Relational spatial layer atop files and information.
-- **(O) Code/Physics:** Computational Physics
-  - Learning C++ and understanding field.
-- **(I) Code:** Artifical Intelligence
-  - Learning about current climate and technology.
-- **(O) Circuit:** Oforis
-  - Custom split keyboard.
-- **(O) Circuits:** Neuromorphic Computing
-  - Exploring digital logic design.
-### Visuals (Art: Asethetics, Concepts, etc)
+- **(O) Math:** Book of Proof
+  - Practicing mathematical proofs.
+- **(I) Code:** Alternate Computing
+  - Learning about quantam computing and neuromorphic computing. 
+### Visual Art
 - **(O) Concepts:** Drawing From Imagination
   - Practicing to draw like Peter Han and KGI.
 - **(I) Asethetics:** Heavy Digital Effects 
-  - Using photoshop and the digital medium to the max.
+  - Using the digital medium to have fun with texture and effects on wacky forms.
+- **(I) Asethetics:** Film Photography
+  - Trying out film photography (Kodak Gold 200, Nikon EM/YashicaT3D)
 ### Misc 
 #### (I) Literature:
 - *ASOIF: Storm of Swords* by George R. Martin (Fantasy Epic)
-- *Chainsaw Man* by Tatsuki Fujimoto (Manga)
-#### (I) Film/Television:
-- *Dexter* by Michael Cuesta (Crime/Drama)
 #### (I) Videogames:
 - *Disco Elysium* by Za/Um studios (RPG)
-- *Opus Magnum* by Zachtronics (Puzzle/Programming)
