@@ -12,22 +12,25 @@ banner: assets/castle.jpg
 
 ## Why I Do What I Do
 - On a cognitive level, I've fundamentally loved creation and analysis. Specific types of problem solving were enjoyable not because I like solving problems themselves but because they serve as a medium for me to evaluate and innovate. 
-- But over the years, I've collected a number of hobbies and skills I like pursuing, subconciously gravitating towards a few overarching practices that extend into all the hobbies I enjoyed. The passions I carry today — the ones that actually define me — turn out to be the most optimal mediums for the cognitive processes I most enjoy and excel at. There's other stuff I like obviously, but these three are the most defining.
+- But over the years, I've collected a number of practices and skills I like pursuing, subconciously gravitating towards a few overarching practices that extend into all the hobbies I enjoyed. The passions I carry today — the ones that actually define me — turn out to be the most optimal mediums for the cognitive processes I most enjoy and excel at. There's other stuff I like obviously, but these three are the most defining.
 
 ### Analysis
 For each of these, its the function they play that has really captivated me, but the form of that function, the specific medium for the cognition it engages, has compelled me just as much. 
 You can really see the common thread amongst them all: I'm drawn to systems with emergent properties that utilize abstraction.
-1. **Logic (Code, Circuits, Computers, Physics)**
-   - Function: A playground for systems thinking and abstract reasoning. What is interesting isnt the problem solving itself but the sheer scope of waht can be built. It's a space like no other, engaging a unique sort of problem solving and requires application of abstract idea you'd struggle to find as effeciently channeled elsewhere. Physics and math have also begun to fulfill this.
-   - Form: The elegeance of building hardware and software. That everything is reducible to logic and composed of tiny little parts. The emergent complexity is beautiful. As is the same for the abstract language of mathematics and its beautiful application in physics to model reality. (My enjoyment of the form and function is a bit blurred for this one)
-      - In the case of code and circuits, the form the function takes on is the sandbox it develops. A sandbox where anything is possible, a realm removed from the constraints of reality. Code harnesses the power of this digital realm and circuits bring it to fruition in the physical.
-2. **Visual Art (Asethetics, Concept Art)**
+1. **Career Schema** (Math, CS, Physics) 
+   - This takes up 60%. This subject, specifically computing, is the subject of many fields I find the most exciting and with the most impact whilst also having the chance to work in them at the exact level of abstracation and utilizing roundabout the exact mental processes I enjoy. I want to pursue a doctorate in computer engineering or computer science and later work in industry on quantam algorithms and perhaps even spearhead a company or at least lead a team. 
+   - Function: Working on a level of such abstraction allows ideation and creation unlike any other medium. The manifestations of this medium lend themselves to the most innovative fields (math, cs, physics).
+   - Form: Generative abstraction. Schematization leads itself to generative abstraction which is something I love very much. I enjoy looking at a concept or process in reality or otherwise and creating an abstracted architecture, ruleset, or system to represent it. This abstraction can then be added onto, manipulated, and optimized thus giving way to making these same things possible for the concept or process the abstraction actually represents. Its a process involving logic, systems, and syntax. A process that I love. If you're curious about what I mean by all this (it took very long to come to this conclusion) and its relation to math and CS, check out the career entry on the homepage.
+2. **Passion: Visuals** (Asethetics, Concept Art)
+   - This takes up 35%. Visuals, specifically art is my passion and something that I love practicing and working to master. I hope to one day teach it.
    - Function: Visualization of concept. Taking something that exists only as an idea and giving it a concrete visual identity (the most powerful sesne).
    - Form: The intricacies of the visual medium and pursuit of ultimate asethetic. There's a whole language to image-making, one that's infinite in its complexity and potential for application.
-3. **Prose (Philosophy, Worldbuilding)**
+3. **Hobby: Prose** (Philosophy, Worldbuilding)
+   - This takes up 5%. This is not nearly as significant as the other parts and is just something I enjoy on the side every so often. Reading and writing and worldbuilding. 
    - Function: Expression of idea. Lagnauge as the most direct pipeline from mind to mind. Writing, worldbuilding, philosophy - these are all distinct things but the prose is the common thread running through al of them, the medium underneath the medium.
    - Form: The beatufy of language itself and all its nuance. The most miniscule of changes have enormous impacts: the way the words you choose and the order in which you arrange them changes not just what you are saying but how it lands. The system (grammar) layered in complexity and allowing for the usage of near infinite parts (words) comes together to form one of the most fascinating man-made things: language.
    
+- I should also note a few things about how I pursue them. These are my mediums of my output/input (of which there are different categories). For example, art fulfills both creation but also exploration while prose fulfills consumption and expression.
 
 ### Principles of Productivity
 - Let me note that I do not do these 3 all in one day, everyday. One day I might heavily do one and maybe even for a whole week I might neglect another. The point is that these are just the larger genres for the input/output of my life.

@@ -25,7 +25,7 @@ I plan on restructuring the site to not be categorized into logic, visuals, and 
 - **(O) Worldbuilding:** Project Mindscape (Name TBD)
   - Power system exploration.
 - **(O) Philosophy:** Theory of Concept & Cognitive Science
-### Logic (Math/CS)
+### Schema (Math/CS)
 - **(O) Code:** Akasha
   - Relational spatial layer atop files and information.
 - **(O) Math:** Book of Proof

@@ -2,9 +2,11 @@ title: Logic-Composed Emergent Systems for Problem-Solving
 banner: assets/circuit.jpg
 
 ## Updated AO May 10th 
-I love all generative abstraction through architectures, systems, and rulesets. This is quite verbose so I simply name it logic. This is a major misnaming but the things logic involves and I can define related to, also include this generative abstraction. Bear with me lol. 
+**TLDR:** I love all generative abstraction through architectures, systems, and rulesets. 
 
-What I enjoy most is working with abstraction. Especially reducing a system to its primitives, rules, and constraints. I like construction at this level of abstraction, understanding how a system work, epxanding it, questioning its architecture, changing its rules, and implementing new ideas to see what they make possible.
+What I enjoy most is working with abstraction. Especially reducing a system to its primitives, rules, and constraints. I like construction at this level of abstraction, understanding how a system work, epxanding it, questioning its architecture, changing its rules, and implementing new ideas to see what they make possible. 
+
+I love schematization, and the logic, syntax, and systems I define through it.
 
 I have realized that I do not dislike implementation. What I dislike is implementation that only fills in the details of someone else's already completed design. I most enjoy the creation of abstract systems and rule sets and architectures either from scratch or as models of existing things. I especially like when a small set of primitives can generate a much larger space of possibilities. From there, I enjoy implementing the system, testing it against reality, and using it to optimize, expand, or build something further. 
 
