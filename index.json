@@ -1,16 +1,16 @@
 {
   "home": {
     "moreAboutMe.md": {
-      "created": "5/18/2026",
-      "modified": "4/29/2026"
+      "created": "7/3/2026",
+      "modified": "7/3/2026"
     },
     "miscIdeas.md": {
-      "created": "5/18/2026",
+      "created": "7/20/2026",
       "modified": "4/28/2026"
     },
     "miscConsumption.md": {
-      "created": "5/18/2026",
-      "modified": "5/18/2026"
+      "created": "7/20/2026",
+      "modified": "7/16/2026"
     },
     "assets": {
       "acok.jpg": {
@@ -47,9 +47,13 @@
         "asset": true
       }
     },
-    "home.md": {
-      "created": "5/18/2026",
-      "modified": "5/17/2026"
+    "content.md": {
+      "created": "7/20/2026",
+      "modified": "7/20/2026"
+    },
+    "myChosenCareerPath.md": {
+      "created": "7/20/2026",
+      "modified": "7/19/2026"
     }
   },
   "visuals": {
@@ -232,7 +236,7 @@
     },
     "lets_Talk_About_AI_Art.md": {
       "created": "4/18/2026",
-      "modified": "4/20/2026"
+      "modified": "7/3/2026"
     },
     "pandorasMusicbox": {
       "assets": {
@@ -337,10 +341,415 @@
     },
     "visuals.md": {
       "created": "3/16/2026",
-      "modified": "5/10/2026"
+      "modified": "6/27/2026"
     }
   },
-  "logic": {
+  "prose": {
+    "philosophy": {
+      "assets": {
+        "crudemockup.png": {
+          "asset": true
+        },
+        "eccentrism.png": {
+          "asset": true
+        },
+        "lifemaxxing.jpg": {
+          "asset": true
+        },
+        "thinking.jpg": {
+          "asset": true
+        }
+      },
+      "maximalistSoulDriver.md": {
+        "created": "4/10/2026",
+        "modified": "4/16/2026"
+      },
+      "philosophy.md": {
+        "created": "4/16/2026",
+        "modified": "7/20/2026"
+      }
+    },
+    "theMindfill": {
+      "03-16-26_MyMotherTongue.md": {
+        "created": "4/10/2026",
+        "modified": "7/20/2026"
+      },
+      "03-16-26_PumpingImaginaryIron.md": {
+        "created": "4/10/2026",
+        "modified": "7/20/2026"
+      },
+      "03-18-26_CalculusKellogsAnd Knowledge.md": {
+        "created": "3/18/2026",
+        "modified": "4/16/2026"
+      },
+      "03-21-26_EmergentComplexityAndControl.md": {
+        "created": "3/21/2026",
+        "modified": "4/16/2026"
+      },
+      "03-23-26_ChefsInCS.md": {
+        "created": "3/24/2026",
+        "modified": "4/16/2026"
+      },
+      "04-16-26_PursuingGreatness.md": {
+        "created": "4/16/2026",
+        "modified": "4/26/2026"
+      },
+      "04-26-26_TheStandUserCouldBeAnyone.md": {
+        "created": "4/26/2026",
+        "modified": "7/19/2026"
+      },
+      "07-11-26_RoguelikesAndTheLearningCliff.md": {
+        "created": "7/11/2026",
+        "modified": "7/11/2026"
+      },
+      "assets": {
+        "castle.jpg": {
+          "asset": true
+        },
+        "dab.jpg": {
+          "asset": true
+        },
+        "dab2.jpg": {
+          "asset": true
+        },
+        "dab22.jpg": {
+          "asset": true
+        },
+        "dab3.jpg": {
+          "asset": true
+        },
+        "dab33.jpg": {
+          "asset": true
+        },
+        "emergent.jpg": {
+          "asset": true
+        },
+        "factorio.webp": {
+          "asset": true
+        },
+        "gvanaka": {
+          "F-VbSDGbQAAoFtY.jpg": {
+            "asset": true
+          },
+          "F9JQ2LOXcAAOHtS.jpg": {
+            "asset": true
+          },
+          "F9ab86sWgAAPEdj.jpg": {
+            "asset": true
+          },
+          "G0AsOQdWoAA-J_M.jpg": {
+            "asset": true
+          },
+          "GFfJvV0W0AAdKQq.jpg": {
+            "asset": true
+          },
+          "Gh20UwyWQAAFlm-.jpg": {
+            "asset": true
+          }
+        },
+        "him.jpg": {
+          "asset": true
+        },
+        "jojo.jpg": {
+          "asset": true
+        },
+        "jojo1.jpg": {
+          "asset": true
+        },
+        "keiurana": {
+          "135ad4af8f53b2cb1d63f0125e7ad684.jpg": {
+            "asset": true
+          },
+          "14b74a9d705d932c02b1d5260ad535b0.jpg": {
+            "asset": true
+          },
+          "439abb53ca6b8197f19d611d86695fdb.jpg": {
+            "asset": true
+          },
+          "68b42dc2df4cacce2eeb4d6f8b877bed.jpg": {
+            "asset": true
+          },
+          "7018ec5e9eee52c11bcdcd6159929de7.jpg": {
+            "asset": true
+          },
+          "887beb5887d794d8c7939ff6bc3736f6.jpg": {
+            "asset": true
+          },
+          "8f954d94dc61435c0047cb9fb145b0d7.jpg": {
+            "asset": true
+          },
+          "f9203b5052969fd99eff8032f8e6c57f.jpg": {
+            "asset": true
+          },
+          "factorio.webp": {
+            "asset": true
+          }
+        },
+        "minyum": {
+          "fear.jpg": {
+            "asset": true
+          },
+          "hey.jpg": {
+            "asset": true
+          },
+          "oran.jpg": {
+            "asset": true
+          },
+          "read.jpg": {
+            "asset": true
+          },
+          "test.jpg": {
+            "asset": true
+          }
+        },
+        "noita.gif": {
+          "asset": true
+        },
+        "noita2.gif": {
+          "asset": true
+        },
+        "noita3.gif": {
+          "asset": true
+        },
+        "noita4.gif": {
+          "asset": true
+        },
+        "noita5.gif": {
+          "asset": true
+        },
+        "pinterest1.png": {
+          "asset": true
+        },
+        "pinterest2.png": {
+          "asset": true
+        },
+        "pinterest3.png": {
+          "asset": true
+        },
+        "pinterest4.png": {
+          "asset": true
+        },
+        "simpson.png": {
+          "asset": true
+        },
+        "sparth.jpg": {
+          "asset": true
+        },
+        "tree copy copy.jpg": {
+          "asset": true
+        },
+        "tree.jpg": {
+          "asset": true
+        }
+      },
+      "theMindfill.md": {
+        "created": "3/16/2026",
+        "modified": "4/25/2026"
+      }
+    },
+    "flowOfConciousness": {
+      "assets": {
+        "sunga.jpg": {
+          "asset": true
+        },
+        "test.jpg": {
+          "asset": true
+        }
+      },
+      "proofOfConcept.md": {
+        "created": "5/8/2026",
+        "modified": "5/10/2026"
+      },
+      "proofof.csv": {
+        "created": "5/8/2026",
+        "modified": "7/19/2026"
+      }
+    },
+    "schoolEssays": {
+      "whyArtEssay.md": {
+        "created": "3/17/2026",
+        "modified": "4/15/2026"
+      },
+      "whatIsEducationFor.md": {
+        "created": "4/28/2026",
+        "modified": "4/28/2026"
+      },
+      "assets": {
+        "kgi.jpg": {
+          "asset": true
+        },
+        "princeton.jpg": {
+          "asset": true
+        }
+      }
+    },
+    "assets": {
+      "duneaura.jpg": {
+        "asset": true
+      }
+    },
+    "pm_02": {
+      "projectMindscape.md": {
+        "created": "4/26/2026",
+        "modified": "5/19/2026"
+      },
+      ".obsidian": {
+        "plugins": {
+          "obsidian-style-settings": {}
+        },
+        "themes": {
+          "Mulled Wine": {},
+          "Primary": {},
+          "Sanctum": {},
+          "Sanctum reborn": {},
+          "Typomagical": {},
+          "Wikipedia": {},
+          "deep submerge": {}
+        }
+      },
+      "assets": {
+        "city.jpg": {
+          "asset": true
+        },
+        "weather.jpg": {
+          "asset": true
+        }
+      },
+      "mindscapeExamples": {
+        "assets": {
+          "angel.mp3": {
+            "asset": true
+          },
+          "angel1.mp3": {
+            "asset": true
+          },
+          "city.jpg": {
+            "asset": true
+          },
+          "cloud.jpg": {
+            "asset": true
+          },
+          "cloudgpt.png": {
+            "asset": true
+          },
+          "hiromi.webp": {
+            "asset": true
+          },
+          "kitchen.jpg": {
+            "asset": true
+          },
+          "sini.png": {
+            "asset": true
+          },
+          "traffic.jpg": {
+            "asset": true
+          },
+          "tree.jpg": {
+            "asset": true
+          },
+          "weather.jpg": {
+            "asset": true
+          },
+          "weather1.jpg": {
+            "asset": true
+          }
+        },
+        "braise.md": {
+          "created": "5/10/2026",
+          "modified": "5/18/2026"
+        },
+        "lawoftheland.html": {
+          "created": "5/9/2026",
+          "modified": "5/9/2026"
+        },
+        "lawralai.md": {
+          "created": "5/9/2026",
+          "modified": "5/16/2026"
+        },
+        "praferin.md": {
+          "created": "5/8/2026",
+          "modified": "5/17/2026"
+        },
+        "prayfor.html": {
+          "created": "5/11/2026",
+          "modified": "5/11/2026"
+        },
+        "riabKaj.md": {
+          "created": "5/12/2026",
+          "modified": "5/19/2026"
+        },
+        "weatherman.html": {
+          "created": "5/8/2026",
+          "modified": "5/10/2026"
+        }
+      },
+      "premise.md": {
+        "created": "5/19/2026",
+        "modified": "5/21/2026"
+      },
+      "theLeviathan.md": {
+        "created": "5/14/2026",
+        "modified": "5/24/2026"
+      }
+    },
+    "prose.md": {
+      "created": "4/16/2026",
+      "modified": "4/26/2026"
+    }
+  },
+  "miscIdeas.md": {
+    "created": "4/28/2026",
+    "modified": "4/28/2026"
+  },
+  "miscConsumption.md": {
+    "created": "4/26/2026",
+    "modified": "7/16/2026"
+  },
+  ".obsidian": {},
+  "assets": {
+    "acok.jpg": {
+      "asset": true
+    },
+    "agatha.jpg": {
+      "asset": true
+    },
+    "blade.jpg": {
+      "asset": true
+    },
+    "ffa.jpg": {
+      "asset": true
+    },
+    "phm.jpg": {
+      "asset": true
+    },
+    "phmbook.jpg": {
+      "asset": true
+    },
+    "shoot.jpg": {
+      "asset": true
+    },
+    "sj.jpg": {
+      "asset": true
+    },
+    "test.jpg": {
+      "asset": true
+    },
+    "test1.jpg": {
+      "asset": true
+    },
+    "wwz.jpg": {
+      "asset": true
+    }
+  },
+  "content.md": {
+    "created": "3/14/2026",
+    "modified": "7/20/2026"
+  },
+  "myChosenCareerPath.md": {
+    "created": "3/24/2026",
+    "modified": "7/19/2026"
+  },
+  "schema": {
     "akashom": {
       "VisualNon-VisualTrailer.md": {
         "created": "4/23/2026",
@@ -587,524 +996,13 @@
         "modified": "5/26/2026"
       }
     },
-    "logic.md": {
+    "schema.md": {
       "created": "3/16/2026",
-      "modified": "4/26/2026"
+      "modified": "7/20/2026"
+    },
+    "silakka54.md": {
+      "created": "7/20/2026",
+      "modified": "7/20/2026"
     }
-  },
-  "prose": {
-    "philosophy": {
-      "assets": {
-        "crudemockup.png": {
-          "asset": true
-        },
-        "eccentrism.png": {
-          "asset": true
-        },
-        "lifemaxxing.jpg": {
-          "asset": true
-        },
-        "thinking.jpg": {
-          "asset": true
-        }
-      },
-      "maximalistSoulDriver.md": {
-        "created": "4/10/2026",
-        "modified": "4/16/2026"
-      },
-      "philosophy.md": {
-        "created": "4/16/2026",
-        "modified": "4/26/2026"
-      }
-    },
-    "theMindfill": {
-      "03-16-26_MyMotherTongue.md": {
-        "created": "4/10/2026",
-        "modified": "4/29/2026"
-      },
-      "03-16-26_PumpingImaginaryIron.md": {
-        "created": "4/10/2026",
-        "modified": "4/16/2026"
-      },
-      "03-18-26_CalculusKellogsAnd Knowledge.md": {
-        "created": "3/18/2026",
-        "modified": "4/16/2026"
-      },
-      "03-21-26_EmergentComplexityAndControl.md": {
-        "created": "3/21/2026",
-        "modified": "4/16/2026"
-      },
-      "03-23-26_ChefsInCS.md": {
-        "created": "3/24/2026",
-        "modified": "4/16/2026"
-      },
-      "04-16-26_PursuingGreatness.md": {
-        "created": "4/16/2026",
-        "modified": "4/26/2026"
-      },
-      "04-26-26_TheStandUserCouldBeAnyone.md": {
-        "created": "4/26/2026",
-        "modified": "4/28/2026"
-      },
-      "assets": {
-        "castle.jpg": {
-          "asset": true
-        },
-        "dab.jpg": {
-          "asset": true
-        },
-        "dab2.jpg": {
-          "asset": true
-        },
-        "dab22.jpg": {
-          "asset": true
-        },
-        "dab3.jpg": {
-          "asset": true
-        },
-        "dab33.jpg": {
-          "asset": true
-        },
-        "emergent.jpg": {
-          "asset": true
-        },
-        "factorio.webp": {
-          "asset": true
-        },
-        "gvanaka": {
-          "F-VbSDGbQAAoFtY.jpg": {
-            "asset": true
-          },
-          "F9JQ2LOXcAAOHtS.jpg": {
-            "asset": true
-          },
-          "F9ab86sWgAAPEdj.jpg": {
-            "asset": true
-          },
-          "G0AsOQdWoAA-J_M.jpg": {
-            "asset": true
-          },
-          "GFfJvV0W0AAdKQq.jpg": {
-            "asset": true
-          },
-          "Gh20UwyWQAAFlm-.jpg": {
-            "asset": true
-          }
-        },
-        "him.jpg": {
-          "asset": true
-        },
-        "jojo.jpg": {
-          "asset": true
-        },
-        "jojo1.jpg": {
-          "asset": true
-        },
-        "keiurana": {
-          "135ad4af8f53b2cb1d63f0125e7ad684.jpg": {
-            "asset": true
-          },
-          "14b74a9d705d932c02b1d5260ad535b0.jpg": {
-            "asset": true
-          },
-          "439abb53ca6b8197f19d611d86695fdb.jpg": {
-            "asset": true
-          },
-          "68b42dc2df4cacce2eeb4d6f8b877bed.jpg": {
-            "asset": true
-          },
-          "7018ec5e9eee52c11bcdcd6159929de7.jpg": {
-            "asset": true
-          },
-          "887beb5887d794d8c7939ff6bc3736f6.jpg": {
-            "asset": true
-          },
-          "8f954d94dc61435c0047cb9fb145b0d7.jpg": {
-            "asset": true
-          },
-          "f9203b5052969fd99eff8032f8e6c57f.jpg": {
-            "asset": true
-          },
-          "factorio.webp": {
-            "asset": true
-          }
-        },
-        "minyum": {
-          "fear.jpg": {
-            "asset": true
-          },
-          "hey.jpg": {
-            "asset": true
-          },
-          "oran.jpg": {
-            "asset": true
-          },
-          "read.jpg": {
-            "asset": true
-          },
-          "test.jpg": {
-            "asset": true
-          }
-        },
-        "noita.gif": {
-          "asset": true
-        },
-        "noita2.gif": {
-          "asset": true
-        },
-        "noita3.gif": {
-          "asset": true
-        },
-        "noita4.gif": {
-          "asset": true
-        },
-        "noita5.gif": {
-          "asset": true
-        },
-        "pinterest1.png": {
-          "asset": true
-        },
-        "pinterest2.png": {
-          "asset": true
-        },
-        "pinterest3.png": {
-          "asset": true
-        },
-        "pinterest4.png": {
-          "asset": true
-        },
-        "simpson.png": {
-          "asset": true
-        },
-        "sparth.jpg": {
-          "asset": true
-        },
-        "tree copy copy.jpg": {
-          "asset": true
-        },
-        "tree.jpg": {
-          "asset": true
-        }
-      },
-      "theMindfill.md": {
-        "created": "3/16/2026",
-        "modified": "4/25/2026"
-      }
-    },
-    "flowOfConciousness": {
-      "assets": {
-        "sunga.jpg": {
-          "asset": true
-        },
-        "test.jpg": {
-          "asset": true
-        }
-      },
-      "proofOfConcept.md": {
-        "created": "5/8/2026",
-        "modified": "5/10/2026"
-      },
-      "proofof.csv": {
-        "created": "5/8/2026",
-        "modified": "5/8/2026"
-      }
-    },
-    "schoolEssays": {
-      "whyArtEssay.md": {
-        "created": "3/17/2026",
-        "modified": "4/15/2026"
-      },
-      "whatIsEducationFor.md": {
-        "created": "4/28/2026",
-        "modified": "4/28/2026"
-      },
-      "assets": {
-        "kgi.jpg": {
-          "asset": true
-        },
-        "princeton.jpg": {
-          "asset": true
-        }
-      }
-    },
-    "assets": {
-      "duneaura.jpg": {
-        "asset": true
-      }
-    },
-    "pm_02": {
-      "projectMindscape.md": {
-        "created": "4/26/2026",
-        "modified": "5/19/2026"
-      },
-      ".obsidian": {
-        "plugins": {
-          "obsidian-style-settings": {}
-        },
-        "themes": {
-          "Mulled Wine": {},
-          "Primary": {},
-          "Sanctum": {},
-          "Sanctum reborn": {},
-          "Typomagical": {},
-          "Wikipedia": {},
-          "deep submerge": {}
-        }
-      },
-      "Pasted image 20260602182535.png": {
-        "asset": true
-      },
-      "assets": {
-        "Pasted image 20260527115700.png": {
-          "asset": true
-        },
-        "Pasted image 20260527115749.png": {
-          "asset": true
-        },
-        "Pasted image 20260527120009.png": {
-          "asset": true
-        },
-        "Pasted image 20260527120020.png": {
-          "asset": true
-        },
-        "Pasted image 20260527140433.png": {
-          "asset": true
-        },
-        "Pasted image 20260527140451.png": {
-          "asset": true
-        },
-        "Pasted image 20260527143145.png": {
-          "asset": true
-        },
-        "Pasted image 20260527144121.png": {
-          "asset": true
-        },
-        "Pasted image 20260527144432.png": {
-          "asset": true
-        },
-        "Pasted image 20260527144511.png": {
-          "asset": true
-        },
-        "Pasted image 20260527144616.png": {
-          "asset": true
-        },
-        "Pasted image 20260527144709.png": {
-          "asset": true
-        },
-        "Pasted image 20260527144810.png": {
-          "asset": true
-        },
-        "Pasted image 20260527162106.png": {
-          "asset": true
-        },
-        "Pasted image 20260527162110.png": {
-          "asset": true
-        },
-        "Pasted image 20260527235604.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000020.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000056.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000418.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000452.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000501.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000826.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000838.png": {
-          "asset": true
-        },
-        "Pasted image 20260528000935.png": {
-          "asset": true
-        },
-        "Pasted image 20260528001012.png": {
-          "asset": true
-        },
-        "city.jpg": {
-          "asset": true
-        },
-        "notForWunderkammer": {
-          "jivanDefined.md": {
-            "created": "5/25/2026",
-            "modified": "5/27/2026"
-          },
-          "jivanVisualMaxxing 1.md": {
-            "created": "5/27/2026",
-            "modified": "5/27/2026"
-          },
-          "jivanVisualMaxxing.md": {
-            "created": "5/26/2026",
-            "modified": "5/27/2026"
-          },
-          "jivanVisualMaxxingActual.md": {
-            "created": "5/27/2026",
-            "modified": "5/27/2026"
-          },
-          "jivanVisualsThoughtsDillema.md": {
-            "created": "5/27/2026",
-            "modified": "5/28/2026"
-          },
-          "jivanWorkingDocument.md": {
-            "created": "5/29/2026",
-            "modified": "5/31/2026"
-          },
-          "utilitarianButAvanteGarde.md": {
-            "created": "6/1/2026",
-            "modified": "6/2/2026"
-          }
-        },
-        "test.jpg": {
-          "asset": true
-        },
-        "void.jpg": {
-          "asset": true
-        },
-        "weather.jpg": {
-          "asset": true
-        }
-      },
-      "mindscapeExamples": {
-        "assets": {
-          "angel.mp3": {
-            "asset": true
-          },
-          "angel1.mp3": {
-            "asset": true
-          },
-          "city.jpg": {
-            "asset": true
-          },
-          "cloud.jpg": {
-            "asset": true
-          },
-          "cloudgpt.png": {
-            "asset": true
-          },
-          "hiromi.webp": {
-            "asset": true
-          },
-          "kitchen.jpg": {
-            "asset": true
-          },
-          "sini.png": {
-            "asset": true
-          },
-          "traffic.jpg": {
-            "asset": true
-          },
-          "tree.jpg": {
-            "asset": true
-          },
-          "weather.jpg": {
-            "asset": true
-          },
-          "weather1.jpg": {
-            "asset": true
-          }
-        },
-        "braise.md": {
-          "created": "5/10/2026",
-          "modified": "5/18/2026"
-        },
-        "lawoftheland.html": {
-          "created": "5/9/2026",
-          "modified": "5/9/2026"
-        },
-        "lawralai.md": {
-          "created": "5/9/2026",
-          "modified": "5/16/2026"
-        },
-        "praferin.md": {
-          "created": "5/8/2026",
-          "modified": "5/17/2026"
-        },
-        "prayfor.html": {
-          "created": "5/11/2026",
-          "modified": "5/11/2026"
-        },
-        "riabKaj.md": {
-          "created": "5/12/2026",
-          "modified": "5/19/2026"
-        },
-        "weatherman.html": {
-          "created": "5/8/2026",
-          "modified": "5/10/2026"
-        }
-      },
-      "premise.md": {
-        "created": "5/19/2026",
-        "modified": "5/21/2026"
-      },
-      "theLeviathan.md": {
-        "created": "5/14/2026",
-        "modified": "5/24/2026"
-      }
-    },
-    "prose.md": {
-      "created": "4/16/2026",
-      "modified": "4/26/2026"
-    }
-  },
-  "moreAboutMe.md": {
-    "created": "3/24/2026",
-    "modified": "4/29/2026"
-  },
-  "miscIdeas.md": {
-    "created": "4/28/2026",
-    "modified": "4/28/2026"
-  },
-  "miscConsumption.md": {
-    "created": "4/26/2026",
-    "modified": "5/18/2026"
-  },
-  ".obsidian": {},
-  "assets": {
-    "acok.jpg": {
-      "asset": true
-    },
-    "agatha.jpg": {
-      "asset": true
-    },
-    "blade.jpg": {
-      "asset": true
-    },
-    "ffa.jpg": {
-      "asset": true
-    },
-    "phm.jpg": {
-      "asset": true
-    },
-    "phmbook.jpg": {
-      "asset": true
-    },
-    "shoot.jpg": {
-      "asset": true
-    },
-    "sj.jpg": {
-      "asset": true
-    },
-    "test.jpg": {
-      "asset": true
-    },
-    "test1.jpg": {
-      "asset": true
-    },
-    "wwz.jpg": {
-      "asset": true
-    }
-  },
-  "content.md": {
-    "created": "3/14/2026",
-    "modified": "5/17/2026"
   }
 }
