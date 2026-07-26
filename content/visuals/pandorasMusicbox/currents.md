@@ -1,9 +1,78 @@
 banner: assets/yves2.png
 
-- I know music isn't really visual but this is my website so piss off lol. 
+- I know music isn't really visual but pay no mind to that. 
 - Every month, I will try to update this page with some records/tracks I've been frequenting. 
 
-- **(Remember you can right-click on the album covers to hear my favorite song on each album)** 
+- **(Remember you can right-click on the album covers to hear my favorite song on each album)**
+
+## July 2026:
+<div class="grid">
+
+![album](assets/illusion.jpg)
+*Illusion - Soulstice*
+
+![album](assets/zipless.jpg)
+*Zipless - Vanessa Daou*
+
+![album](assets/breathe-in.jpg)
+*Breathe In - Beauty's Confusion*
+
+![album](assets/flow-river-of-my-soul.jpg)
+*Flow, River of My Soul - Single Gun Theory*
+
+![album](assets/new-stereophonic-sound-spectacular.jpg)
+*A New Stereophonic Sound Spectacular - Hooverphonic*
+
+![album](assets/breath-from-another.jpg)
+*Breath from Another - Esthero*
+
+</div>
+
+## June 2026:
+<div class="grid">
+
+![album](assets/cross-of-changes.jpg)
+*The Cross of Changes - Enigma*
+
+![album](assets/mezzanine.jpg)
+*Mezzanine - Massive Attack*
+
+![album](assets/maxinquaye.jpg)
+*Maxinquaye - Tricky*
+
+![album](assets/dummy.jpg)
+*Dummy - Portishead*
+
+![album](assets/infinity-coast.jpg)
+*Infinity Coast - 21 Hertz*
+
+![album](assets/bloodsport.jpg)
+*Bloodsport - Sneaker Pimps*
+
+</div>
+
+## May 2026:
+<div class="grid">
+
+![album](assets/my-anti-aircraft-friend.jpg)
+*my anti-aircraft friend - julie*
+
+![album](assets/camp.jpg)
+*Camp - Childish Gambino*
+
+![album](assets/fable.jpg)
+*Fable - Faye Wong*
+
+![album](assets/red-album.jpg)
+*1962–1966 (The Red Album) - The Beatles*
+
+![album](assets/saya.jpg)
+*SAYA - Saya Gray*
+
+![album](assets/best-of-sade.jpg)
+*The Best of Sade - Sade*
+
+</div>
 
 ## Mid-April 2026:
 <div class="grid">

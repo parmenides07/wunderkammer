@@ -243,6 +243,18 @@
         "antpile.mp3": {
           "asset": true
         },
+        "best-of-sade.jpg": {
+          "asset": true
+        },
+        "bloodsport.jpg": {
+          "asset": true
+        },
+        "breath-from-another.jpg": {
+          "asset": true
+        },
+        "breathe-in.jpg": {
+          "asset": true
+        },
         "bricolage.png": {
           "asset": true
         },
@@ -252,16 +264,31 @@
         "bythehand.mp3": {
           "asset": true
         },
+        "camp.jpg": {
+          "asset": true
+        },
         "choke.jpg": {
           "asset": true
         },
+        "cross-of-changes.jpg": {
+          "asset": true
+        },
         "cujo.jpg": {
+          "asset": true
+        },
+        "dummy.jpg": {
           "asset": true
         },
         "easy.jpg": {
           "asset": true
         },
         "easy.mp3": {
+          "asset": true
+        },
+        "fable.jpg": {
+          "asset": true
+        },
+        "flow-river-of-my-soul.jpg": {
           "asset": true
         },
         "fragile.jpg": {
@@ -282,10 +309,22 @@
         "hex.jpg": {
           "asset": true
         },
+        "illusion.jpg": {
+          "asset": true
+        },
+        "infinity-coast.jpg": {
+          "asset": true
+        },
         "let.jpg": {
           "asset": true
         },
         "maria.mp3": {
+          "asset": true
+        },
+        "maxinquaye.jpg": {
+          "asset": true
+        },
+        "mezzanine.jpg": {
           "asset": true
         },
         "music.jpg": {
@@ -300,6 +339,12 @@
         "music3.jpeg": {
           "asset": true
         },
+        "my-anti-aircraft-friend.jpg": {
+          "asset": true
+        },
+        "new-stereophonic-sound-spectacular.jpg": {
+          "asset": true
+        },
         "pacifico.mp3": {
           "asset": true
         },
@@ -310,6 +355,12 @@
           "asset": true
         },
         "portals.jpg": {
+          "asset": true
+        },
+        "red-album.jpg": {
+          "asset": true
+        },
+        "saya.jpg": {
           "asset": true
         },
         "screaming.mp3": {
@@ -332,11 +383,14 @@
         },
         "yves2.png": {
           "asset": true
+        },
+        "zipless.jpg": {
+          "asset": true
         }
       },
       "currents.md": {
-        "created": "3/16/2026",
-        "modified": "4/26/2026"
+        "created": "7/25/2026",
+        "modified": "7/25/2026"
       }
     },
     "visuals.md": {
