@@ -21,7 +21,7 @@ Join me in my journey of maximizing life.
 I plan on restructuring the site to not be categorized into logic, visuals, and prose. 
 
 ## Current Input/Output (I/O)
-### Prose 
+### Prose
 - **(O) Worldbuilding:** Project Mindscape (Name TBD)
   - Power system exploration.
 - **(O) Philosophy:** Theory of Concept & Cognitive Science
