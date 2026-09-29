@@ -61,6 +61,12 @@
     return (navigation.pageGroups.get(page.id)?.pages||[]).filter(p=>p.id!==page.id)
       .slice().sort((a,b)=>b.created.localeCompare(a.created)||a.title.localeCompare(b.title)||a.id.localeCompare(b.id));
   }
-  const api={createNavigation,activePath,indexEntries};
+  function receiptSelection(previous,container,page){
+    const directLeafPages=container.pages;
+    const receiptEligible=directLeafPages.length>=2;
+    return {selectedContainerId:container.key,activePageId:page?.id||null,directLeafPages,receiptEligible,
+      receiptTucked:previous.selectedContainerId===container.key?(!receiptEligible||previous.receiptTucked):!receiptEligible};
+  }
+  const api={createNavigation,activePath,indexEntries,receiptSelection};
   if(typeof module!=='undefined')module.exports=api;else root.SiteNavigation=api;
 })(globalThis);

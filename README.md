@@ -83,7 +83,7 @@ For a custom page, add `layout: custom` and optionally `layoutClass: orbital-dem
 
 The left paper expands only the active ancestor path. Only containers with child containers have disclosure arrows. Every row occupies one ruled line, including on phones. Receipts show direct pages, never recursive descendants, with the container's name as the heading.
 
-Entering a container opens its first direct page. Zero-page receipts are hidden; one-page receipts tuck automatically; multi-page receipts unfold. Index pages tuck their duplicate receipt. Use the existing red tuck control on desktop or the RECEIPT control inside mobile INDEX to override this. Manual choices persist while navigating within the same container; entering another container restores its automatic rule. The flying line and bob occur only when a useful multi-page receipt becomes visible.
+Entering a container opens its first direct page unless the URL explicitly selects another page. Receipts always stay mounted: zero or one direct page tucks the paper; two or more open it, including index pages. Manual tucking/unfolding persists only within the same container. Entering another container resets that choice. Use the red desktop tuck control or the RECEIPT control inside mobile INDEX for multi-page receipts. Bobbing is disabled. The desktop connector appears only after entering a different multi-page container with an open, settled receipt; it is disabled on mobile.
 
 Optional `groups` in `site.config.json` can subdivide a project without using its filesystem folders. For example, after creating a project with `project: anvesana`:
 
@@ -155,6 +155,7 @@ With the site running and Playwright available:
 
 ```sh
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/browser.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/stabilization.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/layout.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/profiles.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/performance.cjs current
@@ -165,3 +166,5 @@ PLAYWRIGHT_MODULE=/path/to/playwright node tests/performance.cjs current
 The paper components use source-image geometry: `.card` defines `--paper-width` and derives ruled rows from its artwork; `.receipt` defines `--receipt-width` and bounds only its entry list. Change these component scales rather than stretching their backgrounds. Every navigation row spans exactly one printed rule. The grid surface has a constant texture scale and a viewport-sized layer on mobile. See [LAYOUT.md](LAYOUT.md) for measurements, screenshots, routing behavior, and Safari review notes.
 
 See [UI-PROFILES.md](UI-PROFILES.md) for the latest UI/profile pass, screenshot/test results, asset-warning summary and performance smoke measurements.
+
+See [STABILIZATION.md](STABILIZATION.md) for the current mobile text, deterministic receipt rules and validation results.

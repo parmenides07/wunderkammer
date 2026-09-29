@@ -69,6 +69,10 @@ function buildFolderLinks() {
 }
 function buildFileLinks(group, page) {
   const container = document.querySelector('.card-file-links');
+  if(container.dataset.container===group.key){
+    container.querySelectorAll('.file-link').forEach(link=>link.classList.toggle('active-link',link.dataset.id===page?.id));
+    refreshUnread();updateReceipt(group,page);return;
+  }
   container.innerHTML = '';
   const add = (className, text) => { const el = document.createElement('div');el.className=className;el.textContent=text;container.appendChild(el); };
   // Container state supplies the heading; leaf state only highlights a receipt item.
@@ -92,49 +96,52 @@ function buildFileLinks(group, page) {
   refreshUnread();
   updateReceipt(group,page);
 }
-// One presentation state per current container. Manual choice survives its leaf navigation.
-const receiptState={groupKey:null,tucked:true,manual:false,page:null};
+// Semantic receipt state changes synchronously; CSS alone owns paper movement.
+let receiptState={selectedContainerId:null,activePageId:null,directLeafPages:[],receiptEligible:false,receiptTucked:true};
+let pendingReceiptLine=null;
 function stopReceiptEffects(){
-  document.getElementById('card-files-panel').classList.remove('receipt-bob');
-  if(currentAnimationId){cancelAnimationFrame(currentAnimationId);currentAnimationId=null;}
-  clearTimeout(currentFadeTimeout1);clearTimeout(currentFadeTimeout2);
-  document.getElementById('folder-line').innerHTML='';
-}
-function animateReceipt(){
-  if(!activeGroup||activeGroup.pages.length<2||receiptState.tucked||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  if(isMobileLayout()&&!document.body.classList.contains('index-open'))return;
-  const panel=document.getElementById('card-files-panel');
-  panel.classList.remove('receipt-bob');void panel.offsetHeight;panel.classList.add('receipt-bob');
-  const key=activeGroup.key;
-  requestAnimationFrame(()=>{if(activeGroup?.key===key&&!receiptState.tucked)drawFolderLine(document.querySelector(`[data-group="${key}"]`));});
+  pendingReceiptLine=null;
+  document.getElementById('folder-line').replaceChildren();
 }
 function syncReceiptPosition(){
   const panel=document.getElementById('card-files-panel'),button=document.getElementById('receipt-toggle');
-  panel.hidden=!activeGroup?.pages.length;
-  panel.dataset.tucked=String(receiptState.tucked);
-  panel.querySelector('.receipt').inert=receiptState.tucked;
-  button.hidden=panel.hidden;
-  button.textContent=receiptState.tucked?'RECEIPT ▸':'TUCK RECEIPT ×';
-  button.setAttribute('aria-expanded',String(!receiptState.tucked));
-  document.getElementById('tuck-files-btn').setAttribute('aria-label',receiptState.tucked?'Unfold receipt':'Tuck receipt');
-  if(!isMobileLayout())panel.style.left=receiptState.tucked?`-${Math.max(0,panel.offsetWidth-38)}px`:panel.dataset.savedLeft||'26.5cqw';
+  panel.classList.toggle('is-tucked',receiptState.receiptTucked);
+  panel.classList.toggle('is-open',!receiptState.receiptTucked);
+  panel.dataset.tucked=String(receiptState.receiptTucked);
+  panel.querySelector('.receipt').inert=receiptState.receiptTucked;
+  button.hidden=false;
+  button.disabled=!receiptState.receiptEligible;
+  button.textContent=receiptState.receiptTucked?'RECEIPT':'TUCK RECEIPT ×';
+  button.setAttribute('aria-expanded',String(!receiptState.receiptTucked));
+  const tuck=document.getElementById('tuck-files-btn');
+  tuck.disabled=!receiptState.receiptEligible;
+  tuck.setAttribute('aria-label',receiptState.receiptTucked?'Unfold receipt':'Tuck receipt');
 }
-function setReceiptTucked(tucked,manual=false){
-  const wasTucked=receiptState.tucked,panel=document.getElementById('card-files-panel');
-  if(tucked&&!wasTucked&&!isMobileLayout())panel.dataset.savedLeft=panel.style.left||'26.5cqw';
-  receiptState.tucked=tucked;if(manual)receiptState.manual=true;
-  if(tucked)stopReceiptEffects();
-  syncReceiptPosition();
-  if(wasTucked&&!tucked)animateReceipt();
+function setReceiptTucked(tucked){
+  receiptState.receiptTucked=!receiptState.receiptEligible||tucked;
+  stopReceiptEffects();syncReceiptPosition();
 }
+function drawPendingReceiptLine(){
+  const panel=document.getElementById('card-files-panel');
+  if(!pendingReceiptLine||pendingReceiptLine!==receiptState.selectedContainerId||receiptState.receiptTucked||!receiptState.receiptEligible||isMobileLayout())return;
+  if(panel.getAnimations().some(animation=>animation.playState==='running'))return;
+  const box=panel.getBoundingClientRect();
+  if(box.width<=0||box.right<=0||box.left>=innerWidth)return;
+  pendingReceiptLine=null;
+  drawFolderLine(document.querySelector('.active-folder-link'));
+}
+document.getElementById('card-files-panel').addEventListener('transitionend',event=>{
+  if(event.target===event.currentTarget&&event.propertyName==='left')drawPendingReceiptLine();
+});
 function updateReceipt(group,page){
-  const changed=receiptState.groupKey!==group.key;
-  if(changed){stopReceiptEffects();receiptState.manual=false;}
-  receiptState.groupKey=group.key;receiptState.page=page?.id||null;
-  const tucked=receiptState.manual?receiptState.tucked:group.pages.length<2||page?.layout==='index';
-  const wasTucked=receiptState.tucked;
-  setReceiptTucked(tucked);
-  if(changed&&!tucked&&!wasTucked)animateReceipt();
+  const changed=receiptState.selectedContainerId!==group.key;
+  stopReceiptEffects();
+  receiptState=SiteNavigation.receiptSelection(receiptState,group,page);
+  syncReceiptPosition();
+  if(changed&&receiptState.receiptEligible&&!isMobileLayout()){
+    pendingReceiptLine=group.key;
+    requestAnimationFrame(drawPendingReceiptLine);
+  }
 }
 function selectNavigationPath(node){
   expandedGroups.clear();

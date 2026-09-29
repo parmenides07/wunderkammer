@@ -1,5 +1,7 @@
 # UI and layout-profile pass
 
+Historical report: mobile ink and receipt behavior were subsequently stabilized; see [STABILIZATION.md](STABILIZATION.md).
+
 Completed locally on 2026-09-29. No deployment, dependency additions, asset deletions, or prose edits. The 24 content changes add frontmatter only; their Markdown bodies match the previous commit exactly. The outer paper width and physical grid model are unchanged.
 
 ## Corrections and root causes

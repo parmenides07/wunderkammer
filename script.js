@@ -12,10 +12,6 @@ function startAmbient() { if(currentSound && !siteMuted && audioActivated) curre
 document.addEventListener('pointerdown',()=>{audioActivated=true;startAmbient();},{once:true});
 document.addEventListener('keydown',()=>{audioActivated=true;startAmbient();},{once:true});
 let fileList = [];
-let currentArrowEl = null;
-let currentAnimationId = null;
-let currentFadeTimeout1 = null;
-let currentFadeTimeout2 = null;
 
 
 marked.use({ breaks: true });
@@ -29,130 +25,12 @@ function formatName(name) {
     .replace(/^./, str => str.toUpperCase());
 }
 function drawFolderLine(folderEl) {
-  if(!activeGroup||activeGroup.pages.length<2||receiptState.tucked||document.getElementById('card-files-panel').hidden)return;
-  if(isMobileLayout() || matchMedia('(prefers-reduced-motion: reduce)').matches)return;
-  if (currentAnimationId) {
-    cancelAnimationFrame(currentAnimationId);
-    currentAnimationId = null;
-  }
-  if (currentFadeTimeout1) {
-    clearTimeout(currentFadeTimeout1);
-    currentFadeTimeout1 = null;
-  }
-  if (currentFadeTimeout2) {
-    clearTimeout(currentFadeTimeout2);
-    currentFadeTimeout2 = null;
-  }
-
-  const svg = document.getElementById('folder-line');
-  svg.innerHTML = '';
-
-  const receipt = document.querySelector('.receipt');
-  if (!receipt || !folderEl) return;
-
-  svg.style.position = 'fixed';
-  svg.style.top = '0';
-  svg.style.left = '0';
-  svg.style.width = '100vw';
-  svg.style.height = '100vh';
-  svg.style.pointerEvents = 'none';
-  svg.style.zIndex = '9999';
-
-  const measureText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
-  measureText.style.fontFamily = 'Noto Serif, serif';
-  measureText.style.fontSize = getComputedStyle(folderEl).fontSize;
-  measureText.style.fontWeight = getComputedStyle(folderEl).fontWeight;
-  measureText.textContent = folderEl.textContent.replace('► ', '').replace('▼ ', '');
-  svg.appendChild(measureText);
-  const textWidth = measureText.getBBox().width;
-  svg.removeChild(measureText);
-
-  const fRect = folderEl.getBoundingClientRect();
-  const rRect = receipt.getBoundingClientRect();
-
-  const x1 = fRect.left + textWidth;
-  const y1 = fRect.top + fRect.height / 2;
-  const x2 = rRect.left + 42;
-  const y2 = rRect.top + 74;
-
-  const angle = Math.atan2(y2 - y1, x2 - x1);
-  const arrowSize = 10;
-
-  const defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
-  defs.innerHTML = `
-    <filter id="line-filter" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur in="SourceGraphic" stdDeviation="0.4" result="blur"/>
-      <feDropShadow dx="0" dy="0" stdDeviation="2.4" flood-color="rgba(0,0,0,0.25)"/>
-    </filter>
-  `;
-  svg.appendChild(defs);
-
-  const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  path.setAttribute('d', `M ${x1} ${y1} L ${x2} ${y2}`);
-  path.setAttribute('fill', 'none');
-  path.setAttribute('stroke', '#4a4440');
-  path.setAttribute('stroke-width', '2.5');
-  path.setAttribute('stroke-linecap', 'round');
-  path.setAttribute('opacity', '0.715');
-  path.setAttribute('filter', 'url(#line-filter)');
-  svg.appendChild(path);
-
-  const arrow = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-  arrow.setAttribute('fill', 'none');
-  arrow.setAttribute('stroke', '#4a4440');
-  arrow.setAttribute('stroke-width', '2.5');
-  arrow.setAttribute('stroke-linecap', 'round');
-  arrow.setAttribute('stroke-linejoin', 'round');
-  arrow.setAttribute('opacity', '0.715');
-  arrow.setAttribute('filter', 'url(#line-filter)');
-  svg.appendChild(arrow);
-
-  function updateArrow(hx, hy) {
-    const ax1 = hx - arrowSize * Math.cos(angle - 0.4);
-    const ay1 = hy - arrowSize * Math.sin(angle - 0.4);
-    const ax2 = hx - arrowSize * Math.cos(angle + 0.4);
-    const ay2 = hy - arrowSize * Math.sin(angle + 0.4);
-    arrow.setAttribute('d', `M ${ax1} ${ay1} L ${hx} ${hy} L ${ax2} ${ay2}`);
-  }
-
-  const len = path.getTotalLength();
-  const trailLen = 50;
-  const duration = 490;
-  const start = performance.now();
-
-  // capture references so the closure always touches the right elements
-  const thispath = path;
-  const thisArrow = arrow;
-
-  function animate(now) {
-    const t = Math.min((now - start) / duration, 1);
-    const ease = t < 0.5 ? 2*t*t : -1+(4-2*t)*t;
-
-    const head = ease * (len + trailLen);
-    const tail = Math.max(0, head - trailLen);
-    const visibleLen = head - tail;
-
-    thispath.setAttribute('stroke-dasharray', `0 ${tail} ${visibleLen} ${len * 10}`);
-
-    const headClamped = Math.min(ease * len, len);
-    const pt = thispath.getPointAtLength(headClamped);
-    updateArrow(pt.x, pt.y);
-
-    if (t < 1) {
-      currentAnimationId = requestAnimationFrame(animate);
-    } else {
-      currentAnimationId = null;
-      currentFadeTimeout1 = setTimeout(() => {
-        thispath.style.transition = 'opacity 0.4s ease';
-        thisArrow.style.transition = 'opacity 0.4s ease';
-        thispath.style.opacity = '0';
-        thisArrow.style.opacity = '0';
-        currentFadeTimeout2 = setTimeout(() => svg.innerHTML = '', 400);
-      }, 600);
-    }
-  }
-
-  currentAnimationId = requestAnimationFrame(animate);
+  if(!folderEl||!receiptState.receiptEligible||receiptState.receiptTucked||isMobileLayout()||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const svg=document.getElementById('folder-line');
+  const from=folderEl.getBoundingClientRect(),to=document.querySelector('.receipt').getBoundingClientRect();
+  const x=from.right,y=from.top+from.height/2,tx=to.left+42,ty=to.top+74;
+  const angle=Math.atan2(ty-y,tx-x),size=10;
+  svg.innerHTML=`<path d="M ${x} ${y} L ${tx} ${ty}"/><path d="M ${tx-size*Math.cos(angle-.4)} ${ty-size*Math.sin(angle-.4)} L ${tx} ${ty} L ${tx-size*Math.cos(angle+.4)} ${ty-size*Math.sin(angle+.4)}"/>`;
 }
 
 function updateFrame() {
@@ -177,7 +55,8 @@ function makeDraggable(panelEl) {
   let startX, startY, startLeft, startTop;
 
   function dragStart(clientX, clientY) {
-    if(isMobileLayout())return;
+    if(isMobileLayout()||panelEl.classList.contains('is-tucked'))return;
+    stopReceiptEffects();
     isDragging = true;
     startX = clientX;
     startY = clientY;
@@ -233,7 +112,7 @@ contentEl.addEventListener('scroll', () => {
   }
 });
 
-window.addEventListener('resize', () => { updateFrame(); syncMobileLayout(); syncBannerLayout(); });
+window.addEventListener('resize', () => { stopReceiptEffects(); updateFrame(); syncMobileLayout(); syncBannerLayout(); });
 
 init().then(() => {
   document.getElementById('mute-btn').classList.toggle('muted',siteMuted);
@@ -257,7 +136,7 @@ init().then(() => {
     }
   });
 
-  const toggleReceipt=()=>{playEffect(tuckSound);setReceiptTucked(!receiptState.tucked,true);};
+  const toggleReceipt=()=>{playEffect(tuckSound);setReceiptTucked(!receiptState.receiptTucked);};
   document.getElementById('tuck-files-btn').addEventListener('click',toggleReceipt);
   document.getElementById('receipt-toggle').addEventListener('click',toggleReceipt);
 }).catch(showError);
