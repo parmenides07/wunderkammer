@@ -1,0 +1,30 @@
+{
+  "sections": [
+    {"id":"home","label":"Home"},
+    {"id":"projects","label":"Projects"},
+    {"id":"notes","label":"Notes","professionalLabel":"Writing"},
+    {"id":"archive","label":"Archive"},
+    {"id":"about","label":"About"}
+  ],
+  "projects": [
+    {"id":"akashom","label":"Akashom"},
+    {"id":"jivan","label":"Jivan"},
+    {"id":"cornocupia","label":"Cornocupia"},
+    {"id":"mindscape","label":"Project Mindscape"},
+    {"id":"darkroom","label":"Darkroom"}
+  ],
+  "collections": [
+    {"id":"mindfill","label":"Mindfill"},
+    {"id":"philosophy","label":"Philosophy"},
+    {"id":"systems","label":"Systems"},
+    {"id":"art","label":"Art"},
+    {"id":"consumption","label":"Consumption"},
+    {"id":"ideas","label":"Ideas"},
+    {"id":"inspirations","label":"Inspirations"},
+    {"id":"music","label":"Music"},
+    {"id":"school-writing","label":"School Writing"},
+    {"id":"personal-snapshots","label":"Personal Snapshots"},
+    {"id":"experiments","label":"Experiments"},
+    {"id":"writing","label":"Writing"}
+  ]
+}

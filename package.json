@@ -1,0 +1,6 @@
+{
+  "name": "wunderkammer",
+  "private": true,
+  "scripts": { "build": "node build.js", "test": "node --test tests/*.test.js" },
+  "devDependencies": { "gray-matter": "4.0.3" }
+}

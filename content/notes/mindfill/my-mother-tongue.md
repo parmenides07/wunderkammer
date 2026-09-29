@@ -1,0 +1,56 @@
+---
+id: "notes-mindfill-my-mother-tongue"
+title: "My Mother Tongue"
+slug: "notes/mindfill/my-mother-tongue"
+section: "notes"
+type: "note"
+audience: ["public"]
+status: "active"
+published: true
+created: "2026-03-16"
+modified: "2026-08-15"
+order: 10
+topics: ["cognition"]
+collection: "mindfill"
+banner: "assets/castle.jpg"
+---
+
+- So my previous post was about mindbuilding and discovering how I think and what I'm most profecient at. Doing this, I mapped out how I think (which helped me with another huge thing I was undergoing). I Also realized something very interesting about the things I love to do (hobbies/passions). A lot of what kinda eluded me before is very clear now.
+
+## Cognitive Mental Model Context
+- Before I continue I want to take you on a bit of a tangent to explain a concept I've been thinking about as of late: the idea that everyone thinks differently. This isn't entirely new but I'm not saying everyone thinks completely differently. Instead, I believe there is a small number of distinct cognitive modes or "archetypes of thinking." They fundamentally transform how your brain works and affects the approach to everything you do in life from conversations, to school, to coming up with ideas. Everything. 
+- These modes of thinking are ways of taking in, using, and outputting information/knowledge. I mainly want to explain this in the context of school. You can think of it like blood types and donation, some of these are more common and some less common. Certain modes of thinking/operation are more conducive to reciepiance and others great at donating information, but most a mix of both. That's why some really smart people just suck at explaining stuff or some people can not learn stuff quick but be able to explain it so well. 
+- I guess to really drive home what I'm saying, I gotta give more context. A lot of my life, I didn't think I was very smart. I thought I was just a hard worker. I saw everyone around me in high school being able to do really well and chalked it up to just that. But what really confused me was that as soon as I learned the material I would seem to know it better than a lot of these same people after they'd studied as well. What made it even more confusing is that sometimes this would be the case and other times I would do just as well without studying. I didn't think about this stuff that much becuase I didn't need to and was set in my findings that I was just not that smart but I work hard. That was until I came to university. Here, I met so many different people with different ways of thinking and was placed in so many academic scenarios with these people that I was met with all the evidence I needed to naturally come to these conclusions. I realized this whole idea of different mental models, and the recipiance, processing, and donation of information. I saw it firsthand. And I realized that no one really thought the way I did and that explained why the onloading of information especially in a lecture setting from certain professors was not as effective for me. I'd learn considerably better from books or straight lecture notes. There I could morph the input I recieve to fit my mental model. It also explained why after studying I'd be able to work through a lot more difficult problems a lot easier than others and structure information in a much more digestible and compoundable manner. I think this is because I think very structurally, based on systems and such, very much founded upon abstraction and emergent complexity. Its probably more than this but essentially, all this time I was mistaking a translation problem for an intillegence problem.
+   - To explain how I would feel, let's say you're talking to your friend and they say something but you don't exactly get what they mean and maybe you ask them a question to elaborate. Then, you get it and say "OHHHH, why didn't you just say it like this?" That's how I feel a lot of the time but I never really noticed since I was able to understand it quickly and typically didn't need to ask that extra question. So I'd hear a concept explained a certain way and have to take an extra second to put it in terms that my brain better understood and my knee-jerk reaction was to think "why not just explain it like this" and often times that explanation would make more sense to people beyond myself as well. 
+-  So essentially, there is a level of friction when "translating" their model of knowledge to my model. This is partially why I'm so obsessed with first principle thinking: breaking something down into its tiniest fundamental pieces makes each piece easier to translate individually, and then I can reconstruct and build upon it in my mind. This is thinking that just aligns perfectly with how my mind works anyway. Obviously for easier things this isn't much of an issue but it is for more complex things especially explained by those possessing certain modes of thinking. The great thing however is that once I get over that hurdle of translation, processing the stored information becomes incredibly effecient as does teaching that information to others I think more so than for others and even more so for certain contexts.
+- This brings me back to the topic at hand: now that you understand how I think given the context of school and knowledge, I hope you might be able to understand why I love the following practices so much and why they align so naturally with how I think.
+
+## Why I Do What I Do
+- On a cognitive level, I've fundamentally loved creation and analysis. Specific types of problem solving were enjoyable not because I like solving problems themselves but because they serve as a medium for me to evaluate and innovate. 
+- But over the years, I've collected a number of practices and skills I like pursuing, subconciously gravitating towards a few overarching practices that extend into all the hobbies I enjoyed. The passions I carry today — the ones that actually define me — turn out to be the most optimal mediums for the cognitive processes I most enjoy and excel at. There's other stuff I like obviously, but these three are the most defining.
+
+### Analysis
+For each of these, its the function they play that has really captivated me, but the form of that function, the specific medium for the cognition it engages, has compelled me just as much. 
+You can really see the common thread amongst them all: I'm drawn to systems with emergent properties that utilize abstraction.
+1. **Career Schema** (Math, CS, Physics) 
+   - This takes up 60%. This subject, specifically computing, is the subject of many fields I find the most exciting and with the most impact whilst also having the chance to work in them at the exact level of abstracation and utilizing roundabout the exact mental processes I enjoy. I want to pursue a doctorate in computer engineering or computer science and later work in industry on quantam algorithms and perhaps even spearhead a company or at least lead a team. 
+   - Function: Working on a level of such abstraction allows ideation and creation unlike any other medium. The manifestations of this medium lend themselves to the most innovative fields (math, cs, physics).
+   - Form: Generative abstraction. Schematization leads itself to generative abstraction which is something I love very much. I enjoy looking at a concept or process in reality or otherwise and creating an abstracted architecture, ruleset, or system to represent it. This abstraction can then be added onto, manipulated, and optimized thus giving way to making these same things possible for the concept or process the abstraction actually represents. Its a process involving logic, systems, and syntax. A process that I love. If you're curious about what I mean by all this (it took very long to come to this conclusion) and its relation to math and CS, check out the career entry on the homepage.
+2. **Passion: Visuals** (Asethetics, Concept Art)
+   - This takes up 35%. Visuals, specifically art is my passion and something that I love practicing and working to master. I hope to one day teach it.
+   - Function: Visualization of concept. Taking something that exists only as an idea and giving it a concrete visual identity (the most powerful sesne).
+   - Form: The intricacies of the visual medium and pursuit of ultimate asethetic. There's a whole language to image-making, one that's infinite in its complexity and potential for application.
+3. **Hobby: Prose** (Philosophy, Worldbuilding)
+   - This takes up 5%. This is not nearly as significant as the other parts and is just something I enjoy on the side every so often. Reading and writing and worldbuilding. 
+   - Function: Expression of idea. Lagnauge as the most direct pipeline from mind to mind. Writing, worldbuilding, philosophy - these are all distinct things but the prose is the common thread running through al of them, the medium underneath the medium.
+   - Form: The beatufy of language itself and all its nuance. The most miniscule of changes have enormous impacts: the way the words you choose and the order in which you arrange them changes not just what you are saying but how it lands. The system (grammar) layered in complexity and allowing for the usage of near infinite parts (words) comes together to form one of the most fascinating man-made things: language.
+   
+- I should also note a few things about how I pursue them. These are my mediums of my output/input (of which there are different categories). For example, art fulfills both creation but also exploration while prose fulfills consumption and expression.
+
+### Principles of Productivity
+- Let me note that I do not do these 3 all in one day, everyday. One day I might heavily do one and maybe even for a whole week I might neglect another. The point is that these are just the larger genres for the input/output of my life.
+   - In fact, trying to do all 3 of these in one day would be counterintuitive and go against the principles of focus and productivity. Parts of this are founded off of the lessons of Cal Newport's *Slow Productivty* and Odysseas's [*Hobby Season Concept*](https://www.youtube.com/watch?v=usOgvEPaW4k)
+   - You can even apply my idea of [expert of a few](#/notes/philosophy/maximalist-soul-driver) to this, shrinking the scale down to a single day. Too many items and you can't focus and enter the flow state, but too little items and you reach diminishing returns for the day. 
+
+- What's really great about these are the skills I hone doing these are so transferrable and each of the practices are unique with their own unique communities. 
+

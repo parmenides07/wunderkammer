@@ -1,0 +1,154 @@
+[
+  {
+    "old": "content/content.md",
+    "new": "content/home.md"
+  },
+  {
+    "old": "content/home/moreAboutMe.md",
+    "new": "content/about/about.md"
+  },
+  {
+    "old": "content/sciences/akashom/akashom.md",
+    "new": "content/projects/akashom/index.md"
+  },
+  {
+    "old": "content/sciences/akashom/VisualNon-VisualTrailer.md",
+    "new": "content/projects/akashom/visual-nonvisual-trailer.md"
+  },
+  {
+    "old": "content/sciences/akashom/DL2_Visualmaxxing_Is_Meta.md",
+    "new": "content/projects/akashom/visual-design.md"
+  },
+  {
+    "old": "content/sciences/akashom/DL5_Distros_and_Architecture.md",
+    "new": "content/projects/akashom/architecture.md"
+  },
+  {
+    "old": "content/sciences/cornocupia/cornocupia.md",
+    "new": "content/projects/cornocupia/index.md"
+  },
+  {
+    "old": "content/sciences/jivan/jivanDefined.md",
+    "new": "content/projects/jivan/index.md"
+  },
+  {
+    "old": "content/arts/prose/pm_02/projectMindscape.md",
+    "new": "content/projects/mindscape/index.md"
+  },
+  {
+    "old": "content/arts/prose/pm_02/premise.md",
+    "new": "content/projects/mindscape/premise.md"
+  },
+  {
+    "old": "content/arts/prose/pm_02/theLeviathan.md",
+    "new": "content/projects/mindscape/leviathan.md"
+  },
+  {
+    "old": "content/arts/prose/pm_02/mindscapeExamples/braise.md",
+    "new": "content/projects/mindscape/examples/braise.md"
+  },
+  {
+    "old": "content/arts/prose/pm_02/mindscapeExamples/lawralai.md",
+    "new": "content/projects/mindscape/examples/lawralai.md"
+  },
+  {
+    "old": "content/arts/prose/pm_02/mindscapeExamples/praferin.md",
+    "new": "content/projects/mindscape/examples/praferin.md"
+  },
+  {
+    "old": "content/arts/prose/pm_02/mindscapeExamples/riabKaj.md",
+    "new": "content/projects/mindscape/examples/riab-kaj.md"
+  },
+  {
+    "old": "content/arts/visuals/darkroom/darkroom.md",
+    "new": "content/projects/darkroom/index.md"
+  },
+  {
+    "old": "content/sciences/sciences.md",
+    "new": "content/notes/systems/logic-composed-emergent-systems.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/theMindfill.md",
+    "new": "content/notes/mindfill/index.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/03-16-26_MyMotherTongue.md",
+    "new": "content/notes/mindfill/my-mother-tongue.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/03-16-26_PumpingImaginaryIron.md",
+    "new": "content/notes/mindfill/pumping-imaginary-iron.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/03-18-26_CalculusKellogsAnd Knowledge.md",
+    "new": "content/notes/mindfill/calculus-kellogs-and-knowledge.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/03-21-26_EmergentComplexityAndControl.md",
+    "new": "content/notes/mindfill/emergent-complexity-and-control.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/03-23-26_ChefsInCS.md",
+    "new": "content/notes/mindfill/chefs-in-cs.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/04-16-26_PursuingGreatness.md",
+    "new": "content/notes/mindfill/pursuing-greatness.md"
+  },
+  {
+    "old": "content/arts/prose/theMindfill/04-26-26_TheStandUserCouldBeAnyone.md",
+    "new": "content/notes/mindfill/the-stand-user-could-be-anyone.md"
+  },
+  {
+    "old": "content/arts/prose/philosophy/philosophy.md",
+    "new": "content/notes/philosophy/index.md"
+  },
+  {
+    "old": "content/arts/prose/philosophy/maximalistSoulDriver.md",
+    "new": "content/notes/philosophy/maximalist-soul-driver.md"
+  },
+  {
+    "old": "content/arts/visuals/visuals.md",
+    "new": "content/notes/art/harnessing-visuals-with-art.md"
+  },
+  {
+    "old": "content/arts/visuals/lets_Talk_About_AI_Art.md",
+    "new": "content/notes/art/lets-talk-about-ai-art.md"
+  },
+  {
+    "old": "content/miscConsumption.md",
+    "new": "content/archive/consumption/index.md"
+  },
+  {
+    "old": "content/miscIdeas.md",
+    "new": "content/archive/ideas/index.md"
+  },
+  {
+    "old": "content/myChosenCareerPath.md",
+    "new": "content/archive/career/my-chosen-career-path.md"
+  },
+  {
+    "old": "content/arts/visuals/currentInspirations.md",
+    "new": "content/archive/inspiration/current-inspirations.md"
+  },
+  {
+    "old": "content/arts/visuals/pandorasMusicbox/currents.md",
+    "new": "content/archive/music/currents.md"
+  },
+  {
+    "old": "content/arts/prose/schoolEssays/whyArtEssay.md",
+    "new": "content/archive/school-writing/why-art.md"
+  },
+  {
+    "old": "content/arts/prose/schoolEssays/whatIsEducationFor.md",
+    "new": "content/archive/school-writing/what-is-education-for.md"
+  },
+  {
+    "old": "content/arts/prose/flowOfConciousness/proofOfConcept.md",
+    "new": "content/archive/experiments/proof-of-concept.md"
+  },
+  {
+    "old": "content/arts/prose/prose.md",
+    "new": "content/archive/writing/when-it-rains-it-prose.md"
+  }
+]
