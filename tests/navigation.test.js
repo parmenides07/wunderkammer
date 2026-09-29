@@ -30,3 +30,11 @@ test('all legacy aliases resolve within eligible views',()=>{
  const model=createContentModel(manifest,'public');
  for(const [alias,slug] of Object.entries(manifest.aliases))assert.equal(model.resolve(alias).slug,slug,alias);
 });
+test('receipts contain only direct leaves while unread retains descendants',()=>{
+ const nav=createNavigation(createContentModel(manifest,'public'),config,'public');
+ for(const section of ['projects','notes','archive']) {
+  assert.equal(nav.catalog.get(section).pages.length,0,section);
+  assert.ok(nav.catalog.get(section).allPages.length>0,section);
+ }
+ assert.equal(nav.catalog.get('notes/mindfill').pages.length,8);
+});

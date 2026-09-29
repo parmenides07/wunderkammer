@@ -1,10 +1,13 @@
+const {markdownReferences}=require('./tools/markdown');
 const fs = require('node:fs');
 const path = require('node:path');
 const matter = require('gray-matter');
+const {buildImages, displayVariant} = require('./tools/images');
 
 const SECTIONS = ['home', 'projects', 'notes', 'archive', 'about'];
 const AUDIENCES = ['public', 'professional'];
 const STATUSES = ['active', 'complete', 'wip', 'paused', 'superseded', 'archived'];
+const TYPES = ['home','project','project-note','note','essay','log','collection','archive','about'];
 const REQUIRED = ['id', 'title', 'slug', 'section', 'type', 'audience', 'status', 'published', 'created'];
 const slash = value => value.split(path.sep).join('/');
 function date(value, field, source) {
@@ -42,6 +45,7 @@ function buildManifest(root = __dirname) {
       if (!/^[a-z0-9][a-z0-9-]*$/.test(data.id)) throw new Error(`${source}: invalid id "${data.id}"`);
       if (!SECTIONS.includes(data.section)) throw new Error(`${source}: invalid section "${data.section}"`);
       if (!Array.isArray(data.audience) || !data.audience.length || data.audience.some(a => !AUDIENCES.includes(a))) throw new Error(`${source}: invalid audience; expected public and/or professional`);
+      if (!TYPES.includes(data.type)) throw new Error(`${source}: invalid type "${data.type}"`);
       if (!STATUSES.includes(data.status)) throw new Error(`${source}: invalid status "${data.status}"`);
       if (data.published !== true) throw new Error(`${source}: published must be a boolean`);
       for (const [field, seen] of [['id', ids], ['slug', slugs]]) {
@@ -65,8 +69,39 @@ function buildManifest(root = __dirname) {
   aliases = Object.fromEntries(Object.entries(aliases).filter(([, slug]) => slugs.has(slug)));
   return { generatedAt: new Date().toISOString(), pages, assetDirectories, aliases };
 }
-function build(root = __dirname) {
+async function build(root = __dirname) {
   const manifest = buildManifest(root);
+  const shell = fs.readFileSync(path.join(root, 'site.shell.html'), 'utf8');
+  const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
+  const images = await buildImages(root, manifest, shell, css);
+  fs.writeFileSync(path.join(root, 'generated/image-index.json'),JSON.stringify(images));
+  for(const page of manifest.pages) {
+    // Page-local metadata only: no download of the archive's image index at runtime.
+    const references = [page.banner,...markdownReferences(page.body).images.map(image=>image.href),...[...page.body.matchAll(/<img[^>]*src=["']([^"']+)/g)].map(m=>m[1])].filter(Boolean);
+    const wanted = new Set(references.filter(ref=>!/^https?:/.test(ref)).map(ref=>path.posix.normalize(`${page.assetBase}/${ref.split('#')[0]}`)));
+    for(const match of page.body.matchAll(/images\{([^}]+)\}/g)) {
+      const folder=path.posix.normalize(`${page.assetBase}/${match[1].split(',')[0].trim()}`).replace(/\/$/,'');
+      for(const filename of manifest.assetDirectories[folder]||[])wanted.add(`${folder}/${filename}`);
+    }
+    const selected = Object.fromEntries(Object.entries(images).filter(([src])=>wanted.has(src)).map(([src,item])=>[src,{...item,original:src}]));
+    const dest = `generated/images/${page.id}.json`;
+    fs.writeFileSync(path.join(root,dest),JSON.stringify(selected));
+    page.images = dest;
+  }
+  let optimizedCss = css.replace(/url\((["']?)(assets\/[^"')]+)\1\)/g,(match,q,src)=>images[src]?`url('../${displayVariant(images[src], src.includes('noise')?600:1200).src}')`:match.replace('assets/','../assets/'));
+  fs.writeFileSync(path.join(root,'generated/site.css'),optimizedCss);
+  const vendor = path.join(root,'generated/vendor');fs.mkdirSync(vendor,{recursive:true});
+  const copy=(src,dest)=>fs.copyFileSync(path.join(__dirname,'node_modules',src),path.join(vendor,dest));
+  copy('marked/lib/marked.umd.js','marked.js');
+  copy('papaparse/papaparse.min.js','papaparse.js');
+  copy('photoswipe/dist/photoswipe.esm.min.js','photoswipe.js');
+  copy('photoswipe/dist/photoswipe.css','photoswipe.css');
+  for(const family of ['jetbrains-mono','azeret-mono']) {
+    copy(`@fontsource/${family}/files/${family}-latin-400-normal.woff2`,`${family}.woff2`);
+    copy(`@fontsource/${family}/LICENSE`,`${family}-LICENSE.txt`);
+  }
+  for(const [pkg,name] of [['photoswipe','LICENSE'],['marked','LICENSE'],['papaparse','LICENSE']]) copy(`${pkg}/${name}`,`${pkg}-LICENSE.txt`);
+
   const output = path.join(root, 'generated/pages');
   fs.mkdirSync(output, { recursive: true });
   const expected = new Set(manifest.pages.map(page => path.basename(page.source)));
@@ -78,14 +113,19 @@ function build(root = __dirname) {
     return page;
   });
   fs.writeFileSync(path.join(root, 'manifest.json'), JSON.stringify(manifest, null, 2) + '\n');
-  // Single application shell, including support for GitHub Pages project subpaths.
-  const shell = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
+  const optimizedShell = shell.replace(/<img([^>]*?)src="(assets\/[^"]+)"([^>]*)>/g,(tag,before,src,after)=>{
+    const item=images[src];if(!item)return tag;
+    const variant=displayVariant(item,src.includes('theoprins')?1200:600);
+    const image = `<img${before}src="${variant.src}" width="${item.width}" height="${item.height}" decoding="async"${after}>`;
+    return tag.includes('data-desktop') ? `<picture><source media="(min-width: 901px) and (pointer: fine)" srcset="${variant.src}">${image.replace(`src="${variant.src}"`, 'src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs="')}</picture>` : image;
+  });
+  fs.writeFileSync(path.join(root,'index.html'),optimizedShell);
   fs.mkdirSync(path.join(root, 'work'), { recursive: true });
-  fs.writeFileSync(path.join(root, 'work/index.html'), shell.replace('<head>', '<head>\n  <!-- Generated by npm run build; edit the root index.html instead. -->\n  <base href="../">'));
+  fs.writeFileSync(path.join(root, 'work/index.html'), optimizedShell.replace('<head>', '<head>\n  <!-- Generated by npm run build; edit site.shell.html instead. -->\n  <base href="../">'));
   console.log(`manifest.json generated: ${manifest.pages.length} published pages`);
   return manifest;
 }
 if (require.main === module) {
-  try { build(); } catch (error) { console.error(`Build failed: ${error.message}`); process.exitCode = 1; }
+  build().catch(error => { console.error(`Build failed: ${error.message}`); process.exitCode = 1; });
 }
 module.exports = { buildManifest, build };

@@ -33,3 +33,4 @@ test('unpublishing removes page and aliases; filesystem dates have no authority'
  assert.deepEqual(buildManifest(f.root).pages,[]);
  assert.deepEqual(buildManifest(f.root).aliases,{});
 });
+test('rejects invalid type',t=>{const f=fixture(t);f.write('bad.md',{...metadata,type:'mystery'});assert.throws(()=>buildManifest(f.root),/invalid type/);});

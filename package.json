@@ -1,6 +1,24 @@
 {
   "name": "wunderkammer",
   "private": true,
-  "scripts": { "build": "node build.js", "test": "node --test tests/*.test.js" },
-  "devDependencies": { "gray-matter": "4.0.3" }
+  "scripts": {
+    "build": "node build.js",
+    "test": "node --test tests/*.test.js",
+    "dev": "node tools/dev.js",
+    "new": "node tools/new.js",
+    "check": "node tools/check.js"
+  },
+  "devDependencies": {
+    "@fontsource/azeret-mono": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "chokidar": "4.0.3",
+    "gray-matter": "4.0.3",
+    "marked": "18.0.14",
+    "papaparse": "5.7.0",
+    "photoswipe": "5.4.4",
+    "sharp": "0.35.5"
+  },
+  "engines": {
+    "node": ">=22.13.0"
+  }
 }

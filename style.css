@@ -5,12 +5,8 @@ html, body {
   background: #97867d;
 }
 
-@font-face {
-  font-family: 'Baskerville';
-  src: url('assets/Baskerville.woff2') format('woff2');
-  font-weight: 385;
-  font-style: normal;
-}
+@font-face { font-family: 'JetBrains Mono'; src: url('vendor/jetbrains-mono.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
+@font-face { font-family: 'Azeret Mono'; src: url('vendor/azeret-mono.woff2') format('woff2'); font-weight: 400; font-style: normal; font-display: swap; }
 
 /*
 * {
@@ -105,22 +101,22 @@ p, h1, h2, h3, .content {
   right: -1.4cqw;
   top: 1.2cqw;
   filter: drop-shadow(0px 5.5px 2.6px rgba(0,0,0,0.5));
-}
+}@media (hover: hover) {
 
 #card-folders-panel .tuck-btn:hover {
   width: 5cqw;
-}
+}}
 
 #card-files-panel .tuck-btn {
   width: 2.8cqw; /* smaller */
   right: -0.6cqw;
   top: 1.9cqw;
   filter: drop-shadow(0px 3.1px 3.2px rgba(0,0,0,0.44));
-}
+}@media (hover: hover) {
 
 #card-files-panel .tuck-btn:hover {
   width: 3cqw;
-}
+}}
 
 /* ========================
    FOLDER CARD
@@ -177,13 +173,13 @@ p, h1, h2, h3, .content {
   filter: blur(0.53px) drop-shadow(0px 0px 2.4px rgba(0,0,0,0.25));
   mix-blend-mode: multiply;
   display: block;
-}
+}@media (hover: hover) {
 
 .card a:hover {
   color: #5c3286;
   font-size: 4.6cqw;
   text-decoration: underline;
-}
+}}
 
 .card a.active-link {
   color: #566acf;
@@ -287,11 +283,11 @@ p, h1, h2, h3, .content {
   pointer-events: visibleFill;
   z-index: 5;
   transform: rotate(-28deg);
-}
+}@media (hover: hover) {
 
 .cardicon2:hover {
   width: 17cqw;
-}
+}}
 
 /* ========================
    RECEIPT — files panel
@@ -385,12 +381,12 @@ p, h1, h2, h3, .content {
   display: block;
   transform: rotate(-0.8deg);
   filter: blur(0.07px) contrast(106%);
-}
+}@media (hover: hover) {
 
 .card-file-links a:hover {
   color: #512e74;
   opacity: 0.77;
-}
+}}
 
 .card-file-links a.active-link {
   color: #213786;
@@ -507,11 +503,11 @@ p, h1, h2, h3, .content {
     drop-shadow(0px 0px 35px rgba(0,0,0,0.15));
   transition: transform 0.2s ease, box-shadow 0.2s ease;
   cursor: pointer;
-}
+}@media (hover: hover) {
 
 .content img:hover {
   transform: scale(1.035);
-}
+}}
 
 .multiply-wrapper {
   background: rgb(248, 246, 246);
@@ -645,12 +641,12 @@ p, h1, h2, h3, .content {
   opacity: 0.94;
   transition: opacity 0.2s ease;
   filter: drop-shadow(2px 2px 6px rgba(0,0,0,0.25));
-}
+}@media (hover: hover) {
 
 .mute-btn:hover {
   opacity: 1;
   width: 9.07cqw;
-}
+}}
 
 .mute-btn.muted {
   opacity: 0.6;
@@ -764,11 +760,11 @@ p, h1, h2, h3, .content {
   transform: scaleX(-1) translateY(100%);
   transition: width 0.15s ease;
   cursor: pointer;
-}
+}@media (hover: hover) {
 
 .next-page-btn:hover {
   width: 10.7cqw;
-}
+}}
 
 .safari .content,
 .safari .content-text h1, .safari .content-text h2, .safari .content-text h3,
@@ -859,3 +855,98 @@ p, h1, h2, h3, .content {
   filter: drop-shadow(4px 4px 12px rgba(0,0,0,0.4));
   cursor: default;
 }
+/* Keep image aspect ratios when intrinsic dimensions are provided by the build. */
+img { height: auto; }
+.paper-icon { padding: 0; border: 0; background: none; cursor: pointer; }
+.paper-icon img { display: block; width: 100%; height: auto; }
+:where(a,button,[tabindex]):focus-visible { outline: 2px dashed #713d55; outline-offset: 4px; }
+#navigation-papers { display: contents; }
+.index-control { display: none; }
+.content { font-size: clamp(.9rem, .96vw, 1.1rem); line-height: 1.5; }
+.content-text { max-width: 72ch; margin-inline: auto; }
+.content img { box-sizing: border-box; max-width: 100%; }
+.content pre { overflow-x: auto; }
+.doc-dates { font-size: clamp(.75rem, 1.2vw, 1rem); }
+.csv-table { font-size: inherit; }
+
+@media (max-width: 900px), (pointer: coarse) {
+  html, body { min-height: 100%; height: auto; overflow-x: clip; }
+  .wrapper { width: 100%; height: auto; min-height: 100dvh; overflow: visible; container-type: normal; }
+  .wrapper::after, .leftbg, .top, .topframe, .leftbgblur, .frame, #folder-line { display: none; }
+  .material { position: relative; width: 100%; height: auto; min-height: 100dvh; padding-bottom: env(safe-area-inset-bottom); background-size: auto 100%; }
+  .banner { position: relative; display: block; width: 100%; max-height: 42vh; object-fit: cover; transform: none !important; }
+  .content { position: relative; width: 100%; height: auto; overflow: visible; padding: 1.2rem !important; font-size: 1rem; line-height: 1.65; filter: none; }
+  .content-bg { min-height: 60vh; margin: 0; padding: 1.1rem; outline-width: 1px; }
+  .content-text { max-width: 65ch; }
+  .content-text p, .content-text li, .content-text ul, .content-text ol { filter: none; opacity: 1; }
+  .content ul, .content ol { padding-left: 1.25rem; }
+  .content p { margin-bottom: 1rem; }
+  .content h1, .doc-header h2 { font-size: clamp(1.5rem, 6vw, 2.2rem); line-height: 1.2; }
+  .content h2 { font-size: 1.5rem; line-height: 1.3; }
+  .content h3 { font-size: 1.2rem; }
+  .doc-dates { font-size: .75rem; line-height: 1.5; }
+  .content img { margin: .8rem auto .3rem; }
+  .content .grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
+  .content .grid em { font-size: .875rem; }
+  .content .float-right { float: none; width: 100%; margin: 1rem 0; gap: .75rem; }
+  .content .float-right img { height: auto; }
+  .content a { overflow-wrap: anywhere; }
+  .content iframe { max-width: 100%; }
+  .html-embed { height: 70dvh; }
+  .wip-sticker { width: 6rem; left: auto; right: .5rem; top: 4rem !important; transform: none !important; opacity: 1 !important; }
+  .next-page-btn { position: relative; display: block; float: right; bottom: auto; right: 1.5rem; width: 6rem; min-height: 44px; transform: scaleX(-1) !important; }
+  .mute-btn { position: fixed; bottom: max(.75rem, env(safe-area-inset-bottom)); left: .5rem; width: 48px; height: 48px; z-index: 31; }
+  .index-control { display: block; border: 1px solid #8c715b; background: #eedabd; color: #4a4440; box-shadow: 2px 3px 5px #0003; font: 1rem 'Azeret Mono',monospace; min-height: 44px; padding: .6rem .9rem; cursor: pointer; }
+  #index-toggle { position: fixed; left: max(.5rem,env(safe-area-inset-left)); top: max(.5rem,env(safe-area-inset-top)); transform: rotate(-3deg); z-index: 40; }
+  #index-close { align-self: flex-end; margin: .5rem; position: sticky; top: 0; z-index: 45; }
+  #navigation-papers { display: flex; flex-direction: column; position: fixed; inset: 0; z-index: 42; height: 100dvh; box-sizing: border-box; padding: env(safe-area-inset-top) max(.6rem,env(safe-area-inset-right)) max(1rem,env(safe-area-inset-bottom)); background: #97867df5; overflow-y: auto; overscroll-behavior: contain; transform: translateX(-105%); visibility: hidden; transition: transform .25s ease,visibility .25s; }
+  .index-open #navigation-papers { transform: translateX(0); visibility: visible; }
+  body.index-open { overflow: hidden; }
+  .card-panel, #card-files-panel, #card-folders-panel { position: relative; top: auto !important; left: auto !important; width: 100%; cursor: auto; touch-action: auto; margin-bottom: 1rem; }
+  .card, .receipt { width: 100%; max-width: 38rem; margin-inline: auto; container-type: normal; }
+  .card-folder-links { margin: 2rem 1.25rem 1.5rem 2rem; }
+  .card-section-header { font-size: 1.5rem; line-height: 1.4; }
+  .card a { font-size: 1.15rem; line-height: 1.3; min-height: 44px; box-sizing: border-box; padding: .6rem 0; filter: none; letter-spacing: -.02em; }
+  .folder-link::before { font-size: .9rem; }
+  .card a.unread::after { font-size: 1rem; }
+  .sub-links { padding-left: 1rem; }
+  .cardicon2, .tuck-btn { display: none; }
+  .card-file-links { margin: 2rem 1.5rem; }
+  .receipt { background-size: 100% 100%; }
+  .receipt-header { font-size: 1.2rem; }
+  .receipt-divider { font-size: .65rem; overflow: hidden; }
+  .receipt-total { font-size: 1rem; padding-block: .5rem; }
+  .card-file-links a { font-size: 1rem; min-height: 44px; padding: .7rem 0; box-sizing: border-box; line-height: 1.4; }
+  .card-file-links a.unread::after { font-size: 1rem; }
+}
+@media (max-width: 390px) { .content .grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+  .content img:hover { transform: none; }
+}
+
+.card a.active-folder-link { color: #566acf; }
+.card a.active-folder-link::after { content: ' □'; color: currentColor; font-size: .8em; }
+@media (max-width: 900px), (pointer: coarse) {
+  .material { display: flex; flex-direction: column; }
+  .content { order: 1; }
+  .next-page-btn { order: 2; float: none; align-self: flex-end; margin-bottom: 1rem; }
+  .material:not(:has(.banner[src])) { padding-top: 3.5rem; }
+}
+.image-viewer { display: block; }
+.pswp { --pswp-bg: #29231f; --pswp-icon-color: #f5e9d5; z-index: 2000; }
+.pswp__img { border: 6px solid #f7f0e5; box-sizing: border-box; }
+.pswp__caption { position: absolute; bottom: 3.5rem; left: 5%; width: 90%; text-align: center; color: #fff5e5; font: 1rem/1.5 Georgia,serif; pointer-events: none; }
+.pswp__original { position: absolute; bottom: max(.5rem,env(safe-area-inset-bottom)); left: 50%; transform: translateX(-50%); color: #fff5e5; font: .875rem/1.4 monospace; padding: .75rem; min-height: 44px; box-sizing: border-box; }
+@media (max-width: 900px), (pointer: coarse) { .pswp__button { min-width: 48px; min-height: 48px; } }
+@media (max-width: 900px), (pointer: coarse) {
+  #navigation-papers .card, #navigation-papers .receipt { background-image: none; }
+  .index-open #navigation-papers .card { background-image: url('assets/linedpapergraffiti.png'); }
+  .index-open #navigation-papers .receipt { background-image: url('assets/receipt.png'); }
+}
+
+.animation-control { border: 1px dashed #8c715b; background: #f1e4d0; color: #4a4440; font: inherit; min-height: 44px; padding: .5rem .8rem; cursor: pointer; margin-block: .25rem 1rem; }
+/* Controls must remain readable over pale photographs and scanned borders. */
+.pswp .pswp__top-bar { background: linear-gradient(#29231fd9, transparent); }
+.pswp .pswp__original { background: #29231fe6; border-radius: 2px; }
+.pswp .pswp__caption:not(:empty) { background: #29231fe6; padding: .35rem; box-sizing: border-box; }

@@ -2,6 +2,7 @@
 const markdownCache = new Map();
 let renderGeneration = 0;
 async function renderPage(page) {
+  if(viewer)viewer.close();
   const generation = ++renderGeneration;
   const folder = page.assetBase;
   const { created, modified } = page;
@@ -13,10 +14,13 @@ async function renderPage(page) {
     text = await response.text();
     markdownCache.set(page.id, text);
   }
+  const metadata = await loadPageImages(page);
   if (generation !== renderGeneration) return;
+  currentImages = metadata;
   document.querySelector('.content').scrollTop = 0;
   const sticker = document.querySelector('.wip-sticker');
   sticker.style.display = page.status === 'wip' ? 'block' : 'none';
+  if(page.status==='wip' && sticker.dataset.src)sticker.src=sticker.dataset.src;
   sticker.style.transform = '';
   sticker.style.opacity = '';
   const banner = document.querySelector('.banner');
@@ -25,22 +29,24 @@ async function renderPage(page) {
   if (page.banner) {
     banner.onload = () => {
       if (generation !== renderGeneration) return;
-      document.querySelector('.content').style.paddingTop = `calc(${banner.offsetHeight}px + 2cqh)`;
-      sticker.style.top = (banner.offsetHeight - 146) + 'px';
+      syncBannerLayout();
     };
     banner.src = assetUrl(folder, page.banner);
+    optimizeImage(banner,metadata,true);
     banner.style.display = 'block';
+    syncBannerLayout();
   } else {
     banner.removeAttribute('src');
+    banner.removeAttribute('srcset');
     banner.style.display = 'none';
     document.querySelector('.content').style.paddingTop = '4cqw';
     sticker.style.top = '5cqh';
   }
   if (currentSound) { currentSound.pause(); currentSound.currentTime = 0; }
-  currentSound = page.sound ? new Audio(assetUrl(folder, page.sound)) : null;
+  currentSound = page.sound ? deferredAudio(assetUrl(folder, page.sound)) : null;
   if (currentSound) {
     currentSound.loop = true;
-    if (!siteMuted) currentSound.play().catch(() => {});
+    startAmbient();
   }
   const header = `<div class="doc-header">
     <em class="doc-dates">created: ${created || ''} &nbsp;&nbsp; modified: ${modified || ''}</em>
@@ -75,9 +81,12 @@ async function renderPage(page) {
     const embedFile = match[1].trim();
     const placeholder = `EMBEDPLACEHOLDER${Object.keys(embedResults).length}`;
     const embedPath = assetUrl(folder, embedFile);
-    const embedRes = await fetch(embedPath);
-    if (!embedRes.ok) throw new Error(`Could not load embed: ${embedPath}`);
-    const embedText = await embedRes.text();
+    let embedText='';
+    if(embedFile.endsWith('.csv')) {
+      const embedRes=await fetch(embedPath);
+      if(!embedRes.ok)throw new Error(`Could not load embed: ${embedPath}`);
+      embedText=await embedRes.text();
+    }
     let embedHtml = '';
     if (embedFile.endsWith('.csv')) {
       const parsedCsv = Papa.parse(embedText, { skipEmptyLines: true });
@@ -92,7 +101,7 @@ async function renderPage(page) {
         </div>`;
     } else if (embedFile.endsWith('.html')) {
       // A real document URL preserves relative image/script URLs inside the embed.
-      embedHtml = `<iframe src="${escapeHtml(embedPath)}" class="html-embed"></iframe>`;
+      embedHtml = `<iframe src="${escapeHtml(embedPath)}" class="html-embed" loading="lazy" title="Interactive example"></iframe>`;
     }
     embedResults[placeholder] = embedHtml;
     text = text.replace(match[0], placeholder);
@@ -109,7 +118,10 @@ async function renderPage(page) {
   template.content.querySelectorAll('img').forEach(img => {
     const src = img.getAttribute('src');
     if (src && !/^(?:[a-z]+:|\/)/i.test(src)) img.src = assetUrl(folder, src);
+    if(img.src.includes('#multiply'))img.dataset.multiply='true';
+    optimizeImage(img,metadata);
   });
+  template.content.querySelectorAll('iframe').forEach(frame=>{frame.loading='lazy';});
   parsed = template.innerHTML;
   document.querySelector('.content').innerHTML = `<div class="content-bg">${header + parsed}</div>`;
 
@@ -136,7 +148,7 @@ async function renderPage(page) {
   });
 
   content.querySelectorAll('img').forEach(img => {
-    if (img.src.includes('#multiply')) {
+    if (img.dataset.multiply === 'true' || img.src.includes('#multiply')) {
       img.src = img.src.replace('#multiply', '');
       img.style.mixBlendMode = 'multiply';
       const wrapper = document.createElement('div');
@@ -156,32 +168,23 @@ async function renderPage(page) {
           currentSound.pause();
           currentSound.currentTime = 0;
         }
-        const s = new Audio(soundSrc);
+        const s = deferredAudio(soundSrc);
         currentSound = s;
         if (!siteMuted) s.play().catch(() => {});
       }
     });
-    img.alt = '';
+    img.dataset.sound = soundSrc;
+    img.alt = img.getAttribute('title') || 'Album artwork — right-click to play audio';
   });
 
-  content.querySelectorAll('img:not([alt^="sound:"])').forEach(img => {
-    img.addEventListener('click', () => {
-      const lightbox = document.getElementById('lightbox');
-      const lightboxImg = document.getElementById('lightbox-img');
-      lightboxImg.src = img.src;
-      lightbox.classList.remove('active');
-      lightboxImg.style.transform = 'scale(0.96)';
-      void lightboxImg.offsetHeight;
-      lightboxImg.style.transform = '';
-      lightbox.classList.add('active');
-    });
-  });
+  attachImageViewer(content);
 
   const nextBtn = document.getElementById('next-page-btn');
   const fileIdx = fileList.findIndex(f => f.id === page.id);
   if (fileIdx !== -1 && fileIdx < fileList.length - 1) {
     const next = fileList[fileIdx + 1];
     nextBtn.style.display = 'block';
+    const nextImage=nextBtn.querySelector('img');if(nextImage?.dataset.src)nextImage.src=nextImage.dataset.src;
     nextBtn.onclick = async () => {
       fileSound.currentTime = 0;
       playEffect(fileSound);
@@ -204,3 +207,10 @@ async function renderPage(page) {
   setTimeout(updateFrame, 100);
 }
 
+
+function syncBannerLayout() {
+  const banner=document.querySelector('.banner');
+  if(isMobileLayout()||banner.style.display==='none')return;
+  document.querySelector('.content').style.paddingTop=`calc(${banner.offsetHeight}px + 2cqh)`;
+  document.querySelector('.wip-sticker').style.top=(banner.offsetHeight-146)+'px';
+}

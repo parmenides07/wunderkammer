@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T03:21:02.108Z",
+  "generatedAt": "2026-09-29T14:41:22.457Z",
   "pages": [
     {
       "id": "about",
@@ -25,7 +25,8 @@
       "sound": null,
       "authorSource": "content/about/about.md",
       "source": "generated/pages/about.md",
-      "assetBase": "content/about"
+      "assetBase": "content/about",
+      "images": "generated/images/about.json"
     },
     {
       "id": "archive-personal-snapshots-my-chosen-career-path",
@@ -52,7 +53,8 @@
       "sound": null,
       "authorSource": "content/archive/career/my-chosen-career-path.md",
       "source": "generated/pages/archive-personal-snapshots-my-chosen-career-path.md",
-      "assetBase": "content/archive/career"
+      "assetBase": "content/archive/career",
+      "images": "generated/images/archive-personal-snapshots-my-chosen-career-path.json"
     },
     {
       "id": "archive-consumption",
@@ -79,7 +81,8 @@
       "sound": null,
       "authorSource": "content/archive/consumption/index.md",
       "source": "generated/pages/archive-consumption.md",
-      "assetBase": "content/archive/consumption"
+      "assetBase": "content/archive/consumption",
+      "images": "generated/images/archive-consumption.json"
     },
     {
       "id": "archive-experiments-proof-of-concept",
@@ -106,7 +109,8 @@
       "sound": null,
       "authorSource": "content/archive/experiments/proof-of-concept.md",
       "source": "generated/pages/archive-experiments-proof-of-concept.md",
-      "assetBase": "content/archive/experiments"
+      "assetBase": "content/archive/experiments",
+      "images": "generated/images/archive-experiments-proof-of-concept.json"
     },
     {
       "id": "archive-ideas",
@@ -133,7 +137,8 @@
       "sound": null,
       "authorSource": "content/archive/ideas/index.md",
       "source": "generated/pages/archive-ideas.md",
-      "assetBase": "content/archive/ideas"
+      "assetBase": "content/archive/ideas",
+      "images": "generated/images/archive-ideas.json"
     },
     {
       "id": "archive-inspirations",
@@ -160,7 +165,8 @@
       "sound": null,
       "authorSource": "content/archive/inspiration/current-inspirations.md",
       "source": "generated/pages/archive-inspirations.md",
-      "assetBase": "content/archive/inspiration"
+      "assetBase": "content/archive/inspiration",
+      "images": "generated/images/archive-inspirations.json"
     },
     {
       "id": "archive-music-currents",
@@ -187,7 +193,8 @@
       "sound": null,
       "authorSource": "content/archive/music/currents.md",
       "source": "generated/pages/archive-music-currents.md",
-      "assetBase": "content/archive/music"
+      "assetBase": "content/archive/music",
+      "images": "generated/images/archive-music-currents.json"
     },
     {
       "id": "archive-school-writing-what-is-education-for",
@@ -214,7 +221,8 @@
       "sound": null,
       "authorSource": "content/archive/school-writing/what-is-education-for.md",
       "source": "generated/pages/archive-school-writing-what-is-education-for.md",
-      "assetBase": "content/archive/school-writing"
+      "assetBase": "content/archive/school-writing",
+      "images": "generated/images/archive-school-writing-what-is-education-for.json"
     },
     {
       "id": "archive-school-writing-why-art",
@@ -241,7 +249,8 @@
       "sound": null,
       "authorSource": "content/archive/school-writing/why-art.md",
       "source": "generated/pages/archive-school-writing-why-art.md",
-      "assetBase": "content/archive/school-writing"
+      "assetBase": "content/archive/school-writing",
+      "images": "generated/images/archive-school-writing-why-art.json"
     },
     {
       "id": "archive-writing-when-it-rains-it-prose",
@@ -268,7 +277,8 @@
       "sound": null,
       "authorSource": "content/archive/writing/when-it-rains-it-prose.md",
       "source": "generated/pages/archive-writing-when-it-rains-it-prose.md",
-      "assetBase": "content/archive/writing"
+      "assetBase": "content/archive/writing",
+      "images": "generated/images/archive-writing-when-it-rains-it-prose.json"
     },
     {
       "id": "home",
@@ -294,7 +304,8 @@
       "sound": null,
       "authorSource": "content/home.md",
       "source": "generated/pages/home.md",
-      "assetBase": "content"
+      "assetBase": "content",
+      "images": "generated/images/home.json"
     },
     {
       "id": "notes-art-harnessing-visuals-with-art",
@@ -322,7 +333,8 @@
       "sound": null,
       "authorSource": "content/notes/art/harnessing-visuals-with-art.md",
       "source": "generated/pages/notes-art-harnessing-visuals-with-art.md",
-      "assetBase": "content/notes/art"
+      "assetBase": "content/notes/art",
+      "images": "generated/images/notes-art-harnessing-visuals-with-art.json"
     },
     {
       "id": "notes-art-lets-talk-about-ai-art",
@@ -350,7 +362,8 @@
       "sound": null,
       "authorSource": "content/notes/art/lets-talk-about-ai-art.md",
       "source": "generated/pages/notes-art-lets-talk-about-ai-art.md",
-      "assetBase": "content/notes/art"
+      "assetBase": "content/notes/art",
+      "images": "generated/images/notes-art-lets-talk-about-ai-art.json"
     },
     {
       "id": "notes-mindfill-calculus-kellogs-and-knowledge",
@@ -377,7 +390,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/calculus-kellogs-and-knowledge.md",
       "source": "generated/pages/notes-mindfill-calculus-kellogs-and-knowledge.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill-calculus-kellogs-and-knowledge.json"
     },
     {
       "id": "notes-mindfill-chefs-in-cs",
@@ -404,7 +418,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/chefs-in-cs.md",
       "source": "generated/pages/notes-mindfill-chefs-in-cs.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill-chefs-in-cs.json"
     },
     {
       "id": "notes-mindfill-emergent-complexity-and-control",
@@ -433,7 +448,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/emergent-complexity-and-control.md",
       "source": "generated/pages/notes-mindfill-emergent-complexity-and-control.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill-emergent-complexity-and-control.json"
     },
     {
       "id": "notes-mindfill",
@@ -460,7 +476,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/index.md",
       "source": "generated/pages/notes-mindfill.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill.json"
     },
     {
       "id": "notes-mindfill-my-mother-tongue",
@@ -487,7 +504,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/my-mother-tongue.md",
       "source": "generated/pages/notes-mindfill-my-mother-tongue.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill-my-mother-tongue.json"
     },
     {
       "id": "notes-mindfill-pumping-imaginary-iron",
@@ -514,7 +532,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/pumping-imaginary-iron.md",
       "source": "generated/pages/notes-mindfill-pumping-imaginary-iron.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill-pumping-imaginary-iron.json"
     },
     {
       "id": "notes-mindfill-pursuing-greatness",
@@ -541,7 +560,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/pursuing-greatness.md",
       "source": "generated/pages/notes-mindfill-pursuing-greatness.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill-pursuing-greatness.json"
     },
     {
       "id": "notes-mindfill-the-stand-user-could-be-anyone",
@@ -568,7 +588,8 @@
       "sound": null,
       "authorSource": "content/notes/mindfill/the-stand-user-could-be-anyone.md",
       "source": "generated/pages/notes-mindfill-the-stand-user-could-be-anyone.md",
-      "assetBase": "content/notes/mindfill"
+      "assetBase": "content/notes/mindfill",
+      "images": "generated/images/notes-mindfill-the-stand-user-could-be-anyone.json"
     },
     {
       "id": "notes-philosophy",
@@ -595,7 +616,8 @@
       "sound": null,
       "authorSource": "content/notes/philosophy/index.md",
       "source": "generated/pages/notes-philosophy.md",
-      "assetBase": "content/notes/philosophy"
+      "assetBase": "content/notes/philosophy",
+      "images": "generated/images/notes-philosophy.json"
     },
     {
       "id": "notes-philosophy-maximalist-soul-driver",
@@ -622,7 +644,8 @@
       "sound": null,
       "authorSource": "content/notes/philosophy/maximalist-soul-driver.md",
       "source": "generated/pages/notes-philosophy-maximalist-soul-driver.md",
-      "assetBase": "content/notes/philosophy"
+      "assetBase": "content/notes/philosophy",
+      "images": "generated/images/notes-philosophy-maximalist-soul-driver.json"
     },
     {
       "id": "notes-systems-logic-composed-emergent-systems",
@@ -650,7 +673,8 @@
       "sound": null,
       "authorSource": "content/notes/systems/logic-composed-emergent-systems.md",
       "source": "generated/pages/notes-systems-logic-composed-emergent-systems.md",
-      "assetBase": "content/notes/systems"
+      "assetBase": "content/notes/systems",
+      "images": "generated/images/notes-systems-logic-composed-emergent-systems.json"
     },
     {
       "id": "projects-akashom-architecture",
@@ -681,7 +705,8 @@
       "sound": null,
       "authorSource": "content/projects/akashom/architecture.md",
       "source": "generated/pages/projects-akashom-architecture.md",
-      "assetBase": "content/projects/akashom"
+      "assetBase": "content/projects/akashom",
+      "images": "generated/images/projects-akashom-architecture.json"
     },
     {
       "id": "projects-akashom",
@@ -712,7 +737,8 @@
       "sound": null,
       "authorSource": "content/projects/akashom/index.md",
       "source": "generated/pages/projects-akashom.md",
-      "assetBase": "content/projects/akashom"
+      "assetBase": "content/projects/akashom",
+      "images": "generated/images/projects-akashom.json"
     },
     {
       "id": "projects-akashom-visual-design",
@@ -743,7 +769,8 @@
       "sound": null,
       "authorSource": "content/projects/akashom/visual-design.md",
       "source": "generated/pages/projects-akashom-visual-design.md",
-      "assetBase": "content/projects/akashom"
+      "assetBase": "content/projects/akashom",
+      "images": "generated/images/projects-akashom-visual-design.json"
     },
     {
       "id": "projects-akashom-visual-nonvisual-trailer",
@@ -774,7 +801,8 @@
       "sound": null,
       "authorSource": "content/projects/akashom/visual-nonvisual-trailer.md",
       "source": "generated/pages/projects-akashom-visual-nonvisual-trailer.md",
-      "assetBase": "content/projects/akashom"
+      "assetBase": "content/projects/akashom",
+      "images": "generated/images/projects-akashom-visual-nonvisual-trailer.json"
     },
     {
       "id": "projects-cornocupia",
@@ -803,7 +831,8 @@
       "sound": null,
       "authorSource": "content/projects/cornocupia/index.md",
       "source": "generated/pages/projects-cornocupia.md",
-      "assetBase": "content/projects/cornocupia"
+      "assetBase": "content/projects/cornocupia",
+      "images": "generated/images/projects-cornocupia.json"
     },
     {
       "id": "projects-darkroom",
@@ -832,7 +861,8 @@
       "summary": "",
       "authorSource": "content/projects/darkroom/index.md",
       "source": "generated/pages/projects-darkroom.md",
-      "assetBase": "content/projects/darkroom"
+      "assetBase": "content/projects/darkroom",
+      "images": "generated/images/projects-darkroom.json"
     },
     {
       "id": "projects-jivan",
@@ -862,7 +892,8 @@
       "sound": null,
       "authorSource": "content/projects/jivan/index.md",
       "source": "generated/pages/projects-jivan.md",
-      "assetBase": "content/projects/jivan"
+      "assetBase": "content/projects/jivan",
+      "images": "generated/images/projects-jivan.json"
     },
     {
       "id": "projects-mindscape-examples-braise",
@@ -890,7 +921,8 @@
       "sound": null,
       "authorSource": "content/projects/mindscape/examples/braise.md",
       "source": "generated/pages/projects-mindscape-examples-braise.md",
-      "assetBase": "content/projects/mindscape/examples"
+      "assetBase": "content/projects/mindscape/examples",
+      "images": "generated/images/projects-mindscape-examples-braise.json"
     },
     {
       "id": "projects-mindscape-examples-lawralai",
@@ -918,7 +950,8 @@
       "sound": null,
       "authorSource": "content/projects/mindscape/examples/lawralai.md",
       "source": "generated/pages/projects-mindscape-examples-lawralai.md",
-      "assetBase": "content/projects/mindscape/examples"
+      "assetBase": "content/projects/mindscape/examples",
+      "images": "generated/images/projects-mindscape-examples-lawralai.json"
     },
     {
       "id": "projects-mindscape-examples-praferin",
@@ -946,7 +979,8 @@
       "summary": "",
       "authorSource": "content/projects/mindscape/examples/praferin.md",
       "source": "generated/pages/projects-mindscape-examples-praferin.md",
-      "assetBase": "content/projects/mindscape/examples"
+      "assetBase": "content/projects/mindscape/examples",
+      "images": "generated/images/projects-mindscape-examples-praferin.json"
     },
     {
       "id": "projects-mindscape-examples-riab-kaj",
@@ -974,7 +1008,8 @@
       "sound": null,
       "authorSource": "content/projects/mindscape/examples/riab-kaj.md",
       "source": "generated/pages/projects-mindscape-examples-riab-kaj.md",
-      "assetBase": "content/projects/mindscape/examples"
+      "assetBase": "content/projects/mindscape/examples",
+      "images": "generated/images/projects-mindscape-examples-riab-kaj.json"
     },
     {
       "id": "projects-mindscape",
@@ -1003,7 +1038,8 @@
       "sound": null,
       "authorSource": "content/projects/mindscape/index.md",
       "source": "generated/pages/projects-mindscape.md",
-      "assetBase": "content/projects/mindscape"
+      "assetBase": "content/projects/mindscape",
+      "images": "generated/images/projects-mindscape.json"
     },
     {
       "id": "projects-mindscape-leviathan",
@@ -1032,7 +1068,8 @@
       "sound": null,
       "authorSource": "content/projects/mindscape/leviathan.md",
       "source": "generated/pages/projects-mindscape-leviathan.md",
-      "assetBase": "content/projects/mindscape"
+      "assetBase": "content/projects/mindscape",
+      "images": "generated/images/projects-mindscape-leviathan.json"
     },
     {
       "id": "projects-mindscape-premise",
@@ -1061,7 +1098,8 @@
       "sound": null,
       "authorSource": "content/projects/mindscape/premise.md",
       "source": "generated/pages/projects-mindscape-premise.md",
-      "assetBase": "content/projects/mindscape"
+      "assetBase": "content/projects/mindscape",
+      "images": "generated/images/projects-mindscape-premise.json"
     }
   ],
   "assetDirectories": {

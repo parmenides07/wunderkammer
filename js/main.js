@@ -31,15 +31,18 @@ function refreshUnread() {
   });
   document.querySelectorAll('.folder-link').forEach(link => {
     const node = navigation.catalog.get(link.dataset.group);
-    link.classList.toggle('unread', node.pages.some(isUnread));
+    link.classList.toggle('unread', node.allPages.some(isUnread));
   });
 }
 function buildFolderLinks() {
+  const focusedGroup=document.activeElement?.dataset.group;
   const container = document.querySelector('.card-folder-links');
   container.innerHTML = '<div class="card-section-header">Sections:</div>';
   function add(node, parent) {
     const a = document.createElement('a');
-    a.href = `#/${node.pages[0].slug}`;
+    a.href = `#/browse/${node.key}`;
+    a.setAttribute('aria-current',activeGroup?.key === node.key ? 'true' : 'false');
+    if(node.children.length)a.setAttribute('aria-expanded',String(expandedGroups.has(node.key)));
     a.textContent = node.label;
     a.className = 'folder-link';
     a.dataset.group = node.key;
@@ -50,11 +53,8 @@ function buildFolderLinks() {
     children.style.display = expandedGroups.has(node.key) ? 'flex' : 'none';
     a.addEventListener('click', e => {
       e.preventDefault(); playEffect(clickSound);
-      if (node.children.length && expandedGroups.has(node.key)) {
-        expandedGroups.delete(node.key);
-        buildFolderLinks();
-        document.getElementById('folder-line').innerHTML = '';
-        return;
+      if (activeGroup?.key === node.key && node.children.length && expandedGroups.has(node.key)) {
+        expandedGroups.delete(node.key); buildFolderLinks(); return;
       }
       expandedGroups.add(node.key);
       openGroup(node);
@@ -66,6 +66,7 @@ function buildFolderLinks() {
   }
   navigation.sections.forEach(node => add(node, container));
   refreshUnread();
+  if(focusedGroup)[...container.querySelectorAll('[data-group]')].find(el=>el.dataset.group===focusedGroup)?.focus({preventScroll:true});
 }
 function buildFileLinks(page) {
   const container = document.querySelector('.card-file-links');
@@ -91,40 +92,49 @@ function buildFileLinks(page) {
   refreshUnread();
 }
 function openGroup(node) {
-  activeGroup = node;
-  buildFolderLinks();
-  goToPage(node.pages[0]);
+  const hash = `#/browse/${node.key}`;
+  if(location.hash===hash)handleRoute();else location.hash=hash;
 }
 function goToPage(page) {
   if (!page || !contentModel.byId.has(page.id)) return;
+  setMobileNavigation(false);
   const hash = `#/${page.slug}`;
   if (window.location.hash === hash) handleRoute(); else window.location.hash = hash;
 }
 function showError(error) {
+  ++renderGeneration;
+  if(currentSound){currentSound.pause();currentSound=null;}
   console.error(error);
-  document.querySelector('.content').innerHTML = `<div class="content-bg"><div class="content-text"><p>Unable to load this page. Please reload and try again.</p></div></div>`;
+  showPaperMessage('Unable to load this page', 'Please reload and try again, or choose another page from the index.');
 }
 async function handleRoute() {
   try {
     let route;
     try { route = decodeURIComponent(window.location.hash.replace(/^#\/?/, '')); } catch { route = ''; }
+    saveScrollPosition();
+    if(route.startsWith('browse/')) {
+      const node=navigation.catalog.get(route.slice(7));
+      if(node) {
+        ++renderGeneration; activeGroup=node;expandedGroups.add(node.key.split('/')[0]);
+        buildFolderLinks();buildFileLinks();
+        if(currentSound){currentSound.pause();currentSound=null;}
+        showPaperMessage(node.label, node.children.length ? 'Choose a collection from the index.' : 'Choose a page from the receipt.');
+        return;
+      }
+    }
     const page = contentModel.resolve(route || 'home');
     if (!page) {
       ++renderGeneration;
       if (currentSound) { currentSound.pause(); currentSound = null; }
-      document.querySelector('.banner').style.display = 'none';
-      document.querySelector('.wip-sticker').style.display = 'none';
-      document.querySelector('.content').style.paddingTop = '4cqw';
-      document.getElementById('next-page-btn').style.display = 'none';
-      document.querySelector('.content').dataset.pageId = '';
-      document.querySelector('.content').innerHTML = '<div class="content-bg"><div class="content-text"><h2>Page unavailable</h2><p>This page is not available in this view. Choose a section from the paper card.</p></div></div>';
+      showPaperMessage('Page unavailable', 'This page is not available in this view. Choose a section from the index.');
       return;
     }
     if (window.location.hash !== `#/${page.slug}`) window.history.replaceState(null, '', `${location.pathname}${location.search}#/${page.slug}`);
-    if (!activeGroup?.pages.some(entry => entry.id === page.id)) activeGroup = navigation.pageGroups.get(page.id);
+    activeGroup = navigation.pageGroups.get(page.id);
     expandedGroups.add(page.section);
     buildFolderLinks(); buildFileLinks(page);
     await renderPage(page);
+    if(document.querySelector('.content').dataset.pageId===page.id)restoreScrollPosition(page.id);
   } catch (error) { showError(error); }
 }
 async function init() {
@@ -148,4 +158,21 @@ async function init() {
   buildFolderLinks();
   window.addEventListener('hashchange', handleRoute);
   await handleRoute();
+}
+
+function showPaperMessage(title,message) {
+  const banner=document.querySelector('.banner');banner.style.display='none';banner.removeAttribute('src');banner.removeAttribute('srcset');
+  document.querySelector('.wip-sticker').style.display='none';
+  document.getElementById('next-page-btn').style.display='none';
+  const content=document.querySelector('.content');content.style.paddingTop='4cqw';content.dataset.pageId='';
+  content.innerHTML=`<div class="content-bg"><div class="content-text"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(message)}</p></div></div>`;
+}
+const scrollPositions=new Map();
+function saveScrollPosition() {
+  const content=document.querySelector('.content'),id=content.dataset.pageId;
+  if(id)scrollPositions.set(id,isMobileLayout()?window.scrollY:content.scrollTop);
+}
+function restoreScrollPosition(id) {
+  const top=scrollPositions.get(id)||0;
+  if(isMobileLayout())window.scrollTo({top,behavior:'instant'});else document.querySelector('.content').scrollTop=top;
 }

@@ -1,10 +1,16 @@
-const backSound = new Audio('assets/holepunch.mp3');
-const clickSound = new Audio('assets/page-flip-01a.mp3');
-const hoverSound = new Audio('assets/boxclick1.mp3');
-const fileSound = new Audio('assets/printer2.mp3');
-const tuckSound = new Audio('assets/tuck1.mp3');
+function deferredAudio(src) { const audio = new Audio(); audio.preload = 'none'; audio.src = src; return audio; }
+const backSound = deferredAudio('assets/holepunch.mp3');
+const clickSound = deferredAudio('assets/page-flip-01a.mp3');
+const hoverSound = deferredAudio('assets/boxclick1.mp3');
+const fileSound = deferredAudio('assets/printer2.mp3');
+const tuckSound = deferredAudio('assets/tuck1.mp3');
 let currentSound = null;
 let siteMuted = false;
+try { siteMuted = localStorage.getItem('site:muted') === 'true'; } catch {}
+let audioActivated = false;
+function startAmbient() { if(currentSound && !siteMuted && audioActivated) currentSound.play().catch(()=>{}); }
+document.addEventListener('pointerdown',()=>{audioActivated=true;startAmbient();},{once:true});
+document.addEventListener('keydown',()=>{audioActivated=true;startAmbient();},{once:true});
 let fileList = [];
 let currentArrowEl = null;
 let currentAnimationId = null;
@@ -23,6 +29,7 @@ function formatName(name) {
     .replace(/^./, str => str.toUpperCase());
 }
 function drawFolderLine(folderEl) {
+  if(isMobileLayout() || matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   if (currentAnimationId) {
     cancelAnimationFrame(currentAnimationId);
     currentAnimationId = null;
@@ -148,6 +155,7 @@ function drawFolderLine(folderEl) {
 }
 
 function updateFrame() {
+  if(isMobileLayout())return;
   const contentEl = document.querySelector('.content');
   const maxScroll = contentEl.scrollHeight - contentEl.clientHeight;
   const distFromBottom = maxScroll - contentEl.scrollTop;
@@ -168,6 +176,7 @@ function makeDraggable(panelEl) {
   let startX, startY, startLeft, startTop;
 
   function dragStart(clientX, clientY) {
+    if(isMobileLayout())return;
     isDragging = true;
     startX = clientX;
     startY = clientY;
@@ -191,33 +200,19 @@ function makeDraggable(panelEl) {
 
   // mouse
   panelEl.addEventListener('mousedown', (e) => {
-    if (e.target.classList.contains('tuck-btn')) return;
-    if (e.target.tagName === 'A') return;
+    if (e.target.closest('button,a')) return;
     dragStart(e.clientX, e.clientY);
     e.preventDefault();
   });
   document.addEventListener('mousemove', (e) => dragMove(e.clientX, e.clientY));
   document.addEventListener('mouseup', dragEnd);
 
-  // touch
-  panelEl.addEventListener('touchstart', (e) => {
-    if (e.target.classList.contains('tuck-btn')) return;
-    if (e.target.tagName === 'A') return;
-    const t = e.touches[0];
-    dragStart(t.clientX, t.clientY);
-  }, { passive: true });
 
-  panelEl.addEventListener('touchmove', (e) => {
-    const t = e.touches[0];
-    dragMove(t.clientX, t.clientY);
-    e.preventDefault();
-  }, { passive: false });
-
-  panelEl.addEventListener('touchend', dragEnd);
 }
 
 const contentEl = document.querySelector('.content');
 contentEl.addEventListener('scroll', () => {
+  if(isMobileLayout())return;
   const banner = document.querySelector('.banner');
   const sticker = document.querySelector('.wip-sticker');
   const bannerH = banner.offsetHeight;
@@ -237,13 +232,12 @@ contentEl.addEventListener('scroll', () => {
   }
 });
 
-let resizeTimer;
-window.addEventListener('resize', () => {
-  clearTimeout(resizeTimer);
-  resizeTimer = setTimeout(() => location.reload(), 300);
-});
+window.addEventListener('resize', () => { updateFrame(); syncMobileLayout(); syncBannerLayout(); });
 
 init().then(() => {
+  document.getElementById('mute-btn').classList.toggle('muted',siteMuted);
+  document.getElementById('mute-btn').setAttribute('aria-pressed',String(siteMuted));
+  syncMobileLayout();
   setTimeout(updateFrame, 100);
   makeDraggable(document.getElementById('card-folders-panel'));
   makeDraggable(document.getElementById('card-files-panel'));
@@ -277,10 +271,6 @@ init().then(() => {
   });
 }).catch(showError);
 
-document.getElementById('lightbox').addEventListener('click', () => {
-  document.getElementById('lightbox').classList.remove('active');
-});
-
 document.querySelector('.cardicon2').addEventListener('click', () => {
   playEffect(backSound);
   const parent = activeGroup?.key.includes('/') ? activeGroup.key.split('/')[0] : null;
@@ -290,41 +280,14 @@ document.querySelector('.cardicon2').addEventListener('click', () => {
 
 document.getElementById('mute-btn').addEventListener('click', () => {
   siteMuted = !siteMuted;
+  try { localStorage.setItem('site:muted', String(siteMuted)); } catch {}
+  document.getElementById('mute-btn').setAttribute('aria-pressed',String(siteMuted));
   document.getElementById('mute-btn').classList.toggle('muted', siteMuted);
   if (siteMuted && currentSound) {
     currentSound.pause();
   } else if (!siteMuted && currentSound) {
     currentSound.play().catch(() => {});
   }
-});
-
-const isWebKit = /iPad|iPhone|iPod/.test(navigator.userAgent) ||
-  (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1) ||
-  /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
-const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
-
-// showing — add active first, then visible on next frame so transition fires
-function showOverlay(id) {
-  const el = document.getElementById(id);
-  el.classList.add('active');
-  requestAnimationFrame(() => el.classList.add('visible'));
-}
-
-function hideOverlay(id) {
-  const el = document.getElementById(id);
-  el.classList.remove('visible');
-  el.addEventListener('transitionend', () => el.classList.remove('active'), { once: true });
-}
-
-if (isWebKit || isMobile) {
-  showOverlay('compat-warning');
-} else {
-  showOverlay('info-card');
-}
-
-document.getElementById('compat-ok').addEventListener('click', () => hideOverlay('compat-warning'));
-document.getElementById('info-card').addEventListener('click', (e) => {
-  if (!e.target.closest('.info-card-img')) hideOverlay('info-card');
 });
 
 document.querySelector('.content').addEventListener('click', e => {
