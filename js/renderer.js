@@ -50,9 +50,7 @@ async function renderPage(page) {
   }
   const header = `<div class="doc-header">
     <em class="doc-dates">created: ${created || ''} &nbsp;&nbsp; modified: ${modified || ''}</em>
-    <br><br>
     <h2>${displayName}</h2>
-    <br>
   </div>`;
 
   const imagesFolderMatches = [...text.matchAll(/images\{([^}]+)\}/g)];

@@ -68,24 +68,27 @@ function buildFolderLinks() {
   refreshUnread();
   if(focusedGroup)[...container.querySelectorAll('[data-group]')].find(el=>el.dataset.group===focusedGroup)?.focus({preventScroll:true});
 }
-function buildFileLinks(page) {
+function buildFileLinks(group, page) {
   const container = document.querySelector('.card-file-links');
   container.innerHTML = '';
   const receiptPanel = document.getElementById('card-files-panel');
   receiptPanel.classList.remove('receipt-bob'); void receiptPanel.offsetHeight; receiptPanel.classList.add('receipt-bob');
   const add = (className, text) => { const el = document.createElement('div');el.className=className;el.textContent=text;container.appendChild(el); };
-  add('receipt-header', activeGroup.label);
+  // Container state supplies the heading; leaf state only highlights a receipt item.
+  container.dataset.container = group.key;
+  add('receipt-header', group.label);
   add('receipt-divider', '***********************************');
-  fileList = activeGroup.pages;
+  fileList = group.pages;
+  const entries=document.createElement('div');entries.className='receipt-entries';container.appendChild(entries);
   fileList.forEach((entry, i) => {
     const a = document.createElement('a');
     a.href = `#/${entry.slug}`;
-    a.textContent = `${i + 1}  ${activeGroup.key.includes('/') ? entry.navTitle || entry.title : entry.title}`;
+    a.textContent = `${i + 1}  ${group.key.includes('/') ? entry.navTitle || entry.title : entry.title}`;
     a.className = 'file-link'; a.dataset.id = entry.id;
     a.classList.toggle('active-link', page?.id === entry.id);
     a.addEventListener('click', e => { e.preventDefault();playEffect(fileSound);goToPage(entry); });
     a.addEventListener('mouseenter', () => playEffect(hoverSound.cloneNode()));
-    container.appendChild(a);
+    entries.appendChild(a);
   });
   add('receipt-divider', '===================================');
   add('receipt-total', `Total: ${fileList.length}.00$`);
@@ -112,17 +115,22 @@ async function handleRoute() {
     let route;
     try { route = decodeURIComponent(window.location.hash.replace(/^#\/?/, '')); } catch { route = ''; }
     saveScrollPosition();
+    let page;
     if(route.startsWith('browse/')) {
       const node=navigation.catalog.get(route.slice(7));
       if(node) {
         ++renderGeneration; activeGroup=node;expandedGroups.add(node.key.split('/')[0]);
-        buildFolderLinks();buildFileLinks();
-        if(currentSound){currentSound.pause();currentSound=null;}
-        showPaperMessage(node.label, node.children.length ? 'Choose a collection from the index.' : 'Choose a page from the receipt.');
-        return;
+        if(node.pages.length) {
+          page=node.pages[0];
+        } else {
+          buildFolderLinks();buildFileLinks(node);
+          if(currentSound){currentSound.pause();currentSound=null;}
+          showPaperMessage(node.label, node.children.length ? 'Choose a collection from the index.' : 'This container has no published pages.');
+          return;
+        }
       }
     }
-    const page = contentModel.resolve(route || 'home');
+    page ||= contentModel.resolve(route || 'home');
     if (!page) {
       ++renderGeneration;
       if (currentSound) { currentSound.pause(); currentSound = null; }
@@ -132,7 +140,7 @@ async function handleRoute() {
     if (window.location.hash !== `#/${page.slug}`) window.history.replaceState(null, '', `${location.pathname}${location.search}#/${page.slug}`);
     activeGroup = navigation.pageGroups.get(page.id);
     expandedGroups.add(page.section);
-    buildFolderLinks(); buildFileLinks(page);
+    buildFolderLinks(); buildFileLinks(activeGroup, page);
     await renderPage(page);
     if(document.querySelector('.content').dataset.pageId===page.id)restoreScrollPosition(page.id);
   } catch (error) { showError(error); }
@@ -170,9 +178,12 @@ function showPaperMessage(title,message) {
 const scrollPositions=new Map();
 function saveScrollPosition() {
   const content=document.querySelector('.content'),id=content.dataset.pageId;
-  if(id)scrollPositions.set(id,isMobileLayout()?window.scrollY:content.scrollTop);
+  if(id)scrollPositions.set(id,isMobileLayout()?(readingLocks.size?readingPosition.y:window.scrollY):content.scrollTop);
 }
 function restoreScrollPosition(id) {
   const top=scrollPositions.get(id)||0;
-  if(isMobileLayout())window.scrollTo({top,behavior:'instant'});else document.querySelector('.content').scrollTop=top;
+  if(isMobileLayout()) {
+    if(readingLocks.size) {readingPosition.y=top;document.body.style.top=`-${top}px`;}
+    else window.scrollTo({top,behavior:'instant'});
+  } else document.querySelector('.content').scrollTop=top;
 }

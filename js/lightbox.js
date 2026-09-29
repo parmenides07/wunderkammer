@@ -23,17 +23,17 @@ async function openImageViewer(images, index, trigger) {
   if(!dataSource[index].width) { window.open(dataSource[index].original,'_blank','noopener');return; }
   const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
   viewer=new PhotoSwipe({dataSource,index,preload:[0,1],bgOpacity:.94,showHideAnimationType:reduced?'none':'fade',loop:false,returnFocus:true,trapFocus:true});
-  const previousOverflow=document.body.style.overflow;
+
   viewer.on('uiRegister',()=>{
     viewer.ui.registerElement({name:'caption',order:9,isButton:false,appendTo:'root',onInit:(el,pswp)=>pswp.on('change',()=>{el.textContent=dataSource[pswp.currIndex]?.caption || '';})});
     viewer.ui.registerElement({name:'original',order:8,isButton:false,tagName:'a',appendTo:'root',onInit:(el,pswp)=>{el.textContent='Open original ↗';el.target='_blank';el.rel='noopener';pswp.on('change',()=>{el.href=dataSource[pswp.currIndex]?.original || '#';});}});
   });
   viewer.on('destroy',()=>{
-    viewer=null;document.body.style.overflow=previousOverflow;
+    viewer=null;unlockReadingScroll('viewer');
     document.querySelector('.wrapper').inert=false;document.getElementById('index-toggle').inert=false;
     if(trigger.isConnected)trigger.focus({preventScroll:true});
   });
-  document.body.style.overflow='hidden';document.querySelector('.wrapper').inert=true;document.getElementById('index-toggle').inert=true;
+  lockReadingScroll('viewer');document.querySelector('.wrapper').inert=true;document.getElementById('index-toggle').inert=true;
   viewer.init();
   } finally { viewerOpening = false; }
 }

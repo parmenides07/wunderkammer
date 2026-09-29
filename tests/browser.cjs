@@ -22,13 +22,13 @@ async function run() {
   for(const section of ['projects','notes','archive']){
    await page.locator(`[data-group="${section}"]`).click();
    await page.waitForFunction(key=>activeGroup.key===key&&document.querySelectorAll('.file-link').length===0,section);
-   assert.equal(await page.locator(`[data-group="${section}"]`).evaluate(el=>getComputedStyle(el,'::after').content),'" □"');
+   assert.equal(await page.locator(`[data-group="${section}"]`).evaluate(el=>getComputedStyle(el,'::after').content),'" ■"');
   }
   await page.evaluate(()=>localStorage.removeItem('visited:notes-mindfill-my-mother-tongue'));
   await page.locator('[data-group="notes"]').click();await page.waitForFunction(()=>activeGroup.key==='notes');
   await page.locator('[data-group="notes/mindfill"]').click();await page.waitForFunction(()=>document.querySelectorAll('.file-link').length===8);
   assert.equal(await page.locator('[data-group="notes"]').evaluate(el=>getComputedStyle(el,'::after').content),'" •"');
-  results.push('Direct leaves only; selected square overrides and restores unread dot');
+  results.push('Direct leaves only; selected filled square overrides and restores unread dot');
   await route(page,'projects/akashom');assert.equal(await page.locator('.file-link').count(),4);
   await page.locator('.content').evaluate(el=>el.scrollTop=350);
   await route(page,'about');await page.goBack();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom');assert.ok(await page.locator('.content').evaluate(el=>el.scrollTop)>250);

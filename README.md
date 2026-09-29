@@ -107,7 +107,10 @@ With the site running and Playwright available:
 
 ```sh
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/browser.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/layout.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/performance.cjs current
 ```
 
 `SITE_URL` and `CHROME_PATH` override the default local URL and Chrome executable. Tests include phone/touch emulation, pinch/swipe gestures, multiple viewport sizes, the work view, history, receipts, audio and paper controls. Reports are written to `.test-results/`. See `PERFORMANCE.md` for measured before/after results and remaining review items.
+
+The paper components use source-image geometry: `.card` defines `--paper-width` and derives ruled rows from its artwork; `.receipt` defines `--receipt-width` and bounds only its entry list. Change these component scales rather than stretching their backgrounds. Mobile touch rows span whole printed rules. The grid surface has a constant texture scale and a viewport-sized layer on mobile. See [LAYOUT.md](LAYOUT.md) for measurements, screenshots, routing behavior, and Safari review notes.
