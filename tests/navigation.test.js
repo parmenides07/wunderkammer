@@ -38,3 +38,36 @@ test('receipts contain only direct leaves while unread retains descendants',()=>
  }
  assert.equal(nav.catalog.get('notes/mindfill').pages.length,8);
 });
+test('nested semantic groups use direct leaves, active ancestors, and the filtered universe',()=>{
+ const config={sections:[{id:'projects',label:'Projects'}],projects:[{id:'anvesana',label:'Anvesana'}],collections:[],groups:[
+  {id:'anvesana-experiments',label:'Experiments',parent:'projects/anvesana'},
+  {id:'anvesana-hardware',label:'Hardware',parent:'projects/anvesana'},
+  {id:'anvesana-traffic',label:'Traffic',parent:'anvesana-experiments'}]};
+ const page=(id,parent,audience=['public'])=>({id,slug:id,title:id,section:'projects',project:'anvesana',parent,audience,published:true,topics:[],order:0,created:'2026-09-29'});
+ const pages=[page('overview',null,['public','professional']),page('diffusion','anvesana-experiments'),page('traffic','anvesana-traffic'),page('fpga','anvesana-hardware',['public','professional'])];
+ const {activePath}=require('../js/navigation');
+ const nav=createNavigation(createContentModel({pages,aliases:{},assetDirectories:{}},'public'),config,'public');
+ assert.deepEqual(nav.catalog.get('projects/anvesana').pages.map(p=>p.id),['overview']);
+ assert.deepEqual(nav.catalog.get('group/anvesana-experiments').pages.map(p=>p.id),['diffusion']);
+ assert.deepEqual(activePath(nav,nav.pageGroups.get('traffic')),['projects','projects/anvesana','group/anvesana-experiments']);
+ const work=createNavigation(createContentModel({pages,aliases:{},assetDirectories:{}},'professional'),config,'professional');
+ assert.equal(work.catalog.has('group/anvesana-experiments'),false);
+ assert.equal(work.catalog.get('projects/anvesana').children.length,1);
+ assert.throws(()=>createNavigation({pages}, {...config,groups:[{id:'loop',label:'Loop',parent:'loop'}]},'public'),/cycle/);
+ assert.throws(()=>createNavigation({pages:[page('bad','missing')]},config,'public'),/unknown parent/);
+ assert.throws(()=>createNavigation({pages:[]},{...config,groups:[{id:'bad',label:'Bad',parent:'missing'}]},'public'),/unknown parent/);
+});
+test('index entries are chronological, exclude the landing, and never escape the audience filter',()=>{
+ const {indexEntries}=require('../js/navigation');const model=createContentModel(manifest,'public'),nav=createNavigation(model,config,'public');
+ const landing=model.byId.get('notes-mindfill'),entries=indexEntries(landing,nav);
+ assert.equal(entries.length,7);assert.ok(entries.every(p=>p.id!==landing.id));
+ assert.deepEqual(entries.map(p=>p.created),entries.map(p=>p.created).sort().reverse());
+ const work=createContentModel(manifest,'professional'),wn=createNavigation(work,config,'professional');
+ assert.deepEqual(indexEntries(landing,wn),[]);
+});
+
+test('build validation rejects an unknown base container while a filtered empty subtree can be pruned',()=>{
+ const c={sections:[{id:'projects',label:'Projects'}],projects:[],collections:[],groups:[{id:'child',label:'Child',parent:'projects/missing'}]};
+ assert.throws(()=>createNavigation({pages:[]},c,'public',true),/unknown parent container/);
+ assert.equal(createNavigation({pages:[]},c,'professional').sections.length,0);
+});

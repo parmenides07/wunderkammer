@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-akashom-visual-nonvisual-trailer"
 title: "What is the form of Akashoma?"
 slug: "projects/akashom/visual-nonvisual-trailer"

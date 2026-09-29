@@ -220,17 +220,17 @@ p, h1, h2, h3, .content {
 .sub-links {
   display: flex;
   flex-direction: column;
-  padding-left: calc(30 * var(--paper-unit));
+  padding-left: calc(96 * var(--paper-unit));
 }
 
-.folder-link::before {
-  content: '► ';
+.folder-link.has-children::before {
+  content: '▶ ';
   font-size: .85em;
   display: inline-block;
   transition: transform 0.5s ease;
 }
 
-.folder-link.open::before {
+.folder-link.has-children.open::before {
   content: '▼ ';
 }
 
@@ -960,3 +960,56 @@ img { height: auto; }
 .doc-dates { margin-bottom: 2em; }
 .content h3 { margin-bottom: .5em; }
 .content .video, .content iframe { box-sizing: border-box; max-width: 100%; }
+
+/* Touch ink uses the same treatment at a smaller spread. Desktop is unchanged. */
+@media (max-width: 900px), (pointer: coarse) {
+  .content { --ink-blur: .0015em; --ink-shadow: .035em; }
+  .content-text :is(h1,h2,h3,h4,h5,h6) {
+    filter: blur(.001em) drop-shadow(0 0 .025em rgba(0,0,0,.22));
+  }
+  .card-section-header, .card a {
+    filter: blur(calc(.3 * var(--paper-unit))) drop-shadow(0 0 calc(1.2 * var(--paper-unit)) rgba(0,0,0,.25));
+  }
+  .receipt :is(a,.receipt-header,.receipt-divider,.receipt-total) {
+    filter: blur(.015px) contrast(106%);
+    text-shadow: 0 0 .1px rgba(93,74,150,.4);
+  }
+}
+
+/* Profiles change the interior measure, never the physical sheet or grid. */
+.layout-essay .content-text { max-width: 70ch; }
+.layout-project .content-text { max-width: 72ch; }
+.layout-gallery .content-text { max-width: 65ch; }
+.layout-gallery .grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+.layout-gallery .grid p { margin: 0; }
+.layout-gallery .grid img { margin-top: 0; }
+@media (min-width: 2400px) and (pointer: fine) {
+  .layout-gallery .grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
+}
+@media (max-width: 600px) { .layout-gallery .grid { grid-template-columns: minmax(0,1fr); } }
+.layout-index .content-text { max-width: 70ch; }
+.collection-index { margin-block: 0 2em; }
+.collection-index ol { list-style: none; padding: 0; margin: 0; }
+.collection-index li { display: grid; grid-template-columns: 10ch 1fr auto; gap: .8em; align-items: baseline; padding-block: .3em; }
+.collection-index time { font-size: .85em; font-variant-numeric: tabular-nums; }
+.collection-index .entry-status { font-size: .75em; opacity: .75; }
+.collection-index a { text-decoration: none; }
+.collection-index a:focus-visible { text-decoration: underline; }
+@media (hover: hover) { .collection-index a:hover { text-decoration: underline; } }
+@media (max-width: 600px) {
+  .collection-index li { grid-template-columns: 9ch 1fr; gap: .5em; }
+  .collection-index .entry-status { grid-column: 2; }
+}
+.layout-catalog .content-text { max-width: 80ch; }
+.layout-catalog :is(p,li,dd) { margin-block: .25em; }
+.layout-catalog :is(h2,h3) { margin-block: 1.5em .5em; }
+.layout-catalog dl { display: grid; grid-template-columns: max-content minmax(0,1fr); gap: .35em 1em; }
+.layout-catalog dd { margin-inline: 0; }
+.layout-custom .content-text { max-width: none; }
+
+#receipt-toggle { display: none; }
+#card-files-panel[hidden], #receipt-toggle[hidden] { display: none; }
+@media (max-width: 900px), (pointer: coarse) {
+  #card-files-panel[data-tucked="true"] { display: none; }
+  #receipt-toggle:not([hidden]) { display: block; align-self: center; margin-bottom: .75rem; }
+}

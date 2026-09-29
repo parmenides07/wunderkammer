@@ -38,7 +38,7 @@ async function run(){
    const short=links.clientHeight,bg=getComputedStyle(e).backgroundSize;
    for(let i=0;i<40;i++){const a=document.createElement('a');a.className='folder-link';a.textContent='Geometry fixture';links.append(a);}
    return {rule,rows,short,tall:links.clientHeight,overflow:links.scrollHeight>links.clientHeight,unchanged:bg===getComputedStyle(e).backgroundSize};
-  });assert.ok(paper.overflow&&paper.unchanged);assert.ok(paper.rows.every(h=>Math.abs(h/paper.rule-Math.round(h/paper.rule))<.015));if(touch)assert.ok(paper.rows.every(h=>h>=43.9));
+  });assert.ok(paper.overflow&&paper.unchanged);assert.ok(paper.rows.every(h=>Math.abs(h/paper.rule-1)<.015));
   const receipt=await page.evaluate(()=>{const e=document.querySelector('.receipt'),entries=e.querySelector('.receipt-entries');const bg=getComputedStyle(e).backgroundSize;for(let i=0;i<80;i++){const a=document.createElement('a');a.textContent='Geometry fixture';entries.append(a);}return {overflow:entries.scrollHeight>entries.clientHeight,unchanged:bg===getComputedStyle(e).backgroundSize,height:e.offsetHeight};});assert.ok(receipt.overflow&&receipt.unchanged&&receipt.height<=630);
   // Remove DOM-only fixtures by selecting a real container again.
   await group('notes');await page.waitForFunction(()=>activeGroup.key==='notes');await group('notes/mindfill');await page.waitForFunction(()=>activeGroup.key==='notes/mindfill');await page.waitForTimeout(300);await page.screenshot({path:`.test-results/layout/index-${width}.png`});

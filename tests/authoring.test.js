@@ -16,3 +16,11 @@ test('Markdown asset discovery preserves titles and reference image destinations
  assert.deepEqual(refs.images,[{href:'assets/a.jpg',alt:'The drawing'},{href:'assets/b.jpg',alt:'A reference'}]);
  assert.deepEqual(refs.links,['#/notes/test']);
 });
+test('asset audit reports exact duplicates, backups, and unused files without deleting anything',t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'site-assets-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));fs.mkdirSync(path.join(root,'assets'));fs.mkdirSync(path.join(root,'content'));
+ for(const name of ['one.png','copy.png','edit.png~'])fs.writeFileSync(path.join(root,'assets',name),'same bytes');
+ fs.writeFileSync(path.join(root,'site.shell.html'),'<img src="assets/one.png">');
+ const warnings=require('../tools/assets').auditAssets(root);
+ assert.ok(warnings.some(w=>w.startsWith('Exact duplicate')));assert.ok(warnings.some(w=>w.includes('editor backup')));
+ assert.ok(warnings.some(w=>w.includes('copy.png: possibly unreferenced')));assert.ok(!warnings.some(w=>w.includes('one.png: possibly unreferenced')));assert.equal(fs.readdirSync(path.join(root,'assets')).length,3);
+});

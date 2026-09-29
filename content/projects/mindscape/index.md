@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-mindscape"
 title: "Project Mindscape"
 slug: "projects/mindscape"

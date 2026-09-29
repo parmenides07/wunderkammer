@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-mindscape-examples-praferin"
 title: "Praferin"
 slug: "projects/mindscape/examples/praferin"

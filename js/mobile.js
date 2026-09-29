@@ -11,9 +11,7 @@ function setMobileNavigation(open) {
   else document.getElementById('index-toggle').focus({preventScroll:true});
 }
 function syncMobileLayout() {
-  const paper=document.querySelector('.card');
-  const rule=paper.getBoundingClientRect().width * 69 / 1494;
-  paper.style.setProperty('--nav-row',`${rule * (isMobileLayout()?Math.ceil(44/rule):1)}px`);
+  syncReceiptPosition();
   const nav=document.getElementById('navigation-papers');
   nav.inert=isMobileLayout()&&!document.body.classList.contains('index-open');
   if(!isMobileLayout()) {unlockReadingScroll('index');document.body.classList.remove('index-open');document.querySelector('.material').inert=false;}

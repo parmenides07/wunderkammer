@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-akashom-visual-design"
 title: "DL2 Visualmaxxing Is Meta"
 slug: "projects/akashom/visual-design"

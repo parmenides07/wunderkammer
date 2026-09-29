@@ -29,6 +29,7 @@ function formatName(name) {
     .replace(/^./, str => str.toUpperCase());
 }
 function drawFolderLine(folderEl) {
+  if(!activeGroup||activeGroup.pages.length<2||receiptState.tucked||document.getElementById('card-files-panel').hidden)return;
   if(isMobileLayout() || matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   if (currentAnimationId) {
     cancelAnimationFrame(currentAnimationId);
@@ -256,24 +257,14 @@ init().then(() => {
     }
   });
 
-  document.getElementById('tuck-files-btn').addEventListener('click', () => {
-    tuckSound.currentTime = 0;
-    playEffect(tuckSound);
-    const panel = document.getElementById('card-files-panel');
-    if (panel.dataset.tucked === 'true') {
-      panel.style.left = panel.dataset.savedLeft || '48cqw';
-      panel.dataset.tucked = 'false';
-    } else {
-      panel.dataset.savedLeft = panel.style.left || '48cqw';
-      panel.style.left = '-' + (panel.offsetWidth - 38) + 'px';
-      panel.dataset.tucked = 'true';
-    }
-  });
+  const toggleReceipt=()=>{playEffect(tuckSound);setReceiptTucked(!receiptState.tucked,true);};
+  document.getElementById('tuck-files-btn').addEventListener('click',toggleReceipt);
+  document.getElementById('receipt-toggle').addEventListener('click',toggleReceipt);
 }).catch(showError);
 
 document.querySelector('.cardicon2').addEventListener('click', () => {
   playEffect(backSound);
-  const parent = activeGroup?.key.includes('/') ? activeGroup.key.split('/')[0] : null;
+  const parent = activeGroup?.parent;
   if (parent) openGroup(navigation.catalog.get(parent));
   else goToPage(contentModel.pages.find(page => page.section === 'home') || contentModel.pages[0]);
 });

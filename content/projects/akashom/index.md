@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-akashom"
 title: "What is the function of Akashom?"
 slug: "projects/akashom"

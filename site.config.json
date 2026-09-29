@@ -1,4 +1,5 @@
 {
+  "groups": [],
   "sections": [
     {"id":"home","label":"Home"},
     {"id":"projects","label":"Projects"},

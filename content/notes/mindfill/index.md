@@ -1,4 +1,5 @@
 ---
+layout: index
 id: "notes-mindfill"
 title: "The Mindfill"
 slug: "notes/mindfill"

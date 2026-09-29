@@ -1,4 +1,5 @@
 ---
+layout: index
 id: "notes-philosophy"
 title: "Philosophy"
 slug: "notes/philosophy"

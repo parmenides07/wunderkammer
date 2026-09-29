@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-akashom-architecture"
 title: "DL5 Distros and Architecture"
 slug: "projects/akashom/architecture"

@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-mindfill-the-stand-user-could-be-anyone"
 title: "The Stand User Could Be Anyone"
 slug: "notes/mindfill/the-stand-user-could-be-anyone"

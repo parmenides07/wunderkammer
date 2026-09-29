@@ -7,6 +7,7 @@ const {buildImages, displayVariant} = require('./tools/images');
 const SECTIONS = ['home', 'projects', 'notes', 'archive', 'about'];
 const AUDIENCES = ['public', 'professional'];
 const STATUSES = ['active', 'complete', 'wip', 'paused', 'superseded', 'archived'];
+const LAYOUTS = ['essay','project','gallery','index','catalog','custom'];
 const TYPES = ['home','project','project-note','note','essay','log','collection','archive','about'];
 const REQUIRED = ['id', 'title', 'slug', 'section', 'type', 'audience', 'status', 'published', 'created'];
 const slash = value => value.split(path.sep).join('/');
@@ -46,6 +47,12 @@ function buildManifest(root = __dirname) {
       if (!SECTIONS.includes(data.section)) throw new Error(`${source}: invalid section "${data.section}"`);
       if (!Array.isArray(data.audience) || !data.audience.length || data.audience.some(a => !AUDIENCES.includes(a))) throw new Error(`${source}: invalid audience; expected public and/or professional`);
       if (!TYPES.includes(data.type)) throw new Error(`${source}: invalid type "${data.type}"`);
+      if (data.layout !== undefined && !LAYOUTS.includes(data.layout)) throw new Error(`${source}: invalid layout "${data.layout}"`);
+      if (data.layoutClass !== undefined && (data.layout !== 'custom' || !/^[a-z][a-z0-9-]*$/.test(data.layoutClass))) throw new Error(`${source}: layoutClass needs layout: custom and a CSS class name`);
+      if (data.indexStatus !== undefined && typeof data.indexStatus !== 'boolean') throw new Error(`${source}: indexStatus must be a boolean`);
+      for (const key of ['project','collection','parent']) {
+        if (data[key] != null && (typeof data[key] !== 'string' || !/^[a-z0-9][a-z0-9-]*$/.test(data[key]))) throw new Error(`${source}: invalid ${key}`);
+      }
       if (!STATUSES.includes(data.status)) throw new Error(`${source}: invalid status "${data.status}"`);
       if (data.published !== true) throw new Error(`${source}: published must be a boolean`);
       for (const [field, seen] of [['id', ids], ['slug', slugs]]) {
@@ -63,6 +70,9 @@ function buildManifest(root = __dirname) {
     }
   }
   walk(path.join(root, 'content'));
+  const configPath=path.join(root,'site.config.json');
+  if(fs.existsSync(configPath))require('./js/navigation').createNavigation({pages},JSON.parse(fs.readFileSync(configPath,'utf8')),'public',true);
+  else if(pages.some(page=>page.parent))throw new Error('site.config.json is required to define parent groups');
   const aliasPath = path.join(root, 'legacy-routes.json');
   let aliases = fs.existsSync(aliasPath) ? JSON.parse(fs.readFileSync(aliasPath, 'utf8')) : {};
   // Unpublishing a page also removes its aliases from the public manifest.

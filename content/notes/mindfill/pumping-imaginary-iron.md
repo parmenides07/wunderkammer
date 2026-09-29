@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-mindfill-pumping-imaginary-iron"
 title: "Pumping Imaginary Iron"
 slug: "notes/mindfill/pumping-imaginary-iron"

@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-mindfill-calculus-kellogs-and-knowledge"
 title: "Calculus Kellogs And Knowledge"
 slug: "notes/mindfill/calculus-kellogs-and-knowledge"

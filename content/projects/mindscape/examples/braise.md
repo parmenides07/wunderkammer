@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-mindscape-examples-braise"
 title: "Braise"
 slug: "projects/mindscape/examples/braise"

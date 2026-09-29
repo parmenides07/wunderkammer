@@ -45,6 +45,7 @@ function buildFolderLinks() {
     if(node.children.length)a.setAttribute('aria-expanded',String(expandedGroups.has(node.key)));
     a.textContent = node.label;
     a.className = 'folder-link';
+    a.classList.toggle('has-children',node.children.length>0);
     a.dataset.group = node.key;
     a.classList.toggle('active-folder-link', activeGroup?.key === node.key);
     a.classList.toggle('open', expandedGroups.has(node.key));
@@ -56,9 +57,7 @@ function buildFolderLinks() {
       if (activeGroup?.key === node.key && node.children.length && expandedGroups.has(node.key)) {
         expandedGroups.delete(node.key); buildFolderLinks(); return;
       }
-      expandedGroups.add(node.key);
       openGroup(node);
-      requestAnimationFrame(() => drawFolderLine(document.querySelector(`[data-group="${node.key}"]`)));
     });
     a.addEventListener('mouseenter', () => playEffect(hoverSound.cloneNode()));
     parent.append(a, children);
@@ -71,8 +70,6 @@ function buildFolderLinks() {
 function buildFileLinks(group, page) {
   const container = document.querySelector('.card-file-links');
   container.innerHTML = '';
-  const receiptPanel = document.getElementById('card-files-panel');
-  receiptPanel.classList.remove('receipt-bob'); void receiptPanel.offsetHeight; receiptPanel.classList.add('receipt-bob');
   const add = (className, text) => { const el = document.createElement('div');el.className=className;el.textContent=text;container.appendChild(el); };
   // Container state supplies the heading; leaf state only highlights a receipt item.
   container.dataset.container = group.key;
@@ -93,7 +90,57 @@ function buildFileLinks(group, page) {
   add('receipt-divider', '===================================');
   add('receipt-total', `Total: ${fileList.length}.00$`);
   refreshUnread();
+  updateReceipt(group,page);
 }
+// One presentation state per current container. Manual choice survives its leaf navigation.
+const receiptState={groupKey:null,tucked:true,manual:false,page:null};
+function stopReceiptEffects(){
+  document.getElementById('card-files-panel').classList.remove('receipt-bob');
+  if(currentAnimationId){cancelAnimationFrame(currentAnimationId);currentAnimationId=null;}
+  clearTimeout(currentFadeTimeout1);clearTimeout(currentFadeTimeout2);
+  document.getElementById('folder-line').innerHTML='';
+}
+function animateReceipt(){
+  if(!activeGroup||activeGroup.pages.length<2||receiptState.tucked||matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  if(isMobileLayout()&&!document.body.classList.contains('index-open'))return;
+  const panel=document.getElementById('card-files-panel');
+  panel.classList.remove('receipt-bob');void panel.offsetHeight;panel.classList.add('receipt-bob');
+  const key=activeGroup.key;
+  requestAnimationFrame(()=>{if(activeGroup?.key===key&&!receiptState.tucked)drawFolderLine(document.querySelector(`[data-group="${key}"]`));});
+}
+function syncReceiptPosition(){
+  const panel=document.getElementById('card-files-panel'),button=document.getElementById('receipt-toggle');
+  panel.hidden=!activeGroup?.pages.length;
+  panel.dataset.tucked=String(receiptState.tucked);
+  panel.querySelector('.receipt').inert=receiptState.tucked;
+  button.hidden=panel.hidden;
+  button.textContent=receiptState.tucked?'RECEIPT ▸':'TUCK RECEIPT ×';
+  button.setAttribute('aria-expanded',String(!receiptState.tucked));
+  document.getElementById('tuck-files-btn').setAttribute('aria-label',receiptState.tucked?'Unfold receipt':'Tuck receipt');
+  if(!isMobileLayout())panel.style.left=receiptState.tucked?`-${Math.max(0,panel.offsetWidth-38)}px`:panel.dataset.savedLeft||'26.5cqw';
+}
+function setReceiptTucked(tucked,manual=false){
+  const wasTucked=receiptState.tucked,panel=document.getElementById('card-files-panel');
+  if(tucked&&!wasTucked&&!isMobileLayout())panel.dataset.savedLeft=panel.style.left||'26.5cqw';
+  receiptState.tucked=tucked;if(manual)receiptState.manual=true;
+  if(tucked)stopReceiptEffects();
+  syncReceiptPosition();
+  if(wasTucked&&!tucked)animateReceipt();
+}
+function updateReceipt(group,page){
+  const changed=receiptState.groupKey!==group.key;
+  if(changed){stopReceiptEffects();receiptState.manual=false;}
+  receiptState.groupKey=group.key;receiptState.page=page?.id||null;
+  const tucked=receiptState.manual?receiptState.tucked:group.pages.length<2||page?.layout==='index';
+  const wasTucked=receiptState.tucked;
+  setReceiptTucked(tucked);
+  if(changed&&!tucked&&!wasTucked)animateReceipt();
+}
+function selectNavigationPath(node){
+  expandedGroups.clear();
+  for(const key of SiteNavigation.activePath(navigation,node))expandedGroups.add(key);
+}
+
 function openGroup(node) {
   const hash = `#/browse/${node.key}`;
   if(location.hash===hash)handleRoute();else location.hash=hash;
@@ -119,7 +166,7 @@ async function handleRoute() {
     if(route.startsWith('browse/')) {
       const node=navigation.catalog.get(route.slice(7));
       if(node) {
-        ++renderGeneration; activeGroup=node;expandedGroups.add(node.key.split('/')[0]);
+        ++renderGeneration; activeGroup=node;selectNavigationPath(node);
         if(node.pages.length) {
           page=node.pages[0];
         } else {
@@ -139,7 +186,7 @@ async function handleRoute() {
     }
     if (window.location.hash !== `#/${page.slug}`) window.history.replaceState(null, '', `${location.pathname}${location.search}#/${page.slug}`);
     activeGroup = navigation.pageGroups.get(page.id);
-    expandedGroups.add(page.section);
+    selectNavigationPath(activeGroup);
     buildFolderLinks(); buildFileLinks(activeGroup, page);
     await renderPage(page);
     if(document.querySelector('.content').dataset.pageId===page.id)restoreScrollPosition(page.id);
@@ -172,7 +219,7 @@ function showPaperMessage(title,message) {
   const banner=document.querySelector('.banner');banner.style.display='none';banner.removeAttribute('src');banner.removeAttribute('srcset');
   document.querySelector('.wip-sticker').style.display='none';
   document.getElementById('next-page-btn').style.display='none';
-  const content=document.querySelector('.content');content.style.paddingTop='4cqw';content.dataset.pageId='';
+  const content=document.querySelector('.content');content.className='content';content.style.paddingTop='4cqw';content.dataset.pageId='';
   content.innerHTML=`<div class="content-bg"><div class="content-text"><h2>${escapeHtml(title)}</h2><p>${escapeHtml(message)}</p></div></div>`;
 }
 const scrollPositions=new Map();

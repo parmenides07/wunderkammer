@@ -40,7 +40,7 @@ async function run() {
    const before=await panel.boundingBox(),box=await handle.boundingBox();const startX=box.x+(kind==='files'?15:220);await page.mouse.move(startX,box.y+10);await page.mouse.down();await page.mouse.move(startX+(kind==='files'?450:70),box.y+35,{steps:8});await page.mouse.up();await page.waitForFunction(({id,x})=>Math.abs(document.getElementById(id).getBoundingClientRect().x-x)>30,{id:`card-${kind}-panel`,x:before.x});
    await page.locator(`#tuck-${kind}-btn`).click();assert.equal(await panel.getAttribute('data-tucked'),'true');await page.locator(`#tuck-${kind}-btn`).click();assert.equal(await panel.getAttribute('data-tucked'),'false');
   }
-  await page.locator('[data-group="notes"]').click();await page.waitForFunction(()=>document.querySelector('#folder-line path'));
+  await page.locator('[data-group="notes"]').click();await page.waitForFunction(()=>activeGroup.key==='notes');assert.equal(await page.locator('#folder-line path').count(),0);
   await route(page,'projects/akashom');await page.locator('.content').evaluate(el=>el.scrollTop=el.scrollHeight);await page.locator('#next-page-btn').click();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom-visual-nonvisual-trailer');
   await route(page,'archive/experiments/proof-of-concept');assert.ok(await page.locator('.csv-table tbody tr').count());assert.ok(await page.locator('.multiply-wrapper').count());
   await route(page,'projects/jivan');assert.ok(await page.locator('.html-embed').count());
@@ -56,7 +56,7 @@ async function run() {
    const touch=width<900,{ctx,page}=await context(width,touch);await route(page,'home');assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
    if(touch){
     assert.ok(await page.locator('.content').evaluate(el=>parseFloat(getComputedStyle(el).fontSize))>=16);
-    await page.locator('#index-toggle').click();await page.locator('[data-group="notes"]').click();await page.waitForFunction(()=>activeGroup.key==='notes'&&document.querySelectorAll('.file-link').length===0);await page.locator('[data-group="notes/mindfill"]').click();await page.waitForFunction(()=>document.querySelectorAll('.file-link').length===8);await page.locator('.file-link').first().click();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='notes-mindfill');assert.equal(await page.locator('#index-toggle').getAttribute('aria-expanded'),'false');
+    await page.locator('#index-toggle').click();await page.locator('[data-group="notes"]').click();await page.waitForFunction(()=>activeGroup.key==='notes'&&document.querySelectorAll('.file-link').length===0);await page.locator('[data-group="notes/mindfill"]').click();await page.waitForFunction(()=>document.querySelectorAll('.file-link').length===8);await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='notes-mindfill');await page.locator('#index-close').click();assert.equal(await page.locator('#index-toggle').getAttribute('aria-expanded'),'false');
     await route(page,'projects/darkroom');await page.locator('.image-viewer').first().scrollIntoViewIfNeeded();await page.locator('.image-viewer').first().click();await page.waitForSelector('.pswp--open');await page.waitForFunction(()=>viewer.opener.isOpen);
     const cdp=await ctx.newCDPSession(page);
     async function touchEvent(type,points){await cdp.send('Input.dispatchTouchEvent',{type,touchPoints:points.map(([x,y,id])=>({x,y,id,radiusX:1,radiusY:1,force:1}))});}

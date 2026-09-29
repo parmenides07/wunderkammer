@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-mindscape-leviathan"
 title: "The Leviathan"
 slug: "projects/mindscape/leviathan"

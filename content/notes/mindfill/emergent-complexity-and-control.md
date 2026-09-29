@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-mindfill-emergent-complexity-and-control"
 title: "Emergent Complexity And Control"
 slug: "notes/mindfill/emergent-complexity-and-control"

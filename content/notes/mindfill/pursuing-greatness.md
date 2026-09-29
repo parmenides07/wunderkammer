@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-mindfill-pursuing-greatness"
 title: "Pursuing Greatness"
 slug: "notes/mindfill/pursuing-greatness"

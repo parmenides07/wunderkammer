@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-mindscape-premise"
 title: "Premise"
 slug: "projects/mindscape/premise"

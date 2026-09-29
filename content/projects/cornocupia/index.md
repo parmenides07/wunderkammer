@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-cornocupia"
 title: "Cornocupia"
 slug: "projects/cornocupia"

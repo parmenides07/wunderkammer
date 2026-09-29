@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-mindscape-examples-riab-kaj"
 title: "Riab Kaj"
 slug: "projects/mindscape/examples/riab-kaj"

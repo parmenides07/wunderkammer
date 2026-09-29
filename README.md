@@ -62,6 +62,54 @@ Required fields are shown through `created`; `collection` and `topics` are optio
 
 Folders are authoring conveniences. `project` and `collection` define containers; `site.config.json` sets their labels/order. The left paper contains containers; each receipt lists only its direct leaf pages. Topic tags remain independent. A future Now page can use `section: about` and `slug: about/now` without navigation code changes.
 
+## Layout profiles
+
+Add optional frontmatter `layout:`. Omitting it preserves the existing default layout. All profiles share the same renderer, paper shell, grid, images and viewer.
+
+| Layout | Use |
+|---|---|
+| `essay` | Long-form prose, about 70 characters per line; media may use more of the paper. |
+| `project` | Familiar project prose with room for diagrams and embeds. |
+| `gallery` | Narrow intro, larger images: two columns on desktop/tablet, one on phones, three only above 2400px. |
+| `index` | A chronological list of the other direct pages in this container, followed by your unchanged Markdown. |
+| `catalog` | Compact headings, lists and definition lists for grouped reference material. |
+| `custom` | Shared shell with page-specific styling hooks. |
+
+An index uses `created` dates, newest first, and the current audience filter. Non-active/non-complete statuses such as `superseded`, `paused`, `wip` and `archived` appear beside entries; set `indexStatus: false` to omit them. You do not need to duplicate entry links in Markdown. Existing authored links are preserved.
+
+For a custom page, add `layout: custom` and optionally `layoutClass: orbital-demo`. The shell gets `layout-custom`, `page-<stable-id>`, and `orbital-demo`; target those classes in `style.css`. No separate renderer or stylesheet loader is required.
+
+## Semantic groups and navigation
+
+The left paper expands only the active ancestor path. Only containers with child containers have disclosure arrows. Every row occupies one ruled line, including on phones. Receipts show direct pages, never recursive descendants, with the container's name as the heading.
+
+Entering a container opens its first direct page. Zero-page receipts are hidden; one-page receipts tuck automatically; multi-page receipts unfold. Index pages tuck their duplicate receipt. Use the existing red tuck control on desktop or the RECEIPT control inside mobile INDEX to override this. Manual choices persist while navigating within the same container; entering another container restores its automatic rule. The flying line and bob occur only when a useful multi-page receipt becomes visible.
+
+Optional `groups` in `site.config.json` can subdivide a project without using its filesystem folders. For example, after creating a project with `project: anvesana`:
+
+```json
+"groups": [
+  {"id": "anvesana-experiments", "label": "Experiments", "parent": "projects/anvesana", "order": 10},
+  {"id": "anvesana-hardware", "label": "Hardware", "parent": "projects/anvesana", "order": 20}
+]
+```
+
+A page inside Hardware keeps its normal project metadata and adds:
+
+```yaml
+project: anvesana
+parent: anvesana-hardware
+layout: project
+```
+
+For another nested group, its config `parent` can be another group ID, such as `anvesana-experiments`. Parent names containing `/` refer to existing section/project/collection containers; group IDs themselves are lowercase hyphenated identifiers. Pages without `parent` remain directly inside their project or collection. Aim for one or two group levels. Empty groups disappear after audience filtering. Unknown parents, duplicate groups, cycles, and pages assigned outside their declared project/collection fail validation.
+
+Group URLs use `#/browse/group/<group-id>`; published pages retain their own stable slugs. These are illustrative definitions, not new projects added to the site.
+
+## Asset review
+
+`npm run check` also reports exact duplicate assets (by bytes), obvious editor backups and possibly unreferenced files under `assets/` and `content/`. References include Markdown, gallery macros, frontmatter, HTML, CSS and local application scripts. Dynamic paths can produce false positives, so these are review warnings, not deletion instructions or build failures. Nothing is removed or recompressed in place. Generated WebPs remain build outputs; `npm run dev` caches them as before. Git push has no mutation hook, and deployment remains unchanged.
+
 ## Images and embeds
 
 Keep assets near their Markdown page. All relative paths resolve from that authored page's directory.
@@ -108,9 +156,12 @@ With the site running and Playwright available:
 ```sh
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/browser.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/layout.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/profiles.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/performance.cjs current
 ```
 
 `SITE_URL` and `CHROME_PATH` override the default local URL and Chrome executable. Tests include phone/touch emulation, pinch/swipe gestures, multiple viewport sizes, the work view, history, receipts, audio and paper controls. Reports are written to `.test-results/`. See `PERFORMANCE.md` for measured before/after results and remaining review items.
 
-The paper components use source-image geometry: `.card` defines `--paper-width` and derives ruled rows from its artwork; `.receipt` defines `--receipt-width` and bounds only its entry list. Change these component scales rather than stretching their backgrounds. Mobile touch rows span whole printed rules. The grid surface has a constant texture scale and a viewport-sized layer on mobile. See [LAYOUT.md](LAYOUT.md) for measurements, screenshots, routing behavior, and Safari review notes.
+The paper components use source-image geometry: `.card` defines `--paper-width` and derives ruled rows from its artwork; `.receipt` defines `--receipt-width` and bounds only its entry list. Change these component scales rather than stretching their backgrounds. Every navigation row spans exactly one printed rule. The grid surface has a constant texture scale and a viewport-sized layer on mobile. See [LAYOUT.md](LAYOUT.md) for measurements, screenshots, routing behavior, and Safari review notes.
+
+See [UI-PROFILES.md](UI-PROFILES.md) for the latest UI/profile pass, screenshot/test results, asset-warning summary and performance smoke measurements.

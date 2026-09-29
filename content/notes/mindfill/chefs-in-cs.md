@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-mindfill-chefs-in-cs"
 title: "Chefs In CS"
 slug: "notes/mindfill/chefs-in-cs"

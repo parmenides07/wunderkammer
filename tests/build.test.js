@@ -34,3 +34,5 @@ test('unpublishing removes page and aliases; filesystem dates have no authority'
  assert.deepEqual(buildManifest(f.root).aliases,{});
 });
 test('rejects invalid type',t=>{const f=fixture(t);f.write('bad.md',{...metadata,type:'mystery'});assert.throws(()=>buildManifest(f.root),/invalid type/);});
+for(const [patch,error] of [[{layout:'invalid'},/invalid layout/],[{layout:'custom',layoutClass:'bad class'},/layoutClass/],[{layout:'essay',indexStatus:'yes'},/indexStatus/]])test('validates layout metadata '+JSON.stringify(patch),t=>{const f=fixture(t);f.write('bad.md',{...metadata,...patch});assert.throws(()=>buildManifest(f.root),error);});
+test('layout metadata and custom hook survive without changing Markdown',t=>{const f=fixture(t);f.write('page.md',{...metadata,layout:'custom',layoutClass:'spatial-demo'});const p=buildManifest(f.root).pages[0];assert.equal(p.layout,'custom');assert.equal(p.layoutClass,'spatial-demo');assert.equal(p.body,'Body stays intact.\n');});

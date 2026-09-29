@@ -13,7 +13,7 @@ function imageInfo(url, metadata=currentImages) {
   if(absolute.origin!==appBase.origin)return null;
   return metadata[decodeURIComponent(absolute.pathname.slice(appBase.pathname.length))];
 }
-function optimizeImage(img, metadata=currentImages, eager=false) {
+function optimizeImage(img, metadata=currentImages, eager=false, layout='default') {
   const info=imageInfo(img.src,metadata);
   img.decoding='async';img.loading=eager?'eager':'lazy';
   if(!info)return;
@@ -23,6 +23,7 @@ function optimizeImage(img, metadata=currentImages, eager=false) {
   const variants=info.poster?[info.poster]:(inline.length?inline:info.variants);
   if(info.poster){img.dataset.animation=new URL(info.original,appBase).href;img.dataset.poster=new URL(info.poster.src,appBase).href;}
   img.sizes=img.closest('.grid')?'(max-width: 390px) calc(100vw - 80px), (max-width: 900px) 42vw, 16vw':img.classList.contains('banner')?'(max-width: 900px) 100vw, 58vw':'(max-width: 600px) calc(100vw - 40px), (max-width: 900px) 90vw, 48vw';
+  if(layout==='gallery'&&img.closest('.grid'))img.sizes='(max-width: 600px) calc(100vw - 80px), (max-width: 900px) calc((100vw - 80px) / 2), (min-width: 2400px) 14vw, 21vw';
   img.srcset=variants.map(v=>`${new URL(v.src,appBase).href} ${v.width}w`).join(', ');
   img.src=new URL((variants.find(v=>v.width>=1200)||variants.at(-1)).src,appBase).href;
   img.dataset.fullSrc=new URL(info.variants.at(-1).src,appBase).href;

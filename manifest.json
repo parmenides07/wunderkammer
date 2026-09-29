@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-29T18:29:12.838Z",
+  "generatedAt": "2026-09-29T20:17:38.639Z",
   "pages": [
     {
       "id": "about",
@@ -366,6 +366,7 @@
       "images": "generated/images/notes-art-lets-talk-about-ai-art.json"
     },
     {
+      "layout": "essay",
       "id": "notes-mindfill-calculus-kellogs-and-knowledge",
       "title": "Calculus Kellogs And Knowledge",
       "slug": "notes/mindfill/calculus-kellogs-and-knowledge",
@@ -394,6 +395,7 @@
       "images": "generated/images/notes-mindfill-calculus-kellogs-and-knowledge.json"
     },
     {
+      "layout": "essay",
       "id": "notes-mindfill-chefs-in-cs",
       "title": "Chefs In CS",
       "slug": "notes/mindfill/chefs-in-cs",
@@ -422,6 +424,7 @@
       "images": "generated/images/notes-mindfill-chefs-in-cs.json"
     },
     {
+      "layout": "essay",
       "id": "notes-mindfill-emergent-complexity-and-control",
       "title": "Emergent Complexity And Control",
       "slug": "notes/mindfill/emergent-complexity-and-control",
@@ -452,6 +455,7 @@
       "images": "generated/images/notes-mindfill-emergent-complexity-and-control.json"
     },
     {
+      "layout": "index",
       "id": "notes-mindfill",
       "title": "The Mindfill",
       "slug": "notes/mindfill",
@@ -480,6 +484,7 @@
       "images": "generated/images/notes-mindfill.json"
     },
     {
+      "layout": "essay",
       "id": "notes-mindfill-my-mother-tongue",
       "title": "My Mother Tongue",
       "slug": "notes/mindfill/my-mother-tongue",
@@ -508,6 +513,7 @@
       "images": "generated/images/notes-mindfill-my-mother-tongue.json"
     },
     {
+      "layout": "essay",
       "id": "notes-mindfill-pumping-imaginary-iron",
       "title": "Pumping Imaginary Iron",
       "slug": "notes/mindfill/pumping-imaginary-iron",
@@ -536,6 +542,7 @@
       "images": "generated/images/notes-mindfill-pumping-imaginary-iron.json"
     },
     {
+      "layout": "essay",
       "id": "notes-mindfill-pursuing-greatness",
       "title": "Pursuing Greatness",
       "slug": "notes/mindfill/pursuing-greatness",
@@ -564,6 +571,7 @@
       "images": "generated/images/notes-mindfill-pursuing-greatness.json"
     },
     {
+      "layout": "essay",
       "id": "notes-mindfill-the-stand-user-could-be-anyone",
       "title": "The Stand User Could Be Anyone",
       "slug": "notes/mindfill/the-stand-user-could-be-anyone",
@@ -592,6 +600,7 @@
       "images": "generated/images/notes-mindfill-the-stand-user-could-be-anyone.json"
     },
     {
+      "layout": "index",
       "id": "notes-philosophy",
       "title": "Philosophy",
       "slug": "notes/philosophy",
@@ -620,6 +629,7 @@
       "images": "generated/images/notes-philosophy.json"
     },
     {
+      "layout": "essay",
       "id": "notes-philosophy-maximalist-soul-driver",
       "title": "Maximalist Soul Driver",
       "slug": "notes/philosophy/maximalist-soul-driver",
@@ -677,6 +687,7 @@
       "images": "generated/images/notes-systems-logic-composed-emergent-systems.json"
     },
     {
+      "layout": "project",
       "id": "projects-akashom-architecture",
       "title": "DL5 Distros and Architecture",
       "slug": "projects/akashom/architecture",
@@ -709,6 +720,7 @@
       "images": "generated/images/projects-akashom-architecture.json"
     },
     {
+      "layout": "project",
       "id": "projects-akashom",
       "title": "What is the function of Akashom?",
       "slug": "projects/akashom",
@@ -741,6 +753,7 @@
       "images": "generated/images/projects-akashom.json"
     },
     {
+      "layout": "project",
       "id": "projects-akashom-visual-design",
       "title": "DL2 Visualmaxxing Is Meta",
       "slug": "projects/akashom/visual-design",
@@ -773,6 +786,7 @@
       "images": "generated/images/projects-akashom-visual-design.json"
     },
     {
+      "layout": "project",
       "id": "projects-akashom-visual-nonvisual-trailer",
       "title": "What is the form of Akashoma?",
       "slug": "projects/akashom/visual-nonvisual-trailer",
@@ -805,6 +819,7 @@
       "images": "generated/images/projects-akashom-visual-nonvisual-trailer.json"
     },
     {
+      "layout": "project",
       "id": "projects-cornocupia",
       "title": "Cornocupia",
       "slug": "projects/cornocupia",
@@ -835,6 +850,7 @@
       "images": "generated/images/projects-cornocupia.json"
     },
     {
+      "layout": "gallery",
       "id": "projects-darkroom",
       "title": "Darkroom",
       "slug": "projects/darkroom",
@@ -865,6 +881,7 @@
       "images": "generated/images/projects-darkroom.json"
     },
     {
+      "layout": "project",
       "id": "projects-jivan",
       "title": "Jivan Defined",
       "slug": "projects/jivan",
@@ -896,6 +913,7 @@
       "images": "generated/images/projects-jivan.json"
     },
     {
+      "layout": "project",
       "id": "projects-mindscape-examples-braise",
       "title": "Braise",
       "slug": "projects/mindscape/examples/braise",
@@ -925,6 +943,7 @@
       "images": "generated/images/projects-mindscape-examples-braise.json"
     },
     {
+      "layout": "project",
       "id": "projects-mindscape-examples-lawralai",
       "title": "Lawralai",
       "slug": "projects/mindscape/examples/lawralai",
@@ -954,6 +973,7 @@
       "images": "generated/images/projects-mindscape-examples-lawralai.json"
     },
     {
+      "layout": "project",
       "id": "projects-mindscape-examples-praferin",
       "title": "Praferin",
       "slug": "projects/mindscape/examples/praferin",
@@ -983,6 +1003,7 @@
       "images": "generated/images/projects-mindscape-examples-praferin.json"
     },
     {
+      "layout": "project",
       "id": "projects-mindscape-examples-riab-kaj",
       "title": "Riab Kaj",
       "slug": "projects/mindscape/examples/riab-kaj",
@@ -1012,6 +1033,7 @@
       "images": "generated/images/projects-mindscape-examples-riab-kaj.json"
     },
     {
+      "layout": "project",
       "id": "projects-mindscape",
       "title": "Project Mindscape",
       "slug": "projects/mindscape",
@@ -1042,6 +1064,7 @@
       "images": "generated/images/projects-mindscape.json"
     },
     {
+      "layout": "project",
       "id": "projects-mindscape-leviathan",
       "title": "The Leviathan",
       "slug": "projects/mindscape/leviathan",
@@ -1072,6 +1095,7 @@
       "images": "generated/images/projects-mindscape-leviathan.json"
     },
     {
+      "layout": "project",
       "id": "projects-mindscape-premise",
       "title": "Premise",
       "slug": "projects/mindscape/premise",

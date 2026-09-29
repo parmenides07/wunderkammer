@@ -1,4 +1,5 @@
 ---
+layout: gallery
 id: "projects-darkroom"
 title: "Darkroom"
 slug: "projects/darkroom"

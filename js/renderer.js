@@ -2,7 +2,7 @@
 const markdownCache = new Map();
 let renderGeneration = 0;
 async function renderPage(page) {
-  if(viewer)viewer.close();
+  if(viewer)viewer.destroy();
   const generation = ++renderGeneration;
   const folder = page.assetBase;
   const { created, modified } = page;
@@ -17,6 +17,9 @@ async function renderPage(page) {
   const metadata = await loadPageImages(page);
   if (generation !== renderGeneration) return;
   currentImages = metadata;
+  const shell=document.querySelector('.content');
+  shell.className=`content layout-${page.layout||'default'}`;
+  if(page.layout==='custom'){shell.classList.add(`page-${page.id}`);if(page.layoutClass)shell.classList.add(page.layoutClass);}
   document.querySelector('.content').scrollTop = 0;
   const sticker = document.querySelector('.wip-sticker');
   sticker.style.display = page.status === 'wip' ? 'block' : 'none';
@@ -117,11 +120,12 @@ async function renderPage(page) {
     const src = img.getAttribute('src');
     if (src && !/^(?:[a-z]+:|\/)/i.test(src)) img.src = assetUrl(folder, src);
     if(img.src.includes('#multiply'))img.dataset.multiply='true';
-    optimizeImage(img,metadata);
+    optimizeImage(img,metadata,false,page.layout);
   });
   template.content.querySelectorAll('iframe').forEach(frame=>{frame.loading='lazy';});
   parsed = template.innerHTML;
-  document.querySelector('.content').innerHTML = `<div class="content-bg">${header + parsed}</div>`;
+  const index=page.layout==='index'?renderCollectionIndex(page):'';
+  document.querySelector('.content').innerHTML = `<div class="content-bg">${header + index + parsed}</div>`;
 
   const content = document.querySelector('.content');
   const contentBg = content.querySelector('.content-bg');
@@ -211,4 +215,14 @@ function syncBannerLayout() {
   if(isMobileLayout()||banner.style.display==='none')return;
   document.querySelector('.content').style.paddingTop=`calc(${banner.offsetHeight}px + 2cqh)`;
   document.querySelector('.wip-sticker').style.top=(banner.offsetHeight-146)+'px';
+}
+
+function renderCollectionIndex(page){
+  const entries=SiteNavigation.indexEntries(page,navigation);
+  if(!entries.length)return '';
+  const items=entries.map(entry=>{
+    const status=page.indexStatus!==false&&!['active','complete'].includes(entry.status)?`<span class="entry-status">${escapeHtml(entry.status)}</span>`:'';
+    return `<li><time datetime="${entry.created}">${entry.created}</time><a href="#/${entry.slug}">${escapeHtml(entry.title)}</a>${status}</li>`;
+  }).join('');
+  return `<nav class="collection-index" aria-label="Entries in ${escapeHtml(page.title)}"><ol>${items}</ol></nav>`;
 }

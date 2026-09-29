@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-mindscape-examples-lawralai"
 title: "Lawralai"
 slug: "projects/mindscape/examples/lawralai"

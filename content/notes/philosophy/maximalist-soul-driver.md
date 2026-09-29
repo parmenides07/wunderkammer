@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-philosophy-maximalist-soul-driver"
 title: "Maximalist Soul Driver"
 slug: "notes/philosophy/maximalist-soul-driver"

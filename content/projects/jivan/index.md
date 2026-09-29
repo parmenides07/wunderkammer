@@ -1,4 +1,5 @@
 ---
+layout: project
 id: "projects-jivan"
 title: "Jivan Defined"
 slug: "projects/jivan"

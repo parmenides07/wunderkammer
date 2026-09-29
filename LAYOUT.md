@@ -1,5 +1,7 @@
 # Physical layout corrections — 2026-09-29
 
+This is the historical report for that pass. The later [UI/profile pass](UI-PROFILES.md) supersedes its mobile multi-rule rows, ink intensity and receipt/expansion policy.
+
 The desktop composition, authored content, semantic architecture, mobile INDEX overlay, image pipeline and viewer remain. Nothing was deployed. The starting checkout was clean at `ef72f9a`; an additional source backup is `/tmp/portfoliosite-before-layout-pass.tar.gz`.
 
 ## Diagnosis from the running site

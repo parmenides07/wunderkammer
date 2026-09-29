@@ -1,4 +1,5 @@
 ---
+layout: essay
 id: "notes-mindfill-my-mother-tongue"
 title: "My Mother Tongue"
 slug: "notes/mindfill/my-mother-tongue"

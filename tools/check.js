@@ -38,6 +38,7 @@ function checkContent(root) {
 }
 async function main() {
  const root=path.resolve(__dirname,'..');await build(root);const {errors,warnings}=checkContent(root);
+ warnings.push(...require('./assets').auditAssets(root));
  for(const warning of warnings)console.warn(`WARN ${warning}`);
  for(const error of errors)console.error(`ERROR ${error}`);
  console.log(`Check: ${errors.length} errors, ${warnings.length} authoring warnings. No deployment performed.`);
