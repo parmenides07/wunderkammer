@@ -138,7 +138,6 @@ init().then(() => {
 
   const toggleReceipt=()=>{playEffect(tuckSound);setReceiptTucked(!receiptState.receiptTucked);};
   document.getElementById('tuck-files-btn').addEventListener('click',toggleReceipt);
-  document.getElementById('receipt-toggle').addEventListener('click',toggleReceipt);
 }).catch(showError);
 
 document.querySelector('.cardicon2').addEventListener('click', () => {

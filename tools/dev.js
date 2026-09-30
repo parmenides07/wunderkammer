@@ -36,7 +36,7 @@ async function start() {
  const port=Number(process.env.PORT||5173);server.on('error',e=>{console.error(e.message);process.exitCode=1;watcher.close();});
  const watcher=chokidar.watch(['content','assets','site.shell.html','style.css','script.js','js','site.config.json','legacy-routes.json','build.js','tools/images.js','tools/markdown.js'].map(p=>path.join(root,p)),{ignored:p=>/(^|[/\\])\.[^/\\]/.test(path.relative(root,p)),ignoreInitial:true,awaitWriteFinish:{stabilityThreshold:150,pollInterval:50}});
  watcher.on('all',()=>{clearTimeout(timer);timer=setTimeout(rebuild,150);});
- server.listen(port,'127.0.0.1',()=>console.log(`Preview: http://127.0.0.1:${port}/ — watching content and application files`));
+ server.listen(port,'127.0.0.1',()=>console.log(`Preview: http://127.0.0.1:${port}/ — also /personal/ and /work/; watching content and application files`));
  for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{watcher.close();for(const client of clients)client.end();server.close();});
 }
 start().catch(e=>{console.error(e.message);process.exitCode=1;});

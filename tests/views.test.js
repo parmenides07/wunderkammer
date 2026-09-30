@@ -1,0 +1,5 @@
+const test=require('node:test'),assert=require('node:assert/strict');
+const views=require('../js/views');
+test('entry audience handles directory and explicit index paths',()=>{for(const p of ['/','/index.html','/work/'])assert.equal(views.audience(p),'professional');for(const p of ['/personal/','/personal/index.html','/site/personal/'])assert.equal(views.audience(p),'public');});
+test('fallback resolves public-only aliases but never drafts, professional pages or unknown routes',()=>{const manifest={aliases:{old:'personal'},pages:[{slug:'personal',published:true,audience:['public']},{slug:'both',published:true,audience:['public','professional']},{slug:'draft',published:false,audience:['public']}]};assert.equal(views.personalFallback(manifest,'old'),'personal');for(const slug of ['both','draft','unknown'])assert.equal(views.personalFallback(manifest,slug),null);assert.equal(views.routeHref('/personal/','?x=1','both'),'/personal/?x=1#/both');});
+test('generated root, personal, alias and filtered direct receipts validate',()=>assert.deepEqual(require('../tools/views-check').checkViews(require('node:path').resolve(__dirname,'..')),[]));

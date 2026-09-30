@@ -1,4 +1,5 @@
 {
+  "views": {"root":{"title":"Param Ghetia","description":"Projects and selected writing by Param Ghetia."},"personal":{"title":"Wunderkammer \u2014 Param Ghetia","description":"Projects, writing and personal archives by Param Ghetia.","noindex":true}},
   "groups": [],
   "sections": [
     {"id":"home","label":"Home"},

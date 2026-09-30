@@ -203,6 +203,8 @@ async function renderPage(page) {
     content.classList.remove('text-only');
   }
 
+  content.querySelectorAll('a[href^="#/"]').forEach(link=>link.setAttribute('href',viewHref(link.getAttribute('href').slice(2))));
+  document.title=`${page.title} — Param Ghetia${currentAudience==='public'?' · Wunderkammer':''}`;
   markVisited(page);
   refreshUnread();
   document.querySelector('.content').dataset.pageId = page.id;

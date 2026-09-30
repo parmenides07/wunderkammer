@@ -10,7 +10,7 @@ async function run() {
   page.on('response',r=>{if(r.url().startsWith(base)&&r.status()>=400)failures.push(r.url());});return {ctx,page};
  }
  async function route(page,slug,work=false) {
-  const entry=manifest.pages.find(p=>p.slug===slug);await page.goto(`${base}/${work?'work/':''}#/${slug}`,{waitUntil:'domcontentloaded'});
+  const entry=manifest.pages.find(p=>p.slug===slug);await page.goto(`${base}/${work?'':'personal/'}#/${slug}`,{waitUntil:'domcontentloaded'});
   await page.waitForFunction(id=>document.querySelector('.content').dataset.pageId===id,entry.id);
   assert.equal(await page.locator('.doc-header h2').textContent(),entry.title);
  }
@@ -32,7 +32,7 @@ async function run() {
   await route(page,'projects/akashom');assert.equal(await page.locator('.file-link').count(),4);
   await page.locator('.content').evaluate(el=>el.scrollTop=350);
   await route(page,'about');await page.goBack();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom');assert.ok(await page.locator('.content').evaluate(el=>el.scrollTop)>250);
-  await page.goto(`${base}/#sciences/akashom/akashom.md`);await page.waitForURL('**/#/projects/akashom');await page.reload();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom');
+  await page.goto(`${base}/personal/#sciences/akashom/akashom.md`);await page.waitForURL('**/#/projects/akashom');await page.reload();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom');
   // Drag papers apart so both real tuck buttons are exposed.
   await page.waitForFunction(()=>!document.querySelector('#card-files-panel').getAnimations().some(a=>a.playState==='running'));
   for(const kind of ['files','folders']){
@@ -49,7 +49,7 @@ async function run() {
   assert.ok(await page.evaluate(()=>currentSound?.loop));await page.locator('#mute-btn').click();assert.equal(await page.locator('#mute-btn').getAttribute('aria-pressed'),'true');await page.reload();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-darkroom');assert.equal(await page.locator('#mute-btn').getAttribute('aria-pressed'),'true');assert.ok(await page.evaluate(()=>currentSound.paused));await page.locator('#mute-btn').click();await page.waitForFunction(()=>!currentSound.paused);
   results.push('Desktop drag/tuck/line, next, history/scroll, aliases, embeds, gallery, keyboard viewer, ambient/mute persistence');
   for(const entry of manifest.pages.filter(p=>p.audience.includes('professional'))){await route(page,entry.slug,true);assert.equal(await page.locator('[data-group^="archive"],[data-group="projects/mindscape"],[data-group="projects/darkroom"]').count(),0);const ids=await page.locator('.file-link').evaluateAll(els=>els.map(el=>el.dataset.id));assert.ok(ids.every(id=>manifest.pages.find(p=>p.id===id).audience.includes('professional')));}
-  await page.goto(`${base}/work/#/archive/consumption`);await page.waitForFunction(()=>document.querySelector('.content h2')?.textContent==='Page unavailable');
+  await page.goto(`${base}/work/#/archive/consumption`);await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='archive-consumption');assert.equal(new URL(page.url()).pathname,'/personal/');
   await page.goto(`${base}/work/index.html#/home`);await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='home');assert.equal(await page.locator('[data-group="archive"]').count(),0);
   await ctx.close();
   for(const width of [375,430,768,1366,1920]){

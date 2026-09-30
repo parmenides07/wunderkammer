@@ -10,7 +10,7 @@ async function run(){
   async function index(){if(touch&&await page.locator('#index-toggle').getAttribute('aria-expanded')==='false')await page.locator('#index-toggle').click();}
   async function group(key){await index();await page.locator(`[data-group="${key}"]`).click();}
   async function header(name){assert.equal(await page.locator('.receipt-header').textContent(),name);}
-  await page.goto(base+'/#/home');await ready('home');await page.waitForTimeout(300);
+  await page.goto(base+'/personal/#/home');await ready('home');await page.waitForTimeout(300);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
   const geometry=await page.evaluate(()=>{
    const box=s=>{const e=document.querySelector(s),c=getComputedStyle(e),r=e.getBoundingClientRect();return {width:r.width,height:r.height,font:c.fontSize,line:c.lineHeight,filter:c.filter,background:c.backgroundSize};};
@@ -48,12 +48,12 @@ async function run(){
   }
   // Existing embeds remain contained inside the narrower sheet.
   for(const slug of ['projects/jivan','archive/experiments/proof-of-concept']){
-   await page.goto(base+'/#/'+slug);await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId);
+   await page.goto(base+'/personal/#/'+slug);await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId);
    assert.ok(await page.locator('.content').evaluate(el=>el.scrollWidth<=el.clientWidth+1));
    assert.ok(await page.locator('.content iframe').evaluateAll(els=>els.every(el=>el.getBoundingClientRect().width<=document.querySelector('.content-bg').getBoundingClientRect().width)));
   }
   // Exercise viewer pan and exact scroll restoration, then INDEX after viewer closure.
-  await page.goto(base+'/#/projects/darkroom');await ready('projects-darkroom');const image=page.locator('.image-viewer').nth(4);await image.scrollIntoViewIfNeeded();await page.waitForTimeout(150);
+  await page.goto(base+'/personal/#/projects/darkroom');await ready('projects-darkroom');const image=page.locator('.image-viewer').nth(4);await image.scrollIntoViewIfNeeded();await page.waitForTimeout(150);
   const reading=await page.evaluate(()=>({document:window.scrollY,article:document.querySelector('.content').scrollTop}));await image.click();await page.waitForFunction(()=>viewer?.opener.isOpen);assert.equal(await page.evaluate(()=>document.body.style.overflow),'hidden');
   if(touch){const cdp=await ctx.newCDPSession(page);async function gesture(type,points){await cdp.send('Input.dispatchTouchEvent',{type,touchPoints:points.map(([x,y,id])=>({x,y,id,radiusX:1,radiusY:1,force:1}))});}
    const start=await page.evaluate(()=>viewer.currIndex);await gesture('touchStart',[[width*.8,400,0]]);for(let i=1;i<=8;i++)await gesture('touchMove',[[width*(.8-.65*i/8),400,0]]);await gesture('touchEnd',[]);await page.waitForFunction(i=>viewer.currIndex===i+1,start);

@@ -916,7 +916,11 @@ img { height: auto; }
   .card { --paper-width: min(calc(100vw - 2.4rem - env(safe-area-inset-left) - env(safe-area-inset-right)), 38rem); --paper-limit: min(calc(2070 * var(--paper-unit)), 65svh); }
   .cardicon2, .tuck-btn { display: none; }
   .receipt { --receipt-width: min(calc(100vw - 3.2rem - env(safe-area-inset-left) - env(safe-area-inset-right)), 24rem); --receipt-limit: min(calc(2429 * var(--receipt-unit)), 65svh); }
-  .card-file-links a { min-height: 44px; display: flex; align-items: center; line-height: 1.2; }
+  /* Desktop's 39 source-pixel type uses a 1.08 line box: 42.12 artwork units. */
+  .receipt { --receipt-row-height: calc(42.12 * var(--receipt-unit)); }
+  .card-file-links a, .receipt-total { min-height: 0; display: block; line-height: var(--receipt-row-height); }
+  .receipt-header { line-height: calc(70.2 * var(--receipt-unit)); }
+  .receipt-divider { line-height: calc(44.46 * var(--receipt-unit)); }
 }
 @media (max-width: 390px) { .content .grid { grid-template-columns: 1fr; } }
 @media (prefers-reduced-motion: reduce) {
@@ -985,13 +989,6 @@ img { height: auto; }
 .layout-catalog dl { display: grid; grid-template-columns: max-content minmax(0,1fr); gap: .35em 1em; }
 .layout-catalog dd { margin-inline: 0; }
 .layout-custom .content-text { max-width: none; }
-
-#receipt-toggle { display: none; }
-#receipt-toggle[hidden] { display: none; }
-@media (max-width: 900px), (pointer: coarse) {
-
-  #receipt-toggle:not([hidden]) { display: block; align-self: center; margin-bottom: .75rem; }
-}
 
 /* Stabilization: position transitions only; the paper remains mounted. */
 #card-files-panel { transition: left .35s ease; }

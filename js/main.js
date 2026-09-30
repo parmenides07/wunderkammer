@@ -1,4 +1,6 @@
-let contentModel, navigation, activeGroup;
+let contentModel, navigation, activeGroup, siteManifest;
+const currentAudience=SiteViews.audience(location.pathname);
+function viewHref(route){return SiteViews.routeHref(location.pathname,location.search,route);}
 const expandedGroups = new Set();
 const appBase = new URL('./', document.baseURI);
 function escapeHtml(value) {
@@ -40,7 +42,7 @@ function buildFolderLinks() {
   container.innerHTML = '<div class="card-section-header">Sections:</div>';
   function add(node, parent) {
     const a = document.createElement('a');
-    a.href = `#/browse/${node.key}`;
+    a.href = viewHref(`browse/${node.key}`);
     a.setAttribute('aria-current',activeGroup?.key === node.key ? 'true' : 'false');
     if(node.children.length)a.setAttribute('aria-expanded',String(expandedGroups.has(node.key)));
     a.textContent = node.label;
@@ -83,7 +85,7 @@ function buildFileLinks(group, page) {
   const entries=document.createElement('div');entries.className='receipt-entries';container.appendChild(entries);
   fileList.forEach((entry, i) => {
     const a = document.createElement('a');
-    a.href = `#/${entry.slug}`;
+    a.href = viewHref(entry.slug);
     a.textContent = `${i + 1}  ${group.key.includes('/') ? entry.navTitle || entry.title : entry.title}`;
     a.className = 'file-link'; a.dataset.id = entry.id;
     a.classList.toggle('active-link', page?.id === entry.id);
@@ -104,15 +106,12 @@ function stopReceiptEffects(){
   document.getElementById('folder-line').replaceChildren();
 }
 function syncReceiptPosition(){
-  const panel=document.getElementById('card-files-panel'),button=document.getElementById('receipt-toggle');
+  const panel=document.getElementById('card-files-panel');
+  if(isMobileLayout())receiptState.receiptTucked=!receiptState.receiptEligible;
   panel.classList.toggle('is-tucked',receiptState.receiptTucked);
   panel.classList.toggle('is-open',!receiptState.receiptTucked);
   panel.dataset.tucked=String(receiptState.receiptTucked);
   panel.querySelector('.receipt').inert=receiptState.receiptTucked;
-  button.hidden=false;
-  button.disabled=!receiptState.receiptEligible;
-  button.textContent=receiptState.receiptTucked?'RECEIPT':'TUCK RECEIPT ×';
-  button.setAttribute('aria-expanded',String(!receiptState.receiptTucked));
   const tuck=document.getElementById('tuck-files-btn');
   tuck.disabled=!receiptState.receiptEligible;
   tuck.setAttribute('aria-label',receiptState.receiptTucked?'Unfold receipt':'Tuck receipt');
@@ -186,6 +185,8 @@ async function handleRoute() {
     }
     page ||= contentModel.resolve(route || 'home');
     if (!page) {
+      const personal=currentAudience==='professional'&&SiteViews.personalFallback(siteManifest,route);
+      if(personal){const target=new URL('personal/',appBase);target.search=location.search;target.hash=`/${personal}`;location.replace(target.href);return;}
       ++renderGeneration;
       if (currentSound) { currentSound.pause(); currentSound = null; }
       showPaperMessage('Page unavailable', 'This page is not available in this view. Choose a section from the index.');
@@ -205,7 +206,8 @@ async function init() {
     if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
     return response.json();
   }));
-  const audience = /\/work(?:\/(?:index\.html)?)?$/.test(window.location.pathname) ? 'professional' : 'public';
+  siteManifest=manifest;
+  const audience=currentAudience;
   contentModel = SiteContent.createContentModel(manifest, audience);
   navigation = SiteNavigation.createNavigation(contentModel, config, audience);
   // Carry visits forward from any recognized legacy path, once per stable ID.

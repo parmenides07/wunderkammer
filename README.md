@@ -57,7 +57,7 @@ Required fields are shown through `created`; `collection` and `topics` are optio
 - Sections: `home`, `projects`, `notes`, `archive`, `about`.
 - Types: `home`, `project`, `project-note`, `note`, `essay`, `log`, `collection`, `archive`, `about`.
 - Statuses: `active`, `complete`, `wip`, `paused`, `superseded`, `archived`.
-- Add `professional` to `audience: [public, professional]` to include a page in `/work/`.
+- Add `professional` to `audience: [public, professional]` to include a page in the curated root `/`. Public-only pages remain in `/personal/`.
 - Optional fields include `project`, `collection`, `topics`, `order`, `featured`, `summary`, `banner`, `sound`, and `navTitle` (receipt label).
 
 Folders are authoring conveniences. `project` and `collection` define containers; `site.config.json` sets their labels/order. The left paper contains containers; each receipt lists only its direct leaf pages. Topic tags remain independent. A future Now page can use `section: about` and `slug: about/now` without navigation code changes.
@@ -83,7 +83,7 @@ For a custom page, add `layout: custom` and optionally `layoutClass: orbital-dem
 
 The left paper expands only the active ancestor path. Only containers with child containers have disclosure arrows. Every row occupies one ruled line, including on phones. Receipts show direct pages, never recursive descendants, with the container's name as the heading.
 
-Entering a container opens its first direct page unless the URL explicitly selects another page. Receipts always stay mounted: zero or one direct page tucks the paper; two or more open it, including index pages. Manual tucking/unfolding persists only within the same container. Entering another container resets that choice. Use the red desktop tuck control or the RECEIPT control inside mobile INDEX for multi-page receipts. Bobbing is disabled. The desktop connector appears only after entering a different multi-page container with an open, settled receipt; it is disabled on mobile.
+Entering a container opens its first direct page unless the URL explicitly selects another page. Receipts always stay mounted: zero or one direct page tucks the paper; two or more open it, including index pages. Manual tucking/unfolding persists only within the same container. Entering another container resets that choice. Use the red desktop tuck control for multi-page receipts. Mobile has no manual receipt control: its state always follows the direct-page count. Bobbing is disabled. The desktop connector appears only after entering a different multi-page container with an open, settled receipt; it is disabled on mobile.
 
 Optional `groups` in `site.config.json` can subdivide a project without using its filesystem folders. For example, after creating a project with `project: anvesana`:
 
@@ -138,7 +138,7 @@ Existing `#multiply`, ambient `sound:` frontmatter and legacy `![sound:assets/so
 
 Edit `site.shell.html` for the shared HTML shell and `style.css` for styles. Do not hand-edit generated output:
 
-- `index.html`, `work/index.html`
+- `index.html`, `personal/index.html`, `work/index.html`
 - `manifest.json`
 - `generated/pages/`, `generated/images/`, `generated/image-index.json`
 - `generated/site.css`, `generated/vendor/`
@@ -147,7 +147,7 @@ Commit generated output along with source edits for the existing GitHub Pages de
 
 `build.js` parses YAML, validates it, generates clean Markdown, optimizes images and copies the small local runtime libraries/fonts. `js/content.js` filters the audience before grouping; `js/navigation.js` separates direct pages from unread descendants; `js/renderer.js`, `js/images.js`, `js/lightbox.js` handle content and media; `js/main.js`, `js/mobile.js` and `script.js` handle routes, mobile navigation and paper effects.
 
-`/work/` is curation, not security. Review Home/About before sharing it. A static repository does not make authored files private. Add old slugs to `legacy-routes.json` when changing a route. Visit state uses stable IDs; scroll positions are remembered within the current browsing session.
+`/` is the curated professional view; `/personal/` is the full public view. `/work/` redirects to root, preserving query and hash. Personal-only page links requested at root redirect to their `/personal/` equivalent; unknown routes keep the styled 404. Internal links retain the current shell. This is curation, not security. Review Home/About before sharing it. A static repository does not make authored files private. Add old slugs to `legacy-routes.json` when changing a route. Visit state uses stable IDs; scroll positions are remembered within the current browsing session.
 
 ## Browser and performance checks
 
@@ -155,6 +155,7 @@ With the site running and Playwright available:
 
 ```sh
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/browser.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/views.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/stabilization.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/layout.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/profiles.cjs
@@ -168,3 +169,7 @@ The paper components use source-image geometry: `.card` defines `--paper-width` 
 See [UI-PROFILES.md](UI-PROFILES.md) for the latest UI/profile pass, screenshot/test results, asset-warning summary and performance smoke measurements.
 
 See [STABILIZATION.md](STABILIZATION.md) for the current mobile text, deterministic receipt rules and validation results.
+
+Both views and the alias run from the same `npm run dev` server. `npm run check` validates their mode selection, routes, aliases, personal-only fallback, generated shells and audience-filtered direct receipts. `site.config.json` → `views` controls entry titles/descriptions. `views.personal.noindex` is initially `true`, generating `noindex,follow` only for the personal entry shell; set it to `false` and rebuild to remove that directive. Personal content remains public. No prominent personal-view link is added.
+
+See [VIEW-MODES.md](VIEW-MODES.md) for the current curated-root/personal routing model and automatic mobile receipt behavior.
