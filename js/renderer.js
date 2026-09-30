@@ -192,9 +192,9 @@ async function renderPage(page) {
   attachImageViewer(content);
 
   const nextBtn = document.getElementById('next-page-btn');
-  const fileIdx = fileList.findIndex(f => f.id === page.id);
-  if (fileIdx !== -1 && fileIdx < fileList.length - 1) {
-    const next = fileList[fileIdx + 1];
+  const next = SiteNavigation.nextSibling(navigation,page);
+  nextBtn.dataset.target = next?.slug || '';
+  if (next) {
     nextBtn.style.display = 'block';
     const nextImage=nextBtn.querySelector('img');if(nextImage?.dataset.src)nextImage.src=nextImage.dataset.src;
     nextBtn.onclick = async () => {
@@ -204,6 +204,7 @@ async function renderPage(page) {
     };
   } else {
     nextBtn.style.display = 'none';
+    nextBtn.onclick = null;
   }
 
   const hasImages = document.querySelector('.content img');

@@ -72,12 +72,28 @@
     return [...navigation.catalog.values()].filter(node=>!firstLeaf(node))
       .map(node=>`Container "${node.key}" (${node.label}) in ${audience}: zero visible descendant pages`);
   }
+  function siblingPages(navigation,page){
+    const owner=navigation.pageGroups.get(page.id);
+    if(!owner)return [];
+    // Singleton top-level sections are leaf destinations in the root navigation.
+    const rootLeaf=node=>!node.parent&&!node.children.length&&node.pages.length===1;
+    return rootLeaf(owner)?navigation.sections.filter(rootLeaf).flatMap(node=>node.pages):owner.pages;
+  }
+  function nextSibling(navigation,page){
+    const pages=siblingPages(navigation,page),index=pages.findIndex(p=>p.id===page.id);
+    return index<0?null:pages[index+1]||null;
+  }
+  function visitTrail(trail,slug,saved){
+    if(saved?.at(-1)===slug)return saved.slice(-100);
+    return trail.at(-1)===slug?trail:[...trail,slug].slice(-100);
+  }
+  function previousTrail(trail){return trail.length>1?trail.slice(0,-1):['home'];}
   function receiptSelection(previous,container,page){
     const directLeafPages=container.pages;
     const receiptEligible=directLeafPages.length>=2;
     return {selectedContainerId:container.key,activePageId:page?.id||null,directLeafPages,receiptEligible,
-      receiptTucked:previous.selectedContainerId===container.key?(!receiptEligible||previous.receiptTucked):!receiptEligible};
+      receiptTucked:!receiptEligible};
   }
-  const api={createNavigation,activePath,indexEntries,receiptSelection,firstLeaf,validateContainers};
+  const api={createNavigation,activePath,indexEntries,receiptSelection,firstLeaf,validateContainers,siblingPages,nextSibling,visitTrail,previousTrail};
   if(typeof module!=='undefined')module.exports=api;else root.SiteNavigation=api;
 })(globalThis);

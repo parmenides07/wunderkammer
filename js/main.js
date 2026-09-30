@@ -115,25 +115,18 @@ function syncReceiptPosition(soundOnChange=false){
   panel.classList.toggle('is-open',!receiptState.receiptTucked);
   panel.dataset.tucked=String(receiptState.receiptTucked);
   panel.querySelector('.receipt').inert=receiptState.receiptTucked;
-  const tuck=document.getElementById('tuck-files-btn');
-  tuck.disabled=!receiptState.receiptEligible;
-  tuck.setAttribute('aria-label',receiptState.receiptTucked?'Unfold receipt':'Tuck receipt');
-}
-function setReceiptTucked(tucked){
-  receiptState.receiptTucked=!receiptState.receiptEligible||tucked;
-  stopReceiptEffects();syncReceiptPosition(true);
 }
 function drawPendingReceiptLine(){
   const panel=document.getElementById('card-files-panel');
   if(!pendingReceiptLine||pendingReceiptLine!==receiptState.selectedContainerId||receiptState.receiptTucked||!receiptState.receiptEligible||isMobileLayout())return;
   if(panel.getAnimations().some(animation=>animation.playState==='running'))return;
   const box=panel.getBoundingClientRect();
-  if(box.width<=0||box.right<=0||box.left>=innerWidth)return;
+  if(box.width<=0||box.right<=0||box.left>=innerWidth||box.bottom<=0||box.top>=innerHeight)return;
   pendingReceiptLine=null;
   drawFolderLine(document.querySelector('.active-folder-link'));
 }
 document.getElementById('card-files-panel').addEventListener('transitionend',event=>{
-  if(event.target===event.currentTarget&&event.propertyName==='left')drawPendingReceiptLine();
+  if(event.target===event.currentTarget&&event.propertyName==='transform')drawPendingReceiptLine();
 });
 function updateReceipt(group,page){
   const changed=receiptState.selectedContainerId!==group.key;
@@ -167,6 +160,21 @@ function showError(error) {
   console.error(error);
   showPaperMessage('Unable to load this page', 'Please reload and try again, or choose another page from the index.');
 }
+// Each browser entry carries its own internal trail. Traversal restores it rather
+// than recording Back/Forward as another forward visit. Normalization adds nothing.
+let internalTrail=[];
+function syncInternalTrail(page){
+  const saved=history.state?.siteTrail;
+  internalTrail=SiteNavigation.visitTrail(internalTrail,page.slug,saved?.shell===location.pathname?saved.routes:null);
+  history.replaceState({...history.state,siteTrail:{shell:location.pathname,routes:internalTrail}},'',viewHref(page.slug));
+}
+function previousInternalPage(){
+  saveScrollPosition();
+  internalTrail=SiteNavigation.previousTrail(internalTrail);
+  const slug=internalTrail.at(-1);
+  if(location.hash!==`#/${slug}`)history.pushState({siteTrail:{shell:location.pathname,routes:internalTrail}},'',viewHref(slug));
+  handleRoute();
+}
 async function handleRoute() {
   try {
     let route;
@@ -187,7 +195,7 @@ async function handleRoute() {
       showPaperMessage('Page unavailable', 'This page is not available in this view. Choose a section from the index.');
       return;
     }
-    if (window.location.hash !== `#/${page.slug}`) window.history.replaceState(null, '', `${location.pathname}${location.search}#/${page.slug}`);
+    syncInternalTrail(page);
     activeGroup = navigation.pageGroups.get(page.id);
     selectNavigationPath(activeGroup);
     buildFolderLinks(); buildFileLinks(activeGroup, page);
@@ -215,6 +223,11 @@ async function init() {
     } catch { /* Storage may be disabled. */ }
   }
   buildFolderLinks();
+  window.addEventListener('popstate',event=>{
+    // Equal-URL browser entries do not emit hashchange, but their trails may differ.
+    const saved=event.state?.siteTrail;
+    if(saved?.shell===location.pathname)internalTrail=saved.routes.slice();
+  });
   window.addEventListener('hashchange', handleRoute);
   await handleRoute();
 }

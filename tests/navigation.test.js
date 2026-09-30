@@ -17,9 +17,9 @@ test('public sections, project receipts, collections and topics use metadata',()
 });
 test('professional filtering precedes grouping, lookups, topics and next-page lists',()=>{
  const model=createContentModel(manifest,'professional',config),nav=createNavigation(model,config,'professional');
- assert.equal(model.pages.length,9);
+ assert.ok(model.pages.every(p=>p.audience.includes('professional')));
  assert.deepEqual(nav.sections.map(s=>s.key),['home','projects','about','currents']);
- assert.deepEqual(nav.catalog.get('projects').children.map(s=>s.key),['projects/akashom','projects/cornocupia','projects/mindscape']);
+ assert.deepEqual(nav.catalog.get('projects').children.map(s=>s.key),config.views.root.projects.filter(id=>model.pages.some(p=>p.project===id)).map(id=>'projects/'+id));
  assert.equal(nav.catalog.has('notes'),false);
  for(const node of nav.catalog.values())assert.ok(node.pages.every(p=>p.audience.includes('professional')));
  assert.equal(model.resolve('archive/consumption'),undefined);

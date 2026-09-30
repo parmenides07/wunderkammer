@@ -18,7 +18,7 @@ async function run() {
  try {
   const {ctx,page}=await context(1440);
   for(const entry of personalModel.pages){await route(page,entry.slug);assert.equal(await page.locator('.wip-sticker').isVisible(),entry.status==='wip');assert.ok(!page.url().includes('.md'));}
-  results.push('39 public pages, banners/WIP, semantic routes');
+  results.push(personalModel.pages.length+' public pages, banners/WIP, semantic routes');
   await route(page,'home');
   for(const [section,owner] of [['projects','projects/akashom'],['notes','notes/mindfill'],['archive','archive/consumption']]){
    await page.locator(`[data-group="${section}"]`).click({position:{x:8,y:8}});
@@ -39,6 +39,7 @@ async function run() {
   for(const kind of ['files','folders']){
    const panel=page.locator(`#card-${kind}-panel`),handle=page.locator(kind==='files'?'.receipt-header':'.card-section-header');
    const before=await panel.boundingBox(),box=await handle.boundingBox();const startX=box.x+(kind==='files'?15:220);await page.mouse.move(startX,box.y+10);await page.mouse.down();await page.mouse.move(startX+(kind==='files'?450:70),box.y+35,{steps:8});await page.mouse.up();await page.waitForFunction(({id,x})=>Math.abs(document.getElementById(id).getBoundingClientRect().x-x)>30,{id:`card-${kind}-panel`,x:before.x});
+   if(kind==='files'){assert.equal(await page.locator('#tuck-files-btn').count(),0);continue;}
    await page.locator(`#tuck-${kind}-btn`).click();assert.equal(await panel.getAttribute('data-tucked'),'true');await page.locator(`#tuck-${kind}-btn`).click();assert.equal(await panel.getAttribute('data-tucked'),'false');
   }
   await page.locator('[data-group="notes"]').click();await page.waitForFunction(()=>activeGroup.key==='notes/mindfill');assert.equal(await page.locator('.receipt-header').textContent(),'Mindfill');

@@ -124,7 +124,7 @@ For a custom page, add `layout: custom` and optionally `layoutClass: orbital-dem
 
 The left paper expands only the active ancestor path. Only containers with child containers have disclosure arrows. Every row occupies one ruled line, including on phones. Receipts show direct pages, never recursive descendants, with the container's name as the heading.
 
-Entering a container opens its first direct page; if there are none, it descends through the first visible child containers until it finds a page. Ordering and audience filtering apply first. Selection and the receipt follow the container owning the resolved page, and ancestors expand. Explicit leaf URLs are never replaced with a first page. Receipts always stay mounted: zero or one direct page tucks the paper; two or more open it, including index pages. Manual tucking/unfolding persists only within the same container. Entering another container resets that choice. Use the red desktop tuck control for multi-page receipts. Mobile has no manual receipt control: its state always follows the direct-page count. Bobbing is disabled. The desktop connector appears only after entering a different multi-page container with an open, settled receipt; it is disabled on mobile.
+Entering a container opens its first direct page; if there are none, it descends through the first visible child containers until it finds a page. Ordering and audience filtering apply first. Selection and the receipt follow the container owning the resolved page, and ancestors expand. Explicit leaf URLs are never replaced with a first page. Receipts always stay mounted: zero or one direct page tucks the paper; two or more open it, including index pages. Receipt state is automatic in both views: desktop receipts slide upward out of view when tucked; mobile keeps its existing INDEX tuck movement. There is no manual receipt control. The lined-paper tuck control remains available on desktop. Bobbing is disabled. The desktop connector appears only after entering a different multi-page container with an open, settled receipt; it is disabled on mobile.
 
 Optional `groups` in `site.config.json` can subdivide a project without using its filesystem folders. For example, after creating a project with `project: anvesana`:
 
@@ -197,6 +197,7 @@ With the site running and Playwright available:
 ```sh
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/browser.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/nav-links.cjs
+node tests/page-controls.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/identity-audio.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/views.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/stabilization.cjs
@@ -216,3 +217,5 @@ See [STABILIZATION.md](STABILIZATION.md) for the current mobile text, determinis
 Both views and the alias run from the same `npm run dev` server. `npm run check` validates their mode selection, routes, aliases, personal-only fallback, generated shells and audience-filtered direct receipts. `site.config.json` → `views` controls entry titles/descriptions. `views.personal.noindex` is initially `true`, generating `noindex,follow` only for the personal entry shell; set it to `false` and rebuild to remove that directive. Personal content remains public. No prominent personal-view link is added.
 
 See [VIEW-MODES.md](VIEW-MODES.md) for the current curated-root/personal routing model and automatic mobile receipt behavior.
+
+The top-left back arrow retraces internally visited pages in the current shell, falling back to Home. Browser Back/Forward restores the corresponding internal trail. The bottom red arrow advances only to the next visible direct sibling: Home → About → Currents at the root, or the next leaf within the current project/group. It disappears at the end of that set.

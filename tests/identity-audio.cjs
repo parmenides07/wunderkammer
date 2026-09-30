@@ -6,13 +6,13 @@ async function count(name,n){assert.equal(await p.evaluate(name=>audioCalls.filt
 async function openIndex(){if(mobile&&await p.locator('#index-toggle').getAttribute('aria-expanded')==='false')await p.locator('#index-toggle').click();}
 async function click(key){await openIndex();await p.locator(`[data-group="${key}"]`).click({position:{x:8,y:8}});await p.waitForFunction(key=>activeGroup.key===navigation.pageGroups.get(SiteNavigation.firstLeaf(navigation.catalog.get(key)).id).key,key);}
 await p.goto('http://127.0.0.1:5173/');await ready('home-professional');await count('printer2.mp3',0);await count('tuck1.mp3',0);assert.equal(requests.some(u=>u.endsWith('.mp3')),false);
-assert.deepEqual(await p.evaluate(()=>navigation.sections.map(n=>n.key)),['home','projects','about','currents']);assert.deepEqual(await p.evaluate(()=>navigation.catalog.get('projects').children.map(n=>n.label)),['Akashom','Cornocupia','Project Mindscape']);assert.equal(await p.evaluate(()=>contentModel.pages.some(p=>p.section==='notes'||p.project==='jivan')),false);
+assert.deepEqual(await p.evaluate(()=>navigation.sections.map(n=>n.key)),['home','projects','about','currents']);assert.deepEqual(await p.evaluate(()=>navigation.catalog.get('projects').children.map(n=>n.label)),['Akashom','Cornocupia','Vivarium','Project Mindscape']);assert.equal(await p.evaluate(()=>contentModel.pages.some(p=>p.section==='notes'||p.project==='jivan')),false);
 await reset();await click('projects');await count('printer2.mp3',1);await count('tuck1.mp3',1);
 await reset();await click('projects/akashom');await ready('projects-akashom');await count('printer2.mp3',1);await count('tuck1.mp3',0);
 await reset();await p.locator('.file-link').nth(1).click();await ready('projects-akashom-visual-nonvisual-trailer');await count('printer2.mp3',0);await count('tuck1.mp3',0);
 await reset();await p.goBack();await ready('projects-akashom');await count('printer2.mp3',0);await count('tuck1.mp3',0);
 await reset();await p.evaluate(()=>{updateReceipt(activeGroup,contentModel.byId.get('projects-akashom'));syncReceiptPosition();});await count('tuck1.mp3',0);
-if(!mobile){await reset();await p.locator('#tuck-files-btn').click();await count('tuck1.mp3',1);await reset();await p.evaluate(()=>setReceiptTucked(true));await count('tuck1.mp3',0);await p.locator('#tuck-files-btn').click();await count('tuck1.mp3',1);}
+assert.equal(await p.locator('#tuck-files-btn').count(),0);assert.equal(await p.locator('#tuck-folders-btn').count(),1);
 await reset();await p.setViewportSize({width:width+1,height:900});await p.waitForTimeout(100);await count('tuck1.mp3',0);
 await reset();await click('projects/cornocupia');await ready('projects-cornocupia');await count('tuck1.mp3',1);await count('printer2.mp3',1);
 await reset();await p.evaluate(()=>siteMuted=true);await click('projects/akashom');await ready('projects-akashom');await count('printer2.mp3',0);await count('tuck1.mp3',0);await p.evaluate(()=>siteMuted=false);

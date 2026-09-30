@@ -9,7 +9,7 @@ for(const slug of ['projects/darkroom','projects/akashom','projects/jivan','note
 await page.evaluate(()=>location.hash='#/browse/notes');await page.waitForFunction(()=>receiptState.selectedContainerId==='notes/mindfill');assert.equal((await state()).count,8);
 await page.evaluate(()=>location.hash='#/browse/projects/darkroom');await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-darkroom');assert.equal((await state()).count,1);
 await page.evaluate(()=>location.hash='#/browse/projects/akashom');await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom');assert.equal((await state()).count,4);
-if(width!==390)await page.evaluate(()=>setReceiptTucked(true));await route('projects/akashom/architecture');assert.equal(await page.evaluate(()=>receiptState.receiptTucked),width!==390);assert.equal(await page.locator('#folder-line path').count(),0);await page.goBack();await page.waitForTimeout(450);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),width!==390);await page.goForward();await page.waitForTimeout(450);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),width!==390);
+await route('projects/akashom/architecture');assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);assert.equal(await page.locator('#folder-line path').count(),0);await page.goBack();await page.waitForTimeout(450);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);await page.goForward();await page.waitForTimeout(450);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);
 await page.evaluate(()=>window.receiptNode=document.querySelector('.receipt'));
 for(let n=0;n<4;n++)for(const slug of ['browse/projects','projects/akashom','projects/jivan','projects/darkroom','projects/akashom']){await page.evaluate(slug=>location.hash='#/'+slug,slug);await page.waitForTimeout(55);}
 await page.waitForTimeout(500);await state();assert.equal(await page.evaluate(()=>window.receiptNode===document.querySelector('.receipt')),true);
@@ -22,13 +22,14 @@ if(width===390){
 }
 if(width!==390){
 const panel=page.locator('#card-files-panel'),start=await panel.boundingBox();
-await page.evaluate(()=>setReceiptTucked(true));await page.waitForTimeout(100);const moving=await panel.boundingBox();assert.ok(moving.x<start.x);assert.equal(moving.height,start.height);assert.notEqual(await panel.evaluate(e=>getComputedStyle(e).display),'none');
-await page.waitForTimeout(300);const tucked=await panel.boundingBox();assert.ok(tucked.x<moving.x);assert.equal(await page.locator('#folder-line path').count(),0);
+await page.evaluate(()=>location.hash='#/projects/darkroom');await page.waitForTimeout(100);const moving=await panel.boundingBox();assert.ok(moving.y<start.y);assert.ok(Math.abs(moving.x-start.x)<1);assert.notEqual(await panel.evaluate(e=>getComputedStyle(e).display),'none');
+await page.waitForTimeout(300);const tucked=await panel.boundingBox();assert.ok(tucked.y<moving.y);assert.equal(await page.locator('#folder-line path').count(),0);
 await page.screenshot({path:`.test-results/stabilization/tucked-${width}.png`});
-await page.evaluate(()=>setReceiptTucked(false));await page.waitForTimeout(400);assert.equal(await page.locator('#folder-line path').count(),0);assert.ok(Math.abs((await panel.boundingBox()).x-start.x)<1);
+await route('projects/akashom');assert.ok(Math.abs((await panel.boundingBox()).y-start.y)<1);
+
 
 }
 if(width===390)await page.locator('#index-close').click();await route('projects/darkroom');await page.locator('.image-viewer').first().scrollIntoViewIfNeeded();await page.locator('.image-viewer').first().click();await page.waitForFunction(()=>viewer?.opener.isOpen);await page.keyboard.press('ArrowRight');await page.keyboard.press('Escape');await page.waitForSelector('.pswp',{state:'detached'});
-await page.goto('http://127.0.0.1:5173/work/#/projects/akashom/architecture');await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId===receiptState.activePageId);await page.waitForTimeout(400);await state();assert.equal(await page.evaluate(()=>receiptState.directLeafPages.every(p=>p.audience.includes('professional'))),true);await page.reload();await page.waitForSelector('.receipt-header',{state:'attached'});await page.waitForTimeout(400);await state();assert.deepEqual(errors,[]);await page.close();}console.log('PASS stabilization: desktop/mobile ink, CSS icons, direct counts, persistent receipt DOM, manual tuck, history, rapid navigation, work routes and PhotoSwipe');}finally{await browser.close();}};
+await page.goto('http://127.0.0.1:5173/work/#/projects/akashom/architecture');await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId===receiptState.activePageId);await page.waitForTimeout(400);await state();assert.equal(await page.evaluate(()=>receiptState.directLeafPages.every(p=>p.audience.includes('professional'))),true);await page.reload();await page.waitForSelector('.receipt-header',{state:'attached'});await page.waitForTimeout(400);await state();assert.deepEqual(errors,[]);await page.close();}console.log('PASS stabilization: desktop/mobile ink, CSS icons, direct counts, persistent receipt DOM, automatic vertical tuck, history, rapid navigation, work routes and PhotoSwipe');}finally{await browser.close();}};
 
 if(require.main===module)module.exports().catch(error=>{console.error(error);process.exitCode=1;});

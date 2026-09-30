@@ -135,16 +135,11 @@ init().then(() => {
       panel.dataset.tucked = 'true';
     }
   });
-
-  const toggleReceipt=()=>{setReceiptTucked(!receiptState.receiptTucked);};
-  document.getElementById('tuck-files-btn').addEventListener('click',toggleReceipt);
 }).catch(showError);
 
 document.querySelector('.cardicon2').addEventListener('click', () => {
   playEffect(backSound);
-  const parent = activeGroup?.parent;
-  if (parent) openGroup(navigation.catalog.get(parent));
-  else goToPage(contentModel.pages.find(page => page.section === 'home') || contentModel.pages[0]);
+  previousInternalPage();
 });
 
 document.getElementById('mute-btn').addEventListener('click', () => {

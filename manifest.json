@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-30T19:11:40.840Z",
+  "generatedAt": "2026-09-30T19:38:53.723Z",
   "pages": [
     {
       "id": "about",
@@ -40,7 +40,7 @@
       "audience": [
         "professional"
       ],
-      "status": "wip",
+      "status": "active",
       "published": true,
       "created": "2026-09-29",
       "order": 10,

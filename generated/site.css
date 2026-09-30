@@ -107,17 +107,6 @@ p, h1, h2, h3, .content {
   width: 5cqw;
 }}
 
-#card-files-panel .tuck-btn {
-  width: 2.8cqw; /* smaller */
-  right: -0.6cqw;
-  top: 1.9cqw;
-  filter: drop-shadow(0px 3.1px 3.2px rgba(0,0,0,0.44));
-}@media (hover: hover) {
-
-#card-files-panel .tuck-btn:hover {
-  width: 3cqw;
-}}
-
 /* ========================
    FOLDER CARD
 ======================== */
@@ -993,8 +982,15 @@ img { height: auto; }
 .layout-custom .content-text { max-width: none; }
 
 /* Stabilization: position transitions only; the paper remains mounted. */
-#card-files-panel { transition: left .35s ease; }
-#card-files-panel.is-tucked { left: calc(-24vw + 38px) !important; }
+#card-files-panel { transition: transform .35s ease; }
+#card-files-panel.is-tucked { transform: translateY(calc(-100% - 100vh)); }
+@media (min-width: 901px) and (pointer: fine) {
+  /* Restore just over half of the original -1.69cqw side margins. */
+  .content-bg { margin-inline: -1cqw; }
+  .content-text, .layout-project .content-text { max-width: 76ch; }
+  /* One boundary for the illustrated plane and the unchanged 58% grid pane. */
+  .leftbg img { width: calc(42vw - 3px); }
+}
 #folder-line { position: fixed; }
 #folder-line path { fill: none; stroke: #4a4440; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; animation: connector-fade 1.2s ease forwards; }
 @keyframes connector-fade { from { opacity: .65; } to { opacity: 0; } }
