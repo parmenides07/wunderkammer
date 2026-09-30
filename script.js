@@ -2,7 +2,7 @@ function deferredAudio(src) { const audio = new Audio(); audio.preload = 'none';
 const backSound = deferredAudio('assets/holepunch.mp3');
 const clickSound = deferredAudio('assets/page-flip-01a.mp3');
 const hoverSound = deferredAudio('assets/boxclick1.mp3');
-const fileSound = deferredAudio('assets/printer2.mp3');
+const printerSound = deferredAudio('assets/printer2.mp3');
 const tuckSound = deferredAudio('assets/tuck1.mp3');
 let currentSound = null;
 let siteMuted = false;
@@ -136,7 +136,7 @@ init().then(() => {
     }
   });
 
-  const toggleReceipt=()=>{playEffect(tuckSound);setReceiptTucked(!receiptState.receiptTucked);};
+  const toggleReceipt=()=>{setReceiptTucked(!receiptState.receiptTucked);};
   document.getElementById('tuck-files-btn').addEventListener('click',toggleReceipt);
 }).catch(showError);
 

@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-30T00:34:12.816Z",
+  "generatedAt": "2026-09-30T16:21:58.253Z",
   "pages": [
     {
       "id": "about",
@@ -8,9 +8,10 @@
       "section": "about",
       "type": "about",
       "audience": [
-        "public",
-        "professional"
+        "public"
       ],
+      "variantGroup": "about",
+      "variant": "personal",
       "status": "active",
       "published": true,
       "created": "2026-03-24",
@@ -23,10 +24,38 @@
       "summary": "",
       "banner": null,
       "sound": null,
-      "authorSource": "content/about/about.md",
+      "authorSource": "content/about/personal.md",
       "source": "generated/pages/about.md",
       "assetBase": "content/about",
       "images": "generated/images/about.json"
+    },
+    {
+      "id": "about-professional",
+      "title": "About",
+      "slug": "about",
+      "section": "about",
+      "type": "about",
+      "variantGroup": "about",
+      "variant": "professional",
+      "audience": [
+        "professional"
+      ],
+      "status": "wip",
+      "published": true,
+      "created": "2026-09-29",
+      "order": 10,
+      "topics": [],
+      "modified": "2026-09-29",
+      "project": null,
+      "collection": null,
+      "featured": false,
+      "summary": "",
+      "banner": null,
+      "sound": null,
+      "authorSource": "content/about/professional.md",
+      "source": "generated/pages/about-professional.md",
+      "assetBase": "content/about",
+      "images": "generated/images/about-professional.json"
     },
     {
       "id": "archive-personal-snapshots-my-chosen-career-path",
@@ -281,31 +310,116 @@
       "images": "generated/images/archive-writing-when-it-rains-it-prose.json"
     },
     {
+      "id": "currents-personal",
+      "title": "Currents",
+      "slug": "currents",
+      "section": "currents",
+      "type": "currents",
+      "variantGroup": "currents",
+      "variant": "personal",
+      "audience": [
+        "public"
+      ],
+      "status": "wip",
+      "published": true,
+      "created": "2026-09-29",
+      "order": 10,
+      "topics": [],
+      "modified": "2026-09-29",
+      "project": null,
+      "collection": null,
+      "featured": false,
+      "summary": "",
+      "banner": null,
+      "sound": null,
+      "authorSource": "content/currents/personal.md",
+      "source": "generated/pages/currents-personal.md",
+      "assetBase": "content/currents",
+      "images": "generated/images/currents-personal.json"
+    },
+    {
+      "id": "currents-professional",
+      "title": "Currents",
+      "slug": "currents",
+      "section": "currents",
+      "type": "currents",
+      "variantGroup": "currents",
+      "variant": "professional",
+      "audience": [
+        "professional"
+      ],
+      "status": "wip",
+      "published": true,
+      "created": "2026-09-29",
+      "order": 10,
+      "topics": [],
+      "modified": "2026-09-29",
+      "project": null,
+      "collection": null,
+      "featured": false,
+      "summary": "",
+      "banner": null,
+      "sound": null,
+      "authorSource": "content/currents/professional.md",
+      "source": "generated/pages/currents-professional.md",
+      "assetBase": "content/currents",
+      "images": "generated/images/currents-professional.json"
+    },
+    {
       "id": "home",
       "title": "WUNDERKAMMER",
       "slug": "home",
       "section": "home",
       "type": "home",
       "audience": [
-        "public",
-        "professional"
+        "public"
       ],
+      "variantGroup": "home",
+      "variant": "personal",
       "status": "active",
       "published": true,
       "created": "2026-03-14",
       "modified": "2026-08-15",
       "order": 10,
       "topics": [],
-      "banner": "assets/test1.jpg",
+      "banner": "../assets/test1.jpg",
       "project": null,
       "collection": null,
       "featured": false,
       "summary": "",
       "sound": null,
-      "authorSource": "content/home.md",
+      "authorSource": "content/home/personal.md",
       "source": "generated/pages/home.md",
-      "assetBase": "content",
+      "assetBase": "content/home",
       "images": "generated/images/home.json"
+    },
+    {
+      "id": "home-professional",
+      "title": "Param Ghetia",
+      "slug": "home",
+      "section": "home",
+      "type": "home",
+      "variantGroup": "home",
+      "variant": "professional",
+      "audience": [
+        "professional"
+      ],
+      "status": "active",
+      "published": true,
+      "created": "2026-09-29",
+      "order": 10,
+      "topics": [],
+      "banner": "assets/test1.jpg",
+      "modified": "2026-09-29",
+      "project": null,
+      "collection": null,
+      "featured": false,
+      "summary": "",
+      "sound": null,
+      "authorSource": "content/home/professional.md",
+      "source": "generated/pages/home-professional.md",
+      "assetBase": "content/home",
+      "images": "generated/images/home-professional.json"
     },
     {
       "id": "notes-art-harnessing-visuals-with-art",
@@ -1040,7 +1154,8 @@
       "section": "projects",
       "type": "project",
       "audience": [
-        "public"
+        "public",
+        "professional"
       ],
       "status": "wip",
       "published": true,
@@ -1228,6 +1343,13 @@
       "test.jpg",
       "test1.jpg",
       "wwz.jpg"
+    ],
+    "content/home/assets": [
+      "forgeOfVulcan.jpg",
+      "gethosyne.jpg",
+      "hill.jpg",
+      "test1.jpg",
+      "trees.jpg"
     ],
     "content/notes/art/assets": [
       "garzo.jpg",

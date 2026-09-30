@@ -1,12 +1,13 @@
 {
-  "views": {"root":{"title":"Param Ghetia","description":"Projects and selected writing by Param Ghetia."},"personal":{"title":"Wunderkammer \u2014 Param Ghetia","description":"Projects, writing and personal archives by Param Ghetia.","noindex":true}},
+  "views": {"root":{"navigation":["home","projects","about","currents"],"projects":["akashom","cornocupia","vivarium","mindscape"],"title":"Param Ghetia","description":"Projects and selected writing by Param Ghetia."},"personal":{"title":"Wunderkammer \u2014 Param Ghetia","description":"Projects, writing and personal archives by Param Ghetia.","noindex":true}},
   "groups": [],
   "sections": [
     {"id":"home","label":"Home"},
     {"id":"projects","label":"Projects"},
     {"id":"notes","label":"Notes","professionalLabel":"Writing"},
     {"id":"archive","label":"Archive"},
-    {"id":"about","label":"About"}
+    {"id":"about","label":"About"},
+    {"id":"currents","label":"Currents"}
   ],
   "projects": [
     {"id":"akashom","label":"Akashom"},

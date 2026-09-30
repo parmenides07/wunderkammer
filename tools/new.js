@@ -4,7 +4,7 @@ const matter=require('gray-matter');
 const {buildManifest}=require('../build');
 function scaffold(root,options) {
  const type=options.type||'note',title=options.title?.trim();
- const sections={home:'home',project:'projects','project-note':'projects',note:'notes',essay:'notes',log:'notes',collection:'notes',archive:'archive',about:'about'};
+ const sections={home:'home',project:'projects','project-note':'projects',note:'notes',essay:'notes',log:'notes',collection:'notes',archive:'archive',about:'about',currents:'currents'};
  if(!sections[type])throw new Error(`Unknown type: ${type}`);
  if(!title)throw new Error('A title is required (--title "Your title").');
  const name=title.normalize('NFKD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');

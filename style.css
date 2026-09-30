@@ -741,8 +741,10 @@ p, h1, h2, h3, .content {
   width: 44.1%;
   height: 100%;
   background-image: url("assets/leftbg.png");
-  background-size: auto 100%;
-  background-position: right center;
+  /* The backing has identical vertical rows: anchor its edge to the illustration width. */
+  background-size: 100% auto;
+  background-position: right top;
+  background-repeat: repeat-y;
   z-index: 5;
   filter: drop-shadow(5px 0px 23px rgba(0,0,0,0.3));
 }

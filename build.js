@@ -4,11 +4,11 @@ const path = require('node:path');
 const matter = require('gray-matter');
 const {buildImages, displayVariant} = require('./tools/images');
 
-const SECTIONS = ['home', 'projects', 'notes', 'archive', 'about'];
+const SECTIONS = ['home', 'projects', 'notes', 'archive', 'about', 'currents'];
 const AUDIENCES = ['public', 'professional'];
 const STATUSES = ['active', 'complete', 'wip', 'paused', 'superseded', 'archived'];
 const LAYOUTS = ['essay','project','gallery','index','catalog','custom'];
-const TYPES = ['home','project','project-note','note','essay','log','collection','archive','about'];
+const TYPES = ['home','project','project-note','note','essay','log','collection','archive','about','currents'];
 const REQUIRED = ['id', 'title', 'slug', 'section', 'type', 'audience', 'status', 'published', 'created'];
 const slash = value => value.split(path.sep).join('/');
 function date(value, field, source) {
@@ -55,7 +55,7 @@ function buildManifest(root = __dirname) {
       }
       if (!STATUSES.includes(data.status)) throw new Error(`${source}: invalid status "${data.status}"`);
       if (data.published !== true) throw new Error(`${source}: published must be a boolean`);
-      for (const [field, seen] of [['id', ids], ['slug', slugs]]) {
+      for (const [field, seen] of [['id', ids]]) {
         if (seen.has(data[field])) throw new Error(`${source}: duplicate ${field} "${data[field]}" (also in ${seen.get(data[field])})`);
         seen.set(data[field], source);
       }
@@ -70,6 +70,8 @@ function buildManifest(root = __dirname) {
     }
   }
   walk(path.join(root, 'content'));
+  require('./js/content').validateRoutes(pages);
+  for(const page of pages)slugs.set(page.slug,page.authorSource);
   const configPath=path.join(root,'site.config.json');
   if(fs.existsSync(configPath))require('./js/navigation').createNavigation({pages},JSON.parse(fs.readFileSync(configPath,'utf8')),'public',true);
   else if(pages.some(page=>page.parent))throw new Error('site.config.json is required to define parent groups');

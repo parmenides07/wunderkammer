@@ -2,14 +2,27 @@ const {markdownReferences}=require('./markdown');
 const fs=require('node:fs');
 const path=require('node:path');
 const {build,buildManifest}=require('../build');
+function checkSemanticLinks(page,tokens,models){
+ const errors=[];
+ for(const token of tokens){
+  const modes=Object.keys(models).filter(mode=>models[mode].byId.has(page.id));
+  for(const mode of modes){const result=require('../js/wiki').resolve(token,models,mode);if(result.error)errors.push(`${page.authorSource}: ${token.raw}: ${mode}: ${result.error}`);}
+  if(!modes.length&&token.error)errors.push(`${page.authorSource}: ${token.raw}: ${token.error}`);
+ }
+ return errors;
+}
 function checkContent(root) {
  const manifest=buildManifest(root),errors=[],warnings=[];
+ const config=JSON.parse(fs.readFileSync(path.join(root,'site.config.json')));
+ const {createContentModel}=require('../js/content');
+ const models=Object.fromEntries(['public','professional'].map(mode=>[mode,createContentModel(manifest,mode,config)]));
  const slugs=new Set(manifest.pages.map(p=>p.slug));
  const report=(list,page,message)=>list.push(`${page.authorSource}: ${message}`);
  const imageIndex=JSON.parse(fs.readFileSync(path.join(root,'generated/image-index.json')));
  for(const page of manifest.pages) {
   const refs=[page.banner,page.sound];
   const markdown=markdownReferences(page.body);
+  errors.push(...checkSemanticLinks(page,markdown.semanticLinks,models));
   for(const image of markdown.images) {
     refs.push(image.href);
     if(image.alt.startsWith('sound:'))refs.push(image.alt.slice(6));
@@ -46,4 +59,4 @@ async function main() {
  if(errors.length)process.exitCode=1;
 }
 if(require.main===module)main().catch(e=>{console.error(`ERROR ${e.message}`);process.exitCode=1;});
-module.exports={checkContent};
+module.exports={checkContent,checkSemanticLinks};

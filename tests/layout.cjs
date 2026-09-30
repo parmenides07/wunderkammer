@@ -17,9 +17,9 @@ async function run(){
    return {paper:box('.card'),sheet:box('.content-bg'),text:box('.content-text'),article:box('.content'),title:box('.doc-header h2'),heading:box('.content-text > h2'),dates:box('.doc-dates'),receipt:box('.receipt'),grid: getComputedStyle(document.querySelector('.material'),matchMedia('(max-width:900px), (pointer:coarse)').matches?'::before':null).backgroundSize};
   });
   await page.screenshot({path:`.test-results/layout/home-${width}.png`});
-  await group('notes');await page.waitForFunction(()=>activeGroup.key==='notes'&&document.querySelector('.content').dataset.pageId==='');
-  await header('Notes');assert.equal(await page.locator('.file-link').count(),0);
-  assert.equal(await page.locator('[data-group="notes"]').evaluate(e=>getComputedStyle(e,'::after').content),'" ■"');
+  await group('notes');await page.waitForFunction(()=>activeGroup.key==='notes/mindfill'&&document.querySelector('.content').dataset.pageId==='notes-mindfill');
+  await header('Mindfill');assert.equal(await page.locator('.file-link').count(),8);
+  assert.equal(await page.locator('[data-group="notes/mindfill"]').evaluate(e=>getComputedStyle(e,'::after').content),'" ■"');
   await group('notes/art');await page.waitForFunction(()=>document.querySelector('.file-link.active-link')?.dataset.id===document.querySelector('.content').dataset.pageId&&activeGroup.key==='notes/art');
   await header('Art');assert.equal(await page.locator('.file-link').count(),2);
   const first=await page.locator('.file-link').first().getAttribute('href'),second=await page.locator('.file-link').nth(1).getAttribute('href');assert.ok(page.url().endsWith(first));
@@ -41,7 +41,7 @@ async function run(){
   });assert.ok(paper.overflow&&paper.unchanged);assert.ok(paper.rows.every(h=>Math.abs(h/paper.rule-1)<.015));
   const receipt=await page.evaluate(()=>{const e=document.querySelector('.receipt'),entries=e.querySelector('.receipt-entries');const bg=getComputedStyle(e).backgroundSize;for(let i=0;i<80;i++){const a=document.createElement('a');a.textContent='Geometry fixture';entries.append(a);}return {overflow:entries.scrollHeight>entries.clientHeight,unchanged:bg===getComputedStyle(e).backgroundSize,height:e.offsetHeight};});assert.ok(receipt.overflow&&receipt.unchanged&&receipt.height<=630);
   // Remove DOM-only fixtures by selecting a real container again.
-  await group('notes');await page.waitForFunction(()=>activeGroup.key==='notes');await group('notes/mindfill');await page.waitForFunction(()=>activeGroup.key==='notes/mindfill');await page.waitForTimeout(300);await page.screenshot({path:`.test-results/layout/index-${width}.png`});
+  await group('notes');await page.waitForFunction(()=>activeGroup.key==='notes/mindfill');await group('notes/mindfill');await page.waitForFunction(()=>activeGroup.key==='notes/mindfill');await page.waitForTimeout(300);await page.screenshot({path:`.test-results/layout/index-${width}.png`});
   if(touch){
    await page.locator('#index-close').click();await page.evaluate(()=>window.scrollTo(0,300));const y=await page.evaluate(()=>window.scrollY);await index();await page.locator('#index-close').click();assert.equal(await page.evaluate(()=>window.scrollY),y);
    const grid=await page.evaluate(()=>{const e=document.querySelector('.material'),before=getComputedStyle(e,'::before');const result={height:before.height,size:before.backgroundSize,position:before.position};const p=document.createElement('div');p.style.height='10000px';document.querySelector('.content-text').append(p);const after=getComputedStyle(e,'::before');result.same=result.height===after.height&&result.size===after.backgroundSize;p.remove();return result;});assert.equal(grid.position,'fixed');assert.ok(grid.same);

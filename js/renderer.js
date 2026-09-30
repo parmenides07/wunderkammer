@@ -1,3 +1,13 @@
+// Semantic links use the current editorial model; crossing views must be explicit.
+marked.use({extensions:[SiteWiki.extension(token=>{
+  const models={public:SiteContent.createContentModel(siteManifest,'public',siteConfig),professional:SiteContent.createContentModel(siteManifest,'professional',siteConfig)};
+  models[currentAudience]=contentModel;
+  const result=SiteWiki.resolve(token,models,currentAudience);
+  if(result.error)return `<span class="invalid-semantic-link" title="${SiteWiki.escape(result.error)}">${SiteWiki.escape(token.raw)}</span>`;
+  const personal=new URL('personal/',appBase);
+  const href=token.personal&&currentAudience!=='public'?`${personal.pathname}#/${result.page.slug}`:viewHref(result.page.slug);
+  return `<a data-semantic-link href="${SiteWiki.escape(href)}">${SiteWiki.escape(result.label)}</a>`;
+})]});
 // Fetch build-parsed Markdown; authorSource retains the frontmatter-bearing original.
 const markdownCache = new Map();
 let renderGeneration = 0;
@@ -188,8 +198,8 @@ async function renderPage(page) {
     nextBtn.style.display = 'block';
     const nextImage=nextBtn.querySelector('img');if(nextImage?.dataset.src)nextImage.src=nextImage.dataset.src;
     nextBtn.onclick = async () => {
-      fileSound.currentTime = 0;
-      playEffect(fileSound);
+      clickSound.currentTime = 0;
+      playEffect(clickSound);
       goToPage(next);
     };
   } else {
@@ -205,6 +215,12 @@ async function renderPage(page) {
 
   content.querySelectorAll('a[href^="#/"]').forEach(link=>link.setAttribute('href',viewHref(link.getAttribute('href').slice(2))));
   document.title=`${page.title} — Param Ghetia${currentAudience==='public'?' · Wunderkammer':''}`;
+  content.querySelectorAll('a[data-semantic-link]').forEach(link=>link.addEventListener('click',event=>{
+    if(event.button!==0||event.metaKey||event.ctrlKey||event.shiftKey||event.altKey)return;
+    const target=new URL(link.href);
+    if(target.pathname===location.pathname){event.preventDefault();location.hash=target.hash;}
+    // An explicit cross-view link loads that shell; within-view links only change the hash.
+  }));
   markVisited(page);
   refreshUnread();
   document.querySelector('.content').dataset.pageId = page.id;

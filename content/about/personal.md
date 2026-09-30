@@ -4,7 +4,9 @@ title: "More About Me"
 slug: "about"
 section: "about"
 type: "about"
-audience: ["public", "professional"]
+audience: ["public"]
+variantGroup: about
+variant: personal
 status: "active"
 published: true
 created: "2026-03-24"

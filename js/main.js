@@ -1,4 +1,4 @@
-let contentModel, navigation, activeGroup, siteManifest;
+let contentModel, navigation, activeGroup, siteManifest, siteConfig;
 const currentAudience=SiteViews.audience(location.pathname);
 function viewHref(route){return SiteViews.routeHref(location.pathname,location.search,route);}
 const expandedGroups = new Set();
@@ -55,7 +55,7 @@ function buildFolderLinks() {
     children.className = 'sub-links';
     children.style.display = expandedGroups.has(node.key) ? 'flex' : 'none';
     a.addEventListener('click', e => {
-      e.preventDefault(); playEffect(clickSound);
+      e.preventDefault(); if(e.isTrusted)playEffect(printerSound);
       if (activeGroup?.key === node.key && node.children.length && expandedGroups.has(node.key)) {
         expandedGroups.delete(node.key); buildFolderLinks(); return;
       }
@@ -89,7 +89,7 @@ function buildFileLinks(group, page) {
     a.textContent = `${i + 1}  ${group.key.includes('/') ? entry.navTitle || entry.title : entry.title}`;
     a.className = 'file-link'; a.dataset.id = entry.id;
     a.classList.toggle('active-link', page?.id === entry.id);
-    a.addEventListener('click', e => { e.preventDefault();playEffect(fileSound);goToPage(entry); });
+    a.addEventListener('click', e => { e.preventDefault();playEffect(clickSound);goToPage(entry); });
     a.addEventListener('mouseenter', () => playEffect(hoverSound.cloneNode()));
     entries.appendChild(a);
   });
@@ -101,13 +101,16 @@ function buildFileLinks(group, page) {
 // Semantic receipt state changes synchronously; CSS alone owns paper movement.
 let receiptState={selectedContainerId:null,activePageId:null,directLeafPages:[],receiptEligible:false,receiptTucked:true};
 let pendingReceiptLine=null;
+let appliedReceiptTucked=null, receiptInitialized=false;
 function stopReceiptEffects(){
   pendingReceiptLine=null;
   document.getElementById('folder-line').replaceChildren();
 }
-function syncReceiptPosition(){
+function syncReceiptPosition(soundOnChange=false){
   const panel=document.getElementById('card-files-panel');
   if(isMobileLayout())receiptState.receiptTucked=!receiptState.receiptEligible;
+  if(soundOnChange&&receiptInitialized&&appliedReceiptTucked!==null&&appliedReceiptTucked!==receiptState.receiptTucked)playEffect(tuckSound);
+  appliedReceiptTucked=receiptState.receiptTucked;
   panel.classList.toggle('is-tucked',receiptState.receiptTucked);
   panel.classList.toggle('is-open',!receiptState.receiptTucked);
   panel.dataset.tucked=String(receiptState.receiptTucked);
@@ -118,7 +121,7 @@ function syncReceiptPosition(){
 }
 function setReceiptTucked(tucked){
   receiptState.receiptTucked=!receiptState.receiptEligible||tucked;
-  stopReceiptEffects();syncReceiptPosition();
+  stopReceiptEffects();syncReceiptPosition(true);
 }
 function drawPendingReceiptLine(){
   const panel=document.getElementById('card-files-panel');
@@ -136,7 +139,8 @@ function updateReceipt(group,page){
   const changed=receiptState.selectedContainerId!==group.key;
   stopReceiptEffects();
   receiptState=SiteNavigation.receiptSelection(receiptState,group,page);
-  syncReceiptPosition();
+  syncReceiptPosition(true);
+  receiptInitialized=true;
   if(changed&&receiptState.receiptEligible&&!isMobileLayout()){
     pendingReceiptLine=group.key;
     requestAnimationFrame(drawPendingReceiptLine);
@@ -171,21 +175,12 @@ async function handleRoute() {
     let page;
     if(route.startsWith('browse/')) {
       const node=navigation.catalog.get(route.slice(7));
-      if(node) {
-        ++renderGeneration; activeGroup=node;selectNavigationPath(node);
-        if(node.pages.length) {
-          page=node.pages[0];
-        } else {
-          buildFolderLinks();buildFileLinks(node);
-          if(currentSound){currentSound.pause();currentSound=null;}
-          showPaperMessage(node.label, node.children.length ? 'Choose a collection from the index.' : 'This container has no published pages.');
-          return;
-        }
-      }
+      if(node)page=SiteNavigation.firstLeaf(node);
     }
+
     page ||= contentModel.resolve(route || 'home');
     if (!page) {
-      const personal=currentAudience==='professional'&&SiteViews.personalFallback(siteManifest,route);
+      const personal=currentAudience==='professional'&&SiteViews.personalFallback(siteManifest,route,siteConfig);
       if(personal){const target=new URL('personal/',appBase);target.search=location.search;target.hash=`/${personal}`;location.replace(target.href);return;}
       ++renderGeneration;
       if (currentSound) { currentSound.pause(); currentSound = null; }
@@ -206,9 +201,9 @@ async function init() {
     if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
     return response.json();
   }));
-  siteManifest=manifest;
+  siteManifest=manifest;siteConfig=config;
   const audience=currentAudience;
-  contentModel = SiteContent.createContentModel(manifest, audience);
+  contentModel = SiteContent.createContentModel(manifest, audience, config);
   navigation = SiteNavigation.createNavigation(contentModel, config, audience);
   // Carry visits forward from any recognized legacy path, once per stable ID.
   for (const [oldPath, slug] of Object.entries(manifest.aliases)) {

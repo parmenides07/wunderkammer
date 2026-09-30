@@ -5,7 +5,7 @@ title: "Project Mindscape"
 slug: "projects/mindscape"
 section: "projects"
 type: "project"
-audience: ["public"]
+audience: ["public", "professional"]
 status: "wip"
 published: true
 created: "2026-04-26"

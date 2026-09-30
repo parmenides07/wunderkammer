@@ -8,7 +8,9 @@
     };
     const definitions=config.groups||[];
     if(!Array.isArray(definitions)||definitions.some(def=>!def||typeof def!=='object'))throw new Error('site.config.json: groups must be an array of group definitions');
-    const sections=config.sections.map((section,i)=>{
+    const sectionOrder=audience==='professional'?config.views?.root?.navigation:null;
+    const sectionConfig=sectionOrder?sectionOrder.map(id=>config.sections.find(s=>s.id===id)).filter(Boolean):config.sections;
+    const sections=sectionConfig.map((section,i)=>{
       const node=add(section.id,audience==='professional'?section.professionalLabel||section.label:section.label,null,i);
       const field=section.id==='projects'?'project':'collection';
       const settings=(field==='project'?config.projects:config.collections)||[];
@@ -20,7 +22,7 @@
         ids.add(id);
       }
       for(const id of ids){
-        const item=settings.find(s=>s.id===id),rank=settings.findIndex(s=>s.id===id);
+        const item=settings.find(s=>s.id===id),rank=(audience==='professional'&&section.id==='projects'&&config.views?.root?.projects?config.views.root.projects:settings.map(s=>s.id)).indexOf(id);
         add(`${section.id}/${id}`,item?.label||titleCase(id),node.key,rank<0?settings.length:rank);
       }
       return node;
@@ -61,12 +63,21 @@
     return (navigation.pageGroups.get(page.id)?.pages||[]).filter(p=>p.id!==page.id)
       .slice().sort((a,b)=>b.created.localeCompare(a.created)||a.title.localeCompare(b.title)||a.id.localeCompare(b.id));
   }
+  function firstLeaf(node){
+    if(node.pages.length)return node.pages[0];
+    for(const child of node.children){const page=firstLeaf(child);if(page)return page;}
+    return null;
+  }
+  function validateContainers(navigation,audience){
+    return [...navigation.catalog.values()].filter(node=>!firstLeaf(node))
+      .map(node=>`Container "${node.key}" (${node.label}) in ${audience}: zero visible descendant pages`);
+  }
   function receiptSelection(previous,container,page){
     const directLeafPages=container.pages;
     const receiptEligible=directLeafPages.length>=2;
     return {selectedContainerId:container.key,activePageId:page?.id||null,directLeafPages,receiptEligible,
       receiptTucked:previous.selectedContainerId===container.key?(!receiptEligible||previous.receiptTucked):!receiptEligible};
   }
-  const api={createNavigation,activePath,indexEntries,receiptSelection};
+  const api={createNavigation,activePath,indexEntries,receiptSelection,firstLeaf,validateContainers};
   if(typeof module!=='undefined')module.exports=api;else root.SiteNavigation=api;
 })(globalThis);

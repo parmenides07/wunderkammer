@@ -6,7 +6,7 @@ const manifest=require('../manifest.json');
 const config=require('../site.config.json');
 test('public sections, project receipts, collections and topics use metadata',()=>{
  const model=createContentModel(manifest,'public'),nav=createNavigation(model,config,'public');
- assert.deepEqual(nav.sections.map(s=>s.key),['home','projects','notes','archive','about']);
+ assert.deepEqual(nav.sections.map(s=>s.key),['home','projects','notes','archive','about','currents']);
  assert.equal(nav.catalog.get('projects/akashom').pages.length,4);
  assert.equal(nav.catalog.get('projects/mindscape').pages.length,7);
  assert.equal(nav.catalog.get('notes/mindfill').pages.length,8);
@@ -16,14 +16,14 @@ test('public sections, project receipts, collections and topics use metadata',()
  assert.deepEqual(shape(createNavigation(createContentModel(moved,'public'),config,'public')),shape(nav));
 });
 test('professional filtering precedes grouping, lookups, topics and next-page lists',()=>{
- const model=createContentModel(manifest,'professional'),nav=createNavigation(model,config,'professional');
+ const model=createContentModel(manifest,'professional',config),nav=createNavigation(model,config,'professional');
  assert.equal(model.pages.length,9);
- assert.deepEqual(nav.sections.map(s=>s.key),['home','projects','notes','about']);
- assert.deepEqual(nav.catalog.get('projects').children.map(s=>s.key),['projects/akashom','projects/jivan','projects/cornocupia']);
- assert.equal(nav.catalog.get('notes/mindfill').pages.length,1);
+ assert.deepEqual(nav.sections.map(s=>s.key),['home','projects','about','currents']);
+ assert.deepEqual(nav.catalog.get('projects').children.map(s=>s.key),['projects/akashom','projects/cornocupia','projects/mindscape']);
+ assert.equal(nav.catalog.has('notes'),false);
  for(const node of nav.catalog.values())assert.ok(node.pages.every(p=>p.audience.includes('professional')));
  assert.equal(model.resolve('archive/consumption'),undefined);
- assert.equal(model.resolve('arts/prose/pm_02/projectMindscape.md'),undefined);
+ assert.equal(model.resolve('arts/prose/pm_02/projectMindscape.md').project,'mindscape');
  assert.ok(model.topic('computation').every(p=>p.audience.includes('professional')));
 });
 test('all legacy aliases resolve within eligible views',()=>{
@@ -62,7 +62,7 @@ test('index entries are chronological, exclude the landing, and never escape the
  const landing=model.byId.get('notes-mindfill'),entries=indexEntries(landing,nav);
  assert.equal(entries.length,7);assert.ok(entries.every(p=>p.id!==landing.id));
  assert.deepEqual(entries.map(p=>p.created),entries.map(p=>p.created).sort().reverse());
- const work=createContentModel(manifest,'professional'),wn=createNavigation(work,config,'professional');
+ const work=createContentModel(manifest,'professional',config),wn=createNavigation(work,config,'professional');
  assert.deepEqual(indexEntries(landing,wn),[]);
 });
 

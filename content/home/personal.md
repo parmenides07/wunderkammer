@@ -4,14 +4,16 @@ title: "WUNDERKAMMER"
 slug: "home"
 section: "home"
 type: "home"
-audience: ["public", "professional"]
+audience: ["public"]
+variantGroup: home
+variant: personal
 status: "active"
 published: true
 created: "2026-03-14"
 modified: "2026-08-15"
 order: 10
 topics: []
-banner: "assets/test1.jpg"
+banner: "../assets/test1.jpg"
 ---
 
 *ambition is bestowed upon those who can achieve it.*

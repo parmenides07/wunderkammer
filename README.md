@@ -60,7 +60,48 @@ Required fields are shown through `created`; `collection` and `topics` are optio
 - Add `professional` to `audience: [public, professional]` to include a page in the curated root `/`. Public-only pages remain in `/personal/`.
 - Optional fields include `project`, `collection`, `topics`, `order`, `featured`, `summary`, `banner`, `sound`, and `navTitle` (receipt label).
 
-Folders are authoring conveniences. `project` and `collection` define containers; `site.config.json` sets their labels/order. The left paper contains containers; each receipt lists only its direct leaf pages. Topic tags remain independent. A future Now page can use `section: about` and `slug: about/now` without navigation code changes.
+Folders are authoring conveniences. `project` and `collection` define containers; `site.config.json` sets their labels/order. The left paper contains containers; each receipt lists only its direct leaf pages. Topic tags remain independent. Currents now has its own section and professional/personal sources.
+
+## Semantic internal links
+
+Use logical routes in Markdown; the current view chooses the right source:
+
+```md
+[[about|About]]
+[[currents|Currents]]
+[[projects/akashom]]
+[[personal:notes/philosophy/maximalist-soul-driver|older philosophy note]]
+```
+
+Without a label, the resolved page title is used. Canonical lowercase routes are preferred. Exact case-insensitive route spelling is accepted, so existing `[[About]]` and `[[Currents]]` work; arbitrary titles and fuzzy matching are not supported. Labels are plain text. Code spans and fenced examples are not interpreted as links. External links remain ordinary Markdown.
+
+Normal links retain `/` or `/personal/` and use hash navigation, including Back/Forward. `personal:` explicitly enters the personal view. A normal link to a page excluded from the current view is an authoring error; use `personal:` when crossing views intentionally. Missing targets (including projects not yet published), malformed syntax and ambiguous routes are errors in `npm run check`, with source filename, link and reason. No left-paper printer sound plays for inline links.
+
+The checker also rejects any visible container with no renderable descendant, identifying its ID, label and view. Unpopulated configuration entries that are pruned from navigation, such as reserved future projects, remain harmless.
+
+## Shared pages and identity variants
+
+Most projects stay one source with `audience: [public, professional]`; no variant metadata is needed. Root also applies the section/project allowlist in `site.config.json` → `views.root.navigation` and `views.root.projects`. Public navigation is not reduced by that allowlist.
+
+Home, About and Currents have separate editorial sources under `content/home/`, `content/about/` and `content/currents/`, each named `professional.md` or `personal.md`. Edit these files directly. Personal Home/About preserve their previous prose. The other four files are published WIP skeletons with non-rendered author comments; write them before sharing the root site.
+
+Variant frontmatter uses a unique ID and a common logical slug/group (alongside the normal required title, section, type, status, published and created fields):
+
+```yaml
+id: about-professional
+slug: about
+variantGroup: about
+variant: professional
+audience: [professional]
+```
+
+The personal file uses its own unique ID, the same `slug: about` and `variantGroup: about`, `variant: personal`, and `audience: [public]`. `/#/about` resolves the professional source; `/personal/#/about` resolves the personal source. Home and Currents work the same way.
+
+An explicit variant wins over a shared fallback in that view. If adding a variant over an existing shared route, give the shared file the same `variantGroup` but omit `variant`. One shared fallback and one explicit variant per mode are allowed; ambiguous duplicates fail the build. Ordinary accidental duplicate slugs still fail. Each variant must have the single matching audience. IDs always remain globally unique.
+
+Root currently shows Home, Projects, About, Currents. Its configured project IDs are `akashom`, `cornocupia`, `vivarium`, `mindscape`, in that order. Vivarium is reserved and omitted until a published professional-visible page exists. Only the existing Mindscape overview is professional-visible; its child pages remain personal. Names are unchanged.
+
+Left-paper clicks play the original `printer2.mp3` once. Receipt/next-page clicks use the existing page-flip effect instead. Actual receipt tuck/open changes play `tuck1.mp3`, excluding initial placement and resize synchronization. Both respect mute and load on demand.
 
 ## Layout profiles
 
@@ -83,7 +124,7 @@ For a custom page, add `layout: custom` and optionally `layoutClass: orbital-dem
 
 The left paper expands only the active ancestor path. Only containers with child containers have disclosure arrows. Every row occupies one ruled line, including on phones. Receipts show direct pages, never recursive descendants, with the container's name as the heading.
 
-Entering a container opens its first direct page unless the URL explicitly selects another page. Receipts always stay mounted: zero or one direct page tucks the paper; two or more open it, including index pages. Manual tucking/unfolding persists only within the same container. Entering another container resets that choice. Use the red desktop tuck control for multi-page receipts. Mobile has no manual receipt control: its state always follows the direct-page count. Bobbing is disabled. The desktop connector appears only after entering a different multi-page container with an open, settled receipt; it is disabled on mobile.
+Entering a container opens its first direct page; if there are none, it descends through the first visible child containers until it finds a page. Ordering and audience filtering apply first. Selection and the receipt follow the container owning the resolved page, and ancestors expand. Explicit leaf URLs are never replaced with a first page. Receipts always stay mounted: zero or one direct page tucks the paper; two or more open it, including index pages. Manual tucking/unfolding persists only within the same container. Entering another container resets that choice. Use the red desktop tuck control for multi-page receipts. Mobile has no manual receipt control: its state always follows the direct-page count. Bobbing is disabled. The desktop connector appears only after entering a different multi-page container with an open, settled receipt; it is disabled on mobile.
 
 Optional `groups` in `site.config.json` can subdivide a project without using its filesystem folders. For example, after creating a project with `project: anvesana`:
 
@@ -155,6 +196,8 @@ With the site running and Playwright available:
 
 ```sh
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/browser.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/nav-links.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/identity-audio.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/views.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/stabilization.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/layout.cjs

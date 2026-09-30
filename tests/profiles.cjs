@@ -6,7 +6,7 @@ try {for(const width of [375,390,430,768,1440,1920]){
  async function ready(id){await page.waitForFunction(id=>document.querySelector('.content').dataset.pageId===id,id);}
  async function index(){if(mobile&&await page.locator('#index-toggle').getAttribute('aria-expanded')==='false')await page.locator('#index-toggle').click();}
  async function close(){if(mobile&&await page.locator('#index-toggle').getAttribute('aria-expanded')==='true')await page.locator('#index-close').click();}
- async function select(key){await index();await page.locator(`[data-group="${key}"]`).click();await page.waitForFunction(key=>activeGroup.key===key,key);}
+ async function select(key){await index();await page.locator(`[data-group="${key}"]`).click();await page.waitForFunction(key=>activeGroup.key===navigation.pageGroups.get(SiteNavigation.firstLeaf(navigation.catalog.get(key)).id).key,key);}
  async function shot(name){await page.evaluate(()=>document.fonts.ready);await page.waitForTimeout(250);await page.screenshot({path:`.test-results/profiles/${name}-${width}.png`});}
  await page.goto(base+'/personal/#/home');await ready('home');await shot('home');
  const ink=await page.locator('.content p').first().evaluate(e=>getComputedStyle(e).filter);if(!mobile)assert.ok(ink.includes('blur('));if(mobile)assert.equal(ink,'none');
@@ -22,7 +22,7 @@ try {for(const width of [375,390,430,768,1440,1920]){
  await select('projects/akashom');await ready('projects-akashom');await page.waitForTimeout(400);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);assert.equal(await page.locator('.receipt-header').textContent(),'Akashom');assert.equal(await page.evaluate(()=>window.bobs),0);assert.equal(await page.locator('#folder-line path').count(),mobile?0:2);await shot('akashom-index');
  const before=await page.evaluate(()=>window.bobs);await page.locator('.file-link').nth(1).click();await ready('projects-akashom-visual-nonvisual-trailer');assert.equal(await page.evaluate(()=>window.bobs),before);
  await index();if(!mobile)await page.locator('#tuck-files-btn').click();assert.equal(await page.evaluate(()=>receiptState.receiptTucked),!mobile);await page.evaluate(()=>location.hash='#/projects/akashom/architecture');await ready('projects-akashom-architecture');assert.equal(await page.evaluate(()=>receiptState.receiptTucked),!mobile);assert.equal(await page.locator('#folder-line path').count(),0);
- await select('notes');assert.equal(await page.locator('[data-group="projects"]').getAttribute('aria-expanded'),'false');assert.equal(await page.locator('.file-link').count(),0);assert.equal(await page.locator('#card-files-panel').getAttribute('hidden'),null);
+ await select('notes');assert.equal(await page.locator('[data-group="projects"]').getAttribute('aria-expanded'),'false');assert.equal(await page.locator('.file-link').count(),8);assert.equal(await page.locator('#card-files-panel').getAttribute('hidden'),null);
  await select('notes/mindfill');await ready('notes-mindfill');assert.equal(await page.locator('.collection-index a').count(),7);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);await shot('mindfill-index');await close();await shot('mindfill');
  const dates=await page.locator('.collection-index time').allTextContents();assert.deepEqual(dates,dates.slice().sort().reverse());
  await page.locator('.collection-index a').first().click();await page.waitForFunction(()=>document.querySelector('.content').classList.contains('layout-essay'));assert.equal(await page.locator('.receipt-header').textContent(),'Mindfill');
