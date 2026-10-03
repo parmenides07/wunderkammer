@@ -13,9 +13,9 @@ I'm less so attached to any particular industry or field than I am to environmen
 An experimental graph-structured engine for constructing, simulating, and eventually learning over dynamical systems.  
 *(Python | graph systems | numerical simulation)*
 
-**[[projects/akashom|Akashom]]**  
+**[[projects/akashom|Akasha]]**  
 A knowledge system built on graph theory exploring more intuitive and efficient ways to organize, query, and navigate interconnected information. 
-*(Svelte | Electron | TypeScript)*
+*(Codex | Svelte | Electron | TypeScript)*
 
 **[[projects/cornocupia|Cornocupia]]**  
 A terminal-based inventory and logging system I built to help me keep track of the stuff I buy, how much I have or use, and where I put it.  

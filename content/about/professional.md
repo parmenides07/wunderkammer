@@ -65,8 +65,8 @@ Some of my biggest influences up to this point in my life have been Richard Feyn
 3. **Kim Jung Gi** (Artist/Illustrator) represents mastery of craft to me. The command he developed over the pen after decades of relentless practice is incredible. His work is evidence of how far a skill can be pushed and motivates me to keep developing my own abilities with that same seriousness and persistence.
 
 ## What Lies Ahead is Uncertain...
-Given all of this, I'm intentionally not too set on a particular destination. I know the kinds of subjects and problem spaces I enjoy much better than I know of the exact job I will want. That means that after my bachelor's I may pursue a PhD, join some R&D lab or some other technical team, or even build my own thing. 
+Given all of this, I'm intentionally not too set on a particular destination. I know the kinds of subjects and problem spaces I enjoy much better than I know of the exact job I will want. So, after my bachelor's, I may pursue a PhD, join some R&D lab or some other technical team, or even build my own thing. 
 
-Whatever it may be, I care much more about continuing to encounter difficult questions, surround myself with capable people, and maintain enough freedom to learn and create.
+Whatever it may be, I care much more about continuing to encounter difficult questions and surronding myself with passionate people whilst maintaining enough freedom to learn and create.
 
 I'm excited for whatever may lie ahead.

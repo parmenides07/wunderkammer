@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-09-30T19:38:53.723Z",
+  "generatedAt": "2026-10-02T19:00:32.975Z",
   "pages": [
     {
       "id": "about",
@@ -198,6 +198,32 @@
       "images": "generated/images/archive-inspirations.json"
     },
     {
+      "id": "archive-inspiring-media",
+      "title": "Inspiring Media",
+      "slug": "archive/inspiring-media",
+      "section": "archive",
+      "type": "archive",
+      "topics": [],
+      "audience": [
+        "public"
+      ],
+      "status": "wip",
+      "published": true,
+      "created": "2026-10-02",
+      "modified": "2026-10-02",
+      "project": null,
+      "collection": null,
+      "featured": false,
+      "order": 100,
+      "summary": "",
+      "banner": null,
+      "sound": null,
+      "authorSource": "content/archive/inspiring-media.md",
+      "source": "generated/pages/archive-inspiring-media.md",
+      "assetBase": "content/archive",
+      "images": "generated/images/archive-inspiring-media.json"
+    },
+    {
       "id": "archive-music-currents",
       "title": "Currents",
       "slug": "archive/music/currents",
@@ -348,17 +374,19 @@
       "audience": [
         "professional"
       ],
-      "status": "wip",
+      "status": "active",
       "published": true,
       "created": "2026-09-29",
       "order": 10,
-      "topics": [],
+      "topics": [
+        "test"
+      ],
+      "banner": "assets/theo.jpg",
       "modified": "2026-09-29",
       "project": null,
       "collection": null,
       "featured": false,
       "summary": "",
-      "banner": null,
       "sound": null,
       "authorSource": "content/currents/professional.md",
       "source": "generated/pages/currents-professional.md",
@@ -1426,6 +1454,13 @@
       "test.jpg",
       "test1.jpg",
       "wwz.jpg"
+    ],
+    "content/currents/assets": [
+      "gethosyne.jpg",
+      "hylics1.gif",
+      "hylics2.gif",
+      "hylics3.gif",
+      "theo.jpg"
     ],
     "content/home/assets": [
       "forgeOfVulcan.jpg",

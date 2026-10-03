@@ -2,15 +2,15 @@
 
 ## My Gravitational Field
 
-Throughout my life I've found myself interested in a lot of different things, but a few have really captured my interest: emergent complexity, abstraction and representation, and systems.
+Throughout my life I've found myself interested in a lot of different things. All of these things have been somehow connected to the concepts of emergent complexity, abstraction and representation, and systems.
 
-I've always had difficulty picking a field I want to work in because I've realized that it's less about the field itself and more about the nature of the work. I enjoy difficult things: systems I have to pull apart, ideas I don't yet understand, or something new I have the chance to build.
+I've always had difficulty picking a field I want to work in because I've realized that it's less about the field itself and more about the nature of the work. I enjoy the challenge of systems I have to pull apart, ideas I don't yet understand, or something new I have the chance to build.
 
 ## Between Abstraction and Reality
 
 As such, I've gravitated to some larger disciplines, those being: physics, math, and computer science. Although I enjoy these subjects individually, there is something very beautiful about how they combine together. It's easiest to explain this by walking you through the connection from the beginning (at least the way I see it):
 
-I enjoy reducing systems to their primitives, rules, and constraints: finding a representation for something, prescribing an architecture or rule system, and then building something new with that structure.
+I enjoy reducing systems to their primitives, rules, and constraints. Thus, finding a representation for something, prescribing an architecture or rule system, and then building something new with that structure.
 
 Mathematics grants those abstractions structure. It gives me a language for defining relationships precisely, reasoning about their consequences, and discovering properties that aren't native to any individual piece.
 
@@ -18,7 +18,7 @@ Computation turns that structure into a process. Instead of just designing a sys
 
 Physics grounds that abstraction in reality. It gives us mathematical models of physical systems, while also imposing the constraints that those models must ultimately answer to. Hardware lies at the boundary of all of this, where theoretical computation is realized through a physical substrate.
 
-That's largely why I chose Computer Engineering: because it lets me keep exploring all of these without necessarily committing myself entirely to just one.
+That's largely why I chose Computer Engineerin; because it lets me keep exploring all of these without necessarily committing myself entirely to just one.
 
 This curiosity eventually led me to questions in computational complexity, particularly P vs. NP, which made me think much more seriously about the limits of computation. I was pushed beyond simply figuring out how to write a better program to understanding how representation, algorithms, architecture, and the model of computation itself determine which problems are tractable.
 
@@ -49,8 +49,8 @@ Some of my biggest influences up to this point in my life have been Richard Feyn
 3. **Kim Jung Gi** (Artist/Illustrator) represents mastery of craft to me. The command he developed over the pen after decades of relentless practice is incredible. His work is evidence of how far a skill can be pushed and motivates me to keep developing my own abilities with that same seriousness and persistence.
 
 ## What Lies Ahead is Uncertain...
-Given all of this, I'm intentionally not too set on a particular destination. I know the kinds of subjects and problem spaces I enjoy much better than I know of the exact job I will want. That means that after my bachelor's I may pursue a PhD, join some R&D lab or some other technical team, or even build my own thing. 
+Given all of this, I'm intentionally not too set on a particular destination. I know the kinds of subjects and problem spaces I enjoy much better than I know of the exact job I will want. So, after my bachelor's, I may pursue a PhD, join some R&D lab or some other technical team, or even build my own thing. 
 
-Whatever it may be, I care much more about continuing to encounter difficult questions, surround myself with capable people, and maintain enough freedom to learn and create.
+Whatever it may be, I care much more about continuing to encounter difficult questions and surronding myself with passionate people whilst maintaining enough freedom to learn and create.
 
 I'm excited for whatever may lie ahead.
