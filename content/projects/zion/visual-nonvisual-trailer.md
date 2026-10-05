@@ -5,7 +5,7 @@ title: "What is the form of ZION?"
 slug: "projects/zion/visual-nonvisual-trailer"
 section: "projects"
 type: "project-note"
-audience: ["public", "professional"]
+audience: ["public"]
 status: "wip"
 published: true
 created: "2026-04-24"

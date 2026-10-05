@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T20:10:54.768Z",
+  "generatedAt": "2026-10-05T20:22:07.964Z",
   "pages": [
     {
       "id": "about",
@@ -1218,39 +1218,6 @@
     },
     {
       "layout": "project",
-      "id": "projects-zion-architecture",
-      "title": "DL5 Distros and Architecture",
-      "slug": "projects/zion/architecture",
-      "section": "projects",
-      "type": "log",
-      "audience": [
-        "public",
-        "professional"
-      ],
-      "status": "active",
-      "published": true,
-      "created": "2026-04-15",
-      "modified": "2026-08-15",
-      "order": 40,
-      "topics": [
-        "computation",
-        "software",
-        "design"
-      ],
-      "project": "zion",
-      "navTitle": "Architecture",
-      "banner": "assets/blue1.jpg",
-      "collection": null,
-      "featured": false,
-      "summary": "",
-      "sound": null,
-      "authorSource": "content/projects/zion/architecture.md",
-      "source": "generated/pages/projects-zion-architecture.md",
-      "assetBase": "content/projects/zion",
-      "images": "generated/images/projects-zion-architecture.json"
-    },
-    {
-      "layout": "project",
       "id": "projects-zion",
       "title": "What is the function of ZION?",
       "slug": "projects/zion",
@@ -1290,8 +1257,7 @@
       "section": "projects",
       "type": "log",
       "audience": [
-        "public",
-        "professional"
+        "public"
       ],
       "status": "active",
       "published": true,
@@ -1323,8 +1289,7 @@
       "section": "projects",
       "type": "project-note",
       "audience": [
-        "public",
-        "professional"
+        "public"
       ],
       "status": "wip",
       "published": true,
@@ -1706,8 +1671,6 @@
     "content/sciences/akashom/VisualNon-VisualTrailer.md": "projects/zion/visual-nonvisual-trailer",
     "sciences/akashom/DL2_Visualmaxxing_Is_Meta.md": "projects/zion/visual-design",
     "content/sciences/akashom/DL2_Visualmaxxing_Is_Meta.md": "projects/zion/visual-design",
-    "sciences/akashom/DL5_Distros_and_Architecture.md": "projects/zion/architecture",
-    "content/sciences/akashom/DL5_Distros_and_Architecture.md": "projects/zion/architecture",
     "sciences/cornocupia/cornocupia.md": "projects/cornocupia",
     "content/sciences/cornocupia/cornocupia.md": "projects/cornocupia",
     "sciences/jivan/jivanDefined.md": "projects/jivan",
@@ -1844,7 +1807,6 @@
     "home/miscConsumption.md": "archive/consumption",
     "content/home/miscConsumption.md": "archive/consumption",
     "projects/akashom": "projects/zion",
-    "projects/akashom/architecture": "projects/zion/architecture",
     "projects/akashom/visual-design": "projects/zion/visual-design",
     "projects/akashom/visual-nonvisual-trailer": "projects/zion/visual-nonvisual-trailer"
   }

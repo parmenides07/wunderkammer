@@ -7,7 +7,7 @@ section: "projects"
 type: "log"
 audience: ["public", "professional"]
 status: "active"
-published: true
+published: false
 created: "2026-04-15"
 modified: "2026-08-15"
 order: 40

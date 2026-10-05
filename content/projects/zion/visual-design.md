@@ -5,7 +5,7 @@ title: "DL2 Visualmaxxing Is Meta"
 slug: "projects/zion/visual-design"
 section: "projects"
 type: "log"
-audience: ["public", "professional"]
+audience: ["public"]
 status: "active"
 published: true
 created: "2026-04-15"
