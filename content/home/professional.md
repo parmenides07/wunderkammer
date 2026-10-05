@@ -29,7 +29,7 @@ I'm less so attached to any particular industry or field than I am to environmen
 An experimental graph-structured engine for constructing, simulating, and eventually learning over dynamical systems.  
 *(Python | graph systems | numerical simulation)*
 
-**[[projects/akashom|Akasha]]**  
+**[[projects/zion|ZION]]**\
 A knowledge system built on graph theory exploring more intuitive and efficient ways to organize, query, and navigate interconnected information. 
 *(Codex | Svelte | Electron | TypeScript)*
 

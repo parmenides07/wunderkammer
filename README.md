@@ -16,13 +16,22 @@ Open the printed local URL (normally `http://127.0.0.1:5173/`). Leave the comman
 Create a page without remembering the schema:
 
 ```sh
-npm run new -- --type project --title "Anvesana"
-npm run new -- --type note --title "Abstraction and Computation"
-npm run new -- --type note --title "A thought" --collection mindfill
-npm run new -- --type project-note --title "Design log" --project akashom
+npm run new -- project "Anvesana"
+npm run new -- archive "Old sketches"
+npm run new -- archive "An idea" --collection ideas
+npm run new -- note "A thought" --collection mindfill
+npm run new -- project-note "Design log" --project zion
+npm run new -- project "Personal experiment" --audience public
+npm run new -- --help
 ```
 
-Projects go in `content/projects/<project>/index.md`, with a nearby `assets/` directory. Notes go in `content/notes/`, optionally inside a collection. New pages start as public, published WIP pages—never automatically professional. Set `published: false` to leave a page out of navigation, or keep drafts in `content/drafts/`.
+Use `npm run new`, including `run`; `new` is this repository's npm script. The original flag form still works: `npm run new -- --type project --title "Anvesana"`.
+
+Projects go in `content/projects/<project>/index.md`, with a nearby `assets/` directory. Notes go in `content/notes/`; archive entries go in `content/archive/`. Either can optionally belong to a collection. New projects start as published WIP pages in **both** the professional root and personal view. Notes and archive entries default to the personal view. Project notes inherit their project's audience and live beside its overview, even if its folder has moved. Use `--audience public` for a personal-only project; `--audience professional` and `--audience public,professional` are also available for sections included in the professional view.
+
+Creation rebuilds the generated site and prints the file and page links. With `npm run dev` running, the browser also refreshes automatically. No project registration or allowlist edit is needed. Navigation uses the project title exactly as entered, including capitalization (`"ZION"` displays as **ZION**), while folders and URLs use lowercase slugs. Existing configuration labels can override the title.
+
+Set `published: false` to leave a page out of navigation, or keep drafts in `content/drafts/`. `status: archived` marks a retained page as archived; creating an `archive` entry places new content in the personal Archive section. Saving with the dev server running rebuilds automatically; otherwise run `npm run build` after edits. Creating a page never overwrites an existing file.
 
 ```sh
 npm run check  # validate metadata, links, assets, image sizes and alt text
@@ -60,7 +69,7 @@ Required fields are shown through `created`; `collection` and `topics` are optio
 - Add `professional` to `audience: [public, professional]` to include a page in the curated root `/`. Public-only pages remain in `/personal/`.
 - Optional fields include `project`, `collection`, `topics`, `order`, `featured`, `summary`, `banner`, `sound`, and `navTitle` (receipt label).
 
-Folders are authoring conveniences. `project` and `collection` define containers; `site.config.json` sets their labels/order. The left paper contains containers; each receipt lists only its direct leaf pages. Topic tags remain independent. Currents now has its own section and professional/personal sources.
+Folders are authoring conveniences. `project` and `collection` define containers; `site.config.json` can override their labels/order. New projects use their overview title without any configuration entry. The left paper contains containers; each receipt lists only its direct leaf pages. Topic tags remain independent. Currents now has its own section and professional/personal sources.
 
 ## Semantic internal links
 
@@ -69,7 +78,7 @@ Use logical routes in Markdown; the current view chooses the right source:
 ```md
 [[about|About]]
 [[currents|Currents]]
-[[projects/akashom]]
+[[projects/zion]]
 [[personal:notes/philosophy/maximalist-soul-driver|older philosophy note]]
 ```
 
@@ -81,7 +90,7 @@ The checker also rejects any visible container with no renderable descendant, id
 
 ## Shared pages and identity variants
 
-Most projects stay one source with `audience: [public, professional]`; no variant metadata is needed. Root also applies the section/project allowlist in `site.config.json` → `views.root.navigation` and `views.root.projects`. Public navigation is not reduced by that allowlist.
+Most projects stay one source with `audience: [public, professional]`; no variant metadata is needed. Root applies the section list in `site.config.json` → `views.root.navigation`. A published project with `professional` in its audience automatically appears there. `views.root.projectOrder` sets preferred ordering only; projects absent from that list appear afterward. Public navigation uses all published public pages.
 
 Home, About and Currents have separate editorial sources under `content/home/`, `content/about/` and `content/currents/`, each named `professional.md` or `personal.md`. Edit these files directly. Personal Home/About preserve their previous prose. The other four files are published WIP skeletons with non-rendered author comments; write them before sharing the root site.
 
@@ -99,7 +108,7 @@ The personal file uses its own unique ID, the same `slug: about` and `variantGro
 
 An explicit variant wins over a shared fallback in that view. If adding a variant over an existing shared route, give the shared file the same `variantGroup` but omit `variant`. One shared fallback and one explicit variant per mode are allowed; ambiguous duplicates fail the build. Ordinary accidental duplicate slugs still fail. Each variant must have the single matching audience. IDs always remain globally unique.
 
-Root currently shows Home, Projects, About, Currents. Its configured project IDs are `akashom`, `cornocupia`, `vivarium`, `mindscape`, in that order. Vivarium is reserved and omitted until a published professional-visible page exists. Only the existing Mindscape overview is professional-visible; its child pages remain personal. Names are unchanged.
+Root currently shows Home, Projects, About, Currents. Its preferred project order is `zion`, `cornocupia`, `vivarium`, `mindscape`, followed by other published professional projects. Empty projects are omitted. Only the existing Mindscape overview is professional-visible; its child pages remain personal. ZION's previous `projects/akashom` routes and older file links remain aliases to its current pages.
 
 Left-paper clicks play the original `printer2.mp3` once. Receipt/next-page clicks use the existing page-flip effect instead. Actual receipt tuck/open changes play `tuck1.mp3`, excluding initial placement and resize synchronization. Both respect mute and load on demand.
 

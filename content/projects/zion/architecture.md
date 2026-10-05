@@ -1,8 +1,8 @@
 ---
 layout: project
-id: "projects-akashom-architecture"
+id: "projects-zion-architecture"
 title: "DL5 Distros and Architecture"
-slug: "projects/akashom/architecture"
+slug: "projects/zion/architecture"
 section: "projects"
 type: "log"
 audience: ["public", "professional"]
@@ -12,7 +12,7 @@ created: "2026-04-15"
 modified: "2026-08-15"
 order: 40
 topics: ["computation", "software", "design"]
-project: "akashom"
+project: "zion"
 navTitle: "Architecture"
 banner: "assets/blue1.jpg"
 ---

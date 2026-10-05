@@ -22,8 +22,11 @@
         ids.add(id);
       }
       for(const id of ids){
-        const item=settings.find(s=>s.id===id),rank=(audience==='professional'&&section.id==='projects'&&config.views?.root?.projects?config.views.root.projects:settings.map(s=>s.id)).indexOf(id);
-        add(`${section.id}/${id}`,item?.label||titleCase(id),node.key,rank<0?settings.length:rank);
+        const item=settings.find(s=>s.id===id);
+        const order=audience==='professional'&&section.id==='projects'?(config.views?.root?.projectOrder||settings.map(s=>s.id)):settings.map(s=>s.id);
+        const rank=order.indexOf(id);
+        const overview=field==='project'?model.pages.find(p=>p.project===id&&p.type==='project'):null;
+        add(`${section.id}/${id}`,item?.label||overview?.title||titleCase(id),node.key,rank<0?order.length:rank);
       }
       return node;
     });

@@ -1,8 +1,8 @@
 ---
 layout: project
-id: "projects-akashom-visual-design"
+id: "projects-zion-visual-design"
 title: "DL2 Visualmaxxing Is Meta"
-slug: "projects/akashom/visual-design"
+slug: "projects/zion/visual-design"
 section: "projects"
 type: "log"
 audience: ["public", "professional"]
@@ -12,7 +12,7 @@ created: "2026-04-15"
 modified: "2026-08-15"
 order: 30
 topics: ["computation", "software", "design"]
-project: "akashom"
+project: "zion"
 navTitle: "Visual Design"
 banner: "assets/sensornode1.webp"
 ---

@@ -1,8 +1,8 @@
 ---
 layout: project
-id: "projects-akashom-visual-nonvisual-trailer"
-title: "What is the form of Akashoma?"
-slug: "projects/akashom/visual-nonvisual-trailer"
+id: "projects-zion-visual-nonvisual-trailer"
+title: "What is the form of ZION?"
+slug: "projects/zion/visual-nonvisual-trailer"
 section: "projects"
 type: "project-note"
 audience: ["public", "professional"]
@@ -12,7 +12,7 @@ created: "2026-04-24"
 modified: "2026-08-15"
 order: 20
 topics: ["computation", "software", "design"]
-project: "akashom"
+project: "zion"
 navTitle: "Visual / Non-Visual Trailer"
 banner: "assets/akasha.jpg"
 ---

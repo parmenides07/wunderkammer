@@ -29,7 +29,7 @@ async function run(){
   await page.reload();await page.waitForFunction(()=>document.querySelectorAll('.file-link')[1]?.classList.contains('active-link'));await header('Art');
   assert.ok(await page.locator('.video').evaluateAll(els=>els.every(el=>el.getBoundingClientRect().width<=document.querySelector('.content-bg').getBoundingClientRect().width)));
   await page.locator('.video').first().scrollIntoViewIfNeeded();await page.screenshot({path:`.test-results/layout/art-${width}.png`});
-  await group('projects');await group('projects/akashom');await ready('projects-akashom');await header('Akashom');assert.match(await page.locator('.file-link').first().textContent(),/Overview/);assert.ok(page.url().endsWith('#/projects/akashom'));
+  await group('projects');await group('projects/zion');await ready('projects-zion');await header('ZION');assert.match(await page.locator('.file-link').first().textContent(),/Overview/);assert.ok(page.url().endsWith('#/projects/zion'));
   await index();await page.waitForTimeout(300);
   // Texture scale is independent of content height. Rows are integral rule steps.
   const paper=await page.evaluate(()=>{

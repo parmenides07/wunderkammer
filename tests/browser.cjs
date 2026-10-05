@@ -20,7 +20,7 @@ async function run() {
   for(const entry of personalModel.pages){await route(page,entry.slug);assert.equal(await page.locator('.wip-sticker').isVisible(),entry.status==='wip');assert.ok(!page.url().includes('.md'));}
   results.push(personalModel.pages.length+' public pages, banners/WIP, semantic routes');
   await route(page,'home');
-  for(const [section,owner] of [['projects','projects/akashom'],['notes','notes/mindfill'],['archive','archive/consumption']]){
+  for(const [section,owner] of [['projects','projects/zion'],['notes','notes/mindfill'],['archive','archive/consumption']]){
    await page.locator(`[data-group="${section}"]`).click({position:{x:8,y:8}});
    await page.waitForFunction(key=>activeGroup.key===key&&!!document.querySelector('.content').dataset.pageId,owner);
    assert.equal(await page.locator(`[data-group="${owner}"]`).evaluate(el=>getComputedStyle(el,'::after').content),'" ■"');
@@ -30,10 +30,10 @@ async function run() {
   await page.locator('[data-group="notes/mindfill"]').click({position:{x:8,y:8}});await page.waitForFunction(()=>document.querySelectorAll('.file-link').length===8);
   assert.equal(await page.locator('[data-group="notes"]').evaluate(el=>getComputedStyle(el,'::after').content),'" •"');
   results.push('Direct leaves only; selected filled square overrides and restores unread dot');
-  await route(page,'projects/akashom');assert.equal(await page.locator('.file-link').count(),4);
+  await route(page,'projects/zion');assert.equal(await page.locator('.file-link').count(),4);
   await page.locator('.content').evaluate(el=>el.scrollTop=350);
-  await route(page,'about');await page.goBack();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom');assert.ok(await page.locator('.content').evaluate(el=>el.scrollTop)>250);
-  await page.goto(`${base}/personal/#sciences/akashom/akashom.md`);await page.waitForURL('**/#/projects/akashom');await page.reload();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom');
+  await route(page,'about');await page.goBack();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion');assert.ok(await page.locator('.content').evaluate(el=>el.scrollTop)>250);
+  await page.goto(`${base}/personal/#sciences/akashom/akashom.md`);await page.waitForURL('**/#/projects/zion');await page.reload();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion');
   // Drag papers apart so both real tuck buttons are exposed.
   await page.waitForFunction(()=>!document.querySelector('#card-files-panel').getAnimations().some(a=>a.playState==='running'));
   for(const kind of ['files','folders']){
@@ -43,7 +43,7 @@ async function run() {
    await page.locator(`#tuck-${kind}-btn`).click();assert.equal(await panel.getAttribute('data-tucked'),'true');await page.locator(`#tuck-${kind}-btn`).click();assert.equal(await panel.getAttribute('data-tucked'),'false');
   }
   await page.locator('[data-group="notes"]').click();await page.waitForFunction(()=>activeGroup.key==='notes/mindfill');assert.equal(await page.locator('.receipt-header').textContent(),'Mindfill');
-  await route(page,'projects/akashom');await page.locator('.content').evaluate(el=>el.scrollTop=el.scrollHeight);await page.locator('#next-page-btn').click();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akashom-visual-nonvisual-trailer');
+  await route(page,'projects/zion');await page.locator('.content').evaluate(el=>el.scrollTop=el.scrollHeight);await page.locator('#next-page-btn').click();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion-visual-nonvisual-trailer');
   await route(page,'archive/experiments/proof-of-concept');assert.ok(await page.locator('.csv-table tbody tr').count());assert.ok(await page.locator('.multiply-wrapper').count());
   await route(page,'projects/jivan');assert.ok(await page.locator('.html-embed').count());
   await route(page,'projects/darkroom');assert.equal(await page.locator('.content img[loading="lazy"]').count(),41);assert.ok(await page.locator('.full-width-img').count());

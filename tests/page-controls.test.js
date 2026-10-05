@@ -7,7 +7,7 @@ for(const mode of ['professional','public'])test(mode+' root and project sibling
  assert.equal(nextSibling(nav,model.resolve('home')).slug,'about');
  assert.equal(nextSibling(nav,model.resolve('about')).slug,'currents');
  assert.equal(nextSibling(nav,model.resolve('currents')),null);
- const pages=nav.catalog.get('projects/akashom').pages;
+ const pages=nav.catalog.get('projects/zion').pages;
  pages.forEach((page,i)=>assert.equal(nextSibling(nav,page),pages[i+1]||null));
 });
 test('nested groups and filtered middle sibling never cross a parent boundary',()=>{
@@ -22,9 +22,9 @@ test('nested groups and filtered middle sibling never cross a parent boundary',(
 });
 test('internal trail deduplicates synchronization, restores browser snapshots, and falls back home',()=>{
  let trail=visitTrail([],'home');
- for(const slug of ['projects/akashom','projects/akashom/architecture','currents'])trail=visitTrail(trail,slug);
+ for(const slug of ['projects/zion','projects/zion/architecture','currents'])trail=visitTrail(trail,slug);
  assert.deepEqual(visitTrail(trail,'currents'),trail);
- for(const slug of ['projects/akashom/architecture','projects/akashom','home']){trail=previousTrail(trail);assert.equal(trail.at(-1),slug);}
+ for(const slug of ['projects/zion/architecture','projects/zion','home']){trail=previousTrail(trail);assert.equal(trail.at(-1),slug);}
  assert.deepEqual(previousTrail(['about']),['home']);
  assert.deepEqual(visitTrail(['home','about','currents'],'about',['home','about']),['home','about']);
 });

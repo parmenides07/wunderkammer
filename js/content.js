@@ -29,8 +29,8 @@
       if(!previous||page.variant)selected.set(page.slug,page);
     }
     const policy=audience==='professional'?config.views?.root:null;
-    const pages=[...selected.values()].filter(page=>(!policy?.navigation||policy.navigation.includes(page.section))&&
-      (page.section!=='projects'||!policy?.projects||policy.projects.includes(page.project))).sort(comparePages);
+    // Page metadata controls project visibility; ordering must never hide a new project.
+    const pages=[...selected.values()].filter(page=>!policy?.navigation||policy.navigation.includes(page.section)).sort(comparePages);
     const bySlug = new Map(pages.map(page => [page.slug, page]));
     const byId = new Map(pages.map(page => [page.id, page]));
     return {pages,bySlug,byId,resolve(route){return bySlug.get(manifest.aliases[route]||route);},topic(topic){return pages.filter(page=>page.topics.includes(topic));},assets:manifest.assetDirectories};

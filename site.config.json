@@ -1,5 +1,5 @@
 {
-  "views": {"root":{"navigation":["home","projects","about","currents"],"projects":["akashom","cornocupia","vivarium","mindscape"],"title":"Param Ghetia","description":"Projects and selected writing by Param Ghetia."},"personal":{"title":"Wunderkammer \u2014 Param Ghetia","description":"Projects, writing and personal archives by Param Ghetia.","noindex":true}},
+  "views": {"root":{"navigation":["home","projects","about","currents"],"projectOrder":["zion","cornocupia","vivarium","mindscape"],"title":"Param Ghetia","description":"Projects and selected writing by Param Ghetia."},"personal":{"title":"Wunderkammer \u2014 Param Ghetia","description":"Projects, writing and personal archives by Param Ghetia.","noindex":true}},
   "groups": [],
   "sections": [
     {"id":"home","label":"Home"},
@@ -10,7 +10,7 @@
     {"id":"currents","label":"Currents"}
   ],
   "projects": [
-    {"id":"akashom","label":"Akashom"},
+    {"id":"zion","label":"ZION"},
     {"id":"jivan","label":"Jivan"},
     {"id":"cornocupia","label":"Cornocupia"},
     {"id":"mindscape","label":"Project Mindscape"},

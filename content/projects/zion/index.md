@@ -1,8 +1,8 @@
 ---
 layout: project
-id: "projects-akashom"
-title: "What is the function of Akashom?"
-slug: "projects/akashom"
+id: "projects-zion"
+title: "What is the function of ZION?"
+slug: "projects/zion"
 section: "projects"
 type: "project"
 audience: ["public", "professional"]
@@ -12,7 +12,7 @@ created: "2026-04-16"
 modified: "2026-08-15"
 order: 10
 topics: ["computation", "software", "design"]
-project: "akashom"
+project: "zion"
 navTitle: "Overview"
 banner: "assets/zion1.jpg"
 ---
@@ -21,7 +21,7 @@ banner: "assets/zion1.jpg"
 - April 24th: ## As of today, I have changed the name to Akashom (\ ə-ˈkä-shəm \ or uh-kah-shum). The name is composed of the Sanskrit word Akasha meaning ether and space, the fifth element and invisible fabric of universe. The suffix is built from the greek word soma meaning physical body of an organism or cell.
 
 ## Context
-- I'll start with some context, I've always felt that other notetaking apps were too limiting like Obsidian or notion or Emacs Org mode. What I'd constantly come back to was just using paper and drawing these very abstract relationships between information. Having that spatial freedom really helped with refining ideas and ideating but one thing I missed was the digital ability to query for information. This is where zion began: as a spatial notetaking software. However, as I continued development, I noticed another flaw of many note taking apps. Most text editors would have a heading (the parent) and then children but these children can only have that one parent. I found this incredibly limiting and forced me into this linear way of storing information. So this brought me to where the development of zion is heading now.
+- I'll start with some context, I've always felt that other notetaking apps were too limiting like Obsidian or notion or Emacs Org mode. What I'd constantly come back to was just using paper and drawing these very abstract relationships between information. Having that spatial freedom really helped with refining ideas and ideating but one thing I missed was the digital ability to query for information. This is where ZION began: as a spatial notetaking software. However, as I continued development, I noticed another flaw of many note taking apps. Most text editors would have a heading (the parent) and then children but these children can only have that one parent. I found this incredibly limiting and forced me into this linear way of storing information. So this brought me to where the development of ZION is heading now.
 
 - Essentially, what if you could combine the spatial freedom of paper with the human brain-like knowledge webs of apps like Obsidian with the structured approach of hierarchical notetaking. Dare I say, also make these aspects better by allowing for the manipulation and modification in a space, making the knowledge webs appear more naturally, and constraining the hiearchies by only how you think not by any inherent rules.
 
@@ -34,7 +34,7 @@ banner: "assets/zion1.jpg"
 ![zionexample](assets/zionexample.png)
 
 ### What's Different:
-- In traditional notetaking, "German Shepherd" lives under "Dogs" and nowhere else. In Zion, "German Shepherd" can simultaneously be a child of "Dogs," "Breeds," and "Cute Animals" -- because that's genuinely true. The diagram illustrates this: the same packages appear in multiple contexts, not as copies or links, but as the same object viewed from different relational angles. 
+- In traditional notetaking, "German Shepherd" lives under "Dogs" and nowhere else. In ZION, "German Shepherd" can simultaneously be a child of "Dogs," "Breeds," and "Cute Animals" -- because that's genuinely true. The diagram illustrates this: the same packages appear in multiple contexts, not as copies or links, but as the same object viewed from different relational angles.
 
 ### Emergent relationships: 
 - From just three primitives, a rich family tree emerges automatically. Two packages that share a parent become siblings. A parent's sibling becomes an aunt or uncle. These are never manually declared -- they're computed on demand from the underlying graph. The system also intentionally allows paradoxes: Animals contains Cute while Cute contains Animals. This isn't a bug, it reflects how human knowledge actually works. This is a great example of [emergent complexity](#/notes/mindfill/emergent-complexity-and-control).
