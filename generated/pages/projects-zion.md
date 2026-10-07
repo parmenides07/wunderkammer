@@ -1,31 +1,61 @@
 
-- This is a mere introduction to the functional aspect of Akashom. It's meant to be very concise. 
-- April 24th: ## As of today, I have changed the name to Akashom (\ ə-ˈkä-shəm \ or uh-kah-shum). The name is composed of the Sanskrit word Akasha meaning ether and space, the fifth element and invisible fabric of universe. The suffix is built from the greek word soma meaning physical body of an organism or cell.
+ZION is a spatial text editor. I like to glorify it as a textual chalkboard, or a textboard, if you will.  
+My primary reason for creating zion was wanting to improve at C, but a secondary reason grew: it seemed fun to make a spatial text editor. 
+It had humble beginnings as a ncurses project where it existed in the terminal. This ended up crashing and burning as a result of changing my goal with my project far too late, with an already existing foundation that couldn't bear the load above it. So, I switched to using Raylib (graphics engine built atop OpenGL) and C, with a clearer vision in mind. 
 
-## Context
-- I'll start with some context, I've always felt that other notetaking apps were too limiting like Obsidian or notion or Emacs Org mode. What I'd constantly come back to was just using paper and drawing these very abstract relationships between information. Having that spatial freedom really helped with refining ideas and ideating but one thing I missed was the digital ability to query for information. This is where ZION began: as a spatial notetaking software. However, as I continued development, I noticed another flaw of many note taking apps. Most text editors would have a heading (the parent) and then children but these children can only have that one parent. I found this incredibly limiting and forced me into this linear way of storing information. So this brought me to where the development of ZION is heading now.
+## AI Usage
+- With this project, my AI usage was incredibly minimal. For the majority of the codebase (at the time I made the project) I didn't even really have access to AI coding tools. Coming back to it many months later, in an effort to finalize this project as of recent, I used codex to refresh me on the project/state of code, clean up some loose ends, and help sort out some bugs so that this project could be "finished". I really tried to keep any changes minimal and I think I for the most part achieved that goal as most of the architecture and majority of the algorithms remained my own. 
+- Mainly, it added tests as well as helped me impliment better selection and changing cell size. 
 
-- Essentially, what if you could combine the spatial freedom of paper with the human brain-like knowledge webs of apps like Obsidian with the structured approach of hierarchical notetaking. Dare I say, also make these aspects better by allowing for the manipulation and modification in a space, making the knowledge webs appear more naturally, and constraining the hiearchies by only how you think not by any inherent rules.
+## The Vision:
+Again, this project isn't too large but my goal was to make a nice brainstorming/braindumping digital tool. I really like working with things on paper but wished I could move things around and change the order of things. I wanted to kind of make this into a very minimal simple program that I could just quickly open, throw stuff into and close, allowing for the chance of later revisting and revising.
 
-## Architecture
-- **Akashoma** is a spatial, relational notetaking app built around a fundamentally different way of storing information. Instead of documents with headings and bullet points, everything in Akashomais a package -- a self-contained unit of information that can be anything from a single word to entire paragraphs.
+This isn't really new but I wanted to just make one for myself, something very simple and barebones: akin to the form and function of something like notepad.
 
-### Core Model:
-- Packages don't live inside documents. They exist independently and form explicit relationships with each other. There are three relationship types: parent, child, and spousal. Parent/child is familiar from hierarchical notetaking, but with a crucial difference -- a package can have unlimited parents and unlimited children simultaneously. Spousal relationships bind two packages together as equivalents, neither containing the other. The viewport and everything the user interacts with is just a visualization formed at runtime based off of this raw data.
+## The program
+- So this is a sample of what a zion file could look like: 
 
-![zionexample](assets/zionexample.png)
+![zionoverview](assets/zionoverview.png)
 
-### What's Different:
-- In traditional notetaking, "German Shepherd" lives under "Dogs" and nowhere else. In ZION, "German Shepherd" can simultaneously be a child of "Dogs," "Breeds," and "Cute Animals" -- because that's genuinely true. The diagram illustrates this: the same packages appear in multiple contexts, not as copies or links, but as the same object viewed from different relational angles.
+### Workflow
 
-### Emergent relationships: 
-- From just three primitives, a rich family tree emerges automatically. Two packages that share a parent become siblings. A parent's sibling becomes an aunt or uncle. These are never manually declared -- they're computed on demand from the underlying graph. The system also intentionally allows paradoxes: Animals contains Cute while Cute contains Animals. This isn't a bug, it reflects how human knowledge actually works. This is a great example of [emergent complexity](#/notes/mindfill/emergent-complexity-and-control).
+1. You click to start typing and this cell follows around your cursor as you type (this actually started out as a bug that I ended up liking) until you click once more. 
 
-### Power of Querying: 
-- Rather than searching for tagged strings, you traverse the relationship graph. The example given: "find nephews of German Shepherd whose grandparent is Dogs" -- this returns children of other dog breeds, surfacing perhaps a story about when I got attacked by a Pomeranian without ever having explicitly tagged or linked it. You're querying the structure of your knowledge, not just its text content.
+![zionwriting](assets/zionwriting.gif)
 
-### My Vision:
-- A second brain that builds itself. As you naturally write and connect ideas, Akashoma constructs a dense queryable knowledge graph without requiring you to maintain tagging systems, manually create links, or organize files. The relationships form through use, and over time the database becomes a powerful reflection of how you actually think.
 
-## Conclusion
-Some may see this as pointless and unneccesary but the best way to view it is a robust storaage system for information and data in a notetaking context that facilitates the querying of this data through [emergent](#/notes/mindfill/emergent-complexity-and-control) relationships. I know this would be perfect for the way I think and structure information so I'm sure there are others like me. Be that as it may, I'm still reall excited about this project and the potetnial it has even if no one will ever use it lol. 
+2. Once you have placed a cell you can click it again to employ the same behavior from earlier (edit it and move around) or you can select it. 
+3. You can select multiple cells and now you are employing the behavior from earlier on all of them, meaning you can backspace or type or make new lines, affecting them all. 
+4. You can also move the cells around all at once. 
+    - The visual of everything moving and being edited is quite satisfying 
+    
+![zionselection](assets/zionselection.gif)
+
+5. You also can scale up and down the selected cells. 
+6. And whenever, you want, you can close it since there is "autosave" (really everything is just saving everytime you do something since there is no undoing and every action is more or less permanent). 
+    
+- As zion is meant to be a textboard, it naturally is infinite meaning you can pan infnitely for each file writing as much as you want (or as much as your local memory allows). Unfortunately, I have not yet been able to impliment zooming smoothly (always some kind of bug or undesired behavior)
+
+![zionmisc](assets/zionmisc.gif)
+
+- Despite zion having a practically nonexistant UI nor any visual feedback, it still feels quite satisfying to use (and I'm not just saying that because I made it).  
+
+## Future Features
+- Zooming
+- Lines between cells
+- More text editing features
+- Better keybindings and keyboard workflow (making it very quick and effecient to use) 
+
+- I likely won't come back to this stuff anytime soon though
+## Reflection
+- Zion will always have a special place in my heart. It was one of my first serious coding projects and It was some of the most fun I ever had debugging and designing algorithms. The biggest thing I learned was that C is damn hard. But its the good kind of difficult. I would love being tasked with this algorithm I have to impliment and then have to work through it keeping in mind memory management. I really went out of my way to learn new data structures and impliment them in C. So, yes, if I had done this project in python it may have been much much easier and much much quicker but the fun I had in trying to keep track of all these things and really thinking through the memory operations was well worth it. However, an unfortunate effect of using C and a result of my development style at the time, I wrote very few comments and implimented complex, and now incomprehensible algorithms, riddled with C idiosyncracies. I also did not expect it to grow to the length it did and left everything in the same file which I have since learned is not great practice. 
+- Anyways, even though I wrote zion many months ago, it is by far one of the most algorithmically impressive projects I've worked on. One that gave me a very very strong understanding over the C language. Unfortunately, that knowledge has since dwindled and my code is far too difficult to understand and expand so I likely will not further work on this project. I will continue to still use ZION time to time and cherish it as the project that brutally taught me C. 
+
+## Development Process
+- I worked on this a while ago so I unfortunately don't remember most of the issues I had in the development process but, I do have some gifs of this particularly pesky bug. Essentially, I was experiencing large amounts of lag and performance issues as the number of cells grew and I tried panning around. I expected some graphical performance drops but the amount there was was absurd. You can see as much in the gif below. 
+
+![beforechange](assets/beforechange.gif)
+
+Turns out the issue was actually that I had a bunch of print statements every frame. So in between the graphics cards calls, the CPU was being called upon to print some statement. This constant discontinuity in actions resulted in a lot of performance ineffeciency. Forgive me if I am wrong and this is not the issue, it has been quite a while although I do think that was the case. 
+
+![afterchange](assets/beforechange.gif)

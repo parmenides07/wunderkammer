@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-05T20:22:07.964Z",
+  "generatedAt": "2026-10-07T00:32:51.820Z",
   "pages": [
     {
       "id": "about",
@@ -1219,7 +1219,7 @@
     {
       "layout": "project",
       "id": "projects-zion",
-      "title": "What is the function of ZION?",
+      "title": "What is ZION?",
       "slug": "projects/zion",
       "section": "projects",
       "type": "project",
@@ -1239,7 +1239,7 @@
       ],
       "project": "zion",
       "navTitle": "Overview",
-      "banner": "assets/zion1.jpg",
+      "banner": "assets/sensornode1.webp",
       "collection": null,
       "featured": false,
       "summary": "",
@@ -1657,7 +1657,11 @@
       "sensornode1.webp",
       "zion.jpg",
       "zion1.jpg",
-      "zionexample.png"
+      "zionexample.png",
+      "zionmisc.gif",
+      "zionoverview.png",
+      "zionselection.gif",
+      "zionwriting.gif"
     ]
   },
   "aliases": {
