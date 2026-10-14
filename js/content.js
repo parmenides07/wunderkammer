@@ -33,7 +33,7 @@
     const pages=[...selected.values()].filter(page=>!policy?.navigation||policy.navigation.includes(page.section)).sort(comparePages);
     const bySlug = new Map(pages.map(page => [page.slug, page]));
     const byId = new Map(pages.map(page => [page.id, page]));
-    return {pages,bySlug,byId,resolve(route){return bySlug.get(manifest.aliases[route]||route);},topic(topic){return pages.filter(page=>page.topics.includes(topic));},assets:manifest.assetDirectories};
+    return {pages,bySlug,byId,navigationMode:manifest.navigationMode,resolve(route){return bySlug.get(manifest.aliases[route]||route);},topic(topic){return pages.filter(page=>page.topics.includes(topic));},assets:manifest.assetDirectories};
   }
   const api={createContentModel,comparePages,validateRoutes};
   if(typeof module!=='undefined')module.exports=api;else root.SiteContent=api;

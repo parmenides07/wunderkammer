@@ -45,13 +45,22 @@ function attachImageViewer(content) {
     // Respect authored image links; otherwise give every Markdown image a keyboard-accessible fallback.
     if(img.closest('a'))return;
     const link=document.createElement('a');link.className='image-viewer';link.href=img.dataset.original||img.src;
-    if(img.dataset.animation){
-      const play=document.createElement('button');play.type='button';play.className='animation-control';play.textContent='Play animation';play.setAttribute('aria-pressed','false');
-      play.addEventListener('click',()=>{const playing=play.getAttribute('aria-pressed')!=='true';img.removeAttribute('srcset');img.src=playing?img.dataset.animation:img.dataset.poster;play.setAttribute('aria-pressed',String(playing));play.textContent=playing?'Pause animation':'Play animation';});
-      img.after(play);
-    }
     link.setAttribute('aria-label',`Enlarge ${img.alt || 'image'}`);
     img.replaceWith(link);link.appendChild(img);
     link.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();openImageViewer(images,index,link).catch(()=>{window.location.href=link.href;});});
+    if(img.dataset.animation){
+      const preview=document.createElement('span');preview.className='animation-preview';
+      const play=document.createElement('button');play.type='button';play.className='animation-control';
+      play.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="animation-icon-play" d="M8 5v14l11-7z"/><path class="animation-icon-pause" d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
+      play.setAttribute('aria-label','Play animation');play.title='Play animation';
+      play.addEventListener('click',()=>{
+        const playing=preview.classList.toggle('is-playing');
+        img.removeAttribute('srcset');img.src=playing?img.dataset.animation:img.dataset.poster;
+        const label=playing?'Pause animation':'Play animation';
+        play.setAttribute('aria-label',label);play.title=label;
+      });
+      // Keep playback and enlargement as separate, keyboard-accessible controls.
+      link.replaceWith(preview);preview.append(link,play);
+    }
   });
 }

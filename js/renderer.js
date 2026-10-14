@@ -19,7 +19,7 @@ async function renderPage(page) {
   const displayName = escapeHtml(page.title);
   let text = markdownCache.get(page.id);
   if (text === undefined) {
-    const response = await fetch(new URL(page.source, appBase));
+    const response = await fetch(new URL(page.source, appBase), {cache:'no-cache'});
     if (!response.ok) throw new Error(`${page.source}: HTTP ${response.status}`);
     text = await response.text();
     markdownCache.set(page.id, text);

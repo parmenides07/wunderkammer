@@ -205,7 +205,7 @@ async function handleRoute() {
 }
 async function init() {
   const [manifest, config] = await Promise.all(['manifest.json','site.config.json'].map(async url => {
-    const response = await fetch(new URL(url, appBase));
+    const response = await fetch(new URL(url, appBase), {cache:'no-cache'});
     if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
     return response.json();
   }));

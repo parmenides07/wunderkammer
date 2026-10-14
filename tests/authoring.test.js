@@ -69,7 +69,11 @@ test('project notes inherit audience and use their project folder; overview stay
  assert.equal(path.dirname(note),moved);
  assert.deepEqual(matter(fs.readFileSync(note,'utf8')).data.audience,['public','professional']);
  const nav=createNavigation(createContentModel(buildManifest(root),'professional',config),config,'professional');
- assert.equal(firstLeaf(nav.catalog.get('projects/nasa')).slug,'projects/nasa');
+ assert.equal(firstLeaf(nav.catalog.get('projects/parent/nasa')).slug,'projects/nasa');
+ assert.equal(nav.catalog.has('projects/nasa'),false);
+ const nestedNote=scaffold(root,{type:'project-note',title:'Nested folder note',project:'parent/nasa'});
+ assert.equal(path.dirname(nestedNote),moved);
+ assert.equal(matter(fs.readFileSync(nestedNote,'utf8')).data.slug,'projects/nasa/nested-folder-note');
  scaffold(root,{type:'project',title:'Private sketch',audience:'public'});
  const personalNote=scaffold(root,{type:'project-note',title:'Notes',project:'private-sketch'});
  assert.deepEqual(matter(fs.readFileSync(personalNote,'utf8')).data.audience,['public']);

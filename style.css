@@ -939,7 +939,25 @@ img { height: auto; }
   .index-open #navigation-papers .receipt { background-image: url('assets/receipt.png'); }
 }
 
-.animation-control { border: 1px dashed #8c715b; background: #f1e4d0; color: #4a4440; font: inherit; min-height: 44px; padding: .5rem .8rem; cursor: pointer; margin-block: .25rem 1rem; }
+.animation-preview { display: block; position: relative; margin-block: 1.2cqw .1cqw; }
+.content .animation-preview img { margin: 0; transform: none; }
+.animation-control {
+  position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%);
+  display: grid; place-items: center; box-sizing: border-box; width: 64px; height: 64px;
+  padding: 0; border: 2px solid #fff5e5; border-radius: 50%;
+  background: #29231fe6; color: #fff5e5; box-shadow: 0 2px 12px #0006; cursor: pointer;
+}
+.animation-control svg { width: 32px; height: 32px; fill: currentColor; pointer-events: none; }
+.animation-icon-pause, .is-playing .animation-icon-play { display: none; }
+.is-playing .animation-icon-pause { display: block; }
+.is-playing > .animation-control {
+  top: auto; left: auto; right: 12px; bottom: 12px; transform: none; width: 48px; height: 48px;
+}
+.is-playing > .animation-control svg { width: 24px; height: 24px; }
+.animation-control:focus-visible { outline: 3px solid #fff5e5; outline-offset: 3px; box-shadow: 0 0 0 7px #29231f; }
+@media (hover: hover) { .animation-control:hover { background: #4a4440; } }
+@media (max-width: 900px), (pointer: coarse) { .animation-preview { margin-block: 1em .1em; } }
+.layout-gallery .grid .animation-preview { margin-top: 0; }
 /* Controls must remain readable over pale photographs and scanned borders. */
 .pswp .pswp__top-bar { background: linear-gradient(#29231fd9, transparent); }
 .pswp .pswp__original { background: #29231fe6; border-radius: 2px; }

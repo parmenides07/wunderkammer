@@ -1,5 +1,47 @@
 (function (root) {
+  function createFolderNavigation(model, config, audience) {
+    const titleCase = value => value.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    const catalog = new Map(), pageGroups = new Map();
+    const sectionOrder = audience === 'professional' ? config.views?.root?.navigation : null;
+    const sections = (sectionOrder ? sectionOrder.map(id => config.sections.find(s => s.id === id)).filter(Boolean) : config.sections)
+      .map((section, order) => {
+        const node = {key:section.id, label:audience === 'professional' ? section.professionalLabel || section.label : section.label,
+          parent:null, order, pages:[], allPages:[], children:[]};
+        catalog.set(node.key, node);return node;
+      });
+    for (const page of model.pages) {
+      const parts = page.contentFolder.split('/');
+      let owner = catalog.get(parts[0]);
+      if (!owner) throw new Error(`${page.authorSource || page.id}: unknown content section "${parts[0]}"`);
+      for (let depth = 1; depth < parts.length; depth++) {
+        const key = parts.slice(0, depth + 1).join('/');
+        if (!catalog.has(key)) {
+          const settings = (parts[0] === 'projects' ? config.projects : config.collections) || [];
+          const item = settings.find(setting => setting.id === parts[depth]);
+          const order = audience === 'professional' && parts[0] === 'projects' && depth === 1
+            ? config.views?.root?.projectOrder || settings.map(setting => setting.id) : settings.map(setting => setting.id);
+          const rank = order.indexOf(parts[depth]);
+          const overview = model.pages.find(candidate => candidate.contentFolder === key && /\/index\.md$/.test(candidate.authorSource));
+          const node = {key, label:item?.label || (parts[0] === 'projects' ? overview?.title : null) || titleCase(parts[depth]),
+            parent:owner.key, order:rank < 0 ? order.length : rank, pages:[], allPages:[], children:[]};
+          catalog.set(key, node);owner.children.push(node);
+        }
+        owner = catalog.get(key);
+      }
+      owner.pages.push(page);pageGroups.set(page.id, owner);
+    }
+    function collect(node) {
+      node.children.sort((a,b) => a.order - b.order || a.label.localeCompare(b.label));
+      node.allPages = [...node.pages, ...node.children.flatMap(collect)];
+      if (!node.allPages.length) catalog.delete(node.key);
+      return node.allPages;
+    }
+    return {sections:sections.filter(section => collect(section).length), catalog, pageGroups};
+  }
   function createNavigation(model, config, audience, validateRoots=false) {
+    // Keep older generated manifests readable during deployment; new builds
+    // always provide the owning content folder instead of metadata-only groups.
+    if (model.navigationMode === 'folders') return createFolderNavigation(model, config, audience);
     const titleCase = value => value.replace(/-/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
     const catalog=new Map(),pageGroups=new Map();
     const add=(key,label,parent=null,order=100)=>{

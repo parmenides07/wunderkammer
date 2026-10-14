@@ -46,12 +46,14 @@ function scaffold(root, options) {
   const section = sections[type];
   if (options.collection && options.project) throw new Error('Choose either --collection or --project, not both.');
   const group = options.collection || options.project;
-  if (group && !/^[a-z0-9][a-z0-9-]*$/.test(group)) throw new Error('Collection/project must be a lowercase hyphenated identifier.');
+  if (group && !/^[a-z0-9][a-z0-9-]*(?:\/[a-z0-9][a-z0-9-]*)*$/.test(group)) throw new Error('Collection/project must be a lowercase hyphenated identifier or folder path.');
   if (options.project && type !== 'project-note') throw new Error('--project is for project-note pages; a new project uses its title as its ID.');
   if (options.collection && !['notes', 'archive'].includes(section)) throw new Error('--collection is for notes and archive entries.');
   if (type === 'project-note' && !options.project) throw new Error('A project note needs --project <existing-project-id>.');
   const manifest = buildManifest(root);
-  const parent = type === 'project-note' ? manifest.pages.find(p => p.type === 'project' && p.project === options.project) : null;
+  const projects = manifest.pages.filter(page => page.type === 'project');
+  const parent = type === 'project-note' ? projects.find(page => page.contentFolder === `projects/${options.project}`) ||
+    projects.find(page => page.slug === `projects/${options.project}`) : null;
   if (type === 'project-note' && !parent) throw new Error(`Unknown published project: ${options.project}. Create it with npm run new -- project "Project name" first.`);
   const audience = options.audience === undefined
     ? (parent?.audience.slice() || (type === 'project' ? ['public', 'professional'] : ['public']))
@@ -60,16 +62,15 @@ function scaffold(root, options) {
   const configFile = path.join(root, 'site.config.json');
   const navigation = fs.existsSync(configFile) ? JSON.parse(fs.readFileSync(configFile, 'utf8')).views?.root?.navigation : null;
   if (audience.includes('professional') && navigation && !navigation.includes(section)) throw new Error(`The professional view does not include ${section}. Use --audience public, or add "${section}" to views.root.navigation in site.config.json.`);
-  const slug = type === 'project' ? `projects/${name}` : [section, group, name].filter(Boolean).join('/');
+  const slug = type === 'project' ? `projects/${name}` : parent ? `${parent.slug}/${name}` : [section, group, name].filter(Boolean).join('/');
   const id = slug.replaceAll('/', '-');
   if (manifest.pages.some(p => p.id === id || p.slug === slug)) throw new Error(`A page already uses ${id} or ${slug}.`);
   if (manifest.aliases[slug]) throw new Error(`The route ${slug} is an existing alias for ${manifest.aliases[slug]}. Choose a different title.`);
   const folder = type === 'project' ? `content/projects/${name}` : [`content/${section}`, group].filter(Boolean).join('/');
   const dest = path.join(root, folder, type === 'project' ? 'index.md' : `${name}.md`);
-  const data = {id, title, slug, section, type, topics:[], audience, status:'wip', published:true, created:new Date().toISOString().slice(0, 10)};
-  if (type === 'project') Object.assign(data, {project:name, layout:'project', navTitle:'Overview', order:10});
-  else if (parent) Object.assign(data, {project:options.project, layout:'project'});
-  else if (options.collection) data.collection = options.collection;
+  const data = {id, title, slug, type, topics:[], audience, status:'wip', published:true, created:new Date().toISOString().slice(0, 10)};
+  if (type === 'project') Object.assign(data, {layout:'project', navTitle:'Overview', order:10});
+  else if (parent) data.layout = 'project';
   // Follow the project's actual folder, even after it has been moved.
   const target = parent ? path.join(root, parent.assetBase, `${name}.md`) : dest;
   if (fs.existsSync(target)) throw new Error(`Already exists: ${target}`);

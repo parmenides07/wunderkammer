@@ -4,11 +4,14 @@ const {createContentModel}=require('../js/content');
 const {createNavigation}=require('../js/navigation');
 const manifest=require('../manifest.json');
 const config=require('../site.config.json');
-test('public sections, project receipts, collections and topics use metadata',()=>{
+test('public navigation follows published folders and preserves topics',()=>{
  const model=createContentModel(manifest,'public'),nav=createNavigation(model,config,'public');
  assert.deepEqual(nav.sections.map(s=>s.key),['home','projects','notes','archive','about','currents']);
- assert.equal(nav.catalog.get('projects/zion').pages.length,4);
- assert.equal(nav.catalog.get('projects/mindscape').pages.length,7);
+ assert.deepEqual(nav.catalog.get('projects/zion').pages.map(p=>p.id),model.pages.filter(p=>p.contentFolder==='projects/zion').map(p=>p.id));
+ assert.deepEqual(nav.catalog.get('projects/mindscape').pages.map(p=>p.id),['projects-mindscape','projects-mindscape-premise','projects-mindscape-leviathan']);
+ assert.equal(nav.catalog.get('projects/mindscape/examples').pages.length,4);
+ assert.equal(nav.pageGroups.get('projects-jivan').key,'projects/akasha/jivan');
+ assert.equal(nav.catalog.has('projects/jivan'),false);
  assert.equal(nav.catalog.get('notes/mindfill').pages.length,8);
  assert.ok(model.topic('computation').some(p=>p.project==='zion'));
  const moved={...manifest,pages:manifest.pages.map(p=>({...p,source:'anywhere/'+p.id+'.md',assetBase:'somewhere'}))};
@@ -37,7 +40,7 @@ test('ZION keeps its old project and file links in both views',()=>{
  for(const audience of ['public','professional']){
   const model=createContentModel(manifest,audience,config);
   for(const suffix of ['','/architecture','/visual-design','/visual-nonvisual-trailer']){
-   assert.equal(model.resolve('projects/akashom'+suffix)?.slug,'projects/zion'+suffix);
+   assert.equal(model.resolve('projects/akashom'+suffix),model.resolve('projects/zion'+suffix));
   }
   assert.equal(model.resolve('sciences/akashom/akashom.md')?.id,'projects-zion');
  }

@@ -2,7 +2,7 @@ const imageMetadataCache = new Map();
 let currentImages = {};
 async function loadPageImages(page) {
   if(!imageMetadataCache.has(page.id)) {
-    const response=await fetch(new URL(page.images,appBase));
+    const response=await fetch(new URL(page.images,appBase),{cache:'no-cache'});
     if(!response.ok)throw new Error(`Image metadata: HTTP ${response.status}`);
     imageMetadataCache.set(page.id,await response.json());
   }

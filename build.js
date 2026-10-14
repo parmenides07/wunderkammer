@@ -34,8 +34,16 @@ function buildManifest(root = __dirname) {
       let parsed;
       try { parsed = matter(fs.readFileSync(filename, 'utf8')); }
       catch (error) { throw new Error(`${source}: invalid YAML frontmatter: ${error.message}`); }
-      const data = parsed.data;
+      const data = { ...parsed.data };
       if (data.published === false) continue;
+      // Content folders own navigation. Older frontmatter may still describe a
+      // previous location after a move, but IDs and authored URLs remain stable.
+      const folders = slash(path.relative(path.join(root, 'content'), dir)).split('/').filter(Boolean);
+      data.section = folders[0] || data.section;
+      data.contentFolder = folders.join('/') || data.section;
+      data.project = data.section === 'projects' ? folders[1] || null : null;
+      data.collection = ['notes', 'archive'].includes(data.section) ? folders[1] || null : null;
+      data.parent = null;
       for (const key of REQUIRED) {
         if (data[key] === undefined || data[key] === null || data[key] === '') throw new Error(`${source}: missing required metadata "${key}"`);
       }
@@ -50,9 +58,6 @@ function buildManifest(root = __dirname) {
       if (data.layout !== undefined && !LAYOUTS.includes(data.layout)) throw new Error(`${source}: invalid layout "${data.layout}"`);
       if (data.layoutClass !== undefined && (data.layout !== 'custom' || !/^[a-z][a-z0-9-]*$/.test(data.layoutClass))) throw new Error(`${source}: layoutClass needs layout: custom and a CSS class name`);
       if (data.indexStatus !== undefined && typeof data.indexStatus !== 'boolean') throw new Error(`${source}: indexStatus must be a boolean`);
-      for (const key of ['project','collection','parent']) {
-        if (data[key] != null && (typeof data[key] !== 'string' || !/^[a-z0-9][a-z0-9-]*$/.test(data[key]))) throw new Error(`${source}: invalid ${key}`);
-      }
       if (!STATUSES.includes(data.status)) throw new Error(`${source}: invalid status "${data.status}"`);
       if (data.published !== true) throw new Error(`${source}: published must be a boolean`);
       for (const [field, seen] of [['id', ids]]) {
@@ -73,13 +78,12 @@ function buildManifest(root = __dirname) {
   require('./js/content').validateRoutes(pages);
   for(const page of pages)slugs.set(page.slug,page.authorSource);
   const configPath=path.join(root,'site.config.json');
-  if(fs.existsSync(configPath))require('./js/navigation').createNavigation({pages},JSON.parse(fs.readFileSync(configPath,'utf8')),'public',true);
-  else if(pages.some(page=>page.parent))throw new Error('site.config.json is required to define parent groups');
+  if(fs.existsSync(configPath))require('./js/navigation').createNavigation({pages,navigationMode:'folders'},JSON.parse(fs.readFileSync(configPath,'utf8')),'public',true);
   const aliasPath = path.join(root, 'legacy-routes.json');
   let aliases = fs.existsSync(aliasPath) ? JSON.parse(fs.readFileSync(aliasPath, 'utf8')) : {};
   // Unpublishing a page also removes its aliases from the public manifest.
   aliases = Object.fromEntries(Object.entries(aliases).filter(([, slug]) => slugs.has(slug)));
-  return { generatedAt: new Date().toISOString(), pages, assetDirectories, aliases };
+  return { generatedAt: new Date().toISOString(), navigationMode: 'folders', pages, assetDirectories, aliases };
 }
 async function build(root = __dirname) {
   const manifest = buildManifest(root);
@@ -87,6 +91,12 @@ async function build(root = __dirname) {
   const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
   const images = await buildImages(root, manifest, shell, css);
   fs.writeFileSync(path.join(root, 'generated/image-index.json'),JSON.stringify(images));
+  const expectedMetadata = new Set(manifest.pages.map(page => `${page.id}.json`));
+  for (const name of fs.readdirSync(path.join(root, 'generated/images'))) {
+    if (name.endsWith('.json') && name !== 'cache.json' && !expectedMetadata.has(name)) {
+      fs.unlinkSync(path.join(root, 'generated/images', name));
+    }
+  }
   for(const page of manifest.pages) {
     // Page-local metadata only: no download of the archive's image index at runtime.
     const references = [page.banner,...markdownReferences(page.body).images.map(image=>image.href),...[...page.body.matchAll(/<img[^>]*src=["']([^"']+)/g)].map(m=>m[1])].filter(Boolean);
