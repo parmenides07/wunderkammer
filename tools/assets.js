@@ -14,7 +14,7 @@ function auditAssets(root){
   let clean;try{clean=decodeURIComponent(ref.split(/[?#]/)[0]);}catch{return;}
   const source=slash(path.normalize(clean.startsWith('/')?clean.slice(1):path.join(path.dirname(from),clean)));
   if(inventory.has(source))used.add(source);
-  if(gallery)for(const file of files)if(file.startsWith(source.replace(/\/$/,'')+'/')&&/\.(png|jpe?g|webp|gif|avif|svg)$/i.test(file))used.add(file);
+  if(gallery)for(const file of files)if(file.startsWith(source.replace(/\/$/,'')+'/')&&/\.(png|jpe?g|webp|gif|avif|svg|mp4|webm)$/i.test(file))used.add(file);
  }
  for(const file of texts){
   const text=fs.readFileSync(path.join(root,file),'utf8');

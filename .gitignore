@@ -1,3 +1,4 @@
 node_modules/
 .test-results/
 generated/images/cache.json
+generated/documents/cache.json

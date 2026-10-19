@@ -5,6 +5,7 @@ const {spawn}=require('node:child_process');
 const chokidar=require('chokidar');
 const root=path.resolve(__dirname,'..'),clients=new Set();
 const types={'.html':'text/html','.js':'text/javascript','.css':'text/css','.json':'application/json','.md':'text/plain','.webp':'image/webp','.png':'image/png','.jpg':'image/jpeg','.jpeg':'image/jpeg','.gif':'image/gif','.svg':'image/svg+xml','.mp3':'audio/mpeg','.ogg':'audio/ogg','.wav':'audio/wav','.woff2':'font/woff2','.csv':'text/csv','.mp4':'video/mp4'};
+Object.assign(types,{'.mjs':'text/javascript','.pdf':'application/pdf','.wasm':'application/wasm','.webm':'video/webm'});
 const reload=`<script>const events=new EventSource('/__events');events.onmessage=e=>{const data=JSON.parse(e.data);if(data.reload)location.reload();else if(data.error){let box=document.getElementById('dev-error');if(!box){box=document.createElement('pre');box.id='dev-error';box.style='position:fixed;inset:auto 1rem 1rem;z-index:99999;padding:1rem;background:#fff0d9;color:#782e27;white-space:pre-wrap;max-height:40vh;overflow:auto';document.body.appendChild(box);}box.textContent=data.error;}};</script>`;
 function broadcast(data){for(const client of clients)client.write(`data: ${JSON.stringify(data)}\n\n`);}
 let running=false,dirty=false,timer;
@@ -26,15 +27,30 @@ async function start() {
   try {
    if(fs.statSync(file).isDirectory()){if(!pathname.endsWith('/')){res.writeHead(302,{Location:pathname+'/'});res.end();return;}file=path.join(file,'index.html');}
    if(!fs.realpathSync(file).startsWith(root+path.sep)){res.writeHead(403);res.end();return;}
-   const ext=path.extname(file),stat=fs.statSync(file),etag=`"${stat.size}-${stat.mtimeMs}"`;
+   const ext=path.extname(file).toLowerCase(),stat=fs.statSync(file),etag=`"${stat.size}-${stat.mtimeMs}"`;
    const headers={'Content-Type':types[ext]||'application/octet-stream','Cache-Control':'no-cache',ETag:etag};
    if(req.headers['if-none-match']===etag){res.writeHead(304,headers);res.end();return;}
    if(ext==='.html'){res.writeHead(200,headers);res.end(fs.readFileSync(file,'utf8').replace('</body>',reload+'</body>'));return;}
+   headers['Content-Length']=stat.size;
+   // PDFs and videos can fetch only the byte ranges needed for viewing/playback.
+   if(['.pdf','.mp4','.webm'].includes(ext)){
+    headers['Accept-Ranges']='bytes';
+    if(req.headers.range){
+     const match=/^bytes=(\d*)-(\d*)$/.exec(req.headers.range);
+     let start=match?.[1]?Number(match[1]):Math.max(0,stat.size-Number(match?.[2]));
+     let end=match?.[1]&&match?.[2]?Math.min(Number(match[2]),stat.size-1):stat.size-1;
+     if(!match||!match[1]&&!match[2]||start>end||start>=stat.size){res.writeHead(416,{'Content-Range':`bytes */${stat.size}`});res.end();return;}
+     res.writeHead(206,{...headers,'Content-Range':`bytes ${start}-${end}/${stat.size}`,'Content-Length':end-start+1});
+     if(req.method==='HEAD')res.end();else fs.createReadStream(file,{start,end}).pipe(res);
+     return;
+    }
+   }
+   if(req.method==='HEAD'){res.writeHead(200,headers);res.end();return;}
    res.writeHead(200,headers);fs.createReadStream(file).pipe(res);
   }catch{res.writeHead(404,{'Content-Type':'text/plain'});res.end('File not found');}
  });
  const port=Number(process.env.PORT||5173);server.on('error',e=>{console.error(e.message);process.exitCode=1;watcher.close();});
- const watcher=chokidar.watch(['content','assets','site.shell.html','style.css','script.js','js','site.config.json','legacy-routes.json','build.js','tools/images.js','tools/markdown.js'].map(p=>path.join(root,p)),{ignored:p=>/(^|[/\\])\.[^/\\]/.test(path.relative(root,p)),ignoreInitial:true,awaitWriteFinish:{stabilityThreshold:150,pollInterval:50}});
+ const watcher=chokidar.watch(['content','assets','site.shell.html','style.css','script.js','js','site.config.json','legacy-routes.json','build.js','tools/images.js','tools/markdown.js','tools/documents.js'].map(p=>path.join(root,p)),{ignored:p=>/(^|[/\\])\.[^/\\]/.test(path.relative(root,p)),ignoreInitial:true,awaitWriteFinish:{stabilityThreshold:150,pollInterval:50}});
  watcher.on('all',()=>{clearTimeout(timer);timer=setTimeout(rebuild,150);});
  server.listen(port,'127.0.0.1',()=>console.log(`Preview: http://127.0.0.1:${server.address().port}/ — also /personal/ and /work/; watching content and application files`));
  for(const signal of ['SIGINT','SIGTERM'])process.on(signal,()=>{watcher.close();for(const client of clients)client.end();server.close();});

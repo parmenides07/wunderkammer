@@ -49,18 +49,14 @@ function attachImageViewer(content) {
     img.replaceWith(link);link.appendChild(img);
     link.addEventListener('click',e=>{if(e.ctrlKey||e.metaKey||e.shiftKey||e.altKey)return;e.preventDefault();openImageViewer(images,index,link).catch(()=>{window.location.href=link.href;});});
     if(img.dataset.animation){
-      const preview=document.createElement('span');preview.className='animation-preview';
-      const play=document.createElement('button');play.type='button';play.className='animation-control';
-      play.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path class="animation-icon-play" d="M8 5v14l11-7z"/><path class="animation-icon-pause" d="M6 5h4v14H6zm8 0h4v14h-4z"/></svg>';
-      play.setAttribute('aria-label','Play animation');play.title='Play animation';
-      play.addEventListener('click',()=>{
-        const playing=preview.classList.toggle('is-playing');
+      let playing=false;
+      const controls=SiteAnimationControls.create(()=>{
+        playing=!playing;
         img.removeAttribute('srcset');img.src=playing?img.dataset.animation:img.dataset.poster;
-        const label=playing?'Pause animation':'Play animation';
-        play.setAttribute('aria-label',label);play.title=label;
+        controls.setPlaying(playing);
       });
       // Keep playback and enlargement as separate, keyboard-accessible controls.
-      link.replaceWith(preview);preview.append(link,play);
+      link.replaceWith(controls.preview);controls.preview.append(link,controls.button);
     }
   });
 }

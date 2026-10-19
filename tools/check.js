@@ -1,6 +1,8 @@
 const {markdownReferences}=require('./markdown');
 const fs=require('node:fs');
 const path=require('node:path');
+const {isPdf,localPath}=require('../js/pdf');
+const {isVideo}=require('../js/videos');
 const {build,buildManifest}=require('../build');
 function checkSemanticLinks(page,tokens,models){
  const errors=[];
@@ -25,6 +27,14 @@ function checkContent(root) {
   errors.push(...checkSemanticLinks(page,markdown.semanticLinks,models));
   for(const image of markdown.images) {
     refs.push(image.href);
+    if(isPdf(image.href)){
+      if(!image.alt.trim())report(warnings,page,`PDF needs a useful document title: ${image.href}`);
+      continue;
+    }
+    if(isVideo(image.href)){
+      if(!image.alt.trim())report(warnings,page,`Video needs a useful description: ${image.href}`);
+      continue;
+    }
     if(image.alt.startsWith('sound:'))refs.push(image.alt.slice(6));
     if(!image.alt.trim()||/^(?:(?:image|img|album|jef|tob|th|gar)\d*|sound:.*)$/i.test(image.alt))report(warnings,page,`Image needs useful alt text: ${image.href}`);
   }
@@ -32,7 +42,8 @@ function checkContent(root) {
   for(const m of page.body.matchAll(/(?:src|poster)=["']([^"']+)["']/g))refs.push(m[1]);
   for(const ref of refs.filter(Boolean)) {
     if(/^(?:https?:|data:)/.test(ref))continue;
-    const source=path.posix.normalize(`${page.assetBase}/${ref.split('#')[0]}`);
+    const source=isPdf(ref)||isVideo(ref)?localPath(page.assetBase,ref):path.posix.normalize(`${page.assetBase}/${ref.split('#')[0]}`);
+    if(source===null)continue;
     if(!fs.existsSync(path.join(root,source)))report(errors,page,`Missing local asset: ${ref}`);
     const info=imageIndex[source];
     if(info) {
@@ -41,6 +52,11 @@ function checkContent(root) {
     }
   }
   for(const href of markdown.links) {
+    if(isPdf(href)){
+      const source=localPath(page.assetBase,href);
+      if(source!==null&&!fs.existsSync(path.join(root,source)))report(errors,page,`Missing local asset: ${href}`);
+      continue;
+    }
     if(href.startsWith('#/')&&!slugs.has(href.slice(2))&&!href.startsWith('#/browse/'))report(errors,page,`Unknown route: ${href}`);
     else if(/parmenides07\.github\.io\/wunderkammer/.test(href))report(warnings,page,`Legacy link needs review: ${href}`);
     else if(!/^(?:[a-z]+:|#|\/)/i.test(href)&&!fs.existsSync(path.resolve(root,page.assetBase,href)))report(errors,page,`Missing relative link: ${href}`);

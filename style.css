@@ -485,7 +485,7 @@ p, h1, h2, h3, .content {
   /* Ink effects belong to text, not a rasterized scrolling article layer. */
 }
 
-.content img {
+.content img, .content .embedded-video {
   display: block;
   margin-top: 1.2cqw;
   margin-bottom: 0.1cqw;
@@ -505,6 +505,8 @@ p, h1, h2, h3, .content {
 .content img:hover {
   transform: scale(1.035);
 }}
+
+.content .embedded-video { object-fit: contain; cursor: pointer; }
 
 .multiply-wrapper {
   background: rgb(248, 246, 246);
@@ -550,7 +552,7 @@ p, h1, h2, h3, .content {
   gap: 1cqw;
 }
 
-.content .grid img {
+.content .grid img, .content .grid .embedded-video {
   width: 100%;
   height: auto;
 }
@@ -575,6 +577,7 @@ p, h1, h2, h3, .content {
   float: none;
   margin: 0;
 }
+.content .float-right .embedded-video { float: none; margin: 0; }
 
 .content .float-right p {
   display: contents;
@@ -863,8 +866,13 @@ img { height: auto; }
 .index-control { display: none; }
 .content { font-size: clamp(.9rem, .96vw, 1.1rem); line-height: 1.3; }
 .content-text { max-width: 72ch; margin-inline: auto; }
-.content img { box-sizing: border-box; max-width: 100%; }
+.content img, .content .embedded-video { box-sizing: border-box; max-width: 100%; }
 .content pre { overflow-x: auto; }
+/* Keep math in the article's ink and scale; wide displays scroll within the measure. */
+.content .katex { font-size: 1.05em; }
+.content .katex-display { max-width: 100%; margin: 1.25em 0; padding-block: .3em; overflow-x: auto; overflow-y: hidden; }
+/* Intrinsic width keeps the left edge reachable when a centered equation is too wide. */
+.content .katex-display > .katex { width: max-content; min-width: 100%; }
 .doc-dates { font-size: clamp(.75rem, 1.2vw, 1rem); }
 .csv-table { font-size: inherit; }
 
@@ -886,7 +894,7 @@ img { height: auto; }
   .content :is(h1,h2,h3) { line-height: 1.1; }
   .doc-header h2 { font-size: 2em; }
   .doc-dates { font-size: .75em; line-height: 1.3; }
-  .content img { margin: 1em auto .1em; }
+  .content img, .content .embedded-video { margin: 1em auto .1em; }
   .content .grid { grid-template-columns: repeat(2,minmax(0,1fr)); gap: .75rem; }
   .content .grid em { font-size: .875em; }
   .content .float-right { float: none; width: 100%; margin: 1em 0; gap: .75rem; }
@@ -940,7 +948,7 @@ img { height: auto; }
 }
 
 .animation-preview { display: block; position: relative; margin-block: 1.2cqw .1cqw; }
-.content .animation-preview img { margin: 0; transform: none; }
+.content .animation-preview img, .content .animation-preview .embedded-video { margin: 0; transform: none; }
 .animation-control {
   position: absolute; z-index: 1; top: 50%; left: 50%; transform: translate(-50%, -50%);
   display: grid; place-items: center; box-sizing: border-box; width: 64px; height: 64px;
@@ -974,7 +982,7 @@ img { height: auto; }
 .layout-gallery .content-text { max-width: 65ch; }
 .layout-gallery .grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
 .layout-gallery .grid p { margin: 0; }
-.layout-gallery .grid img { margin-top: 0; }
+.layout-gallery .grid img, .layout-gallery .grid .embedded-video { margin-top: 0; }
 @media (min-width: 2400px) and (pointer: fine) {
   .layout-gallery .grid { grid-template-columns: repeat(3,minmax(0,1fr)); }
 }
@@ -1032,3 +1040,18 @@ img { height: auto; }
 
 #card-files-panel.dragging { transition: none; }
 @media (prefers-reduced-motion: reduce) { #card-files-panel { transition-duration: .01ms; } }
+
+/* PDFs use the existing article sheet and its normal reading scroll. */
+.pdf-embed { display: block; width: 100%; min-width: 0; margin-block: 1.4em; text-align: left; }
+.pdf-controls { display: flex; flex-wrap: wrap; align-items: baseline; gap: .35em 1em; margin-bottom: .7em; font-size: max(.75rem,.8em); line-height: 1.5; }
+.pdf-title { flex: 1 1 12ch; overflow-wrap: anywhere; }
+.pdf-count { white-space: nowrap; font-variant-numeric: tabular-nums; color: #716b67; }
+.content .pdf-controls a { color: inherit; white-space: nowrap; text-underline-offset: .2em; }
+.pdf-controls a:focus-visible { outline: 2px solid currentColor; outline-offset: 4px; }
+.pdf-status { display: block; font-size: .85em; margin-block: .5em; }
+.pdf-status[hidden] { display: none; }
+.pdf-pages { display: block; }
+@media (max-width: 600px) {
+  .pdf-title { flex-basis: calc(100% - 8ch); }
+  .pdf-controls a { padding-block: .4em; }
+}

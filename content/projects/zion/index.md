@@ -75,4 +75,4 @@ I worked on this a while ago so I unfortunately don't remember most of the issue
 
 Turns out the issue was actually that I had a bunch of print statements every frame. So in between the graphics cards calls, the CPU was being called upon to print some statement. This constant discontinuity in actions resulted in a lot of performance ineffeciency. Forgive me if I am wrong and this is not the issue, it has been quite a while although I do think that was the case. 
 
-![afterchange](assets/beforechange.gif)
+![afterchange](assets/afterchange.gif)

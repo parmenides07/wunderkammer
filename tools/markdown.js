@@ -1,4 +1,5 @@
 const {marked}=require('marked');
+marked.use(require('marked-katex-extension')({throwOnError:false,nonStandard:true}));
 marked.use({extensions:[require('../js/wiki').extension()]});
 // Use the same Markdown parser as the renderer, including reference images and titles.
 function markdownReferences(body) {

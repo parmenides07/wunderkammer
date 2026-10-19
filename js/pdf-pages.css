@@ -1,0 +1,8 @@
+/* Shadow-root styles keep PDF.js's text layer and the site's ink effects apart. */
+:host { display: block; color-scheme: light; }
+.pdf-page { position: relative; width: 100%; margin: 0 auto 1rem; background: white; box-shadow: 0 0 0 1px #4a444038, 1px 2px 5px #0001; overflow: clip; }
+.pdf-page:last-child { margin-bottom: 0; }
+.pdf-page canvas { display: block; width: 100%; height: 100%; position: absolute; inset: 0; }
+.pdf-placeholder { position: absolute; inset: 0; display: grid; place-content: center; font: .8rem 'JetBrains Mono', monospace; color: #716b67; padding: 1rem; text-align: center; }
+.pdf-page[data-rendered] .pdf-placeholder { display: none; }
+.pdf-page .textLayer { --scale-round-x: 1px; --scale-round-y: 1px; }

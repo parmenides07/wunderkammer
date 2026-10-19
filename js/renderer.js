@@ -1,3 +1,5 @@
+// Tokenize math before Markdown can consume LaTeX escapes and underscores.
+marked.use(markedKatex({throwOnError:false,nonStandard:true}));
 // Semantic links use the current editorial model; crossing views must be explicit.
 marked.use({extensions:[SiteWiki.extension(token=>{
   const models={public:SiteContent.createContentModel(siteManifest,'public',siteConfig),professional:SiteContent.createContentModel(siteManifest,'professional',siteConfig)};
@@ -10,8 +12,13 @@ marked.use({extensions:[SiteWiki.extension(token=>{
 })]});
 // Fetch build-parsed Markdown; authorSource retains the frontmatter-bearing original.
 const markdownCache = new Map();
+marked.use({renderer:SitePDF.renderer()});
+let disposePDFs=()=>{};
+let disposeVideos=()=>{};
 let renderGeneration = 0;
 async function renderPage(page) {
+  disposePDFs();
+  disposeVideos();
   if(viewer)viewer.destroy();
   const generation = ++renderGeneration;
   const folder = page.assetBase;
@@ -24,7 +31,7 @@ async function renderPage(page) {
     text = await response.text();
     markdownCache.set(page.id, text);
   }
-  const metadata = await loadPageImages(page);
+  const [metadata,documents] = await Promise.all([loadPageImages(page),SitePDF.loadMetadata(page,appBase)]);
   if (generation !== renderGeneration) return;
   currentImages = metadata;
   const shell=document.querySelector('.content');
@@ -74,7 +81,7 @@ async function renderPage(page) {
     const isFullWidth = flags.includes('full');
     const fullFolder = assetPath(folder, imgFolder);
     try {
-      const imageExts = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
+      const imageExts = /\.(jpg|jpeg|png|gif|webp|svg|mp4|webm)$/i;
       const imageFiles = (contentModel.assets[fullFolder.replace(/\/$/, '')] || []).filter(k => imageExts.test(k));
       const replacement = imageFiles.map(f => {
         const src = assetUrl(fullFolder, f);
@@ -126,13 +133,23 @@ async function renderPage(page) {
   // Resolve URLs in an inert template before attaching images to the document.
   const template = document.createElement('template');
   template.innerHTML = parsed;
+  template.content.querySelectorAll('.katex-display').forEach(equation=>{
+    equation.tabIndex=0;
+    equation.setAttribute('role','region');
+    equation.setAttribute('aria-label','Mathematical equation');
+  });
   template.content.querySelectorAll('img').forEach(img => {
     const src = img.getAttribute('src');
     if (src && !/^(?:[a-z]+:|\/)/i.test(src)) img.src = assetUrl(folder, src);
+    if(SiteVideos.isVideo(src)){SiteVideos.replaceImage(img);return;}
     if(img.src.includes('#multiply'))img.dataset.multiply='true';
     optimizeImage(img,metadata,false,page.layout);
   });
   template.content.querySelectorAll('iframe').forEach(frame=>{frame.loading='lazy';});
+  template.content.querySelectorAll('a[href]').forEach(link=>{
+    const href=link.getAttribute('href');
+    if(SitePDF.isPdf(href))link.href=assetUrl(folder,href);
+  });
   parsed = template.innerHTML;
   const index=page.layout==='index'?renderCollectionIndex(page):'';
   document.querySelector('.content').innerHTML = `<div class="content-bg">${header + index + parsed}</div>`;
@@ -144,8 +161,8 @@ async function renderPage(page) {
 
   let textWrapper = null;
   nodes.forEach(node => {
-    const isImage = node.nodeName === 'IMG';
-    const containsImage = node.querySelector && node.querySelector('img');
+    const isImage = node.nodeName === 'IMG' || node.nodeName === 'VIDEO';
+    const containsImage = node.querySelector && node.querySelector('img,video.embedded-video,.pdf-embed');
     if (!isImage && !containsImage) {
       if (!textWrapper) {
         textWrapper = document.createElement('div');
@@ -190,6 +207,8 @@ async function renderPage(page) {
   });
 
   attachImageViewer(content);
+  disposeVideos=SiteVideos.mount(content);
+  disposePDFs=SitePDF.mount(content,{base:appBase,folder,metadata:documents,resolve:ref=>assetUrl(folder,ref)});
 
   const nextBtn = document.getElementById('next-page-btn');
   const next = SiteNavigation.nextSibling(navigation,page);
@@ -207,7 +226,7 @@ async function renderPage(page) {
     nextBtn.onclick = null;
   }
 
-  const hasImages = document.querySelector('.content img');
+  const hasImages = content.querySelector('img,video.embedded-video');
   if (!hasImages) {
     content.classList.add('text-only');
   } else {

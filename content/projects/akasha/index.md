@@ -9,7 +9,7 @@ audience:
   - public
   - professional
 status: wip
-published: true
+published: false
 created: '2026-09-30'
 project: akasha
 ---

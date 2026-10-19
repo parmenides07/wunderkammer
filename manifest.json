@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-08T01:18:42.199Z",
+  "generatedAt": "2026-10-19T22:28:41.028Z",
   "navigationMode": "folders",
   "pages": [
     {
@@ -888,35 +888,6 @@
       "images": "generated/images/notes-systems-logic-composed-emergent-systems.json"
     },
     {
-      "id": "projects-akasha",
-      "title": "Akasha",
-      "slug": "projects/akasha",
-      "section": "projects",
-      "type": "project",
-      "topics": [],
-      "audience": [
-        "public",
-        "professional"
-      ],
-      "status": "wip",
-      "published": true,
-      "created": "2026-09-30",
-      "project": "akasha",
-      "contentFolder": "projects/akasha",
-      "collection": null,
-      "parent": null,
-      "modified": "2026-09-30",
-      "featured": false,
-      "order": 100,
-      "summary": "",
-      "banner": null,
-      "sound": null,
-      "authorSource": "content/projects/akasha/index.md",
-      "source": "generated/pages/projects-akasha.md",
-      "assetBase": "content/projects/akasha",
-      "images": "generated/images/projects-akasha.json"
-    },
-    {
       "layout": "project",
       "id": "projects-jivan",
       "title": "Jivan Defined",
@@ -1283,10 +1254,11 @@
         "professional",
         "public"
       ],
-      "status": "wip",
+      "status": "active",
       "published": true,
       "created": "2026-09-30",
       "project": "vivarium",
+      "banner": "assets/viv.jpg",
       "contentFolder": "projects/vivarium",
       "collection": null,
       "parent": null,
@@ -1294,7 +1266,6 @@
       "featured": false,
       "order": 100,
       "summary": "",
-      "banner": null,
       "sound": null,
       "authorSource": "content/projects/vivarium/index.md",
       "source": "generated/pages/projects-vivarium.md",
@@ -1692,6 +1663,12 @@
       "lawoftheland.html",
       "prayfor.html",
       "weatherman.html"
+    ],
+    "content/projects/vivarium/assets": [
+      "viv.jpg",
+      "vivariummain.mp4",
+      "vivariumpath.mp4",
+      "vivariumspeed.mp4"
     ],
     "content/projects/zion/assets": [
       "afterchange.gif",

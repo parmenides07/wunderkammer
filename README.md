@@ -152,6 +152,21 @@ Folder URLs use `#/browse/projects/akasha/jivan`; published pages retain their o
 
 `npm run check` also reports exact duplicate assets (by bytes), obvious editor backups and possibly unreferenced files under `assets/` and `content/`. References include Markdown, gallery macros, frontmatter, HTML, CSS and local application scripts. Dynamic paths can produce false positives, so these are review warnings, not deletion instructions or build failures. Nothing is removed or recompressed in place. Generated WebPs remain build outputs; `npm run dev` caches them as before. Git push has no mutation hook, and deployment remains unchanged.
 
+## Mathematics
+
+Use `$n$` for inline math and `$$...$$` for displayed equations. Multiline displays can contain standard LaTeX, including fractions, subscripts, Greek letters, sums, minima and `aligned`:
+
+```latex
+$$
+\begin{aligned}
+f(n) &= g(n) + h(n) \\
+\mu &= \frac{1}{N}\sum_{i=1}^{N} x_i
+\end{aligned}
+$$
+```
+
+The shared Marked renderer uses KaTeX in both views, including projects and archives. The build bundles its stylesheet and fonts locally. Wide displays scroll within the reading column and can be focused to scroll with the keyboard. Code spans/fences remain literal; escape a literal dollar sign as `\$`.
+
 ## Images and embeds
 
 Keep assets near their Markdown page. All relative paths resolve from that authored page's directory.
@@ -170,11 +185,33 @@ embed{measurements.csv}
 
 Normal Markdown images automatically get responsive sizing, lazy loading, dimensions and keyboard/touch lightbox controls. A Markdown image title or a following italic caption is used as the viewer caption. Gallery order is filename order; prefix names with numbers to control it. Gallery filenames cannot supply meaningful descriptions automatically, so use individual Markdown images when specific alt text matters.
 
+MP4 and WebM clips use the same syntax: `![Simulation in motion](assets/vivariummain.mp4)` or `![Animation](assets/clip.webm)`. Like GIF previews, they start paused with the same centered play button; playback uses the same smaller corner pause button. Click/tap the video or its button to toggle playback, or focus the button and press Enter/Space. Pausing keeps the current frame and resuming continues from that position. Videos stay muted, looping and inline with no native control bar, using the image width, margins and borders without cropping. Playback pauses offscreen or in a hidden tab; it resumes when visible only if the reader had left it playing. Leaving the page releases the video. Reference-style images and `images{assets}` galleries (including `full`) also support videos. Ordinary download links remain links; clicking a video never opens the image viewer.
+
 The build preserves originals and creates quality-90 WebP sizes up to 600, 1200, 2000 and 2800 pixels wide without enlarging small sources. Small images keep their original encoding. Content hashes cache unchanged work. The first build is slower; subsequent writing builds reuse the variants. Gallery thumbnails use column-specific sizes. Large animated GIFs show a lightweight still preview with a centered triangle play button; during playback, a smaller pause button sits in the corner. Both controls support keyboard and touch input. Opening or playing them fetches the original animation. **Open original** in the viewer always offers the author's original file.
 
 PhotoSwipe loads only when an image opens. Its next/previous images are local to that article, with one neighboring image preloaded. Desktop supports keyboard arrows, Escape and zoom; touch supports swipe, pinch and pan. Explicit authored links around images remain links.
 
 Existing `#multiply`, ambient `sound:` frontmatter and legacy `![sound:assets/song.mp3](assets/cover.jpg)` behavior remain supported. Ambient sound starts after interaction, effects load on demand, and mute persists. HTML/video iframes are lazy; CSV tables are parsed locally.
+
+### Inline PDFs
+
+Put a PDF beside the page's other assets, for example `content/projects/paragonalia/assets/paper.pdf`, and write this in `model.md` in the same project folder:
+
+```md
+![Paper title](assets/paper.pdf)
+
+[Download paper](assets/paper.pdf)
+```
+
+The image syntax creates an inline, vertically scrolling document; the ordinary link stays a link. Alt text becomes the accessible document title. `.PDF` also works. For spaces or special characters, use standard Markdown destinations such as `![Paper](<assets/my paper.PDF>)` or `![Paper](assets/my%20paper.PDF)`. Relative paths work in both `/` and `/personal/`. Add the original PDF and Markdown to version control, then use the usual dev/build workflow; no configuration or manifest edits are needed.
+
+The compact strip shows the title, current/total page count, **Open PDF** and **Download**. Both actions use the original bytes. Pages fit the existing article width, preserve their typesetting and aspect ratio, and use the article's normal scrolling. There is no nested reader scrollbar or page-turn control.
+
+PDF.js, its worker, fonts, character maps and decoders are bundled locally. Its renderer loads only when an embed approaches the viewport. The build reads local PDFs' page boxes (cached by file bytes); it never passes PDFs to Sharp. At most six nearby page canvases/text layers are retained per active document, with two concurrent renders, a four-million-pixel canvas limit, and device-pixel-ratio scaling up to 3. Distant resources are released; navigation cancels rendering and terminates workers. Range requests reduce fetching when the host supports them; servers without ranges may deliver the whole original PDF.
+
+Text selection/copying uses PDF.js's supported text layer and upstream styles, isolated from article styles. Browser Find and assistive technology can access loaded text, but virtualization limits this to retained pages and does not reproduce the PDF's complete tagged reading structure. Use **Open PDF** for full-document search, printing, zoom, interactive annotations/forms, passwords, or the original PDF's accessibility features. Scanned PDFs need their own OCR text. A failed preview keeps the original links available. External PDFs need CORS permission and acquire their page dimensions progressively; local PDFs provide the most stable layout. Modern browsers supported by the bundled PDF.js release are required for previews; original links remain available if rendering fails.
+
+`npm run check` reports missing local PDFs with their source file. `tests/fixtures/pdf/` contains 1-, 10-, and 40-page Typst documents with mathematical notation and vector diagrams. Run `PLAYWRIGHT_MODULE=/path/to/playwright node tests/pdf.cjs` against `npm run dev` for PDF browser checks in both views at mobile, desktop and wide-desktop widths. Fixtures are overlaid only in the test browser; they do not become site content.
 
 ## Files and build output
 
@@ -184,6 +221,7 @@ Edit `site.shell.html` for the shared HTML shell and `style.css` for styles. Do 
 - `manifest.json`
 - `generated/pages/`, `generated/images/`, `generated/image-index.json`
 - `generated/site.css`, `generated/vendor/`
+- `generated/documents/` (PDF page dimensions; the local `cache.json` is ignored)
 
 Commit generated output along with source edits for the existing GitHub Pages deployment. `CNAME` and hash routing are unchanged. There is no framework, bundler or application server in production. `npm run dev` is a local authoring tool only.
 
@@ -197,6 +235,8 @@ With the site running and Playwright available:
 
 ```sh
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/browser.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/math.cjs
+PLAYWRIGHT_MODULE=/path/to/playwright node tests/videos.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/content-folders.cjs
 PLAYWRIGHT_MODULE=/path/to/playwright node tests/nav-links.cjs
 node tests/page-controls.cjs

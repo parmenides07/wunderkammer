@@ -87,6 +87,7 @@ function buildManifest(root = __dirname) {
 }
 async function build(root = __dirname) {
   const manifest = buildManifest(root);
+  await require('./tools/documents').buildDocuments(root,manifest);
   const shell = fs.readFileSync(path.join(root, 'site.shell.html'), 'utf8');
   const css = fs.readFileSync(path.join(root, 'style.css'), 'utf8');
   const images = await buildImages(root, manifest, shell, css);
@@ -113,8 +114,12 @@ async function build(root = __dirname) {
   let optimizedCss = css.replace(/url\((["']?)(assets\/[^"')]+)\1\)/g,(match,q,src)=>images[src]?`url('../${displayVariant(images[src], src.includes('noise')?600:1200).src}')`:match.replace('assets/','../assets/'));
   fs.writeFileSync(path.join(root,'generated/site.css'),optimizedCss);
   const vendor = path.join(root,'generated/vendor');fs.mkdirSync(vendor,{recursive:true});
+  require('./tools/documents').copyPdfRuntime(vendor);
   const copy=(src,dest)=>fs.copyFileSync(path.join(__dirname,'node_modules',src),path.join(vendor,dest));
   copy('marked/lib/marked.umd.js','marked.js');
+  copy('marked-katex-extension/lib/index.umd.js','marked-katex.js');
+  for(const name of ['katex.min.js','katex.min.css'])copy(`katex/dist/${name}`,name);
+  fs.cpSync(path.join(__dirname,'node_modules/katex/dist/fonts'),path.join(vendor,'fonts'),{recursive:true});
   copy('papaparse/papaparse.min.js','papaparse.js');
   copy('photoswipe/dist/photoswipe.esm.min.js','photoswipe.js');
   copy('photoswipe/dist/photoswipe.css','photoswipe.css');
@@ -122,7 +127,7 @@ async function build(root = __dirname) {
     copy(`@fontsource/${family}/files/${family}-latin-400-normal.woff2`,`${family}.woff2`);
     copy(`@fontsource/${family}/LICENSE`,`${family}-LICENSE.txt`);
   }
-  for(const [pkg,name] of [['photoswipe','LICENSE'],['marked','LICENSE'],['papaparse','LICENSE']]) copy(`${pkg}/${name}`,`${pkg}-LICENSE.txt`);
+  for(const [pkg,name] of [['photoswipe','LICENSE'],['marked','LICENSE'],['marked-katex-extension','LICENSE'],['katex','LICENSE'],['papaparse','LICENSE']]) copy(`${pkg}/${name}`,`${pkg}-LICENSE.txt`);
 
   const output = path.join(root, 'generated/pages');
   fs.mkdirSync(output, { recursive: true });
