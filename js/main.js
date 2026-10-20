@@ -145,7 +145,10 @@ function selectNavigationPath(node){
 }
 
 function openGroup(node) {
-  const hash = `#/browse/${node.key}`;
+  // Resolve before writing history so selecting the current destination does
+  // not create a second entry that normalizes back to the same page.
+  const page=SiteNavigation.firstLeaf(node);
+  const hash = page ? `#/${page.slug}` : `#/browse/${node.key}`;
   if(location.hash===hash)handleRoute();else location.hash=hash;
 }
 function goToPage(page) {

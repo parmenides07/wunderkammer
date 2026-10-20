@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-19T22:28:41.028Z",
+  "generatedAt": "2026-10-20T18:33:56.010Z",
   "navigationMode": "folders",
   "pages": [
     {
@@ -1258,7 +1258,7 @@
       "published": true,
       "created": "2026-09-30",
       "project": "vivarium",
-      "banner": "assets/viv.jpg",
+      "banner": "assets/minyum.webp",
       "contentFolder": "projects/vivarium",
       "collection": null,
       "parent": null,
@@ -1665,6 +1665,7 @@
       "weatherman.html"
     ],
     "content/projects/vivarium/assets": [
+      "minyum.webp",
       "viv.jpg",
       "vivariummain.mp4",
       "vivariumpath.mp4",

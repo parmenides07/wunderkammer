@@ -8,7 +8,7 @@ async function run(){
   const touch=width<900,ctx=await browser.newContext({viewport:{width,height:900},hasTouch:touch,isMobile:touch,deviceScaleFactor:1});const page=await ctx.newPage();page.on('pageerror',e=>errors.push(e.message));
   async function ready(id){await page.waitForFunction(id=>document.querySelector('.content').dataset.pageId===id,id);await page.evaluate(()=>document.fonts.ready);}
   async function index(){if(touch&&await page.locator('#index-toggle').getAttribute('aria-expanded')==='false')await page.locator('#index-toggle').click();}
-  async function group(key){await index();await page.locator(`[data-group="${key}"]`).click();}
+  async function group(key){await index();await page.locator(`[data-group="${key}"]`).click({position:{x:8,y:8}});}
   async function header(name){assert.equal(await page.locator('.receipt-header').textContent(),name);}
   await page.goto(base+'/personal/#/home');await ready('home');await page.waitForTimeout(300);
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth),width);
@@ -23,9 +23,9 @@ async function run(){
   await group('notes/art');await page.waitForFunction(()=>document.querySelector('.file-link.active-link')?.dataset.id===document.querySelector('.content').dataset.pageId&&activeGroup.key==='notes/art');
   await header('Art');assert.equal(await page.locator('.file-link').count(),2);
   const first=await page.locator('.file-link').first().getAttribute('href'),second=await page.locator('.file-link').nth(1).getAttribute('href');assert.ok(page.url().endsWith(first));
-  await page.locator('.file-link').nth(1).click();await page.waitForURL('**/'+second);await page.waitForFunction(()=>document.querySelectorAll('.file-link')[1].classList.contains('active-link'));await header('Art');
-  await page.goBack();await page.waitForURL('**/'+first);await header('Art');
-  await page.goForward();await page.waitForURL('**/'+second);await header('Art');
+  await page.locator('.file-link').nth(1).click();await page.waitForURL(url=>url.href===new URL(second,base).href);await page.waitForFunction(()=>document.querySelectorAll('.file-link')[1].classList.contains('active-link'));await header('Art');
+  await page.goBack();await page.waitForURL(url=>url.href===new URL(first,base).href);await header('Art');
+  await page.goForward();await page.waitForURL(url=>url.href===new URL(second,base).href);await header('Art');
   await page.reload();await page.waitForFunction(()=>document.querySelectorAll('.file-link')[1]?.classList.contains('active-link'));await header('Art');
   assert.ok(await page.locator('.video').evaluateAll(els=>els.every(el=>el.getBoundingClientRect().width<=document.querySelector('.content-bg').getBoundingClientRect().width)));
   await page.locator('.video').first().scrollIntoViewIfNeeded();await page.screenshot({path:`.test-results/layout/art-${width}.png`});

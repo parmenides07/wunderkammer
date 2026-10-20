@@ -79,13 +79,17 @@ async function run() {
    const parent=await page.locator('[data-group="projects/akasha"]').boundingBox();
    const nested=await page.locator('[data-group="projects/akasha/jivan"]').boundingBox();
    assert.ok(nested.x>parent.x,'nested folder is indented');
+   const historyLength=await page.evaluate(()=>history.length);
    await page.locator('[data-group="projects/akasha"]').click();
-   await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-akasha');
-   assert.equal(await page.evaluate(()=>activeGroup.key),'projects/akasha');
-   assert.equal(await page.locator('.file-link').count(),1,'parent receipt contains only its direct page');
+   await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-jivan');
+   assert.equal(await page.evaluate(()=>activeGroup.key),'projects/akasha/jivan');
+   assert.equal(await page.locator('.file-link').count(),1,'empty parent resolves to its first visible descendant and receipt');
+   assert.equal(await page.evaluate(()=>history.length),historyLength,'same resolved descendant adds no history entry');
    if(width===390&&await page.locator('#index-toggle').getAttribute('aria-expanded')==='false')await page.locator('#index-toggle').click();
    await page.screenshot({path:path.join(root,`.test-results/content-folders/${personal?'personal':'work'}-${width}.png`)});
    if(width===390&&await page.locator('#index-toggle').getAttribute('aria-expanded')==='true')await page.locator('#index-close').click();
+   await page.evaluate(()=>location.hash='#/home');
+   await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId===contentModel.resolve('home').id);
    await page.goBack();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-jivan');
    assert.equal(await page.evaluate(()=>activeGroup.key),'projects/akasha/jivan');
    if(personal){

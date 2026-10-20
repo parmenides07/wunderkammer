@@ -21,7 +21,7 @@ try {for(const width of [375,390,430,768,1440,1920]){
  await page.locator('.content .grid').first().scrollIntoViewIfNeeded();await shot('gallery');await page.locator('.image-viewer').first().click();await page.waitForFunction(()=>viewer?.opener.isOpen);await page.keyboard.press('Escape');await page.waitForSelector('.pswp',{state:'detached'});
  await select('projects/zion');await ready('projects-zion');await page.waitForTimeout(400);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);assert.equal(await page.locator('.receipt-header').textContent(),'ZION');assert.equal(await page.evaluate(()=>window.bobs),0);if(mobile)assert.equal(await page.locator('#folder-line path').count(),0);else await page.waitForFunction(()=>document.querySelectorAll('#folder-line path').length===2);await shot('zion-index');
  const before=await page.evaluate(()=>window.bobs);await page.locator('.file-link').nth(1).click();await ready('projects-zion-visual-nonvisual-trailer');assert.equal(await page.evaluate(()=>window.bobs),before);
- await index();assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);await page.evaluate(()=>location.hash='#/projects/zion/architecture');await ready('projects-zion-architecture');assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);assert.equal(await page.locator('#folder-line path').count(),0);
+ await index();assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);await page.evaluate(()=>location.hash='#/projects/zion/visual-design');await ready('projects-zion-visual-design');assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);assert.equal(await page.locator('#folder-line path').count(),0);
  await select('notes');assert.equal(await page.locator('[data-group="projects"]').getAttribute('aria-expanded'),'false');assert.equal(await page.locator('.file-link').count(),8);assert.equal(await page.locator('#card-files-panel').getAttribute('hidden'),null);
  await select('notes/mindfill');await ready('notes-mindfill');assert.equal(await page.locator('.collection-index a').count(),7);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);await shot('mindfill-index');await close();await shot('mindfill');
  const dates=await page.locator('.collection-index time').allTextContents();assert.deepEqual(dates,dates.slice().sort().reverse());
@@ -37,11 +37,20 @@ try {for(const width of [375,390,430,768,1440,1920]){
  }
  // Browser fixtures exercise future groups without adding a project to authored content.
  const ctx=await browser.newContext(),page=await ctx.newPage();const manifest=JSON.parse(fs.readFileSync('manifest.json')),config=JSON.parse(fs.readFileSync('site.config.json'));
- config.groups=[{id:'experiments',label:'Experiments',parent:'projects/zion'},{id:'hardware',label:'Hardware',parent:'projects/zion'}];
- for(const p of manifest.pages){if(p.id==='projects-zion-architecture')p.parent='hardware';if(['projects-zion-visual-design','projects-zion-visual-nonvisual-trailer'].includes(p.id))p.parent='experiments';}
+ config.projects.push({id:'experiments',label:'Experiments'},{id:'hardware',label:'Hardware'});
+ // Current navigation follows content folders, not the retired groups metadata.
+ for(const p of manifest.pages){if(p.id==='projects-zion-visual-design')p.contentFolder='projects/zion/hardware';if(['projects-zion','projects-zion-visual-nonvisual-trailer'].includes(p.id))p.contentFolder='projects/zion/experiments';}
  await page.route('**/manifest.json',r=>r.fulfill({json:manifest}));await page.route('**/site.config.json',r=>r.fulfill({json:config}));
- await page.goto(base+'/personal/#/projects/zion/architecture');await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion-architecture');assert.equal(await page.locator('.receipt-header').textContent(),'Hardware');assert.deepEqual(await page.evaluate(()=>[...expandedGroups]),['projects','projects/zion']);assert.equal(await page.locator('.file-link').count(),1);
- await page.locator('[data-group="group/experiments"]').click();await page.waitForFunction(()=>activeGroup.key==='group/experiments');assert.equal(await page.locator('.receipt-header').textContent(),'Experiments');assert.equal(await page.locator('.file-link').count(),2);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);await ctx.close();
+ await page.goto(base+'/personal/#/projects/zion/visual-design');await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion-visual-design');assert.equal(await page.locator('.receipt-header').textContent(),'Hardware');assert.deepEqual(await page.evaluate(()=>[...expandedGroups]),['projects','projects/zion']);assert.equal(await page.locator('.file-link').count(),1);
+ assert.equal(await page.locator('#next-page-btn').isVisible(),false,'single hardware leaf has no next sibling');
+ await page.locator('[data-group="projects/zion/experiments"]').click();await page.waitForFunction(()=>activeGroup.key==='projects/zion/experiments');assert.equal(await page.locator('.receipt-header').textContent(),'Experiments');assert.equal(await page.locator('.file-link').count(),2);assert.equal(await page.evaluate(()=>receiptState.receiptTucked),false);
+ await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion');
+ assert.equal(await page.locator('#next-page-btn').getAttribute('data-target'),'projects/zion/visual-nonvisual-trailer');
+ await page.locator('.content').evaluate(el=>el.scrollTop=el.scrollHeight);
+ await page.locator('#next-page-btn').click();
+ await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion-visual-nonvisual-trailer');
+ assert.equal(await page.locator('#next-page-btn').isVisible(),false,'last experiment never continues into hardware');
+ await ctx.close();
  assert.deepEqual(errors,[]);fs.writeFileSync('.test-results/profiles/results.json',JSON.stringify({results,nestedGroups:'pass',errors},null,2));console.log('PASS profiles, receipt state/animations, accordion, one-rule rows, index lists, gallery and nested groups at all six viewports');
 }finally{await browser.close();}}
 module.exports=run;if(require.main===module)run().catch(e=>{console.error(e);process.exitCode=1;});

@@ -1016,6 +1016,14 @@ img { height: auto; }
   .content-text, .layout-project .content-text { max-width: 76ch; }
   /* One boundary for the illustrated plane and the unchanged 58% grid pane. */
   .leftbg img { width: calc(42vw - 3px); }
+  /* macOS text fallback only. Keep paper/artwork filters, text opacity,
+     blending, receipt rotation and all dimensions exactly as authored. */
+  .platform-macos .content-text :is(p,li,h1,h2,h3,h4,h5,h6),
+  .platform-macos .card-section-header, .platform-macos .card a,
+  .platform-macos .receipt :is(a,.receipt-header,.receipt-divider,.receipt-total) {
+    filter: none;
+    text-shadow: none;
+  }
 }
 #folder-line { position: fixed; }
 #folder-line path { fill: none; stroke: #4a4440; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; animation: connector-fade 1.2s ease forwards; }

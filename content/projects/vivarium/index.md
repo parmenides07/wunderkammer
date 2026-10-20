@@ -12,7 +12,7 @@ status: "active"
 published: true
 created: '2026-09-30'
 project: vivarium
-banner: assets/viv.jpg
+banner: assets/minyum.webp
 ---
 
 *An experiment in local rules, shared environments, and emergent structure.*  

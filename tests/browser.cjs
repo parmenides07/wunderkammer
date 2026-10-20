@@ -20,7 +20,7 @@ async function run() {
   for(const entry of personalModel.pages){await route(page,entry.slug);assert.equal(await page.locator('.wip-sticker').isVisible(),entry.status==='wip');assert.ok(!page.url().includes('.md'));}
   results.push(personalModel.pages.length+' public pages, banners/WIP, semantic routes');
   await route(page,'home');
-  for(const [section,owner] of [['projects','projects/zion'],['notes','notes/mindfill'],['archive','archive/consumption']]){
+  for(const [section,owner] of [['projects','projects/zion'],['notes','notes/mindfill'],['archive','archive']]){
    await page.locator(`[data-group="${section}"]`).click({position:{x:8,y:8}});
    await page.waitForFunction(key=>activeGroup.key===key&&!!document.querySelector('.content').dataset.pageId,owner);
    assert.equal(await page.locator(`[data-group="${owner}"]`).evaluate(el=>getComputedStyle(el,'::after').content),'" ■"');
@@ -30,7 +30,7 @@ async function run() {
   await page.locator('[data-group="notes/mindfill"]').click({position:{x:8,y:8}});await page.waitForFunction(()=>document.querySelectorAll('.file-link').length===8);
   assert.equal(await page.locator('[data-group="notes"]').evaluate(el=>getComputedStyle(el,'::after').content),'" •"');
   results.push('Direct leaves only; selected filled square overrides and restores unread dot');
-  await route(page,'projects/zion');assert.equal(await page.locator('.file-link').count(),4);
+  await route(page,'projects/zion');assert.equal(await page.locator('.file-link').count(),personalModel.pages.filter(p=>p.contentFolder==='projects/zion').length);
   await page.locator('.content').evaluate(el=>el.scrollTop=350);
   await route(page,'about');await page.goBack();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion');assert.ok(await page.locator('.content').evaluate(el=>el.scrollTop)>250);
   await page.goto(`${base}/personal/#sciences/akashom/akashom.md`);await page.waitForURL('**/#/projects/zion');await page.reload();await page.waitForFunction(()=>document.querySelector('.content').dataset.pageId==='projects-zion');
