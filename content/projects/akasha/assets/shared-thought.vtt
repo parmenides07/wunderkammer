@@ -1,0 +1,10 @@
+WEBVTT
+
+00:00:00.000 --> 00:00:02.000
+The same Working question appears in two Shomas.
+
+00:00:02.000 --> 00:00:06.000
+Edit the note once in the normal editor.
+
+00:00:06.000 --> 00:00:09.650
+Both views update because they share one Cell.

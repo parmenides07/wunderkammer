@@ -7,7 +7,7 @@ section: "projects"
 type: "project"
 audience: ["public", "professional"]
 status: "active"
-published: true
+published: false
 created: "2026-05-25"
 modified: "2026-08-15"
 order: 10

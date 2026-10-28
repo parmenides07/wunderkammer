@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-10-20T18:33:56.010Z",
+  "generatedAt": "2026-10-28T19:23:45.488Z",
   "navigationMode": "folders",
   "pages": [
     {
@@ -888,38 +888,62 @@
       "images": "generated/images/notes-systems-logic-composed-emergent-systems.json"
     },
     {
-      "layout": "project",
-      "id": "projects-jivan",
-      "title": "Jivan Defined",
-      "slug": "projects/jivan",
+      "id": "projects-akasha",
+      "title": "Akasha",
+      "slug": "projects/akasha",
       "section": "projects",
       "type": "project",
+      "topics": [],
       "audience": [
         "public",
         "professional"
       ],
       "status": "active",
       "published": true,
-      "created": "2026-05-25",
-      "modified": "2026-08-15",
-      "order": 10,
-      "topics": [
-        "software",
-        "computation"
-      ],
+      "created": "2026-09-30",
       "project": "akasha",
-      "navTitle": "Overview",
-      "banner": "assets/cell1.jpg",
-      "contentFolder": "projects/akasha/jivan",
+      "banner": "assets/cloud.jpg",
+      "order": 1,
+      "contentFolder": "projects/akasha",
       "collection": null,
       "parent": null,
+      "modified": "2026-09-30",
       "featured": false,
       "summary": "",
       "sound": null,
-      "authorSource": "content/projects/akasha/jivan/index.md",
-      "source": "generated/pages/projects-jivan.md",
-      "assetBase": "content/projects/akasha/jivan",
-      "images": "generated/images/projects-jivan.json"
+      "authorSource": "content/projects/akasha/index.md",
+      "source": "generated/pages/projects-akasha.md",
+      "assetBase": "content/projects/akasha",
+      "images": "generated/images/projects-akasha.json"
+    },
+    {
+      "id": "akasha-manual",
+      "title": "Manual",
+      "slug": "projects/akasha/manual",
+      "section": "projects",
+      "type": "project-note",
+      "project": "akasha",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "status": "active",
+      "published": true,
+      "created": "2026-10-28",
+      "order": 20,
+      "contentFolder": "projects/akasha",
+      "collection": null,
+      "parent": null,
+      "modified": "2026-10-28",
+      "topics": [],
+      "featured": false,
+      "summary": "",
+      "banner": null,
+      "sound": null,
+      "authorSource": "content/projects/akasha/manual.md",
+      "source": "generated/pages/akasha-manual.md",
+      "assetBase": "content/projects/akasha",
+      "images": "generated/images/akasha-manual.json"
     },
     {
       "layout": "project",
@@ -1570,6 +1594,16 @@
       "circuit-fotor-enhance-2026041695323.jpg",
       "circuit.jpg"
     ],
+    "content/projects/akasha/assets": [
+      "cloud.jpg",
+      "folder-context.mp4",
+      "folder-context.vtt",
+      "shared-thought.mp4",
+      "shared-thought.vtt",
+      "source-to-thought.mp4",
+      "source-to-thought.vtt",
+      "workspace.png"
+    ],
     "content/projects/akasha/jivan": [
       "akashom.html"
     ],
@@ -1723,7 +1757,9 @@
       "rellook.jpg",
       "relorg.jpg",
       "sensornode.webp",
+      "sensornode1 copy.webp",
       "sensornode1.webp",
+      "sensornode1.xcf",
       "zion.jpg",
       "zion1.jpg",
       "zionexample.png",
@@ -1746,8 +1782,6 @@
     "content/sciences/akashom/DL2_Visualmaxxing_Is_Meta.md": "projects/zion/visual-design",
     "sciences/cornocupia/cornocupia.md": "projects/cornocupia",
     "content/sciences/cornocupia/cornocupia.md": "projects/cornocupia",
-    "sciences/jivan/jivanDefined.md": "projects/jivan",
-    "content/sciences/jivan/jivanDefined.md": "projects/jivan",
     "arts/prose/pm_02/projectMindscape.md": "projects/mindscape",
     "content/arts/prose/pm_02/projectMindscape.md": "projects/mindscape",
     "pm_02/projectMindscape.md": "projects/mindscape",
