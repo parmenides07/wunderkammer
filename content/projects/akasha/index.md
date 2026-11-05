@@ -21,11 +21,11 @@ TypeScript · Svelte · Electron · CodeMirror · Local files · Relationship gr
 
 Every attempt of mine to try to encapsulate this project ended with a more confusing than clearing document. Thus, I have had AI prepare the following explanation of Akasha:
 
-Akasha is a local desktop workspace for connecting notes, documents, images, and the ideas that give them meaning. It combines a spatial canvas, a Markdown editor, a relationship graph, file previews, and a keyboard-driven interaction system. A piece of writing can appear in several workspaces without becoming several copies. A PDF can belong to a course, a question, and a research project while remaining an ordinary file on disk. A paragraph can become something you arrange and reference without first breaking its source document apart.
+Akasha is a local desktop environment for connecting notes, documents, images, and the ideas that give them meaning. It combines a spatial canvas, a Markdown editor, a relationship graph, file previews, and a keyboard-driven interaction system. An Akasha workspace stores its own knowledge structures independently and can register files and folders wherever they already live. A piece of writing can appear in several Shomas without becoming several copies. A PDF can belong to a course, a question, and a research project while remaining an ordinary file on disk. A paragraph can become something you arrange and reference without first breaking its source document apart.
 
-The organizing principle is simple: **what something is, how it relates to other things, and where you want to see it are separate decisions.** Akasha gives each decision a representation of its own. The interesting capabilities arise when those representations cooperate.
+The organizing principle is simple: **what something is, where its source lives, how it relates to other things, and where you want to see it are separate decisions.** Akasha gives each decision a representation of its own. The interesting capabilities arise when those representations cooperate.
 
-This is a working personal-alpha project, with a usable Linux AppImage. The examples below are recordings of the application using a fictional Courtyard observatory: a small design study with field notes, site diagrams, a project brief, and calculus assignments. The content is synthetic; the editing, relationships, previews, and filesystem behavior are real.
+This is a working personal-alpha project. The current source build includes independent workspaces and multi-source registration; on Linux, run it from a checkout using `npm run launch:electron`. An earlier Linux AppImage exists, but it has not yet been repackaged with the new workspace feature. The examples below are recordings of the application using a fictional Courtyard observatory: a small design study with field notes, site diagrams, a project brief, and calculus assignments. The recordings predate the new source-registration interface; the demonstrated writing, relationships, previews, and filesystem behaviors remain useful examples.
 
 ![A fictional research workspace: three arranged boards, a shared question, site diagrams, homework PDFs, and the focused document preview.](assets/workspace.png)
 
@@ -39,12 +39,16 @@ I want an environment that leaves room for that uncertainty. A place where arran
 
 What excites me is that a connection can become useful long after the moment I made it. An observation recorded for one project can help answer a question in another. A concept can gather explanations, references, and disagreements across years of work. Each deliberate connection gives me another route into that material. Akasha's small abstractions—identities, relationships, views, subjects, and projections—let a body of work accumulate this continuity while remaining open to a different arrangement, interpretation, or purpose.
 
+There is a related constraint I no longer want to impose: that the place where I store Akasha should also be the boundary of what I can organize. Source code belongs in a code repository, drawings in an art folder, and reading notes wherever I actually write them. Their physical locations need not decide whether they can participate in the same inquiry.
+
 ## The model: identity, relationship, and placement
 
 The central vocabulary is compact:
 
 | Concept | Meaning | Example |
 |---|---|---|
+| **Workspace** | A durable Akasha environment with its own state and registered sources. | One personal atlas spanning code, art, and research. |
+| **Source registration** | An explicitly chosen external file or directory Akasha knows about. | A code folder or a single `.org` note. |
 | **Cell** | A durable identity for a meaningful thing. | A question, an image, a PDF, a folder, or a note. |
 | **Relationship** | A connection between Cells. | An assignment is a child of Math HW. |
 | **Shoma** | A spatial view organized around a core Cell. | A research desk or a study-session board. |
@@ -56,7 +60,7 @@ A Cell's identity is not its title, its current text, or its screen position. Se
 
 Similarly, a relationship is not just a line between two rectangles. It is a fact the application can use in navigation and queries, even when neither endpoint is currently visible. A layout can express a temporary juxtaposition without asserting such a fact.
 
-This separation is the basis for the rest of the system. It prevents a convenient visual arrangement from silently becoming an organizational commitment, and prevents reorganizing the canvas from destroying the meaning already recorded in the graph.
+This separation is the basis for the rest of the system. It prevents a convenient visual arrangement from silently becoming an organizational commitment, and prevents reorganizing the canvas from destroying the meaning already recorded in the graph. A source registration grants Akasha access to a file or folder; it does not itself declare the semantic relationship of every file found there. A workspace holds the atlas, not physical copies of all its sources.
 
 ## One thought, several contexts
 
@@ -76,19 +80,31 @@ This is how template-like behavior emerges in Akasha: **copy the structure, choo
 
 ## An organizational layer over ordinary files
 
-Akasha can open a normal project directory. It discovers ordinary files and folders, gives them Cell identities, and stores its own state in a `.akasha` sidecar directory. The original materials remain in the filesystem, available to the applications that already understand them.
+Akasha now separates **workspace storage** from **source locations**. Create a workspace in a folder of your choosing: it stores native writing, identities, relationships, Shomas, layouts, and a catalog of registered sources in its own `.akasha/` directory. A new workspace can begin empty. Register an individual file or an entire directory, recursively, through **Source locations…**. These sources can be elsewhere on the same machine, under different parent folders or in different Git repositories. Akasha does not relocate them or install another sidecar alongside them.
 
-A file-backed Cell can be placed, related, selected, queried, and opened just like other Cells. Its backing is a project-relative path. Its meaning is not limited to that path: a document can be related to several questions or projects even though it occupies one filesystem location.
+A file-backed Cell can be placed, related, selected, queried, and opened like other Cells. Its source association is qualified by a stable registration and path information rather than by an implicit single project root. Two different directories may contain files called `notes.md`; they remain distinct. If registered directories overlap, Akasha reconciles the same physical source to one Cell identity rather than creating copies for each registration.
+
+The original materials remain in the filesystem and in the applications that already understand them. A source's physical location is a practical fact, not a restriction on the ideas it can participate in. A Python experiment and a drawing can be placed together in one Shoma while remaining in their respective Code and Art folders.
 
 The right-hand content instrument adapts to the subject. Native notes open in the editor. Supported text files receive read-only previews. Images display inline. Project PDFs show a static first page and a page count. Folders and unsupported formats still have useful identities, paths, relationships, and external-open actions.
 
 This allows Akasha to work around specialized tools. For a furniture commission, drawings stay in the drafting application, reference photos remain image files, and native notes record why a joint or finish was chosen. Relate those decision notes to the commission and to a shared **White oak** Cell, and a relationship pattern can retrieve the decisions connected to that material. When a matching bench is commissioned, bring the relevant sources and reasoning into a new board; copy the notes that need to diverge. The earlier project's reasoning becomes something you can work with again.
 
-The current implementation is intentionally explicit about its boundaries. Project PDFs have a 20 MB preview limit, and full reading happens in the default external application. There is no universal parser for arbitrary document formats. Native connective writing supplies meaning where format-specific inspection ends.
+The current implementation is intentionally explicit about its boundaries. Project PDFs have a 20 MB preview limit, and full reading happens in the default external application. There is no universal parser for arbitrary document formats. Native connective writing supplies meaning where format-specific inspection ends. Registering a directory makes its files available; it does not automatically understand the files or produce relationships between them.
+
+## One atlas, several paths through the work
+
+For example, I might study machine-learning algorithms from a textbook, implement KNN in a code repository, read about graph-based learning, and draw a set of character skeletons for an unrelated creative project. I do not need to move all those files into an `Akasha` folder. I can register the folders where the work already lives and create Shomas for the textbook, the larger investigation of learning, a specific experiment, or a visual idea.
+
+These are different kinds of organization. The **filesystem** answers where the original material lives. **Source registrations** specify which material this workspace can see. **Cells and relationships** express meaning. **Shomas and placements** arrange a useful working perspective. None requires that the others copy its hierarchy.
+
+I also do not want a required taxonomy of projects, categories, and stages. Some explorations continue for years; others are small, finite experiments. Reading, drawing, and experimenting can be valuable without being assigned to a parent project. A useful concept can grow from a book note into a research question, appear in two different contexts, and eventually anchor its own Shoma. Akasha should let that trajectory emerge from the work rather than demand that I classify it in advance.
+
+A directory is still a perfectly good place to store a set of related files. Akasha is not trying to replace good filesystem habits. It makes those habits less restrictive by letting an idea acquire connections across otherwise separate bodies of work.
 
 ## Files can inherit context as they arrive
 
-A folder connection is an instruction linking the contents of a folder to a Cell. For example, make **Math HW** the parent of files in **Pearson assignments**. Existing files acquire that relationship. A new assignment added later acquires it too.
+A folder connection is an instruction linking the contents of a known folder to a Cell. For example, register a folder containing **Pearson assignments**, then make **Math HW** the parent of its files. Existing files acquire that relationship. A new assignment added later acquires it too.
 
 The instruction can make the target Cell a parent, child, or spouse of the files, and can optionally include subfolders. The resulting facts are ordinary relationships with recorded support: the application knows which folder instruction is responsible for them.
 
@@ -224,29 +240,29 @@ Those boundaries are meaningful extension points, but they are not a claim that 
 
 The desktop shell uses **Electron**. The interface uses **Svelte**, with a DOM-based spatial workspace and dedicated graph rendering. **CodeMirror 6** owns Markdown editing. **TypeScript** defines the domain model and operation contracts. **Vite** builds the application, and **PDF.js** provides bundled, local first-page rendering for project PDFs.
 
-The core state records Cells, relationships, Shomas, layout trees, focus, selection, and theme information. Operations describe changes to that state. Invariant checks catch invalid references and inconsistent structures. Text bodies are kept separately from the graph-and-layout state, then saved with it through the appropriate persistence path.
+The core state records Cells, relationships, Shomas, layout trees, focus, selection, theme information, and source registrations. Operations describe changes to that state. Invariant checks catch invalid references and inconsistent structures. Text bodies are kept separately from the graph-and-layout state, then saved with it through the appropriate persistence path.
 
-For folder projects, `.akasha/vault.json` contains the serialized state and native writing. Source files remain outside that document. Writes use atomic replacement and a per-project queue so an older asynchronous save cannot finish after a newer save and overwrite it. Save checkpoints preserve earlier sidecar states, and a recovery interface restores into a new folder.
+Workspace state remains under the chosen storage folder’s `.akasha/`, including serialized state, native writing, and the registration catalog. External sources remain outside that state. Existing single-root folder projects can be migrated to the new format, with the original document checkpointed before the upgraded save. The current persisted format is not readable by older Akasha builds. Writes retain the existing guarded save and checkpoint discipline; recovery restores workspace metadata, not historical copies of registered source files.
 
 Text editing and structural undo are separate histories. A layout change must not erase newer writing. Read-only previews must not acquire editor ownership. A background file discovery must not reset the user's focus or replace the entire working state. These boundaries have been recurring engineering concerns, and the regression suite is organized around them.
 
-The current source suite covers 165 test files, supplemented by desktop and packaged-AppImage checks. That is evidence of specific tested behavior, not a guarantee that every large-project or cross-platform edge case is solved.
+The multi-source implementation was reported to pass 166 test files, seven disposable-workspace Electron workflows, the PDF interaction check, and the production build. The interface was also visually checked in light and custom dark themes at a narrow viewport. That is evidence of specific tested behavior, not a guarantee that every large-project or cross-platform edge case is solved; this new build has not been repackaged as an AppImage or tested on Windows or macOS.
 
 ## Local ownership, with explicit limits
 
 Local-first means the working project is on the user's filesystem and core editing does not require a hosted service. It does not mean every possible feature is offline: opening web links, fetching optional URL-card metadata, and checking release information may use the network.
 
-The sidecar contains material that ordinary source files do not: native notes, relationships, layouts, and saved theme state. Keeping source files alone preserves the originals, but does not preserve the entire Akasha. A complete backup should include the project directory and its `.akasha` contents.
+The workspace’s `.akasha/` contains material that ordinary source files do not: native notes, source registrations, relationships, layouts, and saved theme state. Keeping only the files in Code or Art does not preserve those Akasha connections. Keeping only `.akasha/` does not preserve the original external files. A complete backup therefore includes both the workspace state **and separately backed-up source directories/files**.
 
-Recovery checkpoints are also narrower than full historical filesystem snapshots. They preserve Akasha state; restoring copies the current external source files. They cannot recover an old version of a PDF that was independently overwritten outside the application.
+Recovery checkpoints are narrower than full historical filesystem snapshots: they preserve Akasha state, not prior contents of every external PDF, drawing, or source file. Reconnecting a missing source may restore access to the live file, but it cannot recreate an earlier version of its contents. Detaching or temporarily losing a source does not itself erase the Cell or its relationships.
 
 This approach gives users direct access to their materials and makes the system's responsibilities visible. It also leaves room for future improvements in export, indexing, migration, and synchronization without pretending those capabilities are already complete.
 
 ## What exists now, and what I want it to become
 
-The present application supports native writing, reusable identities, spatial arrangements, directional relationships, selection and duplication, anchors, read-only transclusions, relationship-pattern queries, graph navigation, file-backed sources, live folder connections, theme customization, and project recovery. The Linux desktop build is usable, and the recorded examples exercise real workflows.
+The present source build supports independent workspaces, individual-file and recursive-directory registrations, native writing, reusable identities, spatial arrangements, directional relationships, selection and duplication, anchors, read-only transclusions, relationship-pattern queries, graph navigation, file-backed sources, live folder connections, theme customization, and workspace recovery. The Linux Electron build is usable, and the recorded examples exercise enduring core workflows.
 
-There are still rough edges. The keyboard grammar is powerful but needs a more complete cross-platform audit. Very large collections need further performance work. Project PDF support is a first-page preview, not an annotation workstation. Rich anchors for arbitrary file types, built-in collaboration, general synchronization, and a public plugin API are not implemented. Some older documents describe exploratory features or superseded behavior; the accompanying reference manual distinguishes those from the current build.
+There are still rough edges. Cross-root moves, symlink sources, rename/move operations through single-file registrations, and export to the older legacy-vault format are not supported in the new workspace implementation. The keyboard grammar is powerful but needs a more complete cross-platform audit. Very large collections need further performance work. Project PDF support is a first-page preview, not an annotation workstation. Rich anchors for arbitrary file types, built-in collaboration, general synchronization, and a public plugin API are not implemented. Some older documents describe exploratory features or superseded behavior; the accompanying reference manual should be checked against current source when exact behavior matters.
 
 Akasha is especially suited to work whose meaning lives between documents: researching an argument, developing a fictional world, designing an object, or assembling a body of musical references. The PDFs, drawings, recordings, and prose already matter. The questions, interpretations, and decisions connecting them deserve a place to develop too.
 
@@ -254,8 +270,12 @@ The larger ambition is for that work to keep giving something back. A passing no
 
 ## Start with a small project
 
-Open a folder containing a few real sources. Make one native note explaining what you are trying to understand. Place a source beside it. Give a question its own Cell. Reuse that question in a second context. Add a relationship only when it expresses something you mean.
+In the current source build, run `npm run launch:electron`, choose **Akasha icon → New Workspace…**, and select a storage folder. Open **Source locations…**, then **Add Folder…** or **Add File…** to register just the material needed for a first experiment. You need not put those sources inside the workspace directory. Make one native note explaining what you are trying to understand. Place a source beside it. Give a question its own Cell. Reuse that question in a second context. Add a relationship only when it expresses something you mean.
 
-The fictional Courtyard observatory is available in the repository as a prepared starting point. It demonstrates a shared question, a small research board, linked homework files, and source-context writing without requiring a large imported collection.
+You can register further sources as your work expands. A whole directory is useful for ongoing work that keeps receiving new files; an individual file is useful when you want just one reference. Neither act of registration needs to create a semantic category or rearrange the canvas.
+
+Existing folder projects remain an opening path and can migrate to the independent-workspace format. Make a backup before upgrading because older application builds cannot read the new saved version.
+
+The fictional Courtyard observatory is available in the repository as a prepared starting point. Its recordings demonstrate a shared question, a small research board, linked homework files, and source-context writing; they were recorded before the multi-source interface was added.
 
 For practical use, read the [task-oriented user manual](manual.md). For the full conceptual model, exact semantics, command reference, implementation boundaries, and extension guidance, read the [comprehensive reference](../reference.md). The latter is designed to be self-contained enough to give to an LLM assisting with Akasha.
