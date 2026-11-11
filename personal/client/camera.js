@@ -41,7 +41,10 @@ export class Camera {
     viewport.addEventListener('pointermove', e => this.move(e));
     viewport.addEventListener('pointerup', e => this.up(e));
     viewport.addEventListener('pointercancel', e => this.up(e, true));
-    viewport.addEventListener('lostpointercapture', e => this.up(e, true));
+    viewport.addEventListener('lostpointercapture', e => {
+      // Pinching transfers capture off editor handles before they are removed.
+      if (!viewport.hasPointerCapture(e.pointerId)) this.up(e, true);
+    });
     viewport.addEventListener('click', e => {
       if (performance.now() < this.suppressUntil) {
         e.preventDefault();
@@ -64,6 +67,7 @@ export class Camera {
       this.gesture = null;
       this.pointers.clear();
       this.multiTouch = false;
+      this.pinch = this.cancelTouch = null;
     });
     this.draw();
   }
@@ -89,8 +93,8 @@ export class Camera {
   }
   wheel(e) {
     if (isTyping(e.target) || this.pointers.size || (!e.deltaX && !e.deltaY)) return;
-    // Leave native browser zoom available on mobile. Touch never changes the
-    // saved canvas scale; trackpad pinch / Ctrl+wheel on desktop zooms the camera.
+    // Keep browser accessibility zoom available via Ctrl+wheel on mobile;
+    // touch pinches use pointer positions, while desktop wheel handling is unchanged.
     if (this.touchDevice.matches && e.ctrlKey) return;
     this.wheelStream = wheelGesture(e, this.wheelStream);
     const action = this.touchDevice.matches ? 'pan' : e.ctrlKey ? 'zoom' :
@@ -119,12 +123,17 @@ export class Camera {
     // Capture on the original target so an ordinary link click remains a real click.
     e.target.setPointerCapture(e.pointerId);
     if (this.pointers.size >= 2) {
+      for (const id of this.pointers.keys()) this.viewport.setPointerCapture(id);
       this.gesture?.cancel?.();
+      this.cancelTouch?.(); this.cancelTouch = null;
       this.gesture = null;
       this.multiTouch = true;
       this.moved = true;
+      if (this.touch && e.pointerType === 'touch') this.startPinch();
       return;
     }
+    this.touch = e.pointerType === 'touch';
+    this.cancelTouch = this.touch ? this.onTouchStart?.() : null;
     this.start = this.last = point;
     this.moved = false;
     const pan = this.space || e.button === 1;
@@ -133,13 +142,29 @@ export class Camera {
     this.panning = pan || (!this.gesture && e.pointerType === 'touch');
     if (pan) e.preventDefault();
   }
+  touchPair() {
+    const [a, b] = this.pointers.values();
+    return { midpoint: { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 }, distance: Math.hypot(b.x - a.x, b.y - a.y) };
+  }
+  startPinch() { this.pinch = { ...this.touchPair(), camera: { ...this.value } }; }
   move(e) {
     if (!this.pointers.has(e.pointerId)) return;
     const point = this.point(e);
     this.pointers.set(e.pointerId, point);
-    // Once a second finger arrives, leave the whole gesture to the browser.
-    // Do not resume dragging an object or jump the camera when one finger lifts.
-    if (this.multiTouch) return;
+    if (this.multiTouch) {
+      if (this.pinch) {
+        const { midpoint, distance } = this.touchPair(), start = this.pinch;
+        // Zoom at the original midpoint, then translate that anchor with the
+        // fingers. Deriving from the gesture start avoids accumulating drift.
+        const next = zoomAt(start.camera, start.midpoint, this.size,
+          start.camera.zoom * (start.distance ? distance / start.distance : 1));
+        next.x -= (midpoint.x - start.midpoint.x) / (GRID * next.zoom);
+        next.y -= (midpoint.y - start.midpoint.y) / (GRID * next.zoom);
+        this.set(next);
+        if (!start.distance) this.startPinch();
+      }
+      return;
+    }
     if (Math.hypot(point.x - this.start.x, point.y - this.start.y) > 4) this.moved = true;
     if (this.moved && this.gesture) this.gesture.move(point, e);
     else if (this.moved && this.panning) {
@@ -159,6 +184,15 @@ export class Camera {
       else this.gesture.end?.(this.moved, e);
     }
     this.gesture = null;
-    if (!this.pointers.size) this.multiTouch = false;
+    if (this.multiTouch && this.touch) {
+      if (this.pointers.size >= 2) this.startPinch();
+      else {
+        this.pinch = null;
+        this.multiTouch = false;
+        this.panning = true;
+        this.start = this.last = this.pointers.values().next().value;
+      }
+    }
+    if (!this.pointers.size) { this.multiTouch = false; this.pinch = this.cancelTouch = null; }
   }
 }

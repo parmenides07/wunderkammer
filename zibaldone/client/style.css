@@ -19,7 +19,7 @@ a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .2em;
 }
 @media (prefers-reduced-motion: reduce) { .text-object > a.content { transition: none !important; } }
 :focus-visible { outline: 1px solid #333; outline-offset: 4px; }
-#viewport { position: fixed; inset: var(--trail-height) 0 0; overflow: clip; touch-action: pinch-zoom; background: #fff; isolation: isolate; }
+#viewport { position: fixed; inset: var(--trail-height) 0 0; overflow: clip; touch-action: none; background: #fff; isolation: isolate; }
 /* Blend above the transformed world so empty areas and overlapping objects
    share the same opaque backdrop. The camera already supplies these grid vars. */
 #viewport::after {

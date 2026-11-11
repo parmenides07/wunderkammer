@@ -311,6 +311,10 @@ function startEditor(app, token) {
     for (const key of Object.keys(e)) delete e[key];
     Object.assign(e, structuredClone(before));
   }
+  app.camera.onTouchStart = () => {
+    const previous = [...selection], primary = selected;
+    return () => setSelection(previous, primary);
+  };
   app.camera.onObjectDown = (event, point) => {
     if (!app.world.contains(document.activeElement)) document.activeElement?.blur();
     if (drawing) return { move() {}, end(moved, up) { if (!moved) placeLinePoint(app.camera.point(up), up); } };

@@ -55,7 +55,7 @@ other canvases have stable IDs used in `/personal/#/slug` hash trails.
 | Undo / redo | Ctrl/Cmd+Z / Ctrl/Cmd+Shift+Z; Ctrl+Y also redoes; toolbar buttons available |
 | Desktop pan | Two-finger trackpad scroll, Space+left drag, or middle-button drag |
 | Desktop zoom | Mouse wheel, trackpad pinch reported as Ctrl+wheel, or Ctrl+trackpad scroll |
-| Touch pan | One-finger drag; two fingers never change canvas zoom |
+| Touch pan/zoom | One finger pans; two fingers pan and pinch around their midpoint |
 | Move on touch | Tap to select, then drag; a second finger cancels a pending move |
 | Save entry view | **Set starting view**, then **Save** |
 | Save composition | **Save** or Ctrl/Cmd+S |
@@ -126,8 +126,9 @@ mouse zoom. A pan stays a pan through its momentum tail. Use **Input → Mouse**
 Ctrl+scroll still zooms on desktop. Zoom remains centered on the pointer.
 
 Mobile exposes a smaller portion of the same world; nothing stacks or rearranges.
-Touch never changes canvas zoom. Native browser pinch magnification remains
-available for accessibility, with no viewport scaling restriction.
+Pinching zooms the canvas within the existing limits; lifting one finger resumes
+panning without a jump. Native scrolling/zooming is suppressed only on the canvas.
+Other UI retains normal browser gestures, with no viewport scaling restriction.
 
 ## Navigation trail
 
@@ -364,7 +365,7 @@ Publish tests use disposable Git checkouts and local bare remotes to cover
 content-only commits, additions/deletions, no changes, staged-file safety, missing
 setup, divergence, authentication/commit/push failures, retries, and concurrency.
 Chromium covers wheel drift/pan, transformed hit tests, hover pixels/overlaps,
-focus/maximizable/Z behavior, touch without canvas zoom, marquee/group movement,
+focus/maximizable/Z behavior, touch pan/pinch and finger transitions, marquee/group movement,
 locks/Alt/nudging, native text undo/clipboard, one-step drag undo, polyline drawing,
 vertex insertion/editing, typography/overflow/shadows, save/reload, static routes,
 repository subpaths, fonts/images/links, breadcrumb pruning/history, fresh-tab

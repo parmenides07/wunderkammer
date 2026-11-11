@@ -247,39 +247,56 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.waitForFunction(() => document.querySelector('#save-status').textContent.startsWith('Saved to'));
     assert.equal(await page.locator('[data-overflow=true]').count(), 1);
 
-    // Touch input via Chromium's actual touch-event pipeline: one-finger pan only.
+    // Touch input via Chromium's actual touch-event pipeline: one-finger pan and midpoint-anchored pinch.
     const mobile = await browser.newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, deviceScaleFactor: 1 });
     const touchPage = await mobile.newPage();
     touchPage.on('pageerror', e => errors.push(e.message));
     await touchPage.goto(origin + '/personal/#/field-notes'); await canvasReady(touchPage); await ready(touchPage);
     await touchPage.screenshot({ path: '/tmp/space-mobile.png' });
     const mobileState = await state(touchPage);
-    assert.equal(await touchPage.locator('#viewport').evaluate(el => getComputedStyle(el).touchAction), 'pinch-zoom');
+    assert.equal(await touchPage.locator('#viewport').evaluate(el => getComputedStyle(el).touchAction), 'none');
     assert.doesNotMatch(await touchPage.locator('meta[name=viewport]').getAttribute('content'), /user-scalable|maximum-scale/);
     // Mobile renders exactly the authored coordinates, never a stacked alternative.
     assert.equal(await touchPage.locator('[data-id=heading]').evaluate(el => el.style.left), '-144px');
     const cdp = await mobile.newCDPSession(touchPage);
-    const touch = (type, points) => cdp.send('Input.dispatchTouchEvent', { type, touchPoints: points.map((p, i) => ({ x: p[0], y: p[1], id: i + 1 })) });
+    const touch = async (type, points) => {
+      await cdp.send('Input.dispatchTouchEvent', { type, touchPoints: points.map((p, i) => ({ x: p[0], y: p[1], id: p[2] ?? i + 1 })) });
+      await settle(touchPage); // Chromium may coalesce pointer moves until the next frame.
+    };
     await touch('touchStart', [[60, 650]]);
     await touch('touchMove', [[108, 674]]);
     await touch('touchEnd', []);
     const pan = (await state(touchPage)).camera;
     near(pan.x, mobileState.camera.x - 48 / (24 * pan.zoom));
     near(pan.y, mobileState.camera.y - 24 / (24 * pan.zoom));
+    const viewportBox = await touchPage.locator('#viewport').boundingBox();
+    const worldAtTouch = (c, x, y) => ({ x: c.x + (x - viewportBox.x - viewportBox.width / 2) / (24 * c.zoom), y: c.y + (y - viewportBox.y - viewportBox.height / 2) / (24 * c.zoom) });
+    const touchAnchor = worldAtTouch(pan, 160, 450);
     await touch('touchStart', [[100, 450], [220, 450]]);
     await touch('touchMove', [[60, 470], [300, 470]]);
-    await touch('touchEnd', []);
     const pinch = (await state(touchPage)).camera;
-    assert.deepEqual(pinch, pan);
+    near(pinch.zoom, pan.zoom * 2);
+    const pinchWorld = worldAtTouch(pinch, 180, 470);
+    near(pinchWorld.x, touchAnchor.x); near(pinchWorld.y, touchAnchor.y);
+    // Keep finger 1 while lifting finger 2, then pan from its exact last position.
+    await touch('touchEnd', [[300, 470, 2]]); // Release only finger 2 by its input ID.
+    assert.equal(await touchPage.evaluate(async () => (await (await import('/personal/client/main.js')).ready).camera.pointers.size), 1);
+    assert.deepEqual((await state(touchPage)).camera, pinch);
+    await touch('touchMove', [[84, 494]]);
+    const resumed = (await state(touchPage)).camera;
+    near(resumed.x, pinch.x - 24 / (24 * pinch.zoom));
+    near(resumed.y, pinch.y - 24 / (24 * pinch.zoom)); near(resumed.zoom, pinch.zoom);
+    await touch('touchEnd', []);
+    near(await touchPage.evaluate(() => visualViewport.scale), 1);
+    assert.equal(await touchPage.evaluate(() => scrollX || scrollY), 0);
     const nativeWheelAllowed = await touchPage.evaluate(() => {
       const event = new WheelEvent('wheel', { ctrlKey: true, deltaY: -30, bubbles: true, cancelable: true });
       document.querySelector('#viewport').dispatchEvent(event);
       return !event.defaultPrevented;
     });
     assert.equal(nativeWheelAllowed, true);
-    assert.deepEqual((await state(touchPage)).camera, pan);
-    // Restore only the browser's native magnification before further test actions.
-    await cdp.send('Emulation.setPageScaleFactor', { pageScaleFactor: 1 });
+    assert.deepEqual((await state(touchPage)).camera, resumed);
+    // Controls and the focus viewer remain outside the canvas touch-action policy.
     // Long text reflows at readable size and scrolls; Close restores the exact camera.
     await touchPage.goto(origin + '/personal/#/browser-created'); await canvasReady(touchPage); await ready(touchPage);
     const essayCamera = (await state(touchPage)).camera;
@@ -306,7 +323,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     const headingAfter = (await state(touchPage)).page.elements.find(e => e.id === 'heading');
     assert.equal(headingAfter.x, headingBefore.x + 1);
     assert.equal(headingAfter.y, headingBefore.y + 1);
-    // A second finger cancels an object move without changing the canvas camera.
+    // A second finger cancels the object move and starts camera zoom instead.
     const editorTouchCamera = (await state(touchPage)).camera;
     await touch('touchStart', [[120, 340]]);
     await touch('touchMove', [[144, 340]]);
@@ -315,12 +332,33 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await touch('touchEnd', []);
     const headingAfterPinch = (await state(touchPage)).page.elements.find(e => e.id === 'heading');
     assert.deepEqual(headingAfterPinch, headingAfter);
-    assert.deepEqual((await state(touchPage)).camera, editorTouchCamera);
-    await cdp.send('Emulation.setPageScaleFactor', { pageScaleFactor: 1 });
+    const editorPinch = (await state(touchPage)).camera;
+    near(editorPinch.zoom, editorTouchCamera.zoom * 190 / 106);
+    near(await touchPage.evaluate(() => visualViewport.scale), 1);
+    // A pinch that starts on a resize handle rolls the resize back, including
+    // when restoring selection replaces that captured handle in the DOM.
+    await touchPage.evaluate(async c => (await (await import('/personal/client/main.js')).ready).camera.set(c), editorTouchCamera);
+    const touchResizeHandle = await touchPage.locator('[data-id=heading] [data-handle=height]').boundingBox();
+    const hx = touchResizeHandle.x + touchResizeHandle.width / 2, hy = touchResizeHandle.y + touchResizeHandle.height / 2;
+    await touch('touchStart', [[hx, hy]]); await touch('touchMove', [[hx, hy + 24]]);
+    assert.notEqual((await state(touchPage)).page.elements.find(e => e.id === 'heading').height, headingAfter.height);
+    await touch('touchStart', [[hx, hy + 24], [70, 200]]);
+    await touch('touchMove', [[hx + 20, hy + 44], [50, 180]]); await touch('touchEnd', []);
+    assert.deepEqual((await state(touchPage)).page.elements.find(e => e.id === 'heading'), headingAfter);
+    assert.ok((await state(touchPage)).camera.zoom > editorTouchCamera.zoom);
+    // Blank-space panning normally clears selection. Joining a second finger
+    // restores the original selection without moving any object.
+    await touch('touchStart', [[10, 150]]);
+    assert.equal(await touchPage.locator('.selected').count(), 0);
+    await touch('touchStart', [[10, 150], [300, 150]]);
+    await touch('touchMove', [[30, 170], [320, 170]]); await touch('touchEnd', []);
+    assert.equal(await touchPage.locator('.selected').getAttribute('data-id'), 'heading');
+    assert.deepEqual((await state(touchPage)).page.elements.find(e => e.id === 'heading'), headingAfter);
+    const textTouchCamera = (await state(touchPage)).camera;
     await touchPage.locator('#edit-text').tap();
     await touchPage.keyboard.insertText(' — touch editing');
     assert.match((await state(touchPage)).page.elements.find(e => e.id === 'heading').text, /touch editing$/);
-    assert.deepEqual((await state(touchPage)).camera, editorTouchCamera);
+    assert.deepEqual((await state(touchPage)).camera, textTouchCamera);
     await mobile.close();
 
     // Verify actual static hosting: direct URLs/reloads work; ?edit5500 exposes nothing.
@@ -367,7 +405,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     for (const base of ['/personal/', '/repository-name/personal/'])
       await require('./trail.cjs').static({ browser, origin: staticOrigin, base });
     assert.deepEqual(errors, []);
-    console.log('Browser checks passed: wheel/trackpad modes, pointer zoom, link feedback, focus, editing, save/reload, touch pan without canvas zoom, native zoom access, static isolation.');
+    console.log('Browser checks passed: wheel/trackpad modes, pointer zoom, link feedback, focus, editing, save/reload, touch pan/pinch, finger handoff, native zoom access outside canvas, static isolation.');
     console.log('Screenshots: /tmp/space-{home-desktop,field-desktop,editor-desktop,mobile}.png');
   } finally {
     await browser?.close();
