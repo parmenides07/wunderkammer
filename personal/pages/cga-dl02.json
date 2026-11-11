@@ -348,15 +348,63 @@
       "arrowhead": true
     },
     {
-      "id": "2c1e30bd-b0f0-47b9-a97d-d371eabcec9d",
+      "id": "ec5f6a8a-36bd-484e-b309-b1e44ac33c98",
       "type": "text",
-      "x": 16,
-      "y": -4,
-      "width": 12,
-      "height": 5,
-      "text": "test",
+      "x": 23,
+      "y": 12,
+      "width": 15,
+      "height": 2,
+      "text": "02: November 10th",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "1dbc870b-8132-48e3-ae7a-4cd9fce80808",
+      "type": "text",
+      "x": 23,
+      "y": 14,
+      "width": 22,
+      "height": 8,
+      "text": "On top of finishing up yesterday's FSM, I also learned about a lot of new concepts:\n- Timing: Hold Time, Setup Time, Clock Skew, Contamination Delays, etc. (Pretty tricky stuff, I still don't have a perfect grasp on it)\n- Parallelism \n- Adders: Half Adders, Full Adders, CPA (Ripple Carry, Carry Lookahead, Prefix)",
       "font": "mono",
-      "fontSize": 16
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "27bb26c7-109d-49a6-81c7-e89af3031969",
+      "type": "line",
+      "points": [
+        [
+          22,
+          21
+        ],
+        [
+          22,
+          9
+        ]
+      ]
+    },
+    {
+      "id": "ed90bda3-8b82-40e5-b7ff-126ee16adbeb",
+      "type": "image",
+      "x": 45,
+      "y": 4,
+      "width": 15,
+      "height": 17.239663093415007,
+      "src": "/personal/assets/image-bc2c4e8f-e955-4dce-a6a5-5a492a47d6a7.png",
+      "alt": ""
+    },
+    {
+      "id": "f1acde7e-7d92-4a8b-bd7a-4351bcc6048c",
+      "type": "image",
+      "x": 24,
+      "y": -1,
+      "width": 20,
+      "height": 13.539967373572596,
+      "src": "/personal/assets/image-ad7bc59b-31ef-484b-985c-fa0c3520f912.png",
+      "alt": ""
     }
   ]
 }
