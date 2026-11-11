@@ -37,6 +37,7 @@ body.editing #viewport.show-grid {
 .editor-tools input[type=url], .editor-tools input[type=text] { width: min(270px, 55vw); }
 .editor-tools a { padding: 5px 0; }
 #save-status { display: block; max-width: 650px; white-space: pre-wrap; }
+#save-error { display: block; max-width: 650px; color: #a33a32; white-space: pre-wrap; }
 #new-page-dialog { border: 1px solid #999; padding: 20px; max-width: calc(100vw - 40px); font-size: 13px; }
 #new-page-dialog::backdrop { background: #ffffffed; }
 #new-page-dialog form { display: grid; gap: 12px; }

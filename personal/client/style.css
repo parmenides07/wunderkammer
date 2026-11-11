@@ -35,13 +35,14 @@ body:not(.editing) #viewport[data-feedback]::after { display: block; }
 .object { position: absolute; margin: 0; line-height: 1.4; }
 .content { display: block; width: 100%; min-height: 100%; white-space: pre-wrap; overflow-wrap: anywhere; }
 .content[role=button] { cursor: pointer; }
+body:not(.editing) .content[role=button] { cursor: zoom-in; }
 body:not(.editing) .object[data-interactive=false] > .content { cursor: default; }
 .image-object .content { height: 100%; }
 .image-object img { display: block; width: 100%; height: 100%; }
 @media (hover: hover) and (prefers-reduced-motion: no-preference) {
-  body:not(.editing) .image-object[data-interactive=true] img { transition: transform 150ms ease; transform-origin: center; }
+  body:not(.editing) .image-object[data-interactive=true] img { transition: transform 50ms ease-out; transform-origin: center; }
   body:not(.editing) .image-object[data-interactive=true]:hover img,
-  body:not(.editing) .image-object[data-interactive=true]:has(:focus-visible) img { transform: scale(1.025); }
+  body:not(.editing) .image-object[data-interactive=true]:has(:focus-visible) img { transform: scale(1.02); }
 }
 .line-object, .line-drawing { pointer-events: none; }
 .line-drawing { display: block; overflow: visible; }
@@ -50,10 +51,10 @@ body:not(.editing) .object[data-interactive=false] > .content { cursor: default;
 .pan-ready:active, .pan-ready:active * { cursor: grabbing !important; }
 .focus-object {
   position: absolute; top: 0; left: 100%; width: 30px; height: 30px;
-  transform: scale(var(--inverse-zoom, 1)); transform-origin: top left;
   border: 0; background: #fff; font: 18px 'JetBrains Mono', monospace; opacity: 0;
 }
-.object:hover > .focus-object, .object:focus-within > .focus-object { opacity: 1; }
+.object:has(:focus-visible) > .focus-object { opacity: 1; }
+@media (hover: hover) { .object:hover > .focus-object { opacity: 1; } }
 @media (pointer: coarse) { .focus-object { opacity: 1; width: 40px; height: 40px; } }
 #focus-view {
   position: fixed; inset: 0; margin: 0; border: 0; padding: 72px 24px 36px;

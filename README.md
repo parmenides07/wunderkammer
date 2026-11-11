@@ -66,7 +66,8 @@ unreviewed application migration. Do not copy the standalone Zibaldone Pages
 workflow into this repository.
 
 **After the integration is committed and pushed:** compose locally and click
-**Publish** beside Save. It waits for uploads, saves the current canvas, validates
+**Publish**. Edits autosave locally after a short pause; wait for **Saved** before
+closing the editor. Publish flushes pending autosaves and uploads, validates
 content, builds only `personal/`, stages only `zibaldone/pages/`,
 `zibaldone/assets/`, and the required `personal/` output, commits `content.`, then
 pushes the configured upstream using existing local Git credentials. It never

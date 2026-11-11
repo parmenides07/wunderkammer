@@ -30,7 +30,11 @@ export function createTrail(ids, base, catalog) {
     navigate(href, approved = false) {
       const url = new URL(href, location.href);
       if (url.href === location.href) return true;
-      if (!approved && !guard()) return false;
+      if (!approved) {
+        const allowed = guard();
+        if (allowed?.then) return allowed.then(ok => ok ? api.navigate(href, true) : false);
+        if (!allowed) return false;
+      }
       index++; currentURL = url.pathname + url.search + url.hash;
       history.pushState({ zibaldoneIndex: index }, '', url);
       api.load(url.hash);
@@ -58,12 +62,18 @@ export function createTrail(ids, base, catalog) {
     if (url.origin !== location.origin || url.pathname !== base || !url.hash.startsWith('#/')) return;
     event.preventDefault(); api.navigate(url);
   });
-  const changed = () => {
+  let checking;
+  const changed = async () => {
     const url = location.pathname + location.search + location.hash;
     if (returning) { if (url === currentURL) returning = false; return; }
     if (url === currentURL) return;
+    if (checking?.url === url) return; // popstate and hashchange describe one traversal.
+    const pending = checking = { url };
     const next = history.state?.zibaldoneIndex;
-    if (!guard()) {
+    const allowed = await guard();
+    if (checking !== pending || url !== location.pathname + location.search + location.hash) return;
+    checking = null;
+    if (!allowed) {
       if (Number.isInteger(next) && next !== index) { returning = true; history.go(index - next); }
       else history.replaceState({ zibaldoneIndex: index }, '', currentURL);
       return;

@@ -4,6 +4,7 @@ import { isTyping } from './camera.js';
 import { GRID, pageURL, snap, resizeBox, validatePage, validHref, elementBounds, isMaximizable, spaceURL, linePoints, setLinePoints, translateElement, routeSegment, nearestSegment, intersectsRect } from './model.js';
 
 import { History } from './history.js';
+import { Autosave } from './autosave.js';
 import { encodeClipboard, decodeClipboard, cloneElements } from './clipboard.js';
 
 const app = await ready;
@@ -23,7 +24,6 @@ function startEditor(app, token) {
         <button id="add-image">Image</button>
         <button id="add-line">Line</button>
         <button id="set-camera">Set starting view</button>
-        <button id="save-page">Save</button>
         <button id="publish-page">Publish</button>
         <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button>
         <a id="preview" target="_blank" rel="noopener">Preview ↗</a>
@@ -36,9 +36,11 @@ function startEditor(app, token) {
         </label>
         <label id="line-mode-setting" hidden>Line <select id="line-mode"><option value="orthogonal">Orthogonal</option><option value="direct">Direct</option></select></label>
         <span id="camera-readout"></span>
+        <button id="save-page" title="Retry or flush autosave">Save now</button>
       </div>
       <small>Double-click blank space: text · double-click text: edit · Space + drag: pan</small>
       <span id="save-status" role="status" aria-live="polite">Saved</span>
+      <span id="save-error" role="alert" hidden></span>
       <a id="deployment-link" target="_blank" rel="noopener" hidden>Check deployment ↗</a>
       <button id="download-draft" hidden>Download unsaved JSON</button>
     </details>
@@ -116,10 +118,8 @@ function startEditor(app, token) {
   let drawing = null;
   let editing = null;
   let dirty = false;
-  let saving = false;
+  let autosave, leaveTask, uploadError = null;
   let publishing = false;
-  let saveTask = null;
-  let saveError = null;
   const pendingImages = new Set();
   let uploads = 0;
   const snapped = event => $('snap-grid').checked && !event?.altKey;
@@ -128,9 +128,9 @@ function startEditor(app, token) {
     dirty = history.isDirty(app.page);
     $('undo').disabled = history.index === 0;
     $('redo').disabled = history.index === history.states.length - 1;
-    status(dirty ? 'Unsaved changes' : 'Saved');
+    rememberDraft();
   };
-  const changed = () => { history.commit(app.page); syncDirty(); };
+  const changed = (immediate = false) => { history.commit(app.page); syncDirty(); autosave?.changed(immediate); };
   const selectedElements = () => app.page.elements.filter(e => selection.has(e.id));
   const element = () => app.page.elements.find(e => e.id === selected);
   const checkOverflow = () => {
@@ -140,17 +140,27 @@ function startEditor(app, token) {
     }
   };
   const update = e => { app.update(e); positionLineHandles(e); requestAnimationFrame(checkOverflow); };
-  const allowLeave = () => !(dirty || uploads || publishing || drawing?.points.length) || confirm('Leave this canvas and discard unsaved changes or pending image additions?');
-  app.trail.setGuard(() => {
-    if (navigating || saving || uploads || publishing) { status('Wait for the current operation to finish before changing canvases.'); return false; }
-    return allowLeave();
-  });
+  async function prepareLeave() {
+    if (publishing || navigating) return false;
+    if (leaveTask) return leaveTask;
+    endText();
+    if (drawing?.points.length && !confirm('Discard the unfinished line and leave this canvas?')) return false;
+    cancelLine(); app.camera.gesture?.cancel?.(); app.camera.gesture = null;
+    const controls = [app.viewport, $('properties'), ...$('editor-tools').querySelectorAll('.tool-row')];
+    controls.forEach(node => { node.inert = true; });
+    leaveTask = save().finally(() => {
+      controls.forEach(node => { node.inert = false; }); leaveTask = null;
+    });
+    return leaveTask;
+  }
+  app.trail.setGuard(prepareLeave);
   app.routePending = value => {
     navigating = value;
     for (const node of [app.viewport, $('properties'), ...$('editor-tools').querySelectorAll('.tool-row')]) node.inert = value;
   };
   app.beforePageChange = () => {
     endText(); cancelLine(); app.camera.gesture?.cancel?.(); app.camera.gesture = null;
+    autosave.close();
     selection.clear(); selected = null; dirty = false; $('properties').hidden = true;
   };
   app.afterPageChange = () => {
@@ -158,12 +168,13 @@ function startEditor(app, token) {
     $('editor-tools').hidden = false; $('page-name').textContent = app.page.slug;
     $('page-picker').value = app.page.slug; $('preview').href = routeURL(app.trail.ids, app.base);
     $('download-draft').hidden = true; $('deployment-link').hidden = true;
+    startAutosave(); recoverDraft();
     decorateSelection(); syncDirty(); requestAnimationFrame(checkOverflow);
   };
   const api = async (url, options = {}) => {
     const response = await fetch(url, { ...options, headers: { 'X-Zibaldone-Token': token, ...options.headers } });
     const data = await response.json();
-    if (!response.ok) throw new Error(data.error || `Request failed (${response.status}).`);
+    if (!response.ok) throw Object.assign(new Error(data.error || `Request failed (${response.status}).`), { status: response.status });
     return data;
   };
   const report = error => { status(error.message); if (dirty) $('download-draft').hidden = false; };
@@ -201,7 +212,7 @@ function startEditor(app, token) {
       else content.removeAttribute('role');
       content.blur();
     }
-    changed();
+    changed(true);
   }
   function refreshProperties() {
     const objects = selectedElements(), e = element();
@@ -295,7 +306,7 @@ function startEditor(app, token) {
     const selection = window.getSelection();
     selection.removeAllRanges();
     selection.addRange(range);
-    content.oninput = () => { e.text = content.innerText; syncDirty(); checkOverflow(); };
+    content.oninput = () => { e.text = content.innerText; syncDirty(); autosave.changed(); checkOverflow(); };
     content.onblur = endText;
   }
   function addText(point) {
@@ -357,6 +368,7 @@ function startEditor(app, token) {
     if (e.locked) return { move() {} };
     const start = structuredClone(e);
     const movable = selectedElements().filter(e => !e.locked).map(e => [e, structuredClone(e)]);
+    autosave.pause();
     const anchor = e.type === 'line' ? linePoints(start)[0] : [start.x, start.y];
     return {
       move(point, event) {
@@ -383,8 +395,8 @@ function startEditor(app, token) {
         }
         refreshProperties();
       },
-      end(moved) { if (moved) changed(); else if (!handle) select(id); },
-      cancel() { for (const [object, before] of movable) { restoreElement(object, before); update(object); } refreshProperties(); },
+      end(moved) { autosave.resume(); if (moved) changed(true); else if (!handle) select(id); },
+      cancel() { autosave.resume(); for (const [object, before] of movable) { restoreElement(object, before); update(object); } refreshProperties(); },
     };
   };
 
@@ -458,7 +470,7 @@ function startEditor(app, token) {
   $('line-mode').onchange = () => previewLine();
   $('edit-text').onclick = editText;
   $('show-grid').onchange = () => app.viewport.classList.toggle('show-grid', $('show-grid').checked);
-  $('set-camera').onclick = () => { app.page.camera = { ...app.camera.value }; changed(); status('Starting view set. Save to keep it.'); };
+  $('set-camera').onclick = () => { app.page.camera = { ...app.camera.value }; changed(true); };
   $('focus-selected').onclick = () => { endText(); if (element()) app.focus(element(), $('focus-selected')); };
   $('delete-object').onclick = removeSelected;
   function removeSelected() {
@@ -514,36 +526,61 @@ function startEditor(app, token) {
     });
   }
 
-  function save() {
-    if (publishing || navigating || app.invalid) return Promise.resolve(false);
-    if (!saveTask) saveTask = saveCanvas().finally(() => { saveTask = null; });
-    return saveTask;
-  }
-  async function saveCanvas() {
-    if (saving) return false;
-    saveError = null;
-    endText();
-    if (drawing) { saveError = new Error('Finish or cancel the line before saving.'); report(saveError); return false; }
-    if (uploads) { saveError = new Error('Wait for image uploads to finish, then save.'); report(saveError); return false; }
+  function draftKey() { return `zibaldone-draft:${app.base}:${app.page.slug}`; }
+  function rememberDraft() {
     try {
-      validatePage(app.page);
-      const snapshot = JSON.stringify(app.page);
-      saving = true;
-      $('save-page').disabled = true;
-      status('Saving…');
-      const result = await api(`/_zibaldone/api/pages/${app.page.slug}`, {
-        method: 'PUT', headers: { 'Content-Type': 'application/json', 'If-Match': app.revision }, body: snapshot,
-      });
-      app.revision = result.revision;
-      history.markSaved(snapshot);
-      syncDirty();
-      status(dirty ? 'Saved snapshot; newer changes are unsaved.' : 'Saved to zibaldone/pages/' + app.page.slug + '.json');
-      $('download-draft').hidden = true;
-      return true;
-    } catch (error) { saveError = error; report(error); return false; }
-    finally { saving = false; $('save-page').disabled = publishing; }
+      if (history.isDirty(app.page)) sessionStorage.setItem(draftKey(), JSON.stringify({ page: app.page, revision: app.revision }));
+      else sessionStorage.removeItem(draftKey());
+    } catch { /* Disk saves and the download fallback still work without storage. */ }
   }
-  $('save-page').onclick = save;
+  function startAutosave() {
+    uploadError = null;
+    $('save-error').hidden = true;
+    autosave = new Autosave({
+      snapshot: () => JSON.stringify(app.page), saved: history.saved,
+      ready: async () => {
+        while (pendingImages.size) await Promise.all([...pendingImages]);
+        if (uploadError) throw uploadError;
+      },
+      write: async snapshot => {
+        validatePage(JSON.parse(snapshot));
+        const result = await api(`/_zibaldone/api/pages/${app.page.slug}`, {
+          method: 'PUT', headers: { 'Content-Type': 'application/json', 'If-Match': app.revision }, body: snapshot,
+        });
+        app.revision = result.revision;
+      },
+      persisted: snapshot => { history.markSaved(snapshot); syncDirty(); },
+      state: (value, error) => {
+        if (!publishing) status(value);
+        $('save-error').hidden = !error;
+        $('save-error').textContent = error ? `${error.message} Changes remain in this tab. Use Download unsaved JSON before resolving a conflict or reloading.` : '';
+        $('download-draft').hidden = !error;
+        if (error) rememberDraft();
+      },
+    });
+    status('Saved');
+  }
+  function recoverDraft() {
+    try {
+      const draft = JSON.parse(sessionStorage.getItem(draftKey()));
+      if (!draft) return;
+      validatePage(draft.page, app.page.slug);
+      if (JSON.stringify(draft.page) === JSON.stringify(app.page)) { sessionStorage.removeItem(draftKey()); return; }
+      if (!confirm('Recover unsaved changes from the previous editing session? Cancel keeps the version on disk.')) {
+        sessionStorage.removeItem(draftKey()); return;
+      }
+      app.page = draft.page;
+      // Use the draft's original revision; recovery must not overwrite a newer disk version.
+      app.revision = draft.revision;
+      history.commit(app.page); app.render(); syncDirty(); autosave.changed();
+    } catch (error) { report(error); }
+  }
+  async function save() {
+    if (navigating || app.invalid) return false;
+    try { await autosave.flush(); return true; }
+    catch { return false; }
+  }
+  $('save-page').onclick = () => { endText(); save(); };
   $('publish-page').onclick = async () => {
     if (publishing) return;
     endText();
@@ -555,13 +592,10 @@ function startEditor(app, token) {
     // status remains outside the inert control rows and available to readers.
     const controls = [app.viewport, $('properties'), ...$('editor-tools').querySelectorAll('.tool-row')];
     controls.forEach(node => { node.inert = true; });
-    status('Saving…');
+    status('Saving...');
     try {
-      if (saveTask && !await saveTask) throw saveError;
-      const images = await Promise.all([...pendingImages]);
-      const failure = images.find(result => !result.ok);
-      if (failure) throw failure.error;
-      if (!await saveCanvas()) throw saveError;
+      if (drawing?.points.length) throw new Error('Finish or cancel the line before publishing.');
+      await autosave.flush();
       status('Committing…');
       const response = await fetch('/_zibaldone/api/publish', { method: 'POST', headers: { 'X-Zibaldone-Token': token } });
       if (!response.ok) throw new Error((await response.json()).error || 'Local publishing request failed.');
@@ -593,7 +627,7 @@ function startEditor(app, token) {
       publishing = false;
       controls.forEach(node => { node.inert = false; });
       button.disabled = false; button.textContent = 'Publish'; button.removeAttribute('aria-busy');
-      $('save-page').disabled = saving;
+      $('save-page').disabled = false;
       app.camera.releaseSpace();
     }
   };
@@ -603,7 +637,22 @@ function startEditor(app, token) {
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
   window.addEventListener('beforeunload', event => {
-    if (!app.trail.departing && (dirty || uploads || publishing || drawing?.points.length)) { event.preventDefault(); event.returnValue = ''; }
+    rememberDraft();
+    if (!app.trail.departing && (history.isDirty(app.page) || uploads || publishing || drawing?.points.length)) {
+      autosave.flush().catch(() => {}); event.preventDefault(); event.returnValue = '';
+    }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden') { rememberDraft(); autosave.flush().catch(() => {}); }
+  });
+  window.addEventListener('online', () => { if (dirty) autosave.changed(true); });
+  document.addEventListener('click', async event => {
+    const link = event.target.closest('a[href]');
+    if (!link || event.defaultPrevented || event.button || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey || link.hasAttribute('download') || link.target && link.target !== '_self') return;
+    const url = new URL(link.href);
+    if (url.origin === location.origin && url.pathname === app.base && url.hash.startsWith('#/')) return;
+    event.preventDefault();
+    if (await prepareLeave()) location.href = url.href;
   });
   function restoreHistory(direction) {
     endText(); cancelLine();
@@ -611,7 +660,7 @@ function startEditor(app, token) {
     const page = history[direction]();
     if (!page) return;
     app.page = page;
-    redraw(); syncDirty();
+    redraw(); syncDirty(); autosave.changed();
   }
   $('undo').onclick = () => restoreHistory('undo');
   $('redo').onclick = () => restoreHistory('redo');
@@ -635,14 +684,14 @@ function startEditor(app, token) {
   // Clipboard events work without clipboard-read permission. A local copy also
   // survives navigation between canvases when the system clipboard is unavailable.
   for (const operation of ['copy', 'cut']) window.addEventListener(operation, event => {
-    if (publishing || navigating || app.invalid || isTyping(event.target) || event.target.closest?.('#breadcrumbs') || document.querySelector('dialog[open]') || !selection.size) return;
+    if (publishing || navigating || leaveTask || app.invalid || isTyping(event.target) || event.target.closest?.('#breadcrumbs') || document.querySelector('dialog[open]') || !selection.size) return;
     const text = encodeClipboard(selectedElements());
     event.clipboardData?.setData('text/plain', text); rememberClipboard(text);
     event.preventDefault();
     if (operation === 'cut') removeSelected();
   });
   window.addEventListener('paste', event => {
-    if (publishing || navigating || app.invalid || isTyping(event.target) || event.target.closest?.('#breadcrumbs') || document.querySelector('dialog[open]')) return;
+    if (publishing || navigating || leaveTask || app.invalid || isTyping(event.target) || event.target.closest?.('#breadcrumbs') || document.querySelector('dialog[open]')) return;
     const text = event.clipboardData?.getData('text/plain') || fallbackClipboard();
     try {
       const elements = decodeClipboard(text);
@@ -656,7 +705,7 @@ function startEditor(app, token) {
     if (document.querySelector('dialog[open]')) return;
     const key = event.key.toLowerCase(), command = event.ctrlKey || event.metaKey;
     if (command && key === 's') { event.preventDefault(); save(); return; }
-    if (publishing || navigating || app.invalid || event.target.closest('#breadcrumbs')) return;
+    if (publishing || navigating || leaveTask || app.invalid || event.target.closest('#breadcrumbs')) return;
     if (event.key === 'Escape') {
       app.camera.gesture?.cancel?.(); app.camera.gesture = null;
       endText(); cancelLine(); select(null); return;
@@ -690,15 +739,15 @@ function startEditor(app, token) {
     }
   });
 
-  $('page-picker').onchange = () => {
+  $('page-picker').onchange = async () => {
     const url = canvasURL(pageURL($('page-picker').value), app.trail.ids, app.base, true, location.origin);
-    if (!app.trail.navigate(url)) $('page-picker').value = app.page.slug;
+    if (!await app.trail.navigate(url)) $('page-picker').value = app.page.slug;
   };
   $('new-page').onclick = () => { $('new-page-error').textContent = ''; $('new-page-dialog').showModal(); };
   $('cancel-new').onclick = () => $('new-page-dialog').close();
   $('new-page-form').onsubmit = async event => {
     event.preventDefault();
-    if (!allowLeave()) return;
+    if (!await prepareLeave()) return;
     const button = event.submitter;
     button.disabled = true;
     try {
@@ -718,7 +767,7 @@ function startEditor(app, token) {
     uploads++;
     try {
       for (const [index, file] of [...files].entries()) {
-        status('Adding image…');
+        status('Saving...');
         // Decode before writing so invalid files do not leave assets behind.
         const localURL = URL.createObjectURL(file);
         const image = new Image();
@@ -730,18 +779,21 @@ function startEditor(app, token) {
         app.world.append(app.makeObject(e));
         select(e.id);
         changed();
-        status('Image added. Set its alt text, then save the canvas.');
+
       }
       return { ok: true };
-    } catch (error) { report(error); return { ok: false, error }; }
+    } catch (error) { uploadError = Object.assign(error, { status: error.status || 400 }); return { ok: false, error }; }
     finally { uploads--; }
   }
   function queueImages(files, point) {
+    uploadError = null;
     const task = addImages(files, point);
     pendingImages.add(task);
-    task.finally(() => pendingImages.delete(task));
+    task.finally(() => { pendingImages.delete(task); autosave.changed(true); });
+    autosave.flush().catch(() => {});
   }
   $('add-image').onclick = () => $('image-input').click();
+  startAutosave(); recoverDraft();
   decorateSelection();
   $('image-input').onchange = () => { queueImages($('image-input').files, { ...app.camera.value }); $('image-input').value = ''; };
   app.viewport.addEventListener('dragover', event => { event.preventDefault(); event.dataTransfer.dropEffect = 'copy'; });

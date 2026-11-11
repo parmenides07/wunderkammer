@@ -45,9 +45,11 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
 
     await require('./inversion.cjs')({ page, browser, origin, root });
     await require('./refinements.cjs')({ page, browser, origin, root });
+    await require('./viewer-controls.cjs')({ page, browser, origin, root });
     await require('./authoring.cjs')({ page, browser, origin, root });
     await require('./trail.cjs').local({ browser, origin, root });
     await require('./publish.cjs')({ browser, source });
+    await require('./autosave.cjs')({ browser, origin, root });
     await page.goto(origin + '/personal/'); await canvasReady(page); await ready(page);
 
     const canvasBox = await page.locator('#viewport').boundingBox();
@@ -204,7 +206,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.keyboard.insertText('Created in empty space');
     await page.keyboard.press('Escape');
     await page.locator('#image-input').setInputFiles(path.join(root, 'assets/zion.png'));
-    await page.waitForFunction(() => document.querySelector('#save-status').textContent.includes('Image added'));
+    await page.waitForFunction(() => document.querySelectorAll('.image-object').length > 0 && document.querySelector('#save-status').textContent === 'Saved');
     const imageElement = (await state(page)).page.elements.at(-1);
     assert.equal(imageElement.type, 'image');
     await page.locator('#prop-width').fill('15');
@@ -215,7 +217,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.locator('#prop-alt').press('Tab');
     await page.locator('#set-camera').click();
     await page.locator('#save-page').click();
-    await page.waitForFunction(() => document.querySelector('#save-status').textContent.startsWith('Saved to'));
+    await page.waitForFunction(() => document.querySelector('#save-status').textContent === 'Saved');
     const saved = await state(page);
     await page.reload(); await ready(page); await page.waitForSelector('#editor-tools');
     assert.deepEqual((await state(page)).page, saved.page);
@@ -244,7 +246,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.keyboard.insertText(('A readable paragraph. '.repeat(20) + '\n\n').repeat(20));
     await page.keyboard.press('Escape');
     await page.locator('#save-page').click();
-    await page.waitForFunction(() => document.querySelector('#save-status').textContent.startsWith('Saved to'));
+    await page.waitForFunction(() => document.querySelector('#save-status').textContent === 'Saved');
     assert.equal(await page.locator('[data-overflow=true]').count(), 1);
 
     // Touch input via Chromium's actual touch-event pipeline: one-finger pan and midpoint-anchored pinch.
@@ -379,7 +381,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.goto(staticOrigin + '/personal/?edit5500#/field-notes'); await canvasReady(page); await ready(page);
     await page.reload(); await ready(page);
     assert.equal(await page.locator('#editor-tools').count(), 0);
-    for (const route of ['/personal/client/editor.js', '/personal/client/editor.css', '/personal/client/history.js', '/personal/client/clipboard.js', '/personal/server.mjs', '/personal/publish.mjs', '/_zibaldone/api/publish', '/_zibaldone/api/pages']) assert.equal((await fetch(staticOrigin + route)).status, 404);
+    for (const route of ['/personal/client/editor.js', '/personal/client/editor.css', '/personal/client/history.js', '/personal/client/autosave.js', '/personal/client/clipboard.js', '/personal/server.mjs', '/personal/publish.mjs', '/_zibaldone/api/publish', '/_zibaldone/api/pages']) assert.equal((await fetch(staticOrigin + route)).status, 404);
     await page.goto(staticOrigin + '/personal/#/refinements'); await canvasReady(page); await ready(page);
     assert.equal(await page.locator('.line-ink').count(), 1);
     assert.equal(await page.locator('.line-hit').evaluate(el => getComputedStyle(el).display), 'none');

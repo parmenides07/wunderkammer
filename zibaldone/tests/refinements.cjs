@@ -12,7 +12,7 @@ const object = (page, id) => page.locator(`[data-id="${id}"]`);
 const selected = page => page.locator('.object.selected').getAttribute('data-id');
 const value = async (page, id) => { const e = (await state(page)).page.elements.find(e => e.id === id); return e?.points ? { ...e, x1: e.points[0][0], y1: e.points[0][1], x2: e.points.at(-1)[0], y2: e.points.at(-1)[1] } : e; };
 const setField = async (page, name, value) => { await page.locator('#prop-' + name).fill(String(value)); await page.locator('#prop-' + name).press('Tab'); };
-const save = async page => { await page.locator('#save-page').click(); await page.waitForFunction(() => document.querySelector('#save-status').textContent.startsWith('Saved to')); };
+const save = async page => { await page.locator('#save-page').click(); await page.waitForFunction(() => document.querySelector('#save-status').textContent === 'Saved'); };
 const point = async (page, x, y) => {
   const c = (await state(page)).camera, size = await page.locator('#viewport').boundingBox();
   return { x: size.x + size.width / 2 + (x - c.x) * 24 * c.zoom, y: size.y + size.height / 2 + (y - c.y) * 24 * c.zoom };
@@ -44,7 +44,7 @@ module.exports = async ({ page, browser, origin, root }) => {
   await object(page, 'legacy').locator('.content').hover();
   assert.equal(await page.locator('#viewport').getAttribute('data-feedback'), null);
   assert.equal(await object(page, 'legacy').evaluate(el => getComputedStyle(el).zIndex), '0');
-  assert.equal(await object(page, 'legacy').locator('.focus-object').count(), 1);
+  assert.equal(await object(page, 'legacy').locator('.focus-object').count(), 0);
   await object(page, 'legacy').locator('.content').click();
   assert.equal(await page.locator('#focus-view').evaluate(el => el.open), true);
   await page.keyboard.press('Escape');
@@ -69,18 +69,18 @@ module.exports = async ({ page, browser, origin, root }) => {
   assert.equal(await page.locator('#viewport').getAttribute('data-feedback'), 'opt-in');
 
   const photoBox = await object(page, 'image').boundingBox();
-  await object(page, 'image').locator('.content').hover(); await scale(page, 'image', 1.025);
+  await object(page, 'image').locator('.content').hover(); await scale(page, 'image', 1.02);
   assert.equal(await page.locator('#viewport').getAttribute('data-feedback'), null);
   assert.deepEqual(await object(page, 'image').boundingBox(), photoBox);
   const scaled = await object(page, 'image').locator('img').boundingBox();
-  assert.ok(Math.abs(scaled.width / photoBox.width - 1.025) < 0.00001);
+  assert.ok(Math.abs(scaled.width / photoBox.width - 1.02) < 0.00001);
   assert.ok(Math.abs(scaled.x + scaled.width / 2 - photoBox.x - photoBox.width / 2) < 0.001);
-  assert.equal(await object(page, 'image').locator('img').evaluate(el => getComputedStyle(el).transitionDuration), '0.15s');
+  assert.equal(await object(page, 'image').locator('img').evaluate(el => getComputedStyle(el).transitionDuration), '0.05s');
   await page.emulateMedia({ reducedMotion: 'reduce' }); await scale(page, 'image', 1);
   assert.equal(await object(page, 'image').locator('img').evaluate(el => getComputedStyle(el).transitionDuration), '0s');
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await page.mouse.move(10, 10); await object(page, 'image').locator('.content').focus();
-  await page.keyboard.press('Tab'); await page.keyboard.press('Shift+Tab'); await scale(page, 'image', 1.025);
+  await page.keyboard.press('Tab'); await page.keyboard.press('Shift+Tab'); await scale(page, 'image', 1.02);
   await page.keyboard.press('Enter'); assert.equal(await page.locator('#focus-view').evaluate(el => el.open), true);
   await page.keyboard.press('Escape');
   await object(page, 'linked').locator('.content').hover();
@@ -90,7 +90,7 @@ module.exports = async ({ page, browser, origin, root }) => {
   await open();
   await object(page, 'linked').locator('.content').focus(); await page.keyboard.press('Enter'); await page.waitForURL('**/field-notes'); await canvasReady(page);
   await open();
-  await object(page, 'linked-image').locator('.content').hover(); await scale(page, 'linked-image', 1.025);
+  await object(page, 'linked-image').locator('.content').hover(); await scale(page, 'linked-image', 1.02);
   assert.equal(await object(page, 'linked-image').locator('.focus-object').count(), 0);
   await object(page, 'linked-image').locator('.content').click(); await page.waitForURL('**/field-notes'); await canvasReady(page);
 

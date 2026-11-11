@@ -91,6 +91,7 @@ module.exports.local = async ({ browser, origin, root }) => {
     await page.locator('#page-picker').selectOption('comics'); await page.waitForURL('**/comics'); await canvasReady(page); await page.waitForSelector('#editor-tools');
     await expect(page, ['home', 'art', 'comic studies']);
     assert.ok((await page.locator('#editor-tools').boundingBox()).y >= 30);
+    await page.route('**/_zibaldone/api/pages/comics', route => route.fulfill({ status: 500, contentType: 'application/json', body: JSON.stringify({ error: 'Disk unavailable' }) }));
     await content(page, 'isolate').dblclick(); await page.keyboard.insertText(' unsaved'); await page.keyboard.press('Escape');
     let prompts = 0;
     const reject = async dialog => { assert.equal(dialog.type(), 'confirm'); prompts++; await dialog.dismiss(); };
@@ -104,14 +105,15 @@ module.exports.local = async ({ browser, origin, root }) => {
     assert.equal(await page.locator('[data-id=isolate]').getAttribute('style'), position);
     assert.equal(await page.locator('.pan-ready').count(), 0);
     await page.keyboard.press('Enter');
-    await page.waitForTimeout(250); assert.equal(prompts, 1);
+    await page.waitForFunction(() => document.querySelector('#save-status').textContent === 'Save failed'); assert.equal(prompts, 0);
     assert.ok(page.url().endsWith('/comics')); await expect(page, ['home', 'art', 'comic studies']);
     assert.match(await content(page, 'isolate').textContent(), /unsaved/);
     assert.equal(await page.evaluate(() => sessionStorage.getItem('zibaldoneTrail:/personal/:pending')), null);
     await page.goBack();
     await page.waitForFunction(() => location.hash === '#/home/art/comics'); await expect(page, ['home', 'art', 'comic studies']);
-    assert.equal(prompts, 2); assert.match(await content(page, 'isolate').textContent(), /unsaved/);
-    page.off('dialog', reject); page.once('dialog', dialog => dialog.accept());
+    assert.equal(prompts, 0); assert.match(await content(page, 'isolate').textContent(), /unsaved/);
+    page.off('dialog', reject);
+    await page.unroute('**/_zibaldone/api/pages/comics');
     await page.locator('#breadcrumbs a').filter({ hasText: /^art$/ }).click(); await page.waitForURL('**/art'); await canvasReady(page);
     await page.waitForSelector('#editor-tools'); await expect(page, ['home', 'art']);
     assert.deepEqual(errors, []);

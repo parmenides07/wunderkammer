@@ -20,7 +20,7 @@ const drag = async (page, x, y, dx, dy) => { await move(page, x, y); await page.
 const undo = page => page.keyboard.press('Control+z');
 const redo = page => page.keyboard.press('Control+Shift+z');
 const field = async (page, name, value) => { const input = page.locator('#prop-' + name); await input.fill(String(value)); await input.press('Tab'); };
-const save = async page => { await page.locator('#save-page').click(); await page.waitForFunction(() => document.querySelector('#save-status').textContent.startsWith('Saved to')); };
+const save = async page => { await page.locator('#save-page').click(); await page.waitForFunction(() => document.querySelector('#save-status').textContent === 'Saved'); };
 
 module.exports = async ({ page, origin, root }) => {
   const fixture = { slug: 'authoring', camera: { x: 0, y: 0, zoom: 1 }, elements: [
@@ -43,7 +43,7 @@ module.exports = async ({ page, origin, root }) => {
   const groupMoved = await values(page);
   assert.equal(new URL(page.url()).hash, '#/authoring');
   await undo(page); assert.deepEqual(await values(page), fixture.elements, 'one undo restores the entire group gesture');
-  assert.equal(await page.locator('#save-status').textContent(), 'Saved');
+  await page.waitForFunction(() => document.querySelector('#save-status').textContent === 'Saved');
   await redo(page); assert.deepEqual(await values(page), groupMoved);
   await page.keyboard.press('Delete'); assert.deepEqual((await values(page)).map(e => e.id), ['photo']);
   await undo(page); assert.deepEqual(await values(page), groupMoved);

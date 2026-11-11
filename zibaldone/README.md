@@ -57,9 +57,9 @@ other canvases have stable IDs used in `/personal/#/slug` hash trails.
 | Desktop zoom | Mouse wheel, trackpad pinch reported as Ctrl+wheel, or Ctrl+trackpad scroll |
 | Touch pan/zoom | One finger pans; two fingers pan and pinch around their midpoint |
 | Move on touch | Tap to select, then drag; a second finger cancels a pending move |
-| Save entry view | **Set starting view**, then **Save** |
-| Save composition | **Save** or Ctrl/Cmd+S |
-| Publish saved content | **Publish** beside Save; saves this canvas first, then commits and pushes |
+| Save entry view | **Set starting view** (saved immediately) |
+| Save composition | Automatic; **Save now** or Ctrl/Cmd+S flushes/retries |
+| Publish saved content | **Publish** waits for autosave and uploads, then commits and pushes |
 
 A click in an overlap selects the topmost object. Higher Z renders above lower Z;
 equal Z preserves JSON order, with later elements on top. Selection never raises
@@ -108,12 +108,15 @@ neighbors. Lines never connect to objects or avoid obstacles automatically.
 
 Text links retain their muted red hover/keyboard-focus feedback. Opt-in text
 inversion uses a white difference overlay covering the whole grid rectangle,
-including empty regions and overlapping content. Interactive images scale 1.025×
-about their center over 150 ms. Reduced motion disables the scale and color
+including empty regions and overlapping content. Interactive images scale 1.02×
+about their center over 50 ms (ease-out). Reduced motion disables the scale and color
 transitions; touch-only devices and the editor do not activate these hover effects.
 
-Maximizable unlinked objects open on click. Linked objects navigate normally and
-have a separate discreet ↗ focus action. This control is visible on touch devices.
+Maximizable unlinked objects open on click/tap, with a zoom-in cursor and no arrow.
+Linked, maximizable objects navigate normally and retain a separate discreet ↗
+focus action: revealed on hover/keyboard focus, or visible on touch devices.
+Only these linked objects have arrows. Arrows scale with the canvas and hide when
+the arrow or asset rectangle is smaller than 24 screen pixels in either dimension.
 Non-maximizable, unlinked objects are plain content, with no interactive cursor,
 focus button, or hover feedback. Links work regardless of the maximizable setting.
 Focus shows only the object on white: images fit, text reflows and scrolls at a
@@ -146,8 +149,8 @@ explanation and a home link; see [the URL audit](LEGACY-URLS.md).
 
 Canvas changes reuse the renderer and camera with the destination's saved start
 view. The editor clears selection and starts a fresh canvas undo history after
-confirming any unsaved departure. Navigation waits for active saves/uploads or
-publishing to finish. In-place editing, focus isolation, mobile trail scrolling,
+flushing pending autosaves and uploads before departure. Failed saves keep the
+current canvas open; navigation is blocked during publishing. In-place editing, focus isolation, mobile trail scrolling,
 and the existing hover treatment are preserved. Focus temporarily hides the trail.
 
 ## JSON format and defaults
@@ -216,11 +219,34 @@ zoom is limited to 0.08–8. Example elements within a page:
 
 ## Saving
 
-Save is explicit. Unsaved edits, pending uploads, and a placed unfinished line
-trigger the leave warning. Preview opens the last saved composition. The local
-server writes indented JSON using atomic rename and serialized writes. ETags
-reject stale saves and duplicate creation. Failed saves retain the current tab
-and offer **Download unsaved JSON** before you resolve the disk conflict/reload.
+Edits autosave to the existing JSON after a 600 ms pause. Completed drags/resizes,
+text-edit completion, and **Set starting view** flush immediately. Ordinary pan
+and zoom never change the saved starting camera. Autosave does not commit or push.
+The restrained status reads **Saving...**, **Saved**, or **Save failed**; **Saved**
+means the latest canvas and all pending image paths have been acknowledged on disk.
+**Save now** / Ctrl/Cmd+S is an optional flush/retry, not a normal editing step.
+
+Writes are serialized and use the existing atomic rename and revision checks.
+Edits made during a request queue a newer snapshot using the acknowledged revision.
+Text saves preserve the caret/native undo; canvas undo/redo history is not reset.
+Navigation, including breadcrumbs and Back/Forward, waits for uploads and autosave.
+Publish also waits and stops on any save/upload failure. Finish unfinished lines
+before publishing; leaving an unfinished line asks before discarding that draft.
+
+Failed saves retain the in-memory canvas and show the error plus **Download unsaved
+JSON**. Transient failures retry at 2, 5, and 10 seconds; new edits, coming online,
+and **Save now** can retry. Revision conflicts never automatically overwrite disk:
+download the draft and resolve the conflicting version before reloading. Failed
+uploads must be re-added; no temporary image references are saved.
+
+Unsaved snapshots are also kept in this tab's sessionStorage when available.
+Refreshing offers recovery; the draft's original revision is retained so recovery
+cannot overwrite a newer disk version. Canceling recovery explicitly keeps disk.
+Tab close/refresh warns only for unsaved work, pending uploads, publishing, or an
+unfinished line. Backgrounding flushes where possible, but browsers cannot
+promise a final network write during shutdown; wait for **Saved** before closing.
+Session drafts are a recovery aid, not a replacement for repository JSON; closing
+the tab may remove them. Preview opens the last safely saved composition.
 
 Uploads are limited to 20 MB, JSON to 2 MB, and pages to 2000 objects. Existing
 validation, image magic-byte checks, Host/Origin/token checks, safe filenames, and
@@ -229,7 +255,7 @@ an object leaves its asset intact so other canvases and undo can still reference
 
 ## One-click publishing
 
-With the one-time Git setup below complete, click **Publish** beside **Save** in
+With the one-time Git setup below complete, click **Publish** in
 `?edit5500`. It finishes text editing, waits for pending image uploads, and saves
 the current canvas through the normal save endpoint. A failed save or upload
 stops publishing. Finish or cancel any unfinished line first.
@@ -238,7 +264,7 @@ Publish validates content and builds only the personal subtree, then stages
 additions, modifications, and deletions **only** within `zibaldone/pages/`,
 `zibaldone/assets/`, and generated `personal/`, commits with the message `content.`, and
 pushes to the current branch's configured upstream. This includes other canvases
-already saved to disk; save unsaved work in other tabs separately. It never stages
+already saved to disk; wait for **Saved** in other editing tabs first. It never stages
 the entire repository or includes professional files, application source changes, or README edits.
 
 The button is disabled during the operation and the status shows **Saving…**,
@@ -342,6 +368,7 @@ Use `npm run dev` for the secure local editor and normal preview of both sites.
 - `client/editor.js`, `editor.css`: local authoring controls and selection.
 - `client/history.js`, `clipboard.js`: bounded snapshots and portable object copies;
   both development-only. No full-page snapshot occurs during pointer movement.
+- `client/autosave.js`: development-only debouncing, serialized writes and bounded retries.
 - `server.mjs`: loopback routes, safe saves, image uploads, authenticated publish progress.
 - `publish.mjs`: development-only validation/build, content/output staging, commit/push, upstream checks and publish lock.
 - `template.mjs`, `build.mjs`: minimal HTML and static output allowlist.
@@ -370,6 +397,8 @@ locks/Alt/nudging, native text undo/clipboard, one-step drag undo, polyline draw
 vertex insertion/editing, typography/overflow/shadows, save/reload, static routes,
 repository subpaths, fonts/images/links, breadcrumb pruning/history, fresh-tab
 isolation, canceled unsaved departures, mobile trail scrolling, and editor/API isolation.
+Autosave tests cover rapid typing/caret preservation, completed gestures, undo/redo,
+queued writes/uploads, navigation/refresh, draft recovery and revision conflicts.
 They also check Publish progress, pending uploads, failed saves, Git errors,
 concurrent requests, and the deployment link without pushing to GitHub. Screenshots
 are written to `/tmp/space-*.png` (the historical test artifact prefix).

@@ -54,20 +54,22 @@ module.exports = async ({ browser, source }) => {
     assert.equal(await git(['log', '-1', '--format=%s']), 'content.');
     assert.equal(await git(['rev-parse', 'HEAD']), (await execute('git', ['rev-parse', 'refs/heads/main'], { cwd: remote })).stdout.trim());
     const events = await page.evaluate(() => window.publishStatuses);
-    for (const state of ['Saving…', 'Building…', 'Committing…', 'Pushing…']) assert.ok(events.includes(state), state);
+    for (const state of ['Saving...', 'Building…', 'Committing…', 'Pushing…']) assert.ok(events.includes(state), state);
     assert.match(await status.textContent(), /not yet confirmed/); assert.equal(await button.isDisabled(), false);
     const firstHead = await git(['rev-parse', 'HEAD']); await button.click(); await waitStatus('^Nothing new to publish$');
     assert.equal(await git(['rev-parse', 'HEAD']), firstHead);
 
     // Failed save must never issue a publish request or lose the in-memory edit.
-    await edit('Unsaved after failed save');
     await page.route('**/_zibaldone/api/pages/home', route => route.fulfill({ status: 409, contentType: 'application/json', body: JSON.stringify({ error: 'This page changed on disk.' }) }));
+    await edit('Unsaved after failed save');
     const requestsBeforeFailure = publishRequests;
     await button.click(); await waitStatus('^Publishing failed: This page changed');
     assert.equal(publishRequests, requestsBeforeFailure); assert.equal(await git(['rev-parse', 'HEAD']), firstHead);
     assert.match(await page.locator('[data-id=note]').textContent(), /Unsaved after failed save/);
     assert.equal(await page.locator('#viewport').evaluate(n => n.inert), false);
     await page.unroute('**/_zibaldone/api/pages/home');
+    await page.reload(); await canvasReady(page); await page.waitForSelector('#editor-tools');
+    await waitStatus('^Saved$'); // Explicit reload recovers the draft; no conflict is blindly retried.
 
     await fs.cp(path.join(source, 'build.mjs'), path.join(root, 'build.mjs'));
     await fs.writeFile(path.join(repo, '_config.yml'), 'exclude: [zibaldone]\n');

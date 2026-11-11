@@ -50,6 +50,7 @@ export class Space {
     this.world = document.querySelector('#world');
     this.nodes = new Map();
     this.camera = new Camera(this.viewport, this.world, page.camera);
+    this.camera.onChange = () => this.updateFocusControls();
     this.world.addEventListener('pointerover', event => {
       this.hoveredAsset = event.pointerType !== 'touch' && matchMedia('(any-hover: hover)').matches
         ? event.target.closest('.object') : null;
@@ -75,6 +76,7 @@ export class Space {
   render() {
     this.nodes.clear();
     this.world.replaceChildren(...this.page.elements.map(element => this.makeObject(element)));
+    this.updateFocusControls();
   }
   makeObject(element) {
     const node = document.createElement('article');
@@ -123,7 +125,7 @@ export class Space {
     });
     content.addEventListener('dragstart', e => e.preventDefault());
     node.append(content);
-    if (isMaximizable(element)) {
+    if (element.href && isMaximizable(element)) {
       const focus = document.createElement('button');
       focus.className = 'focus-object';
       focus.textContent = '↗';
@@ -134,6 +136,15 @@ export class Space {
     }
     this.nodes.set(element.id, node);
     return node;
+  }
+  updateFocusControls() {
+    const size = matchMedia('(pointer: coarse)').matches ? 40 : 30;
+    for (const button of this.world.querySelectorAll('.focus-object')) {
+      const box = button.parentElement.style;
+      // Keep the arrow in world space, but remove unusably small targets from
+      // both pointer hit testing and keyboard navigation.
+      button.hidden = Math.min(size, parseFloat(box.width), parseFloat(box.height)) * this.camera.value.zoom < 24;
+    }
   }
   update(element) {
     const node = this.nodes.get(element.id);
