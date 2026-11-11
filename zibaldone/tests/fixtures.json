@@ -1,0 +1,20 @@
+[
+  {
+    "slug": "home",
+    "camera": { "x": 0, "y": 0, "zoom": 1 },
+    "elements": [
+      { "id": "title", "type": "text", "x": -5, "y": -4, "width": 14, "height": 3, "text": "A place in space.", "font": "baskerville", "fontSize": 40 },
+      { "id": "introduction", "type": "text", "x": -5, "y": 1, "width": 12, "height": 5, "text": "Words, images, and the space between them.", "font": "mono", "fontSize": 14 },
+      { "id": "next", "type": "text", "x": 10, "y": 7, "width": 11, "height": 2, "text": "01 — field notes →", "font": "mono", "fontSize": 16, "href": "/space/field-notes/" }
+    ]
+  },
+  {
+    "slug": "field-notes",
+    "camera": { "x": 0, "y": 0, "zoom": 0.9 },
+    "elements": [
+      { "id": "heading", "type": "text", "x": -6, "y": -6, "width": 14, "height": 3, "text": "Field notes", "font": "baskerville", "fontSize": 48 },
+      { "id": "image", "type": "image", "x": 2, "y": -1, "width": 17, "height": 11.863613738178198, "src": "/space/assets/zion.png", "alt": "Zion workspace" },
+      { "id": "home", "type": "text", "x": -6, "y": 14, "width": 8, "height": 2, "text": "← the first space", "font": "mono", "fontSize": 14, "href": "/space/" }
+    ]
+  }
+]

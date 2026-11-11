@@ -1,0 +1,87 @@
+{
+  "slug": "field-notes",
+  "camera": {
+    "x": -5.349541914784372,
+    "y": 5.447550574231563,
+    "zoom": 0.9471039138391464
+  },
+  "elements": [
+    {
+      "id": "number",
+      "type": "text",
+      "x": -16,
+      "y": -9,
+      "width": 5,
+      "height": 3,
+      "text": "01 /",
+      "font": "mono",
+      "fontSize": 17
+    },
+    {
+      "id": "heading",
+      "type": "text",
+      "x": -6,
+      "y": -6,
+      "width": 14,
+      "height": 3,
+      "text": "Field notes",
+      "font": "baskerville",
+      "fontSize": 48
+    },
+    {
+      "id": "image",
+      "type": "image",
+      "x": 4,
+      "y": 1,
+      "width": 12,
+      "height": 8.374315579890492,
+      "src": "/space/assets/zion.png",
+      "alt": "An existing Zion workspace: scattered notes on a pale open field.",
+      "zIndex": 1
+    },
+    {
+      "id": "note",
+      "type": "text",
+      "x": -19,
+      "y": -2,
+      "width": 11,
+      "height": 14,
+      "text": "So I've  been thinking about a few different things. It's all a bit complicated, I'm not going to lie. \n\n\nIt mainly centers around implicit sense of normalcy and world-view. An understanding of the size of the world you inhabit. ",
+      "font": "baskerville",
+      "fontSize": 22
+    },
+    {
+      "id": "home",
+      "type": "text",
+      "x": -6,
+      "y": 14,
+      "width": 8,
+      "height": 2,
+      "text": "← the first space",
+      "font": "mono",
+      "fontSize": 14,
+      "href": "/space/"
+    },
+    {
+      "id": "16768254-69dd-4b31-8471-b8b1f1655e60",
+      "type": "text",
+      "x": -6,
+      "y": -1,
+      "width": 12,
+      "height": 5,
+      "text": "heyyoo",
+      "font": "mono",
+      "fontSize": 16
+    },
+    {
+      "id": "184fa503-9742-4c37-a9b7-7b252179737e",
+      "type": "image",
+      "x": 0,
+      "y": -2,
+      "width": 12,
+      "height": 6.75,
+      "src": "/space/assets/image-8e2a52d3-a798-4867-8177-1180d1d1d002.jpg",
+      "alt": ""
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "slug": "art",
+  "camera": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "elements": [
+    {
+      "id": "7d8eb970-ec11-4657-9606-931a47ef0042",
+      "type": "image",
+      "x": -18,
+      "y": -11,
+      "width": 13,
+      "height": 14.12126387702818,
+      "src": "/space/assets/image-1b67be47-a6af-4437-9f63-4421cd26f968.png",
+      "alt": "",
+      "zIndex": 1
+    },
+    {
+      "id": "eca27012-dc8e-4f6d-acd3-c487cf942d77",
+      "type": "text",
+      "x": -4,
+      "y": -6,
+      "width": 12,
+      "height": 5,
+      "text": "Blobs and Stuff",
+      "font": "baskerville",
+      "fontSize": 43
+    },
+    {
+      "id": "8c92af1a-e178-4de3-a9e2-a282f6be9322",
+      "type": "image",
+      "x": 2,
+      "y": -2,
+      "width": 12,
+      "height": 12.785046728971963,
+      "src": "/space/assets/image-ac6fe331-aca3-459a-9a39-d8c2ca173a81.png",
+      "alt": ""
+    },
+    {
+      "id": "e6f5e9d2-63a0-473d-a9e7-bbbd0b117f6d",
+      "type": "image",
+      "x": -31,
+      "y": -5,
+      "width": 12,
+      "height": 18.26086956521739,
+      "src": "/space/assets/image-85a1e61d-7d30-4e21-8490-5b5eb2101b7c.png",
+      "alt": ""
+    },
+    {
+      "id": "d8d14ec1-dbb1-4340-943c-ff27b625df26",
+      "type": "image",
+      "x": -11,
+      "y": 5,
+      "width": 12,
+      "height": 10.994152046783626,
+      "src": "/space/assets/image-bdd65b6b-ee04-4211-b454-16e9087db14b.png",
+      "alt": ""
+    },
+    {
+      "id": "1a7e0f48-a19a-4114-a896-c0b5082a8e34",
+      "type": "text",
+      "x": -4,
+      "y": -3,
+      "width": 5,
+      "height": 5,
+      "text": "Lot of random doodles and drawings I've made over the last year ",
+      "font": "mono",
+      "fontSize": 18,
+      "align": "center"
+    },
+    {
+      "id": "0665ab9b-8266-432b-9043-1c32e88688a5",
+      "type": "text",
+      "x": 2,
+      "y": 12,
+      "width": 12,
+      "height": 5,
+      "text": "I hope to do more composition stuff as time goes on",
+      "font": "mono",
+      "fontSize": 16
+    },
+    {
+      "id": "4d428f1d-2dc6-4f75-bd14-e52185b7736a",
+      "type": "text",
+      "x": -18,
+      "y": 4,
+      "width": 6,
+      "height": 5,
+      "text": "I'm trying to get better at painting, but currently drawing is my strong suit, with shape and form being my most developed skills",
+      "font": "mono",
+      "fontSize": 14
+    }
+  ]
+}

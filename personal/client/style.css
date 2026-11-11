@@ -1,0 +1,83 @@
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('../assets/jetbrains-mono.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 100 900;
+}
+:root { --trail-height: 30px; color-scheme: light; font-family: 'JetBrains Mono', monospace; color: #111; background: #fff; }
+* { box-sizing: border-box; }
+html, body { margin: 0; width: 100%; height: 100%; }
+body { overflow: hidden; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+[hidden] { display: none !important; }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: .2em; }
+.text-object:not(.inverts) > a.content, body.editing .text-object > a.content { transition: color 120ms ease; }
+.text-object:not(.inverts) > a.content:focus-visible, body.editing .text-object > a.content:focus-visible { color: #a33a32; }
+@media (hover: hover) {
+  .text-object:not(.inverts) > a.content:hover, body.editing .text-object > a.content:hover { color: #a33a32; }
+}
+@media (prefers-reduced-motion: reduce) { .text-object > a.content { transition: none !important; } }
+:focus-visible { outline: 1px solid #333; outline-offset: 4px; }
+#viewport { position: fixed; inset: var(--trail-height) 0 0; overflow: clip; touch-action: pinch-zoom; background: #fff; isolation: isolate; }
+/* Blend above the transformed world so empty areas and overlapping objects
+   share the same opaque backdrop. The camera already supplies these grid vars. */
+#viewport::after {
+  content: ''; display: none; position: absolute; z-index: 1; pointer-events: none;
+  left: calc(var(--grid-x) + var(--asset-x) * var(--grid-size));
+  top: calc(var(--grid-y) + var(--asset-y) * var(--grid-size));
+  width: calc(var(--asset-width) * var(--grid-size));
+  height: calc(var(--asset-height) * var(--grid-size));
+  background: #fff; mix-blend-mode: difference;
+}
+body:not(.editing) #viewport[data-feedback]::after { display: block; }
+#world { position: absolute; left: 0; top: 0; transform-origin: 0 0; }
+.object { position: absolute; margin: 0; line-height: 1.4; }
+.content { display: block; width: 100%; min-height: 100%; white-space: pre-wrap; overflow-wrap: anywhere; }
+.content[role=button] { cursor: pointer; }
+body:not(.editing) .object[data-interactive=false] > .content { cursor: default; }
+.image-object .content { height: 100%; }
+.image-object img { display: block; width: 100%; height: 100%; }
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  body:not(.editing) .image-object[data-interactive=true] img { transition: transform 150ms ease; transform-origin: center; }
+  body:not(.editing) .image-object[data-interactive=true]:hover img,
+  body:not(.editing) .image-object[data-interactive=true]:has(:focus-visible) img { transform: scale(1.025); }
+}
+.line-object, .line-drawing { pointer-events: none; }
+.line-drawing { display: block; overflow: visible; }
+.line-hit { display: none; }
+.pan-ready, .pan-ready * { cursor: grab !important; user-select: none !important; }
+.pan-ready:active, .pan-ready:active * { cursor: grabbing !important; }
+.focus-object {
+  position: absolute; top: 0; left: 100%; width: 30px; height: 30px;
+  transform: scale(var(--inverse-zoom, 1)); transform-origin: top left;
+  border: 0; background: #fff; font: 18px 'JetBrains Mono', monospace; opacity: 0;
+}
+.object:hover > .focus-object, .object:focus-within > .focus-object { opacity: 1; }
+@media (pointer: coarse) { .focus-object { opacity: 1; width: 40px; height: 40px; } }
+#focus-view {
+  position: fixed; inset: 0; margin: 0; border: 0; padding: 72px 24px 36px;
+  width: 100%; height: 100%; max-width: none; max-height: none;
+  background: #fff; color: #111; overflow: auto; overscroll-behavior: contain;
+}
+#focus-view::backdrop { background: #fff; }
+#close-focus { position: fixed; right: 16px; top: 16px; min-height: 40px; padding: 4px 8px; border: 0; background: #fff; font-size: 12px; }
+.focus-text { max-width: 68ch; margin: 0 auto; white-space: pre-wrap; overflow-wrap: anywhere; line-height: 1.6; }
+.focus-image { min-height: calc(100% - 1px); display: flex; align-items: center; justify-content: center; }
+.focus-image img { max-width: 100%; max-height: calc(100dvh - 108px); object-fit: contain; }
+#notice { position: fixed; top: 30px; left: 30px; max-width: calc(100vw - 60px); font-size: 14px; }
+
+#breadcrumbs {
+  position: fixed; inset: 0 0 auto; height: var(--trail-height); z-index: 1;
+  background: #fff; padding: 0 12px; font: 11px/30px 'JetBrains Mono', monospace;
+  overflow-x: auto; overflow-y: hidden; white-space: nowrap; scrollbar-width: none;
+  touch-action: pan-x pinch-zoom; overscroll-behavior-x: contain;
+}
+#breadcrumbs ol { display: flex; width: max-content; list-style: none; margin: 0; padding: 0; }
+#breadcrumbs li { display: flex; align-items: center; }
+#breadcrumbs .trail-separator { padding: 0 8px; color: #777; }
+#breadcrumbs a { text-decoration: none; }
+#breadcrumbs a:focus-visible { color: #a33a32; outline: none; }
+#breadcrumbs [aria-current=page] { color: #777; }
+@media (hover: hover) { #breadcrumbs a:hover { color: #a33a32; } }
+body:has(#focus-view[open]) #breadcrumbs { visibility: hidden; }

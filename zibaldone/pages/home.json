@@ -1,0 +1,80 @@
+{
+  "slug": "home",
+  "camera": {
+    "x": -0.3840392182222409,
+    "y": -3.464908504345278,
+    "zoom": 1.5509492882560496
+  },
+  "elements": [
+    {
+      "id": "title",
+      "type": "text",
+      "x": -21,
+      "y": -9,
+      "width": 14.166666666666668,
+      "height": 2,
+      "text": "@parghet",
+      "font": "baskerville",
+      "fontSize": 40,
+      "zIndex": 2
+    },
+    {
+      "id": "next",
+      "type": "text",
+      "x": -20,
+      "y": -7,
+      "width": 16,
+      "height": 1,
+      "text": "field notes......................01 →",
+      "font": "mono",
+      "fontSize": 16,
+      "href": "/space/field-notes/"
+    },
+    {
+      "id": "instructions",
+      "type": "text",
+      "x": -19,
+      "y": -1,
+      "width": 11,
+      "height": 5,
+      "text": "Space + drag to wander.\nScroll to change scale.\nOn touch: drag or pinch.\n\nOpen a word or image to read it alone. Linked objects have a separate ↗ action.",
+      "font": "mono",
+      "fontSize": 11
+    },
+    {
+      "id": "36d91aef-3b67-4fda-a1d0-df03b548596e",
+      "type": "image",
+      "x": -3,
+      "y": -12,
+      "width": 23.444442749023438,
+      "height": 16.578570229666575,
+      "src": "/space/assets/image-4c107cf5-0198-4580-92f7-3d7793b5bffd.jpg",
+      "alt": "",
+      "href": "/space/art/"
+    },
+    {
+      "id": "115d77eb-d43f-4de5-a197-df7a90e930a1",
+      "type": "text",
+      "x": -20,
+      "y": -6,
+      "width": 15,
+      "height": 1,
+      "text": "art!.............................02 →",
+      "font": "mono",
+      "fontSize": 16,
+      "href": "/space/art/"
+    },
+    {
+      "id": "141448d9-2676-485e-8a72-efa382497628",
+      "type": "text",
+      "x": -20,
+      "y": -5,
+      "width": 15,
+      "height": 1,
+      "text": "co...............................26 →",
+      "font": "mono",
+      "fontSize": 16,
+      "href": "/space/co-26/"
+    }
+  ]
+}

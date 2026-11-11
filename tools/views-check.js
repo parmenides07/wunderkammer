@@ -21,9 +21,10 @@ function checkViews(root){
  expect(views.personalFallback(manifest,'nonexistent-route')===null,'unknown route should remain a 404');
  const rootShell=fs.readFileSync(path.join(root,'index.html'),'utf8'),personal=fs.readFileSync(path.join(root,'personal/index.html'),'utf8'),alias=fs.readFileSync(path.join(root,'work/index.html'),'utf8');
  expect(!rootShell.includes('noindex'),'root must remain indexable');
- expect(personal.includes('<base href="../">'),'personal assets require shared base');
+ expect(personal.includes('src="/personal/client/main.js"'),'personal must load the spatial renderer');
+ expect(!personal.includes('src="js/main.js"')&&!personal.includes('generated/site.css'),'personal must be isolated from professional CSS/runtime');
  expect(personal.includes('name="robots" content="noindex,follow"')===!!config.views?.personal?.noindex,'personal robots setting mismatch');
- for(const html of [rootShell,personal])expect(html.includes('src="js/views.js"'),'entry shell missing view resolver');
+ expect(rootShell.includes('src="js/views.js"'),'professional entry shell missing view resolver');
  const redirect=alias.match(/<script>([\s\S]*?)<\/script>/)?.[1];
  expect(!!redirect,'work redirect missing');
  if(redirect)for(const entry of ['work/','work/index.html']){let destination;const location={href:`https://example.test/site/${entry}?from=cv#/projects/akashom`,search:'?from=cv',hash:'#/projects/akashom',replace:value=>destination=value};vm.runInNewContext(redirect,{URL,location});expect(destination==='https://example.test/site/?from=cv#/projects/akashom','work alias loses route/query or base path');}

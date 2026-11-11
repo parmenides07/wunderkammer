@@ -1,0 +1,88 @@
+{
+  "slug": "co-26",
+  "camera": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "elements": [
+    {
+      "id": "6cf83c0e-2f99-455d-97ab-60e4bb560f29",
+      "type": "text",
+      "x": -22,
+      "y": -6,
+      "width": 12,
+      "height": 5,
+      "text": "",
+      "font": "mono",
+      "fontSize": 16
+    },
+    {
+      "id": "18910c28-4a2f-4162-b39f-40480738a2f0",
+      "type": "text",
+      "x": -19,
+      "y": -4,
+      "width": 15,
+      "height": 1,
+      "text": "cga-dl...........................02 →",
+      "font": "mono",
+      "fontSize": 16,
+      "href": "/space/cga-dl02/"
+    },
+    {
+      "id": "dba1caf3-de8a-46c0-b48a-e03166aae41b",
+      "type": "text",
+      "x": -8,
+      "y": 1,
+      "width": 12,
+      "height": 5,
+      "text": "\n",
+      "font": "mono",
+      "fontSize": 16
+    },
+    {
+      "id": "c9b7a48a-a076-4d17-83b7-c390d6dd928d",
+      "type": "text",
+      "x": -16,
+      "y": -2,
+      "width": 15,
+      "height": 1,
+      "text": "mlgo-00 →",
+      "font": "mono",
+      "fontSize": 16,
+      "href": "/space/mlgo-00/"
+    },
+    {
+      "id": "a94fe1b0-684b-4aed-ad76-031a60306d20",
+      "type": "image",
+      "x": -2,
+      "y": -10,
+      "width": 12,
+      "height": 14.96,
+      "src": "/zibaldone/assets/image-60680e3f-bbb8-4d8b-9115-417e7d7fc1b7.jpg",
+      "alt": ""
+    },
+    {
+      "id": "b94abdfc-d53c-47b3-b37f-52740ae38d60",
+      "type": "text",
+      "x": -19,
+      "y": -14,
+      "width": 12,
+      "height": 1,
+      "text": "frontier\n\n",
+      "font": "mono",
+      "fontSize": 16
+    },
+    {
+      "id": "1be5e554-00db-4502-aa4f-390d2a7b8fdb",
+      "type": "text",
+      "x": -16,
+      "y": -13,
+      "width": 12,
+      "height": 5,
+      "text": "wilderness",
+      "font": "mono",
+      "fontSize": 16
+    }
+  ]
+}

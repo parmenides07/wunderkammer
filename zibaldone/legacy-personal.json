@@ -1,0 +1,602 @@
+{
+  "about": {
+    "title": "More About Me",
+    "professional": "/#/about"
+  },
+  "archive/personal-snapshots/my-chosen-career-path": {
+    "title": "My Chosen Career Path"
+  },
+  "archive/consumption": {
+    "title": "Miscellaneous Consumption Log"
+  },
+  "archive/experiments/proof-of-concept": {
+    "title": "Proof Of Concept"
+  },
+  "archive/ideas": {
+    "title": "Creation Idea Graveyard"
+  },
+  "archive/inspirations": {
+    "title": "Current Inspirations"
+  },
+  "archive/inspiring-media": {
+    "title": "Inspiring Media"
+  },
+  "archive/music/currents": {
+    "title": "Currents"
+  },
+  "archive/school-writing/what-is-education-for": {
+    "title": "What Is Education For"
+  },
+  "archive/school-writing/why-art": {
+    "title": "Why Art Essay"
+  },
+  "archive/writing/when-it-rains-it-prose": {
+    "title": "When It Rains It Prose"
+  },
+  "currents": {
+    "title": "Currents",
+    "professional": "/#/currents"
+  },
+  "home": {
+    "title": "WUNDERKAMMER",
+    "canvas": "home",
+    "professional": "/#/home"
+  },
+  "notes/art/harnessing-visuals-with-art": {
+    "title": "Harnessing Visuals With Art"
+  },
+  "notes/art/lets-talk-about-ai-art": {
+    "title": "Lets Talk About AI Art"
+  },
+  "notes/mindfill/calculus-kellogs-and-knowledge": {
+    "title": "Calculus Kellogs And Knowledge"
+  },
+  "notes/mindfill/chefs-in-cs": {
+    "title": "Chefs In CS"
+  },
+  "notes/mindfill/emergent-complexity-and-control": {
+    "title": "Emergent Complexity And Control",
+    "professional": "/#/notes/mindfill/emergent-complexity-and-control"
+  },
+  "notes/mindfill": {
+    "title": "The Mindfill"
+  },
+  "notes/mindfill/my-mother-tongue": {
+    "title": "My Mother Tongue"
+  },
+  "notes/mindfill/pumping-imaginary-iron": {
+    "title": "Pumping Imaginary Iron"
+  },
+  "notes/mindfill/pursuing-greatness": {
+    "title": "Pursuing Greatness"
+  },
+  "notes/mindfill/the-stand-user-could-be-anyone": {
+    "title": "The Stand User Could Be Anyone"
+  },
+  "notes/philosophy": {
+    "title": "Philosophy"
+  },
+  "notes/philosophy/maximalist-soul-driver": {
+    "title": "Maximalist Soul Driver"
+  },
+  "notes/systems/logic-composed-emergent-systems": {
+    "title": "Logic-Composed Emergent Systems for Problem-Solving"
+  },
+  "projects/akasha": {
+    "title": "Akasha",
+    "professional": "/#/projects/akasha"
+  },
+  "projects/akasha/manual": {
+    "title": "Manual",
+    "professional": "/#/projects/akasha/manual"
+  },
+  "projects/cornocupia": {
+    "title": "Cornocupia",
+    "professional": "/#/projects/cornocupia"
+  },
+  "projects/darkroom": {
+    "title": "Darkroom"
+  },
+  "projects/mindscape/examples/braise": {
+    "title": "Braise"
+  },
+  "projects/mindscape/examples/lawralai": {
+    "title": "Lawralai"
+  },
+  "projects/mindscape/examples/praferin": {
+    "title": "Praferin"
+  },
+  "projects/mindscape/examples/riab-kaj": {
+    "title": "Riab Kaj"
+  },
+  "projects/mindscape": {
+    "title": "Project Mindscape",
+    "professional": "/#/projects/mindscape"
+  },
+  "projects/mindscape/leviathan": {
+    "title": "The Leviathan"
+  },
+  "projects/mindscape/premise": {
+    "title": "Premise"
+  },
+  "projects/primeapal": {
+    "title": "Primeapal"
+  },
+  "projects/vivarium": {
+    "title": "Vivarium",
+    "professional": "/#/projects/vivarium"
+  },
+  "projects/zion": {
+    "title": "What is ZION?",
+    "professional": "/#/projects/zion"
+  },
+  "projects/zion/visual-design": {
+    "title": "DL2 Visualmaxxing Is Meta"
+  },
+  "projects/zion/visual-nonvisual-trailer": {
+    "title": "What is the form of ZION?"
+  },
+  "content.md": {
+    "title": "WUNDERKAMMER",
+    "canvas": "home",
+    "professional": "/#/home"
+  },
+  "content/content.md": {
+    "title": "WUNDERKAMMER",
+    "canvas": "home",
+    "professional": "/#/home"
+  },
+  "home/moreAboutMe.md": {
+    "title": "More About Me",
+    "professional": "/#/about"
+  },
+  "content/home/moreAboutMe.md": {
+    "title": "More About Me",
+    "professional": "/#/about"
+  },
+  "sciences/akashom/akashom.md": {
+    "title": "What is ZION?",
+    "professional": "/#/projects/zion"
+  },
+  "content/sciences/akashom/akashom.md": {
+    "title": "What is ZION?",
+    "professional": "/#/projects/zion"
+  },
+  "sciences/akashom/VisualNon-VisualTrailer.md": {
+    "title": "What is the form of ZION?"
+  },
+  "content/sciences/akashom/VisualNon-VisualTrailer.md": {
+    "title": "What is the form of ZION?"
+  },
+  "sciences/akashom/DL2_Visualmaxxing_Is_Meta.md": {
+    "title": "DL2 Visualmaxxing Is Meta"
+  },
+  "content/sciences/akashom/DL2_Visualmaxxing_Is_Meta.md": {
+    "title": "DL2 Visualmaxxing Is Meta"
+  },
+  "sciences/cornocupia/cornocupia.md": {
+    "title": "Cornocupia",
+    "professional": "/#/projects/cornocupia"
+  },
+  "content/sciences/cornocupia/cornocupia.md": {
+    "title": "Cornocupia",
+    "professional": "/#/projects/cornocupia"
+  },
+  "arts/prose/pm_02/projectMindscape.md": {
+    "title": "Project Mindscape",
+    "professional": "/#/projects/mindscape"
+  },
+  "content/arts/prose/pm_02/projectMindscape.md": {
+    "title": "Project Mindscape",
+    "professional": "/#/projects/mindscape"
+  },
+  "pm_02/projectMindscape.md": {
+    "title": "Project Mindscape",
+    "professional": "/#/projects/mindscape"
+  },
+  "prose/pm_02/projectMindscape.md": {
+    "title": "Project Mindscape",
+    "professional": "/#/projects/mindscape"
+  },
+  "whenItRainsItProse/pm_02/projectMindscape.md": {
+    "title": "Project Mindscape",
+    "professional": "/#/projects/mindscape"
+  },
+  "arts/prose/pm_02/premise.md": {
+    "title": "Premise"
+  },
+  "content/arts/prose/pm_02/premise.md": {
+    "title": "Premise"
+  },
+  "pm_02/premise.md": {
+    "title": "Premise"
+  },
+  "prose/pm_02/premise.md": {
+    "title": "Premise"
+  },
+  "whenItRainsItProse/pm_02/premise.md": {
+    "title": "Premise"
+  },
+  "arts/prose/pm_02/theLeviathan.md": {
+    "title": "The Leviathan"
+  },
+  "content/arts/prose/pm_02/theLeviathan.md": {
+    "title": "The Leviathan"
+  },
+  "pm_02/theLeviathan.md": {
+    "title": "The Leviathan"
+  },
+  "prose/pm_02/theLeviathan.md": {
+    "title": "The Leviathan"
+  },
+  "whenItRainsItProse/pm_02/theLeviathan.md": {
+    "title": "The Leviathan"
+  },
+  "arts/prose/pm_02/mindscapeExamples/braise.md": {
+    "title": "Braise"
+  },
+  "content/arts/prose/pm_02/mindscapeExamples/braise.md": {
+    "title": "Braise"
+  },
+  "pm_02/mindscapeExamples/braise.md": {
+    "title": "Braise"
+  },
+  "prose/pm_02/mindscapeExamples/braise.md": {
+    "title": "Braise"
+  },
+  "whenItRainsItProse/pm_02/mindscapeExamples/braise.md": {
+    "title": "Braise"
+  },
+  "arts/prose/pm_02/mindscapeExamples/lawralai.md": {
+    "title": "Lawralai"
+  },
+  "content/arts/prose/pm_02/mindscapeExamples/lawralai.md": {
+    "title": "Lawralai"
+  },
+  "pm_02/mindscapeExamples/lawralai.md": {
+    "title": "Lawralai"
+  },
+  "prose/pm_02/mindscapeExamples/lawralai.md": {
+    "title": "Lawralai"
+  },
+  "whenItRainsItProse/pm_02/mindscapeExamples/lawralai.md": {
+    "title": "Lawralai"
+  },
+  "arts/prose/pm_02/mindscapeExamples/praferin.md": {
+    "title": "Praferin"
+  },
+  "content/arts/prose/pm_02/mindscapeExamples/praferin.md": {
+    "title": "Praferin"
+  },
+  "pm_02/mindscapeExamples/praferin.md": {
+    "title": "Praferin"
+  },
+  "prose/pm_02/mindscapeExamples/praferin.md": {
+    "title": "Praferin"
+  },
+  "whenItRainsItProse/pm_02/mindscapeExamples/praferin.md": {
+    "title": "Praferin"
+  },
+  "arts/prose/pm_02/mindscapeExamples/riabKaj.md": {
+    "title": "Riab Kaj"
+  },
+  "content/arts/prose/pm_02/mindscapeExamples/riabKaj.md": {
+    "title": "Riab Kaj"
+  },
+  "pm_02/mindscapeExamples/riabKaj.md": {
+    "title": "Riab Kaj"
+  },
+  "prose/pm_02/mindscapeExamples/riabKaj.md": {
+    "title": "Riab Kaj"
+  },
+  "whenItRainsItProse/pm_02/mindscapeExamples/riabKaj.md": {
+    "title": "Riab Kaj"
+  },
+  "arts/visuals/darkroom/darkroom.md": {
+    "title": "Darkroom"
+  },
+  "content/arts/visuals/darkroom/darkroom.md": {
+    "title": "Darkroom"
+  },
+  "sciences/sciences.md": {
+    "title": "Logic-Composed Emergent Systems for Problem-Solving"
+  },
+  "content/sciences/sciences.md": {
+    "title": "Logic-Composed Emergent Systems for Problem-Solving"
+  },
+  "arts/prose/theMindfill/theMindfill.md": {
+    "title": "The Mindfill"
+  },
+  "content/arts/prose/theMindfill/theMindfill.md": {
+    "title": "The Mindfill"
+  },
+  "theMindfill/theMindfill.md": {
+    "title": "The Mindfill"
+  },
+  "prose/theMindfill/theMindfill.md": {
+    "title": "The Mindfill"
+  },
+  "whenItRainsItProse/theMindfill/theMindfill.md": {
+    "title": "The Mindfill"
+  },
+  "arts/prose/theMindfill/03-16-26_MyMotherTongue.md": {
+    "title": "My Mother Tongue"
+  },
+  "content/arts/prose/theMindfill/03-16-26_MyMotherTongue.md": {
+    "title": "My Mother Tongue"
+  },
+  "theMindfill/03-16-26_MyMotherTongue.md": {
+    "title": "My Mother Tongue"
+  },
+  "prose/theMindfill/03-16-26_MyMotherTongue.md": {
+    "title": "My Mother Tongue"
+  },
+  "whenItRainsItProse/theMindfill/03-16-26_MyMotherTongue.md": {
+    "title": "My Mother Tongue"
+  },
+  "arts/prose/theMindfill/03-16-26_PumpingImaginaryIron.md": {
+    "title": "Pumping Imaginary Iron"
+  },
+  "content/arts/prose/theMindfill/03-16-26_PumpingImaginaryIron.md": {
+    "title": "Pumping Imaginary Iron"
+  },
+  "theMindfill/03-16-26_PumpingImaginaryIron.md": {
+    "title": "Pumping Imaginary Iron"
+  },
+  "prose/theMindfill/03-16-26_PumpingImaginaryIron.md": {
+    "title": "Pumping Imaginary Iron"
+  },
+  "whenItRainsItProse/theMindfill/03-16-26_PumpingImaginaryIron.md": {
+    "title": "Pumping Imaginary Iron"
+  },
+  "arts/prose/theMindfill/03-18-26_CalculusKellogsAnd Knowledge.md": {
+    "title": "Calculus Kellogs And Knowledge"
+  },
+  "content/arts/prose/theMindfill/03-18-26_CalculusKellogsAnd Knowledge.md": {
+    "title": "Calculus Kellogs And Knowledge"
+  },
+  "theMindfill/03-18-26_CalculusKellogsAnd Knowledge.md": {
+    "title": "Calculus Kellogs And Knowledge"
+  },
+  "prose/theMindfill/03-18-26_CalculusKellogsAnd Knowledge.md": {
+    "title": "Calculus Kellogs And Knowledge"
+  },
+  "whenItRainsItProse/theMindfill/03-18-26_CalculusKellogsAnd Knowledge.md": {
+    "title": "Calculus Kellogs And Knowledge"
+  },
+  "arts/prose/theMindfill/03-21-26_EmergentComplexityAndControl.md": {
+    "title": "Emergent Complexity And Control",
+    "professional": "/#/notes/mindfill/emergent-complexity-and-control"
+  },
+  "content/arts/prose/theMindfill/03-21-26_EmergentComplexityAndControl.md": {
+    "title": "Emergent Complexity And Control",
+    "professional": "/#/notes/mindfill/emergent-complexity-and-control"
+  },
+  "theMindfill/03-21-26_EmergentComplexityAndControl.md": {
+    "title": "Emergent Complexity And Control",
+    "professional": "/#/notes/mindfill/emergent-complexity-and-control"
+  },
+  "prose/theMindfill/03-21-26_EmergentComplexityAndControl.md": {
+    "title": "Emergent Complexity And Control",
+    "professional": "/#/notes/mindfill/emergent-complexity-and-control"
+  },
+  "whenItRainsItProse/theMindfill/03-21-26_EmergentComplexityAndControl.md": {
+    "title": "Emergent Complexity And Control",
+    "professional": "/#/notes/mindfill/emergent-complexity-and-control"
+  },
+  "arts/prose/theMindfill/03-23-26_ChefsInCS.md": {
+    "title": "Chefs In CS"
+  },
+  "content/arts/prose/theMindfill/03-23-26_ChefsInCS.md": {
+    "title": "Chefs In CS"
+  },
+  "theMindfill/03-23-26_ChefsInCS.md": {
+    "title": "Chefs In CS"
+  },
+  "prose/theMindfill/03-23-26_ChefsInCS.md": {
+    "title": "Chefs In CS"
+  },
+  "whenItRainsItProse/theMindfill/03-23-26_ChefsInCS.md": {
+    "title": "Chefs In CS"
+  },
+  "arts/prose/theMindfill/04-16-26_PursuingGreatness.md": {
+    "title": "Pursuing Greatness"
+  },
+  "content/arts/prose/theMindfill/04-16-26_PursuingGreatness.md": {
+    "title": "Pursuing Greatness"
+  },
+  "theMindfill/04-16-26_PursuingGreatness.md": {
+    "title": "Pursuing Greatness"
+  },
+  "prose/theMindfill/04-16-26_PursuingGreatness.md": {
+    "title": "Pursuing Greatness"
+  },
+  "whenItRainsItProse/theMindfill/04-16-26_PursuingGreatness.md": {
+    "title": "Pursuing Greatness"
+  },
+  "arts/prose/theMindfill/04-26-26_TheStandUserCouldBeAnyone.md": {
+    "title": "The Stand User Could Be Anyone"
+  },
+  "content/arts/prose/theMindfill/04-26-26_TheStandUserCouldBeAnyone.md": {
+    "title": "The Stand User Could Be Anyone"
+  },
+  "theMindfill/04-26-26_TheStandUserCouldBeAnyone.md": {
+    "title": "The Stand User Could Be Anyone"
+  },
+  "prose/theMindfill/04-26-26_TheStandUserCouldBeAnyone.md": {
+    "title": "The Stand User Could Be Anyone"
+  },
+  "whenItRainsItProse/theMindfill/04-26-26_TheStandUserCouldBeAnyone.md": {
+    "title": "The Stand User Could Be Anyone"
+  },
+  "arts/prose/philosophy/philosophy.md": {
+    "title": "Philosophy"
+  },
+  "content/arts/prose/philosophy/philosophy.md": {
+    "title": "Philosophy"
+  },
+  "philosophy/philosophy.md": {
+    "title": "Philosophy"
+  },
+  "prose/philosophy/philosophy.md": {
+    "title": "Philosophy"
+  },
+  "whenItRainsItProse/philosophy/philosophy.md": {
+    "title": "Philosophy"
+  },
+  "arts/prose/philosophy/maximalistSoulDriver.md": {
+    "title": "Maximalist Soul Driver"
+  },
+  "content/arts/prose/philosophy/maximalistSoulDriver.md": {
+    "title": "Maximalist Soul Driver"
+  },
+  "philosophy/maximalistSoulDriver.md": {
+    "title": "Maximalist Soul Driver"
+  },
+  "prose/philosophy/maximalistSoulDriver.md": {
+    "title": "Maximalist Soul Driver"
+  },
+  "whenItRainsItProse/philosophy/maximalistSoulDriver.md": {
+    "title": "Maximalist Soul Driver"
+  },
+  "arts/visuals/visuals.md": {
+    "title": "Harnessing Visuals With Art"
+  },
+  "content/arts/visuals/visuals.md": {
+    "title": "Harnessing Visuals With Art"
+  },
+  "arts/visuals/lets_Talk_About_AI_Art.md": {
+    "title": "Lets Talk About AI Art"
+  },
+  "content/arts/visuals/lets_Talk_About_AI_Art.md": {
+    "title": "Lets Talk About AI Art"
+  },
+  "miscConsumption.md": {
+    "title": "Miscellaneous Consumption Log"
+  },
+  "content/miscConsumption.md": {
+    "title": "Miscellaneous Consumption Log"
+  },
+  "miscIdeas.md": {
+    "title": "Creation Idea Graveyard"
+  },
+  "content/miscIdeas.md": {
+    "title": "Creation Idea Graveyard"
+  },
+  "myChosenCareerPath.md": {
+    "title": "My Chosen Career Path"
+  },
+  "content/myChosenCareerPath.md": {
+    "title": "My Chosen Career Path"
+  },
+  "arts/visuals/currentInspirations.md": {
+    "title": "Current Inspirations"
+  },
+  "content/arts/visuals/currentInspirations.md": {
+    "title": "Current Inspirations"
+  },
+  "arts/visuals/pandorasMusicbox/currents.md": {
+    "title": "Currents"
+  },
+  "content/arts/visuals/pandorasMusicbox/currents.md": {
+    "title": "Currents"
+  },
+  "arts/prose/schoolEssays/whyArtEssay.md": {
+    "title": "Why Art Essay"
+  },
+  "content/arts/prose/schoolEssays/whyArtEssay.md": {
+    "title": "Why Art Essay"
+  },
+  "schoolEssays/whyArtEssay.md": {
+    "title": "Why Art Essay"
+  },
+  "prose/schoolEssays/whyArtEssay.md": {
+    "title": "Why Art Essay"
+  },
+  "whenItRainsItProse/schoolEssays/whyArtEssay.md": {
+    "title": "Why Art Essay"
+  },
+  "arts/prose/schoolEssays/whatIsEducationFor.md": {
+    "title": "What Is Education For"
+  },
+  "content/arts/prose/schoolEssays/whatIsEducationFor.md": {
+    "title": "What Is Education For"
+  },
+  "schoolEssays/whatIsEducationFor.md": {
+    "title": "What Is Education For"
+  },
+  "prose/schoolEssays/whatIsEducationFor.md": {
+    "title": "What Is Education For"
+  },
+  "whenItRainsItProse/schoolEssays/whatIsEducationFor.md": {
+    "title": "What Is Education For"
+  },
+  "arts/prose/flowOfConciousness/proofOfConcept.md": {
+    "title": "Proof Of Concept"
+  },
+  "content/arts/prose/flowOfConciousness/proofOfConcept.md": {
+    "title": "Proof Of Concept"
+  },
+  "flowOfConciousness/proofOfConcept.md": {
+    "title": "Proof Of Concept"
+  },
+  "prose/flowOfConciousness/proofOfConcept.md": {
+    "title": "Proof Of Concept"
+  },
+  "whenItRainsItProse/flowOfConciousness/proofOfConcept.md": {
+    "title": "Proof Of Concept"
+  },
+  "arts/prose/prose.md": {
+    "title": "When It Rains It Prose"
+  },
+  "content/arts/prose/prose.md": {
+    "title": "When It Rains It Prose"
+  },
+  "prose.md": {
+    "title": "When It Rains It Prose"
+  },
+  "prose/prose.md": {
+    "title": "When It Rains It Prose"
+  },
+  "whenItRainsItProse/prose.md": {
+    "title": "When It Rains It Prose"
+  },
+  "home/content.md": {
+    "title": "WUNDERKAMMER",
+    "canvas": "home",
+    "professional": "/#/home"
+  },
+  "content/home/content.md": {
+    "title": "WUNDERKAMMER",
+    "canvas": "home",
+    "professional": "/#/home"
+  },
+  "home/miscIdeas.md": {
+    "title": "Creation Idea Graveyard"
+  },
+  "content/home/miscIdeas.md": {
+    "title": "Creation Idea Graveyard"
+  },
+  "home/myChosenCareerPath.md": {
+    "title": "My Chosen Career Path"
+  },
+  "content/home/myChosenCareerPath.md": {
+    "title": "My Chosen Career Path"
+  },
+  "home/miscConsumption.md": {
+    "title": "Miscellaneous Consumption Log"
+  },
+  "content/home/miscConsumption.md": {
+    "title": "Miscellaneous Consumption Log"
+  },
+  "projects/akashom": {
+    "title": "What is ZION?",
+    "professional": "/#/projects/zion"
+  },
+  "projects/akashom/visual-design": {
+    "title": "DL2 Visualmaxxing Is Meta"
+  },
+  "projects/akashom/visual-nonvisual-trailer": {
+    "title": "What is the form of ZION?"
+  }
+}

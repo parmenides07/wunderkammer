@@ -10,7 +10,6 @@ test('public navigation follows published folders and preserves topics',()=>{
  assert.deepEqual(nav.catalog.get('projects/zion').pages.map(p=>p.id),model.pages.filter(p=>p.contentFolder==='projects/zion').map(p=>p.id));
  assert.deepEqual(nav.catalog.get('projects/mindscape').pages.map(p=>p.id),['projects-mindscape','projects-mindscape-premise','projects-mindscape-leviathan']);
  assert.equal(nav.catalog.get('projects/mindscape/examples').pages.length,4);
- assert.equal(nav.pageGroups.get('projects-jivan').key,'projects/akasha/jivan');
  assert.equal(nav.catalog.has('projects/jivan'),false);
  assert.equal(nav.catalog.get('notes/mindfill').pages.length,8);
  assert.ok(model.topic('computation').some(p=>p.project==='zion'));
@@ -23,9 +22,9 @@ test('professional filtering precedes grouping, lookups, topics and next-page li
  assert.ok(model.pages.every(p=>p.audience.includes('professional')));
  assert.deepEqual(nav.sections.map(s=>s.key),['home','projects','about','currents']);
  const projects=nav.catalog.get('projects').children.map(s=>s.key);
- assert.deepEqual(projects.slice(0,4),['projects/zion','projects/cornocupia','projects/vivarium','projects/mindscape']);
+ assert.deepEqual(projects.slice(0,4),['projects/vivarium','projects/akasha','projects/zion','projects/cornocupia']);
  assert.equal(projects.length,new Set(model.pages.filter(p=>p.section==='projects').map(p=>p.project)).size);
- assert.equal(nav.catalog.get('projects/zion').label,'ZION');
+ assert.equal(nav.catalog.get('projects/zion').label,'Zion');
  assert.equal(nav.catalog.has('notes'),false);
  for(const node of nav.catalog.values())assert.ok(node.pages.every(p=>p.audience.includes('professional')));
  assert.equal(model.resolve('archive/consumption'),undefined);

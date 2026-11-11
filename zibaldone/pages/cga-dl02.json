@@ -1,0 +1,351 @@
+{
+  "slug": "cga-dl02",
+  "camera": {
+    "x": -10.169294721001846,
+    "y": 1.8622296117079953,
+    "zoom": 0.812135936387558
+  },
+  "elements": [
+    {
+      "id": "c547c866-c36b-4389-a692-cc50654aa725",
+      "type": "text",
+      "x": -21,
+      "y": -8,
+      "width": 12,
+      "height": 2,
+      "text": "01: November 9th",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "fd941e33-e640-48f3-b460-d581eac8b97b",
+      "type": "text",
+      "x": -21,
+      "y": -6,
+      "width": 18,
+      "height": 8,
+      "text": "- SR Latch\n- D Latch \n- D Flip Flop (+ Enablable/Resettable)\n- Registers\n\n- Synchronous Sequential vs Asynchronous Circuits \n- Basic Finite State Machines",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "fded3d8a-502d-44c8-a910-f520f848cf95",
+      "type": "text",
+      "x": -21,
+      "y": 2,
+      "width": 12,
+      "height": 2,
+      "text": "next",
+      "font": "baskerville",
+      "fontSize": 24
+    },
+    {
+      "id": "75ffd422-f12e-450a-a7bb-7447af9784df",
+      "type": "text",
+      "x": -21,
+      "y": 3,
+      "width": 18,
+      "height": 3.1633912841188003,
+      "text": "- build FSM in systemverilog \n- look into other computational models: (Blum Shub Smale Machine, Pushdown Automata, etc)\n",
+      "font": "mono",
+      "fontSize": 16
+    },
+    {
+      "id": "00f4f20e-ad84-40e2-8e2e-a2fde78e708b",
+      "type": "text",
+      "x": -3.672476578822603,
+      "y": -4.672476578822602,
+      "width": 16,
+      "height": 3,
+      "text": "These were brilliant. Incredible how people came up with these novel solutions. So simple yet so elegant",
+      "font": "mono",
+      "fontSize": 12
+    },
+    {
+      "id": "32a8ebd7-57ff-4482-92b0-c5c8266963be",
+      "type": "line",
+      "points": [
+        [
+          -4,
+          -4
+        ],
+        [
+          -5,
+          -4
+        ],
+        [
+          -5,
+          -5
+        ],
+        [
+          -5,
+          -3
+        ]
+      ],
+      "arrowhead": false
+    },
+    {
+      "id": "f5c29bfa-44f4-408f-a4a6-532485d10f08",
+      "type": "text",
+      "x": -3.7320266634865495,
+      "y": 0.02977436084053675,
+      "width": 16,
+      "height": 3,
+      "text": "This whole concept is so cool. I kinda fell down a rabbit hole looking into theoretical computation models. I definitely want to explore this stuff more",
+      "font": "mono",
+      "fontSize": 12
+    },
+    {
+      "id": "bd2814b8-cdf8-4ad0-8db0-9af8321b865a",
+      "type": "line",
+      "points": [
+        [
+          -4,
+          1
+        ],
+        [
+          -9,
+          1
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "5011ab0f-0cfc-4101-8248-bb122af64aee",
+      "type": "text",
+      "x": 8,
+      "y": 3,
+      "width": 9,
+      "height": 10,
+      "text": "Really want to explore Computation Theory (Automata Theory, Computability Theory, and Complexity Theory) ",
+      "font": "mono",
+      "fontSize": 16
+    },
+    {
+      "id": "900f7106-8e09-4c7c-9e69-ca1183b941ba",
+      "type": "line",
+      "points": [
+        [
+          1.5831521333181193,
+          2.434277603149689
+        ],
+        [
+          1.5831521333181193,
+          4.434277603149689
+        ],
+        [
+          7.583152133318119,
+          4.434277603149689
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "8128ed50-d7b8-4d68-8926-d5c69b0aa8a1",
+      "type": "image",
+      "x": -38,
+      "y": -11,
+      "width": 16.660297239915074,
+      "height": 21,
+      "src": "/zibaldone/assets/image-421eb0c7-b899-4099-a9a8-3c691723f8c5.png",
+      "alt": ""
+    },
+    {
+      "id": "d121ecb7-a94c-445f-9070-15a2c5da72e2",
+      "type": "image",
+      "x": -8,
+      "y": -22,
+      "width": 19.85899814471243,
+      "height": 16,
+      "src": "/zibaldone/assets/image-a5ba08e3-51dd-4ec4-a4eb-9ef04a505817.png",
+      "alt": ""
+    },
+    {
+      "id": "c1c27a64-7827-407a-a4e8-708e6cd76058",
+      "type": "text",
+      "x": -6,
+      "y": -7,
+      "width": 16,
+      "height": 3,
+      "text": "FSM Factoring ",
+      "font": "mono",
+      "fontSize": 12
+    },
+    {
+      "id": "d858163c-1590-490d-939c-84ab436be9ca",
+      "type": "text",
+      "x": -21,
+      "y": 6,
+      "width": 13,
+      "height": 2,
+      "text": "01.5: November 9th",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "adaf660e-f989-4ff6-a970-03630875ec78",
+      "type": "text",
+      "x": -21,
+      "y": 8,
+      "width": 18,
+      "height": 8,
+      "text": "- I had a bit of extra time and decided to make a simple finite state machine as a way to really get a good grasp on the things I learned about. I tried understanding finite state machines a bit better and how to translate a diagram to actual logic which was a bit tricky at first. But after a teeny bit of learning it all became really intuitive and I was able to create the following FSM (\"adds\" in binary as time progresses) without referencing the textbook:",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "3757b015-abcf-4926-8aa4-bc0dafe5789a",
+      "type": "image",
+      "x": -5,
+      "y": 7,
+      "width": 27.982711555959966,
+      "height": 17,
+      "src": "/zibaldone/assets/image-d4bec6dc-6676-475f-964c-e30e1a2fc3e4.png",
+      "alt": ""
+    },
+    {
+      "id": "df9fc872-9225-4cff-9f41-ce8dc58e0ab3",
+      "type": "image",
+      "x": -37,
+      "y": 8,
+      "width": 20.477528089887638,
+      "height": 15,
+      "src": "/zibaldone/assets/image-2889f726-e117-4644-8782-0617a2bb6d60.png",
+      "alt": ""
+    },
+    {
+      "id": "77044eb6-d475-4ccb-90b6-bb40b1f8e2ed",
+      "type": "image",
+      "x": 15,
+      "y": 16,
+      "width": 38.15945465323058,
+      "height": 25,
+      "src": "/zibaldone/assets/image-00162e19-4377-42f0-b75e-a96636638433.png",
+      "alt": "",
+      "zIndex": -2
+    },
+    {
+      "id": "384458e5-7c62-4379-b5c5-82eb1cf1bf71",
+      "type": "text",
+      "x": -3,
+      "y": 24,
+      "width": 19,
+      "height": 10,
+      "text": "- I then built this, with a new input START that, if our state is 00 then to preceed to the next state, START must be 1. START is only relevant for the first state. I tried implimenting it but I made a mistake: the very input of the addition that looks at start and the state is actually observing the output and next state not the current state. So what happens is it effectively dosen't matter. The solution is to route the actual current state to my new addition (the START decider). Pretty much I have to move the output/next gate calculators to AFTER the state update checker (my new addition).",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "c134f6ee-bb21-404e-a632-26a97cf38f1b",
+      "type": "text",
+      "x": -2,
+      "y": 22,
+      "width": 15,
+      "height": 2,
+      "text": "01.8: November 10th",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "d75681cc-389f-461f-a27c-c8f7058f9b12",
+      "type": "text",
+      "x": 7,
+      "y": 37,
+      "width": 25,
+      "height": 8,
+      "text": "Okay so my fix didn't quite work either. How about we flip this on its head. Rather than supressing hte output, perhaps we suppress the progression of the clock itself? That would make sense because in any situation whether the latch allows D through or keeps whatever value was there before, that value will get routed into the whole function again thus updating the value and losing the hold. I'm also realizing I could've used simple combinational logic, I didn't need any sequential logic at the end to factor in START.",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "4a42eb47-b2fc-46fb-8a67-52561bd55acb",
+      "type": "line",
+      "points": [
+        [
+          1,
+          38
+        ],
+        [
+          1,
+          42
+        ],
+        [
+          6,
+          42
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "31939353-b920-4736-9e30-e7824b2c2b7a",
+      "type": "text",
+      "x": -9,
+      "y": 46,
+      "width": 18,
+      "height": 2,
+      "text": "it works! My first complete finite state machine: ",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "dcf7efbb-e728-4c55-ab1c-cac3d98d4d95",
+      "type": "image",
+      "x": -48,
+      "y": 12,
+      "width": 54.70212765957447,
+      "height": 31,
+      "src": "/zibaldone/assets/image-8e97bae0-ed03-4be5-8670-dfbf9b60fad1.png",
+      "alt": "",
+      "zIndex": -2
+    },
+    {
+      "id": "3fd487ec-9555-4139-bc13-c0bcf292ebd2",
+      "type": "line",
+      "points": [
+        [
+          15,
+          46
+        ],
+        [
+          15,
+          47
+        ],
+        [
+          8,
+          47
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "53a8e761-169d-474d-b357-97181931b3f9",
+      "type": "line",
+      "points": [
+        [
+          -10,
+          47
+        ],
+        [
+          -13,
+          47
+        ],
+        [
+          -13,
+          39
+        ]
+      ],
+      "arrowhead": true
+    }
+  ]
+}

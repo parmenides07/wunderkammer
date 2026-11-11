@@ -1,0 +1,11 @@
+# Branch-based Pages serves the existing generated root and personal/ output.
+# Authoring source is never part of the hosted site. Keep Jekyll enabled.
+exclude:
+  - zibaldone
+  - node_modules
+  - tools
+  - tests
+  - build.js
+  - package.json
+  - package-lock.json
+  - content/drafts

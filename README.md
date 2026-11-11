@@ -1,3 +1,109 @@
+# Professional website and Zibaldone
+
+This is the single `parmenides07/wunderkammer` repository for **paramghetia.com**:
+
+- `/` keeps the existing professional website, content, receipt UI, CSS, routing and mobile behavior.
+- `/personal/` is now **Zibaldone**, with its own white spatial canvases, renderer, fonts and visual editor.
+- `zibaldone/` holds the copied application, editable JSON in `pages/`, and normal files in `assets/`. There is no nested Git repository.
+- `personal/` is generated, read-only public output and **is tracked**, matching the existing branch-based Pages workflow.
+- The old Markdown archive stays in `content/`, `generated/`, and Git history. It is not automatically imported into canvases. See [old URL status](zibaldone/LEGACY-URLS.md).
+
+## Local commands
+
+Run these from `~/Documents/Code/portfoliosite/` with Node 22.13 or newer:
+
+```sh
+npm run dev                 # local Zibaldone editor + preview of both experiences, port 4173
+npm run dev:professional    # existing Markdown live-reload workflow, port 5173
+npm run build              # professional build + isolated personal build; never pushes
+npm run build:personal     # validate/build ONLY Zibaldone into personal/
+npm run test:all            # both unit/server/Git suites
+npm run test:browser        # professional desktop/mobile + static integration checks
+npm run test:zibaldone:browser # full spatial viewer/editor/publishing browser suite
+```
+
+With `npm run dev`, open:
+
+- Professional preview: <http://127.0.0.1:4173/>
+- Personal viewer: <http://127.0.0.1:4173/personal/#/home>
+- Editor: <http://127.0.0.1:4173/personal/?edit5500#/home>
+
+The professional preview at 4173 serves the last professional build. Use the
+separate live-reload command when editing Markdown. `PORT=4174 npm run dev`
+selects another local port. The editor remains loopback-only and retains its
+Host/Origin/token protections; the query parameter is not authentication.
+`npm start` and `npm run dev:zibaldone` also launch this editor.
+
+## Hash trails
+
+`/personal/` normalizes to `#/home`. Each hash component is a globally unique
+canvas slug, not a folder. Both `#/home/art/comics` and `#/home/comics` resolve the
+same `comics.json` **if that canvas exists**. Existing authored canvases are
+`home`, `art`, `field-notes`, `co-26`, `cga-dl02`, and `mlgo-00`.
+For example `/personal/#/home/co-26/cga-dl02` works now. Refresh, direct opening,
+Back/Forward, and breadcrumb pruning use the URL itself. A new tab opened with a
+trail restores that explicit trail; no unrelated tab state is shared.
+
+Saved `/space/` and `/zibaldone/` links/assets are interpreted centrally and
+adapted automatically. Source JSON is unchanged; generated JSON uses canonical
+`/personal/` paths. Internal canvas anchors include the current trail. Old
+Markdown URLs without an exact canvas equivalent show an explanation and a home
+link; when a corresponding professional page still exists, that is offered too.
+No ambiguous last-segment matching or invented content is used.
+
+## Publishing to the existing Pages site
+
+The migration does **not** push or change GitHub settings, remotes, or `CNAME`.
+The clean starting commit is saved locally as
+`backup/before-zibaldone-integration-20261110` (commit `13fcd2b`).
+The original `~/Documents/Code/zibaldone/` checkout is untouched as a backup.
+
+**First publication of this migration:** review the complete diff, run the tests
+and build, then commit and push the integration with your normal Git workflow.
+Include `zibaldone/`, generated `personal/`, `_config.yml`, and the changed scripts,
+tests and documentation. The editor intentionally refuses to auto-commit an
+unreviewed application migration. Do not copy the standalone Zibaldone Pages
+workflow into this repository.
+
+**After the integration is committed and pushed:** compose locally and click
+**Publish** beside Save. It waits for uploads, saves the current canvas, validates
+content, builds only `personal/`, stages only `zibaldone/pages/`,
+`zibaldone/assets/`, and the required `personal/` output, commits `content.`, then
+pushes the configured upstream using existing local Git credentials. It never
+builds/stages professional output, stages the whole repository, force pushes,
+pulls, or rebases. Unrelated staged files, uncommitted Zibaldone code changes,
+independently edited generated personal files, and unrelated unpushed commits
+stop publication with an explanation. No changes means no empty commit.
+
+A successful push is not confirmation of a finished Pages deployment. Use the
+editor's **Check deployment** link to inspect the repository's Actions runs.
+If a push fails, the content commit remains local and Publish can retry it.
+
+### One-time settings to verify
+
+This checkout has tracked generated files, `CNAME` containing `paramghetia.com`,
+and no custom deployment workflow. Preserve **Settings → Pages → Deploy from a
+branch → master → / (root)** if that is the current configuration. Verify it in
+GitHub; the integration does not change it. Keep the existing domain/DNS settings.
+No second deployment, workflow opt-in variable, token, or hosted editor is needed.
+
+`_config.yml` excludes `zibaldone/` and development tools from the branch Pages
+output. **Do not add `.nojekyll`**, which would bypass those exclusions. If you
+later adopt an Actions artifact, explicitly omit authoring source there too.
+Source remains available in the Git repository; the hosted website contains only
+the generated personal viewer. Existing drafts are not imported or newly exposed.
+
+See [Zibaldone's authoring guide](zibaldone/README.md) for shortcuts and Publish
+troubleshooting. Browser tests use Playwright only as optional test tooling; set
+`PLAYWRIGHT_MODULE`/`BROWSER_EXECUTABLE` (Zibaldone) or `CHROME_PATH` (professional)
+to use existing installations. No runtime dependencies were added.
+
+---
+
+The following retains the professional/archival Markdown authoring documentation.
+References to the former personal Markdown interface describe the preserved
+archive model; new personal composition uses Zibaldone above.
+
 # Wunderkammer
 
 Param's static personal website: <https://paramghetia.com/>. Desktop keeps the paper desk, draggable index and receipts. On phones and touch tablets, the article fills the screen and an **INDEX** tab opens the navigation papers.
@@ -8,10 +114,10 @@ Use Node.js 22.13 or newer.
 
 ```sh
 npm install
-npm run dev
+npm run dev:professional
 ```
 
-Open the printed local URL (normally `http://127.0.0.1:5173/`). Leave the command running, edit Markdown, and save. The manifest, image variants and HTML rebuild automatically; the browser refreshes. Adding, moving, renaming, deleting or unpublishing content also updates navigation. `npm start` runs the same live preview. A plain static file server only serves the last build, so use this preview while editing. Build errors appear in the terminal and preview. Use `PORT=5174 npm run dev` if the default port is occupied.
+Open the printed local URL (normally `http://127.0.0.1:5173/`). Leave the command running, edit Markdown, and save. The manifest, image variants and HTML rebuild automatically; the browser refreshes. Adding, moving, renaming, deleting or unpublishing content also updates navigation. `npm run dev:professional` runs this professional live preview. A plain static file server only serves the last build, so use this preview while editing. Build errors appear in the terminal and preview. Use `PORT=5174 npm run dev:professional` if the default port is occupied.
 
 Create a page without remembering the schema:
 
@@ -30,7 +136,7 @@ Use `npm run new`, including `run`; `new` is this repository's npm script. The o
 
 Projects go in `content/projects/<project>/index.md`, with a nearby `assets/` directory. Notes go in `content/notes/`; archive entries go in `content/archive/`. Either can optionally belong to a collection. New projects start as published WIP pages in **both** the professional root and personal view. Notes and archive entries default to the personal view. Project notes inherit their project's audience and live beside its overview, even if its folder has moved. Use `--audience public` for a personal-only project; `--audience professional` and `--audience public,professional` are also available for sections included in the professional view.
 
-Creation rebuilds the generated site and prints the file and page links. With `npm run dev` running, the browser also refreshes automatically. No project registration or allowlist edit is needed. Navigation uses the project title exactly as entered, including capitalization (`"ZION"` displays as **ZION**), while folders and URLs use lowercase slugs. Existing configuration labels can override the title.
+Creation rebuilds the generated site and prints the file and page links. With `npm run dev:professional` running, the browser also refreshes automatically. No project registration or allowlist edit is needed. Navigation uses the project title exactly as entered, including capitalization (`"ZION"` displays as **ZION**), while folders and URLs use lowercase slugs. Existing configuration labels can override the title.
 
 Set `published: false` to leave a page out of navigation, or keep drafts in `content/drafts/`. `status: archived` marks a retained page as archived; creating an `archive` entry places new content in the personal Archive section. Saving with the dev server running rebuilds automatically; otherwise run `npm run build` after edits. Creating a page never overwrites an existing file.
 
@@ -150,7 +256,7 @@ Folder URLs use `#/browse/projects/akasha/jivan`; published pages retain their o
 
 ## Asset review
 
-`npm run check` also reports exact duplicate assets (by bytes), obvious editor backups and possibly unreferenced files under `assets/` and `content/`. References include Markdown, gallery macros, frontmatter, HTML, CSS and local application scripts. Dynamic paths can produce false positives, so these are review warnings, not deletion instructions or build failures. Nothing is removed or recompressed in place. Generated WebPs remain build outputs; `npm run dev` caches them as before. Git push has no mutation hook, and deployment remains unchanged.
+`npm run check` also reports exact duplicate assets (by bytes), obvious editor backups and possibly unreferenced files under `assets/` and `content/`. References include Markdown, gallery macros, frontmatter, HTML, CSS and local application scripts. Dynamic paths can produce false positives, so these are review warnings, not deletion instructions or build failures. Nothing is removed or recompressed in place. Generated WebPs remain build outputs; `npm run dev:professional` caches them as before. Git push has no mutation hook, and deployment remains unchanged.
 
 ## Mathematics
 
@@ -211,7 +317,7 @@ PDF.js, its worker, fonts, character maps and decoders are bundled locally. Its 
 
 Text selection/copying uses PDF.js's supported text layer and upstream styles, isolated from article styles. Browser Find and assistive technology can access loaded text, but virtualization limits this to retained pages and does not reproduce the PDF's complete tagged reading structure. Use **Open PDF** for full-document search, printing, zoom, interactive annotations/forms, passwords, or the original PDF's accessibility features. Scanned PDFs need their own OCR text. A failed preview keeps the original links available. External PDFs need CORS permission and acquire their page dimensions progressively; local PDFs provide the most stable layout. Modern browsers supported by the bundled PDF.js release are required for previews; original links remain available if rendering fails.
 
-`npm run check` reports missing local PDFs with their source file. `tests/fixtures/pdf/` contains 1-, 10-, and 40-page Typst documents with mathematical notation and vector diagrams. Run `PLAYWRIGHT_MODULE=/path/to/playwright node tests/pdf.cjs` against `npm run dev` for PDF browser checks in both views at mobile, desktop and wide-desktop widths. Fixtures are overlaid only in the test browser; they do not become site content.
+`npm run check` reports missing local PDFs with their source file. `tests/fixtures/pdf/` contains 1-, 10-, and 40-page Typst documents with mathematical notation and vector diagrams. Run `PLAYWRIGHT_MODULE=/path/to/playwright node tests/pdf.cjs` against `npm run dev:professional` for PDF browser checks in both views at mobile, desktop and wide-desktop widths. Fixtures are overlaid only in the test browser; they do not become site content.
 
 ## Files and build output
 
@@ -223,7 +329,7 @@ Edit `site.shell.html` for the shared HTML shell and `style.css` for styles. Do 
 - `generated/site.css`, `generated/vendor/`
 - `generated/documents/` (PDF page dimensions; the local `cache.json` is ignored)
 
-Commit generated output along with source edits for the existing GitHub Pages deployment. `CNAME` and hash routing are unchanged. There is no framework, bundler or application server in production. `npm run dev` is a local authoring tool only.
+Commit generated output along with source edits for the existing GitHub Pages deployment. `CNAME` and hash routing are unchanged. There is no framework, bundler or application server in production. `npm run dev:professional` is a local authoring tool only.
 
 `build.js` parses YAML, validates it, generates clean Markdown, optimizes images and copies the small local runtime libraries/fonts. `js/content.js` filters the audience before grouping; `js/navigation.js` separates direct pages from unread descendants; `js/renderer.js`, `js/images.js`, `js/lightbox.js` handle content and media; `js/main.js`, `js/mobile.js` and `script.js` handle routes, mobile navigation and paper effects.
 
@@ -256,7 +362,7 @@ See [UI-PROFILES.md](UI-PROFILES.md) for the latest UI/profile pass, screenshot/
 
 See [STABILIZATION.md](STABILIZATION.md) for the current mobile text, deterministic receipt rules and validation results.
 
-Both views and the alias run from the same `npm run dev` server. `npm run check` validates their mode selection, routes, aliases, personal-only fallback, generated shells and audience-filtered direct receipts. `site.config.json` → `views` controls entry titles/descriptions. `views.personal.noindex` is initially `true`, generating `noindex,follow` only for the personal entry shell; set it to `false` and rebuild to remove that directive. Personal content remains public. No prominent personal-view link is added.
+Both views and the alias run from the same `npm run dev:professional` server. `npm run check` validates their mode selection, routes, aliases, personal-only fallback, generated shells and audience-filtered direct receipts. `site.config.json` → `views` controls entry titles/descriptions. `views.personal.noindex` is initially `true`, generating `noindex,follow` only for the personal entry shell; set it to `false` and rebuild to remove that directive. Personal content remains public. No prominent personal-view link is added.
 
 See [VIEW-MODES.md](VIEW-MODES.md) for the current curated-root/personal routing model and automatic mobile receipt behavior.
 

@@ -155,8 +155,9 @@ async function build(root = __dirname) {
     return html.replace('<head>','<head>'+metadata+(personal?'\n  <base href="../">':''));
   }
   fs.writeFileSync(path.join(root,'index.html'),entryShell(views.root||{}));
-  fs.mkdirSync(path.join(root,'personal'),{recursive:true});
-  fs.writeFileSync(path.join(root,'personal/index.html'),entryShell(views.personal||{},true));
+  // Personal has its own renderer and assets; never regenerate the old shared shell.
+  if (fs.existsSync(path.join(root, 'zibaldone/build.mjs')))
+    await (await import('./zibaldone/build.mjs')).build({ source: path.join(root, 'zibaldone'), output: path.join(root, 'personal'), basePath: '/personal/' });
   fs.mkdirSync(path.join(root,'work'),{recursive:true});
   fs.writeFileSync(path.join(root,'work/index.html'),`<!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="robots" content="noindex,follow"><title>Param Ghetia</title>

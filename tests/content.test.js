@@ -19,10 +19,12 @@ test('known internal links are semantic and point to published pages',()=>{
  const slugs=new Set(manifest.pages.map(p=>p.slug));
  for(const page of manifest.pages){for(const match of page.body.matchAll(/\]\(#\/([^\s)]+)\)/g))assert.ok(slugs.has(match[1]),`${page.slug}: ${match[1]}`);}
 });
-test('personal shell shares the application body; work is only a redirect',()=>{
+test('personal shell is isolated; work remains a professional redirect',()=>{
  const shared=fs.readFileSync(path.join(root,'index.html'),'utf8');
  const personal=fs.readFileSync(path.join(root,'personal/index.html'),'utf8');
  const work=fs.readFileSync(path.join(root,'work/index.html'),'utf8');
- assert.equal(personal.split('</head>')[1],shared.split('</head>')[1]);
+ assert.notEqual(personal.split('</head>')[1],shared.split('</head>')[1]);
+ assert.match(personal,/\/personal\/client\/main.js/);assert.doesNotMatch(personal,/generated\/site.css|src="js\/main.js/);
+ assert.match(shared,/src="js\/main.js/);
  assert.ok(work.includes('location.replace'));assert.ok(!work.includes('js/main.js'));
 });
