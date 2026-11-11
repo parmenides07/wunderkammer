@@ -346,6 +346,17 @@
         ]
       ],
       "arrowhead": true
+    },
+    {
+      "id": "2c1e30bd-b0f0-47b9-a97d-d371eabcec9d",
+      "type": "text",
+      "x": 16,
+      "y": -4,
+      "width": 12,
+      "height": 5,
+      "text": "test",
+      "font": "mono",
+      "fontSize": 16
     }
   ]
 }
