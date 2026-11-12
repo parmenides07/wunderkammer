@@ -389,10 +389,10 @@
     {
       "id": "ed90bda3-8b82-40e5-b7ff-126ee16adbeb",
       "type": "image",
-      "x": 46,
-      "y": 3,
-      "width": 15,
-      "height": 17.239663093415007,
+      "x": 45.70389754092117,
+      "y": -1.3298593240070673,
+      "width": 18.864531595736402,
+      "height": 21.681211275038546,
       "src": "/personal/assets/image-bc2c4e8f-e955-4dce-a6a5-5a492a47d6a7.png",
       "alt": ""
     },
@@ -404,6 +404,99 @@
       "width": 20,
       "height": 13.539967373572596,
       "src": "/personal/assets/image-ad7bc59b-31ef-484b-985c-fa0c3520f912.png",
+      "alt": ""
+    },
+    {
+      "id": "7df59974-17ac-4e43-9973-4456c993e656",
+      "type": "text",
+      "x": 13,
+      "y": -12,
+      "width": 15,
+      "height": 2,
+      "text": "03: November 11th\n",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "d91e7da4-aefb-4c97-8a9c-e2f226f35257",
+      "type": "text",
+      "x": 13,
+      "y": -10,
+      "width": 21,
+      "height": 10,
+      "text": "I learned a LOT today:\n- Subtraction, Multiplication, Division\n- Comparators, ALUs, Shifters (Logical and Arithmetic) and Rotaters\n- Number Systems: Signed and Unisgned, Fixed Point, Floating Point, Rounding\n- Other stuff: Counters, Shift Registers (and Scan Chains)\n- Memory Arrays/Bit Cells\n- Different Memory Types",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "86a22db0-ed47-4fc2-9899-485db986e522",
+      "type": "text",
+      "x": 34.916653930097404,
+      "y": -18.361337451192504,
+      "width": 30.838059705296587,
+      "height": 10,
+      "text": "Now this was incredibly interesting. Essentially there is 3 memory types: RAM (Random Access Memory), ROM (Read Only Memory), and Register Files. \n\nRAM is volatile, meaning it loses data when power turns off. RAM also kinda sucks in that the way it works is the state of each bit cell is stored via a capacitor, which is nice because that makes it dynamic but that means when we (the bitline) read the data value, charge is transferred from the capacitor to the bitline and that data value is somewhat lost. Thus, we have to replenish it after reading. Also, by nature of capacitors, they discharge or are effected by noise or something. Whatever it may be, if we want to maintain accurate data values, we must periodically update ALL the bit cells. To make this all a bit easier we came up with SRAM which synchronizes (hence the S) access and the reading/writing to a clock so its a bit more systematic to replenish values. To make this more effecient we came up with DDR SRAM which means double data rate SRAM which utilizes both the rising and falling edge of the clock for access. \n\nThere's also SRAM which is static and uses cross coupled inverters instead of capacitors (hence the lack of dynamism). These are nice and do not have to be refreshed although they are larger and cost more transistors. They do have a lower latency and throughput though. \n\nROM is non volatile and retains data indefinately without power. It's very very interesting in the actual way it works. It stores the data values as the presence or absence of a transistor meaning it gives the bitline reading it a weak signal and if the transistor is present it will pull the bitline low but if there is no transistor the bitline will remain high. Remember this is READ ONLY. There are some intersting other progammable ROMS that also use fuses. These are obviously only good for one time so if you want a multi-use one you use EPROM (erasable programmable ROM) which uses a  floating gate resistor. Its not actually attached to anything but the electrons when provided with the right voltage tunnel thorugh the insulator and trigger the transistor. When this is exposed to UV light, the electrons are knocked off and its \"reset\". EEPROM )electrically erasable PROM) can individually \"reset\" bit cells.",
+      "font": "mono",
+      "fontSize": 11,
+      "zIndex": -2
+    },
+    {
+      "id": "87689321-7447-45c8-ac36-58500d8f0c39",
+      "type": "line",
+      "points": [
+        [
+          23,
+          -1
+        ],
+        [
+          30,
+          -1
+        ],
+        [
+          30,
+          -3
+        ],
+        [
+          34,
+          -3
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "88c63a32-5410-4ca2-9c5e-a371badde266",
+      "type": "text",
+      "x": 35.017729417292216,
+      "y": -19.627566662610576,
+      "width": 15,
+      "height": 2,
+      "text": "Memory Types",
+      "font": "baskerville",
+      "fontSize": 25,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "6988ef9e-aa3b-4115-8e0d-8871e9ce25b6",
+      "type": "image",
+      "x": 12,
+      "y": -27,
+      "width": 22.21961932650073,
+      "height": 14,
+      "src": "/personal/assets/image-527db721-392f-4e42-aeca-976c263db066.png",
+      "alt": ""
+    },
+    {
+      "id": "c463bdc9-9ca5-44b7-812d-e76bb1abc9e3",
+      "type": "image",
+      "x": 35,
+      "y": -34,
+      "width": 22.21961932650073,
+      "height": 14,
+      "src": "/personal/assets/image-4b35ad7e-07fd-4848-9bf9-959ab45e59a5.png",
       "alt": ""
     }
   ]
