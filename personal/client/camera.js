@@ -2,6 +2,36 @@ import { GRID, screenToWorld, zoomAt } from './model.js';
 
 export const isTyping = target => !!target?.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"])');
 
+// World-space camera-center limits. Both ends leave the entire viewport blank,
+// including a 32 screen-pixel gap beyond the composition's visual bounds.
+export function wrapInterval(bounds, size, zoom) {
+  if (!bounds || ![bounds.minX, bounds.minY, bounds.maxX, bounds.maxY, size.width, size.height, zoom].every(Number.isFinite) ||
+      bounds.maxX <= bounds.minX || bounds.maxY <= bounds.minY || size.width <= 0 || size.height <= 0 || zoom <= 0) return null;
+  const scale = GRID * zoom;
+  const x = (size.width / 2 + 32) / scale, y = (size.height / 2 + 32) / scale;
+  const limits = { x: [bounds.minX - x, bounds.maxX + x], y: [bounds.minY - y, bounds.maxY + y] };
+  return Object.values(limits).every(([lo, hi]) => Number.isFinite(hi - lo) && hi > lo) ? limits : null;
+}
+
+export function wrapPan(before, next, bounds, size) {
+  if (![next.x, next.y, next.zoom].every(Number.isFinite)) return { ...before };
+  const limits = before.zoom === next.zoom && wrapInterval(bounds, size, next.zoom);
+  if (!limits) return next;
+  const result = { ...next };
+  for (const axis of ['x', 'y']) {
+    const [lo, hi] = limits[axis], period = hi - lo, delta = next[axis] - before[axis];
+    if (!Number.isFinite(delta)) continue;
+    // Zoom, resizing or a saved entry view may start outside the interval.
+    // Inward travel stays natural; outward travel starts a new blank-to-blank
+    // crossing here, without treating the earlier zoom displacement as pan.
+    if (delta > 0 && next[axis] > hi) result[axis] = lo + ((Math.min(before[axis], hi) + delta - hi) % period);
+    if (delta < 0 && next[axis] < lo) result[axis] = hi - ((lo - Math.max(before[axis], lo) - delta) % period);
+  }
+  // Each period skips only a blank-to-blank boundary. The remainder is ordinary
+  // pan travel, even for multi-period input; never render intermediate positions.
+  return result;
+}
+
 // WheelEvent has no reliable device identifier. Fine/diagonal motion and a
 // continuous, varying pixel stream suggest a trackpad; coarse ticks suggest a
 // mouse. Keep an established pan through acceleration and its momentum tail.
@@ -80,6 +110,9 @@ export class Camera {
   toWorld(point) { return screenToWorld(point, this.value, this.size); }
   releaseSpace() { this.space = false; this.viewport.classList.remove('pan-ready'); }
   set(value) { this.value = { ...value }; this.draw(); }
+  pan(dx, dy) {
+    this.set(wrapPan(this.value, { ...this.value, x: this.value.x + dx, y: this.value.y + dy }, this.panBounds?.(), this.size));
+  }
   draw() {
     const { x, y, zoom } = this.value;
     const tx = this.size.width / 2 - x * GRID * zoom;
@@ -102,10 +135,7 @@ export class Camera {
     e.preventDefault();
     const dx = e.deltaX * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? this.size.width : 1);
     const dy = e.deltaY * (e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? this.size.height : 1);
-    if (action === 'pan') this.set({ ...this.value,
-      x: this.value.x + dx / (GRID * this.value.zoom),
-      y: this.value.y + dy / (GRID * this.value.zoom),
-    });
+    if (action === 'pan') this.pan(dx / (GRID * this.value.zoom), dy / (GRID * this.value.zoom));
     else this.set(zoomAt(this.value, this.point(e), this.size, this.value.zoom * Math.exp(-dy * 0.0015)));
   }
   setWheelMode(mode) {
@@ -168,10 +198,7 @@ export class Camera {
     if (Math.hypot(point.x - this.start.x, point.y - this.start.y) > 4) this.moved = true;
     if (this.moved && this.gesture) this.gesture.move(point, e);
     else if (this.moved && this.panning) {
-      this.set({ ...this.value,
-        x: this.value.x - (point.x - this.last.x) / (GRID * this.value.zoom),
-        y: this.value.y - (point.y - this.last.y) / (GRID * this.value.zoom),
-      });
+      this.pan(-(point.x - this.last.x) / (GRID * this.value.zoom), -(point.y - this.last.y) / (GRID * this.value.zoom));
     }
     if (this.moved) this.last = point;
   }

@@ -70,6 +70,15 @@ export class Space {
       document.querySelector('#focus-content').replaceChildren();
       this.focusReturn?.focus({ preventScroll: true });
     });
+    // The editor token is available before editor.js starts: never briefly wrap
+    // the local authoring camera while its module is loading.
+    if (!document.querySelector('meta[name=zibaldone-editor-token]')) {
+      this.camera.panBounds = () => !this.editing && !this.dialog.open ? this.bounds : null;
+      this.boundsObserver = new ResizeObserver(() => this.invalidateBounds());
+      this.world.addEventListener('load', () => this.invalidateBounds(), true);
+      document.fonts.ready.then(() => this.invalidateBounds());
+      document.fonts.addEventListener('loadingdone', () => this.invalidateBounds());
+    }
     this.render();
     document.title = `${page.slug === 'home' ? 'A place in space' : page.slug.replaceAll('-', ' ')} — Zibaldone`;
   }
@@ -77,6 +86,61 @@ export class Space {
     this.nodes.clear();
     this.world.replaceChildren(...this.page.elements.map(element => this.makeObject(element)));
     this.updateFocusControls();
+    if (this.boundsObserver) {
+      this.boundsObserver.disconnect(); this.boundsObserver.observe(this.viewport);
+      for (const node of this.nodes.values()) this.boundsObserver.observe(node.querySelector('.content') || node);
+      this.invalidateBounds();
+    }
+  }
+  invalidateBounds() {
+    if (!this.boundsObserver) return;
+    this.bounds = null; // Never wrap using stale geometry while layout settles.
+    cancelAnimationFrame(this.boundsFrame);
+    this.boundsFrame = requestAnimationFrame(() => { this.bounds = this.measureBounds(); });
+  }
+  measureBounds() {
+    if (!this.page.elements.length) return null;
+    const origin = this.world.getBoundingClientRect(), scale = GRID * this.camera.value.zoom;
+    const bounds = { minX: Infinity, minY: Infinity, maxX: -Infinity, maxY: -Infinity };
+    for (const element of this.page.elements) {
+      const node = this.nodes.get(element.id), box = elementBounds(element);
+      let left = box.x * GRID, top = box.y * GRID, right = left + box.width * GRID, bottom = top + box.height * GRID;
+      let margin = 6; // Focus outlines, glyph overhang and antialiasing.
+      if (element.type === 'line') {
+        // Default SVG miter joins and the rotated 8×8 stroke-unit arrow marker.
+        margin += (element.arrowhead ? 9 : 4) * (element.strokeWidth ?? 1);
+      } else {
+        if (element.type === 'text') {
+          const content = node.querySelector('.content'), range = document.createRange();
+          range.selectNodeContents(content);
+          const text = range.getBoundingClientRect();
+          if (text.width || text.height) {
+            left = Math.min(left, (text.left - origin.left) / this.camera.value.zoom);
+            top = Math.min(top, (text.top - origin.top) / this.camera.value.zoom);
+            right = Math.max(right, (text.right - origin.left) / this.camera.value.zoom);
+            bottom = Math.max(bottom, (text.bottom - origin.top) / this.camera.value.zoom);
+          }
+          right = Math.max(right, box.x * GRID + content.scrollWidth);
+          bottom = Math.max(bottom, box.y * GRID + content.scrollHeight);
+          margin = Math.max(margin, element.fontSize * 0.25);
+        } else if (isInteractive(element)) {
+          left -= box.width * GRID * 0.01; right += box.width * GRID * 0.01;
+          top -= box.height * GRID * 0.01; bottom += box.height * GRID * 0.01;
+        }
+        if (element.shadow) margin += 32;
+        // These controls belong to the asset, not the fixed viewport UI. Reserve
+        // their largest size even when hidden so focus/hover cannot expose a seam.
+        if (node.querySelector('.focus-object')) {
+          right = Math.max(right, (box.x + box.width) * GRID + 40);
+          bottom = Math.max(bottom, box.y * GRID + 40);
+        }
+      }
+      bounds.minX = Math.min(bounds.minX, (left - margin) / GRID);
+      bounds.minY = Math.min(bounds.minY, (top - margin) / GRID);
+      bounds.maxX = Math.max(bounds.maxX, (right + margin) / GRID);
+      bounds.maxY = Math.max(bounds.maxY, (bottom + margin) / GRID);
+    }
+    return scale > 0 && Object.values(bounds).every(Number.isFinite) ? bounds : null;
   }
   makeObject(element) {
     const node = document.createElement('article');
@@ -151,6 +215,7 @@ export class Space {
     styleObject(node, element);
     if (element.type === 'line') updateLine(node, element);
     this.updateAssetFeedback();
+    this.invalidateBounds();
   }
   updateAssetFeedback() {
     const active = document.activeElement;

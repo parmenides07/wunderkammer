@@ -50,6 +50,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await require('./trail.cjs').local({ browser, origin, root });
     await require('./publish.cjs')({ browser, source });
     await require('./autosave.cjs')({ browser, origin, root });
+    await require('./wrapping.cjs')({ page, browser, origin, root });
     await page.goto(origin + '/personal/'); await canvasReady(page); await ready(page);
 
     const canvasBox = await page.locator('#viewport').boundingBox();
@@ -404,8 +405,10 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.goBack(); await ready(page); await page.goForward(); await ready(page);
     await page.goto(staticOrigin + '/repository-name/personal/?edit5500'); await canvasReady(page); await ready(page);
     assert.equal(await page.locator('#editor-tools').count(), 0);
-    for (const base of ['/personal/', '/repository-name/personal/'])
+    for (const base of ['/personal/', '/repository-name/personal/']) {
       await require('./trail.cjs').static({ browser, origin: staticOrigin, base });
+      await require('./wrapping.cjs').static({ page, origin: staticOrigin, base });
+    }
     assert.deepEqual(errors, []);
     console.log('Browser checks passed: wheel/trackpad modes, pointer zoom, link feedback, focus, editing, save/reload, touch pan/pinch, finger handoff, native zoom access outside canvas, static isolation.');
     console.log('Screenshots: /tmp/space-{home-desktop,field-desktop,editor-desktop,mobile}.png');

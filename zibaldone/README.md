@@ -133,6 +133,15 @@ Pinching zooms the canvas within the existing limits; lifting one finger resumes
 panning without a jump. Native scrolling/zooming is suppressed only on the canvas.
 Other UI retains normal browser gestures, with no viewport scaling restriction.
 
+Viewer panning loops around the composition. A wrap crosses from blank space on
+one side to blank space on the other, with the full viewport and a 32 screen-pixel
+gap outside the measured content. Remaining pan movement is preserved, including
+large deltas and diagonal travel. There is still exactly one DOM composition.
+Bounds include overflowing text, line strokes/arrowheads, shadows and hover
+extents; layout/font/image changes refresh the cache, not each camera frame.
+Zoom, pinch, resizing, navigation and saved entry views never trigger wrapping.
+The editor and empty canvases retain unrestricted panning. No JSON fields change.
+
 ## Navigation trail
 
 The same 30px white breadcrumb strip records the path in the URL:
