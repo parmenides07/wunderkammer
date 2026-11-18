@@ -2,6 +2,15 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { screenToWorld, zoomAt, resizeBox, snap, validatePage, isMaximizable, isInteractive, canInvert, elementBounds } from '../client/model.js';
 
+test('xanh is an additive text font; all existing font selections and dimensions survive validation', () => {
+  const elements = ['xanh', 'mono', 'baskerville'].map(font => ({ id: font, type: 'text', x: -3.5, y: 2,
+    width: 12, height: 5, text: 'Writing\nwith contrast.', font, fontSize: 18, lineHeight: 1.4, letterSpacing: 0.02 }));
+  const page = { slug: 'typography', camera: { x: 0, y: 0, zoom: 1 }, elements };
+  const before = JSON.stringify(page);
+  validatePage(page); assert.equal(JSON.stringify(page), before);
+  assert.throws(() => validatePage({ ...page, elements: [{ ...elements[0], font: 'unknown' }] }), /Choose xanh/);
+});
+
 test('pointer-anchored zoom has no accumulating world-coordinate drift', () => {
   const size = { width: 391, height: 843 };
   const point = { x: 83.25, y: 691.75 };

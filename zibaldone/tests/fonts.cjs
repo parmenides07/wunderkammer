@@ -79,7 +79,7 @@ module.exports = async ({ page, origin, root, browser }) => {
   await page.goto(origin + '/personal/?edit5500#/font-check'); await canvasReady(page); await page.waitForSelector('#editor-tools');
   const saved = await verify(page); assert.equal(saved.elements[0].font, 'mono');
   await page.waitForFunction(() => document.querySelector('[data-id=mono]').dataset.overflow === 'true');
-  assert.deepEqual(await page.locator('#prop-font option').allTextContents(), ['Zenbones Mono', 'Baskerville']);
+  assert.deepEqual(await page.locator('#prop-font option').allTextContents(), ['Xanh Mono', 'Baskerville', 'Zenbones Mono']);
   assert.match(await page.locator('[data-id=serif]').evaluate(n => getComputedStyle(n).fontFamily), /Baskerville/);
   assert.deepEqual(JSON.parse(await fs.readFile(path.join(root, 'pages/font-check.json'), 'utf8')), fixture);
   console.log('Zenbones verified: Chromium draws Zenbones Mono / Zenbones-Mono custom glyphs in viewer, editor and breadcrumbs; WOFF2 URLs, fallback/swap, bounds, wrapping/overflow, unchanged box metrics/schema, focus and Baskerville checked.');
@@ -88,3 +88,4 @@ module.exports.static = async ({ page, origin, base }) => {
   await page.goto(origin + base + '#/font-check'); await canvasReady(page); await verify(page, base);
   assert.equal((await page.request.get(origin + base + 'assets/Zenbones-Mono-LICENSE.md')).status(), 200);
 };
+module.exports.renderedFonts = renderedFonts;

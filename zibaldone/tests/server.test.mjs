@@ -39,7 +39,7 @@ test('local authoring roundtrip, upload, conflicts, validation, and request boun
   assert.equal((await fetch(origin + '/personal/pages/home.json')).status, 200);
   const newPage = { slug: 'new-canvas', camera: { x: -400, y: 100, zoom: 0.4 }, elements: [
     { id: 'saved-line', type: 'line', x1: -8, y1: 4, x2: 3, y2: -2, strokeStyle: 'dashed', strokeWidth: 2, arrowhead: true, zIndex: -2 },
-    { ...page.elements[0], id: 'options', zIndex: 3, maximizable: false, invertOnHover: true, shadow: true, locked: true, lineHeight: 1.25, letterSpacing: -0.02 },
+    { ...page.elements[0], id: 'options', font: 'xanh', fontSize: 18, zIndex: 3, maximizable: false, invertOnHover: true, shadow: true, locked: true, lineHeight: 1.25, letterSpacing: -0.02 },
     { id: 'poly', type: 'line', points: [[1, 2], [3, 2], [3, 4]], locked: true },
   ] };
   const create = () => fetch(origin + '/_zibaldone/api/pages/new-canvas', { method: 'PUT', headers: { ...headers, 'If-None-Match': '*' }, body: JSON.stringify(newPage) });
@@ -73,6 +73,11 @@ test('static output has real routes and excludes editor, server, and write APIs'
     await readFile(path.join(source, 'assets/Zenbones-Mono-Regular.woff2')));
   assert.match(await readFile(path.join(output, 'assets/Zenbones-Mono-LICENSE.md'), 'utf8'), /SIL Open Font License/);
   assert.match(await readFile(path.join(output, 'client/style.css'), 'utf8'), /Zenbones-Mono-Regular\.woff2/);
+  for (const subset of ['latin', 'latin-ext', 'vietnamese'])
+    assert.deepEqual(await readFile(path.join(output, `assets/Xanh-Mono-Regular-${subset}.woff2`)),
+      await readFile(path.join(source, `assets/Xanh-Mono-Regular-${subset}.woff2`)));
+  assert.match(await readFile(path.join(output, 'assets/Xanh-Mono-OFL.txt'), 'utf8'), /SIL OPEN FONT LICENSE/);
+  assert.doesNotMatch(await readFile(path.join(output, 'client/style.css'), 'utf8'), /https?:\/\/fonts\./);
   await assert.rejects(readFile(path.join(output, 'server.mjs')));
   await assert.rejects(readFile(path.join(output, 'publish.mjs')));
   await build({ output, basePath: '/repository-name/personal/' });

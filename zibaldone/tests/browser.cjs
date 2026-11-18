@@ -44,6 +44,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.screenshot({ path: '/tmp/space-home-desktop.png' });
 
     await require('./fonts.cjs')({ page, browser, origin, root });
+    await require('./typography.cjs')({ page, browser, origin, root });
     await require('./inversion.cjs')({ page, browser, origin, root });
     await require('./refinements.cjs')({ page, browser, origin, root });
     await require('./viewer-controls.cjs')({ page, browser, origin, root });
@@ -408,6 +409,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     assert.equal(await page.locator('#editor-tools').count(), 0);
     for (const base of ['/personal/', '/repository-name/personal/']) {
       await require('./fonts.cjs').static({ page, origin: staticOrigin, base });
+      await require('./typography.cjs').static({ page, origin: staticOrigin, base });
       await require('./trail.cjs').static({ browser, origin: staticOrigin, base });
       await require('./wrapping.cjs').static({ page, origin: staticOrigin, base });
     }

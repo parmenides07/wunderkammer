@@ -175,17 +175,26 @@ and the existing hover treatment are preserved. Focus temporarily hides the trai
 
 ## Fonts
 
-The interface and existing `"mono"` text selections use the locally bundled
-**Zenbones Mono Regular** WOFF2. Baskerville remains the other selectable font.
-The font was extracted unchanged from the supplied official
+New text objects use **Xanh Mono Regular** (`"xanh"`) at **18px**, with the
+existing 1.4 line-height default. Their default 12×5 grid box is unchanged.
+Xanh Mono is bundled locally as Google Fonts' regular WOFF2 subsets, including
+Latin, extended Latin and Vietnamese coverage. Source URLs and license notices
+are in `assets/Xanh-Mono-NOTICE.md` and `assets/Xanh-Mono-OFL.txt`.
+
+All three fonts remain independent choices in the existing selector:
+**Xanh Mono**, **Baskerville** (system font with the existing serif fallbacks), and
+**Zenbones Mono**. Existing `"mono"` selections still mean Zenbones; no page data
+is migrated. The interface, breadcrumbs and editor controls stay in Zenbones.
+Zenbones was extracted unchanged from the supplied official
 `Zenbones-Mono-WOFF2.zip`; its [upstream project](https://github.com/zenbones-theme/zenbones-mono)
 and SIL Open Font License notices are recorded in
 `assets/Zenbones-Mono-NOTICE.md` and `assets/Zenbones-Mono-LICENSE.md`.
-Only the regular face used by this editor is bundled. Saved font sizes, box
+Only the regular webfont faces used by this editor are bundled. Saved font sizes, box
 dimensions, line heights, letter spacing and coordinates are unchanged. Different
 glyph metrics can naturally change wrapping; editor overflow indicators and
 viewer bounds are measured again after the webfont loads. No remote font service
-or browser-side request to GitHub is used.
+or browser-side request to Google Fonts or GitHub is used. To try the new writing
+voice, create a text object or deliberately choose Xanh Mono on an existing one.
 
 ## JSON format and defaults
 
@@ -226,7 +235,7 @@ zoom is limited to 0.08–8. Example elements within a page:
 
 - Text/images use independent grid X/Y/W/H. Image resizing snaps the dominant
   axis and derives the other when aspect ratio is locked. **Snap** can be disabled.
-- `font` is `mono` (bundled Zenbones Mono) or `baskerville` (system Baskerville,
+- `font` is `xanh` (bundled Xanh Mono), `mono` (bundled Zenbones Mono), or `baskerville` (system Baskerville,
   then Palatino/Georgia). `fontSize` is independent of box dimensions. `align`
   defaults to `left`. `lineHeight` defaults to the existing canvas appearance,
   1.4, and accepts 0.5–4. `letterSpacing` defaults to 0 em and accepts -0.1–1 em.

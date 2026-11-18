@@ -141,7 +141,7 @@ export function validatePage(page, expectedSlug = page?.slug) {
       if (e.letterSpacing !== undefined && (!finite(e.letterSpacing) || e.letterSpacing < -0.1 || e.letterSpacing > 1)) fail('Letter spacing must be between -0.1 and 1 em.');
       if (e.invertOnHover !== undefined && typeof e.invertOnHover !== 'boolean') fail('invertOnHover must be boolean.');
       if (typeof e.text !== 'string' || e.text.length > 100000) fail('Text must be at most 100000 characters.');
-      if (!['mono', 'baskerville'].includes(e.font)) fail('Choose mono or baskerville.');
+      if (!['xanh', 'mono', 'baskerville'].includes(e.font)) fail('Choose xanh, mono or baskerville.');
       if (!finite(e.fontSize) || e.fontSize < 1 || e.fontSize > 1000) fail('Font size must be between 1 and 1000 pixels.');
       if (e.align !== undefined && !['left', 'center', 'right'].includes(e.align)) fail('Invalid text alignment.');
     } else {

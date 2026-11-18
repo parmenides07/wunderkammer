@@ -76,7 +76,7 @@ function startEditor(app, token) {
         <label id="maximize-property"><input id="prop-maximizable" type="checkbox"> Maximizable</label>
       </div>
       <div id="text-properties" class="tool-row">
-        <select id="prop-font" aria-label="Font"><option value="mono">Zenbones Mono</option><option value="baskerville">Baskerville</option></select>
+        <select id="prop-font" aria-label="Font"><option value="xanh">Xanh Mono</option><option value="baskerville">Baskerville</option><option value="mono">Zenbones Mono</option></select>
         <label>Size <input id="prop-fontSize" type="number" min="1" max="1000" step="1"> px</label>
         <label>Line height <input id="prop-lineHeight" type="number" min="0.5" max="4" step="0.05"></label>
         <label>Spacing <input id="prop-letterSpacing" type="number" min="-0.1" max="1" step="0.01"> em</label>
@@ -187,6 +187,7 @@ function startEditor(app, token) {
   $('wheel-input').value = app.camera.wheelMode;
   $('wheel-input').onchange = () => app.camera.setWheelMode($('wheel-input').value);
   document.fonts.ready.then(checkOverflow);
+  document.fonts.addEventListener('loadingdone', checkOverflow);
 
   async function listPages() {
     const slugs = await api('/_zibaldone/api/pages');
@@ -310,7 +311,7 @@ function startEditor(app, token) {
     content.onblur = endText;
   }
   function addText(point) {
-    const e = { id: crypto.randomUUID(), type: 'text', x: snap(point.x, snapped()), y: snap(point.y, snapped()), width: 12, height: 5, text: '', font: 'mono', fontSize: 16 };
+    const e = { id: crypto.randomUUID(), type: 'text', x: snap(point.x, snapped()), y: snap(point.y, snapped()), width: 12, height: 5, text: '', font: 'xanh', fontSize: 18 };
     app.page.elements.push(e);
     app.world.append(app.makeObject(e));
     select(e.id);
