@@ -4,7 +4,7 @@ import { parseRoute, canvasURL, routeURL } from './routes.js';
 import { createTrail } from './trail.js';
 
 export const fonts = {
-  mono: '"JetBrains Mono", monospace',
+  mono: '"Zenbones Mono", monospace',
   baskerville: 'Baskerville, "Baskerville Old Face", "Palatino Linotype", "Book Antiqua", Georgia, serif',
 };
 

@@ -56,6 +56,9 @@ module.exports = async ({ page, browser, origin, root }) => {
     assert.equal(await opacity(arrow(page, id)), '1');
     await page.keyboard.press('Enter'); assert.equal(await isOpen(page), true);
     await page.keyboard.press('Escape');
+    // The dialog's close event restores focus asynchronously. Let that event
+    // finish before moving focus to the link and pressing Enter again.
+    await page.evaluate(() => new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r))));
     await page.waitForFunction(id => document.activeElement === document.querySelector(`[data-id="${id}"] .focus-object`), id);
     await content(page, id).focus(); await page.keyboard.press('Enter');
     await page.waitForURL('**/field-notes'); await canvasReady(page);

@@ -2,18 +2,23 @@ import { GRID, screenToWorld, zoomAt } from './model.js';
 
 export const isTyping = target => !!target?.closest?.('input, textarea, select, [contenteditable]:not([contenteditable="false"])');
 
-// World-space camera-center limits. Both ends leave the entire viewport blank,
-// including a 32 screen-pixel gap beyond the composition's visual bounds.
-export function wrapInterval(bounds, size, zoom) {
+// Internal experiment switch: 'adaptive', 'reflection', or 'translation'.
+// The previous algorithms remain below; none transforms authored content.
+export const WRAP_MODE = 'adaptive';
+export const WRAP_CLEARANCE_PX = 2;
+const DIRECTION_SAMPLE_PX = 0.5;
+
+// World-space camera-center limits, padded in screen pixels at the current zoom.
+export function wrapInterval(bounds, size, zoom, clearance = WRAP_CLEARANCE_PX) {
   if (!bounds || ![bounds.minX, bounds.minY, bounds.maxX, bounds.maxY, size.width, size.height, zoom].every(Number.isFinite) ||
       bounds.maxX <= bounds.minX || bounds.maxY <= bounds.minY || size.width <= 0 || size.height <= 0 || zoom <= 0) return null;
   const scale = GRID * zoom;
-  const x = (size.width / 2 + 32) / scale, y = (size.height / 2 + 32) / scale;
+  const x = (size.width / 2 + clearance) / scale, y = (size.height / 2 + clearance) / scale;
   const limits = { x: [bounds.minX - x, bounds.maxX + x], y: [bounds.minY - y, bounds.maxY + y] };
   return Object.values(limits).every(([lo, hi]) => Number.isFinite(hi - lo) && hi > lo) ? limits : null;
 }
 
-export function wrapPan(before, next, bounds, size) {
+export function translatePan(before, next, bounds, size) {
   if (![next.x, next.y, next.zoom].every(Number.isFinite)) return { ...before };
   const limits = before.zoom === next.zoom && wrapInterval(bounds, size, next.zoom);
   if (!limits) return next;
@@ -30,6 +35,87 @@ export function wrapPan(before, next, bounds, size) {
   // Each period skips only a blank-to-blank boundary. The remainder is ordinary
   // pan travel, even for multi-period input; never render intermediate positions.
   return result;
+}
+
+export function reflectPan(before, next, bounds, size) {
+  if (![next.x, next.y, next.zoom].every(Number.isFinite)) return { ...before };
+  const limits = before.zoom === next.zoom && wrapInterval(bounds, size, next.zoom);
+  if (!limits) return next;
+  const dx = next.x - before.x, dy = next.y - before.y, distance = Math.hypot(dx, dy);
+  if (!distance || !Number.isFinite(distance)) return next;
+  const direction = { x: dx / distance, y: dy / distance };
+  // Intersect the whole movement line with the camera-center rectangle. A
+  // corner is one exit, not separate X/Y reflections. A tangent that never
+  // enters this rectangle simply keeps panning through empty space.
+  let enter = -Infinity, exit = Infinity;
+  for (const axis of ['x', 'y']) {
+    const [lo, hi] = limits[axis], v = direction[axis];
+    if (!v) { if (before[axis] <= lo || before[axis] >= hi) return next; continue; }
+    const a = (lo - before[axis]) / v, b = (hi - before[axis]) / v;
+    enter = Math.max(enter, Math.min(a, b)); exit = Math.min(exit, Math.max(a, b));
+  }
+  const span = exit - enter;
+  if (exit >= distance || !(span > 0) || !Number.isFinite(span)) return next;
+  // Reflect the EXIT point, then spend the unconsumed motion in its original
+  // direction. After zoom/resizing outside the interval, only this pan counts.
+  const remainder = distance - Math.max(0, exit);
+  // The reflected chord has the same length. Two traversals return to the
+  // original chord, so modulo handles huge gestures without a reflection loop.
+  const phase = remainder % (2 * span), opposite = phase <= span;
+  const travel = opposite ? phase : phase - span;
+  const result = { ...next };
+  for (const axis of ['x', 'y']) {
+    const [lo, hi] = limits[axis], clamp = value => Math.max(lo, Math.min(hi, value));
+    const edge = clamp(before[axis] + direction[axis] * (opposite ? exit : enter));
+    result[axis] = clamp((opposite ? lo + (hi - edge) : edge) + direction[axis] * travel);
+  }
+  return Object.values(result).every(Number.isFinite) ? result : next;
+}
+
+export function wrapPan(before, next, bounds, size) {
+  return (WRAP_MODE === 'reflection' ? reflectPan : translatePan)(before, next, bounds, size);
+}
+
+const outside = (point, limits) => ['x', 'y'].some(axis => point[axis] < limits[axis][0] || point[axis] > limits[axis][1]);
+
+// State exists only during the short, blank approach. Entry is the intersection
+// of a continuous direction ray with the viewport-expanded content rectangle.
+// Keeping distance-to-entry (rather than a fixed camera offset) lets direction
+// change without restarting the gap or moving any visible content.
+export function adaptivePan(before, next, bounds, size, state = null) {
+  const unchanged = { camera: next, state: null };
+  if (![next.x, next.y, next.zoom].every(Number.isFinite)) return { camera: before, state: null };
+  const limits = before.zoom === next.zoom && wrapInterval(bounds, size, next.zoom);
+  if (!limits) return unchanged;
+  const core = wrapInterval(bounds, size, next.zoom, 0);
+  if (state && (state.bounds !== bounds || state.width !== size.width || state.height !== size.height || state.zoom !== next.zoom)) state = null;
+  const dx = next.x - before.x, dy = next.y - before.y, distance = Math.hypot(dx, dy);
+  if (!distance || !Number.isFinite(distance)) return { ...unchanged, state };
+  // First render an ordinary pan into blank space. Only a subsequent movement
+  // may choose an approach. Lock before even potentially visible pixels enter.
+  if (!outside(before, core) || (!state && !outside(before, limits))) return unchanged;
+  let direction = { x: dx / distance, y: dy / distance };
+  let sampleX = dx, sampleY = dy;
+  if (state) {
+    sampleX += state.sampleX; sampleY += state.sampleY;
+    const sampleLength = Math.hypot(sampleX, sampleY);
+    if (sampleLength * GRID * next.zoom < DIRECTION_SAMPLE_PX - 1e-7) direction = state.direction;
+    else { direction = { x: sampleX / sampleLength, y: sampleY / sampleLength }; sampleX = sampleY = 0; }
+  } else sampleX = sampleY = 0;
+  const radius = rectangle => Math.min(...['x', 'y'].map(axis =>
+    direction[axis] ? (rectangle[axis][1] - rectangle[axis][0]) / (2 * Math.abs(direction[axis])) : Infinity));
+  const edge = radius(core);
+  const remaining = (state?.remaining ?? radius(limits) - edge) - distance;
+  const camera = { ...next };
+  for (const axis of ['x', 'y']) {
+    const [lo, hi] = core[axis], center = lo + (hi - lo) / 2;
+    camera[axis] = center - direction[axis] * (edge + remaining);
+  }
+  if (![camera.x, camera.y].every(Number.isFinite)) return unchanged;
+  return { camera, state: remaining * GRID * next.zoom > 1e-7 ? {
+    bounds, width: size.width, height: size.height, zoom: next.zoom,
+    direction, remaining, sampleX, sampleY,
+  } : null };
 }
 
 // WheelEvent has no reliable device identifier. Fine/diagonal motion and a
@@ -64,7 +150,7 @@ export class Camera {
     } catch { /* Input preferences are optional when storage is unavailable. */ }
     // Do not mistake a touchscreen laptop with a fine pointer for a phone.
     this.touchDevice = window.matchMedia('(pointer: coarse) and (hover: none)');
-    this.resizeObserver = new ResizeObserver(() => this.draw());
+    this.resizeObserver = new ResizeObserver(() => { this.wrapState = null; this.draw(); });
     this.resizeObserver.observe(viewport);
     viewport.addEventListener('wheel', e => this.wheel(e), { passive: false });
     viewport.addEventListener('pointerdown', e => this.down(e));
@@ -109,9 +195,13 @@ export class Camera {
   }
   toWorld(point) { return screenToWorld(point, this.value, this.size); }
   releaseSpace() { this.space = false; this.viewport.classList.remove('pan-ready'); }
-  set(value) { this.value = { ...value }; this.draw(); }
+  set(value, wrapState = null) { this.wrapState = wrapState; this.value = { ...value }; this.draw(); }
   pan(dx, dy) {
-    this.set(wrapPan(this.value, { ...this.value, x: this.value.x + dx, y: this.value.y + dy }, this.panBounds?.(), this.size));
+    const next = { ...this.value, x: this.value.x + dx, y: this.value.y + dy }, bounds = this.panBounds?.();
+    if (WRAP_MODE === 'adaptive') {
+      const result = adaptivePan(this.value, next, bounds, this.size, this.wrapState);
+      this.set(result.camera, result.state);
+    } else this.set(wrapPan(this.value, next, bounds, this.size));
   }
   draw() {
     const { x, y, zoom } = this.value;

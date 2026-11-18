@@ -69,6 +69,10 @@ test('static output has real routes and excludes editor, server, and write APIs'
   assert.match(html, /data-slug="home"/);
   assert.doesNotMatch(html, /editor|token|_space\/api/);
   assert.deepEqual((await readdir(path.join(output, 'client'))).sort(), ['camera.js', 'main.js', 'model.js', 'routes.js', 'style.css', 'trail.js']);
+  assert.deepEqual(await readFile(path.join(output, 'assets/Zenbones-Mono-Regular.woff2')),
+    await readFile(path.join(source, 'assets/Zenbones-Mono-Regular.woff2')));
+  assert.match(await readFile(path.join(output, 'assets/Zenbones-Mono-LICENSE.md'), 'utf8'), /SIL Open Font License/);
+  assert.match(await readFile(path.join(output, 'client/style.css'), 'utf8'), /Zenbones-Mono-Regular\.woff2/);
   await assert.rejects(readFile(path.join(output, 'server.mjs')));
   await assert.rejects(readFile(path.join(output, 'publish.mjs')));
   await build({ output, basePath: '/repository-name/personal/' });

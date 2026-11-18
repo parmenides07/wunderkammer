@@ -52,7 +52,8 @@ const model = require('../js/content').createContentModel(manifest, 'professiona
       await page.reload(); await page.waitForSelector('.object');
       assert.equal(await page.locator('#editor-tools').count(), 0);
       const images = await page.locator('#world img').evaluateAll(nodes => Promise.all(nodes.map(n => n.decode().then(() => n.naturalWidth > 0)))); assert.ok(images.every(Boolean));
-      await page.evaluate(() => document.fonts.ready); assert.ok(await page.evaluate(() => document.fonts.check('16px "JetBrains Mono"')));
+      await page.evaluate(() => document.fonts.ready);
+      assert.ok(await page.evaluate(() => [...document.fonts].some(font => font.family.replaceAll(/["']/g, '') === 'Zenbones Mono' && font.status === 'loaded')));
       await page.screenshot({ path: `/tmp/wunderkammer-personal-${width}.png` });
       await context.close();
     }

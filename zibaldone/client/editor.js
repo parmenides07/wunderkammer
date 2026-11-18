@@ -76,7 +76,7 @@ function startEditor(app, token) {
         <label id="maximize-property"><input id="prop-maximizable" type="checkbox"> Maximizable</label>
       </div>
       <div id="text-properties" class="tool-row">
-        <select id="prop-font" aria-label="Font"><option value="mono">JetBrains Mono</option><option value="baskerville">Baskerville</option></select>
+        <select id="prop-font" aria-label="Font"><option value="mono">Zenbones Mono</option><option value="baskerville">Baskerville</option></select>
         <label>Size <input id="prop-fontSize" type="number" min="1" max="1000" step="1"> px</label>
         <label>Line height <input id="prop-lineHeight" type="number" min="0.5" max="4" step="0.05"></label>
         <label>Spacing <input id="prop-letterSpacing" type="number" min="-0.1" max="1" step="0.01"> em</label>

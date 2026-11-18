@@ -133,14 +133,25 @@ Pinching zooms the canvas within the existing limits; lifting one finger resumes
 panning without a jump. Native scrolling/zooming is suppressed only on the canvas.
 Other UI retains normal browser gestures, with no viewport scaling restriction.
 
-Viewer panning loops around the composition. A wrap crosses from blank space on
-one side to blank space on the other, with the full viewport and a 32 screen-pixel
-gap outside the measured content. Remaining pan movement is preserved, including
-large deltas and diagonal travel. There is still exactly one DOM composition.
+Viewer panning currently experiments with **adaptive directional wrapping**.
+After an ordinary pan leaves the view completely blank, the next movement chooses
+an approach on the opposite side of the viewport-expanded composition bounds.
+The angle is continuous, not a choice between neighboring tiles. Turning while
+blank changes this approach without restarting its remaining travel distance.
+Sub-pixel direction noise is accumulated in half-pixel samples; movement distance
+is still consumed. As soon as the viewport could intersect the measured content,
+placement locks and normal panning resumes. These conservative bounds can lock a
+little before actual ink appears, keeping overflow and visual effects safe.
+There is exactly one DOM composition; nothing rotates or mirrors. Initial
+clearance is **2 screen pixels** beyond the visual bounds, independent of zoom.
 Bounds include overflowing text, line strokes/arrowheads, shadows and hover
 extents; layout/font/image changes refresh the cache, not each camera frame.
 Zoom, pinch, resizing, navigation and saved entry views never trigger wrapping.
 The editor and empty canvases retain unrestricted panning. No JSON fields change.
+For an easy internal revert, set `WRAP_MODE` in `client/camera.js` to
+`'reflection'` or `'translation'`; both previous algorithms remain intact and
+tested. `WRAP_CLEARANCE_PX` controls clearance (the original translation version
+used `32`). These are internal experiment constants, with no new public controls.
 
 ## Navigation trail
 
@@ -161,6 +172,20 @@ view. The editor clears selection and starts a fresh canvas undo history after
 flushing pending autosaves and uploads before departure. Failed saves keep the
 current canvas open; navigation is blocked during publishing. In-place editing, focus isolation, mobile trail scrolling,
 and the existing hover treatment are preserved. Focus temporarily hides the trail.
+
+## Fonts
+
+The interface and existing `"mono"` text selections use the locally bundled
+**Zenbones Mono Regular** WOFF2. Baskerville remains the other selectable font.
+The font was extracted unchanged from the supplied official
+`Zenbones-Mono-WOFF2.zip`; its [upstream project](https://github.com/zenbones-theme/zenbones-mono)
+and SIL Open Font License notices are recorded in
+`assets/Zenbones-Mono-NOTICE.md` and `assets/Zenbones-Mono-LICENSE.md`.
+Only the regular face used by this editor is bundled. Saved font sizes, box
+dimensions, line heights, letter spacing and coordinates are unchanged. Different
+glyph metrics can naturally change wrapping; editor overflow indicators and
+viewer bounds are measured again after the webfont loads. No remote font service
+or browser-side request to GitHub is used.
 
 ## JSON format and defaults
 
@@ -201,7 +226,7 @@ zoom is limited to 0.08–8. Example elements within a page:
 
 - Text/images use independent grid X/Y/W/H. Image resizing snaps the dominant
   axis and derives the other when aspect ratio is locked. **Snap** can be disabled.
-- `font` is `mono` (bundled JetBrains Mono) or `baskerville` (system Baskerville,
+- `font` is `mono` (bundled Zenbones Mono) or `baskerville` (system Baskerville,
   then Palatino/Georgia). `fontSize` is independent of box dimensions. `align`
   defaults to `left`. `lineHeight` defaults to the existing canvas appearance,
   1.4, and accepts 0.5–4. `letterSpacing` defaults to 0 em and accepts -0.1–1 em.

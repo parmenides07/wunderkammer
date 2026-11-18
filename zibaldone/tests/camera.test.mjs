@@ -1,7 +1,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { GRID, MIN_ZOOM, MAX_ZOOM, screenToWorld } from '../client/model.js';
-import { Camera, wheelGesture, wrapInterval, wrapPan } from '../client/camera.js';
+import { Camera, wheelGesture, wrapInterval, translatePan as wrapPan, reflectPan, WRAP_MODE, WRAP_CLEARANCE_PX } from '../client/camera.js';
 
 const wheel = (values, previous) => wheelGesture({ deltaMode: 0, deltaX: 0, deltaY: 120, timeStamp: 0, ctrlKey: false, ...values }, previous);
 
@@ -125,11 +125,11 @@ const blank = (camera, b = bounds, viewport = size) => {
   return camera.x - hx > b.maxX || camera.x + hx < b.minX || camera.y - hy > b.maxY || camera.y + hy < b.minY;
 };
 
-test('all four crossings preserve fractional overshoot, with blank exit and entry viewports at every zoom', () => {
+test('translation: all four crossings preserve fractional overshoot, with blank exit and entry viewports at every zoom', () => {
   for (const zoom of [MIN_ZOOM, 0.5, 1, 2.75, MAX_ZOOM]) {
     const limits = wrapInterval(bounds, size, zoom);
     for (const axis of ['x', 'y']) for (const direction of [-1, 1]) {
-      const [lo, hi] = limits[axis], step = 0.25 / zoom;
+      const [lo, hi] = limits[axis], step = 0.5 / (GRID * zoom);
       const before = { x: 0, y: 0, zoom, [axis]: direction > 0 ? hi - step : lo + step };
       const next = { ...before, [axis]: before[axis] + direction * step * 2 };
       const result = wrapPan(before, next, bounds, size);
@@ -140,7 +140,7 @@ test('all four crossings preserve fractional overshoot, with blank exit and entr
   }
 });
 
-test('multiple periods and diagonal overshoot consume the complete pan delta in one finite result', () => {
+test('translation: multiple periods and diagonal overshoot consume the complete pan delta in one finite result', () => {
   const before = { x: -3, y: 1, zoom: 1.7 }, limits = wrapInterval(bounds, size, before.zoom);
   const px = limits.x[1] - limits.x[0], py = limits.y[1] - limits.y[0];
   for (const n of [1, 17, 1000000]) {
@@ -150,13 +150,13 @@ test('multiple periods and diagonal overshoot consume the complete pan delta in 
     assert.ok(Object.values(result).every(Number.isFinite));
   }
   const [left, right] = limits.x, [top, bottom] = limits.y;
-  const corner = { x: right - 0.1, y: top + 0.1, zoom: before.zoom };
-  const crossed = wrapPan(corner, { ...corner, x: right + 0.1, y: top - 0.1 }, bounds, size);
-  near(crossed.x, left + 0.1); near(crossed.y, bottom - 0.1);
+  const corner = { x: right - 0.01, y: top + 0.01, zoom: before.zoom };
+  const crossed = wrapPan(corner, { ...corner, x: right + 0.01, y: top - 0.01 }, bounds, size);
+  near(crossed.x, left + 0.01); near(crossed.y, bottom - 0.01);
   assert.ok(blank(corner)); assert.ok(blank(crossed));
 });
 
-test('rapid boundary reversals and many tiny steps neither oscillate nor accumulate drift', () => {
+test('translation: rapid boundary reversals and many tiny steps neither oscillate nor accumulate drift', () => {
   const [lo, hi] = wrapInterval(bounds, size, 1).x;
   let camera = { x: hi - 0.125, y: 0, zoom: 1 };
   for (let i = 0; i < 10000; i++) {
@@ -168,20 +168,20 @@ test('rapid boundary reversals and many tiny steps neither oscillate nor accumul
   assert.ok(Math.abs(camera.x - start.x) < 1e-8);
 });
 
-test('zoom and resize never normalize; subsequent travel outside new limits starts blank and respects direction', () => {
+test('translation: zoom and resize never normalize; subsequent travel outside new limits starts blank and respects direction', () => {
   const camera = { x: 1000, y: -1000, zoom: 1 };
   const zoomed = { ...camera, zoom: 2 };
   assert.deepEqual(wrapPan(camera, zoomed, bounds, size), zoomed);
   const limits = wrapInterval(bounds, size, zoomed.zoom);
   const inward = { ...zoomed, x: 999, y: -999 };
   assert.deepEqual(wrapPan(zoomed, inward, bounds, size), inward);
-  const outward = wrapPan(zoomed, { ...zoomed, x: 1000.1, y: -1000.1 }, bounds, size);
-  near(outward.x, limits.x[0] + 0.1); near(outward.y, limits.y[1] - 0.1); assert.ok(blank(outward));
+  const outward = wrapPan(zoomed, { ...zoomed, x: 1000.01, y: -1000.01 }, bounds, size);
+  near(outward.x, limits.x[0] + 0.01); near(outward.y, limits.y[1] - 0.01); assert.ok(blank(outward));
   assert.deepEqual(wrapPan(zoomed, zoomed, bounds, { width: 1800, height: 300 }), zoomed);
   assert.ok(wrapInterval(bounds, { width: 1800, height: 300 }, 2).x[1] > limits.x[1]);
 });
 
-test('empty, degenerate and invalid bounds keep ordinary panning; nonfinite input cannot corrupt a camera', () => {
+test('translation: empty, degenerate and invalid bounds keep ordinary panning; nonfinite input cannot corrupt a camera', () => {
   const before = { x: 1, y: 2, zoom: 1 }, next = { x: 999, y: -999, zoom: 1 };
   for (const b of [null, {}, { ...bounds, maxX: NaN }, { ...bounds, maxX: bounds.minX }, { ...bounds, minY: Infinity }])
     assert.deepEqual(wrapPan(before, next, b, size), next);
@@ -191,7 +191,7 @@ test('empty, degenerate and invalid bounds keep ordinary panning; nonfinite inpu
   assert.ok(Object.values(huge).every(Number.isFinite));
 });
 
-test('a tiny object, a large image and widely separated negative objects all leave full blank viewports', () => {
+test('translation: a tiny object, a large image and widely separated negative objects all leave full blank viewports', () => {
   for (const box of [
     { minX: -0.25, maxX: 0.25, minY: -0.1, maxY: 0.1 },
     { minX: -500, maxX: 500, minY: -700, maxY: 700 },
@@ -210,11 +210,11 @@ test('wheel, drag and single-finger movement share wrapping while pinch and dire
   camera.panBounds = () => bounds;
   camera.touchDevice = { matches: false }; camera.wheelMode = 'trackpad';
   const [lo, hi] = wrapInterval(bounds, camera.size, 1).x;
-  camera.set({ x: hi - 0.1, y: 0, zoom: 1 });
-  camera.wheel({ target: {}, deltaX: 4.8, deltaY: 0, deltaMode: 0, timeStamp: 0, preventDefault() {} });
-  near(camera.value.x, lo + 0.1);
-  camera.set({ x: hi - 0.1, y: 0, zoom: 1 }); send('down', 1, 100, 300); send('move', 1, 95.2, 300);
-  near(camera.value.x, lo + 0.1); send('up', 1);
+  camera.set({ x: hi + 0.1, y: 0, zoom: 1 });
+  camera.wheel({ target: {}, deltaX: 0.5, deltaY: 0, deltaMode: 0, timeStamp: 0, preventDefault() {} });
+  near(camera.value.x, lo + 0.5 / GRID);
+  camera.set({ x: hi + 0.1, y: 0, zoom: 1 }); send('down', 1, 100, 300); send('move', 1, 95.2, 300);
+  near(camera.value.x, lo + 4.8 / GRID); send('up', 1);
   camera.set({ x: hi + 10, y: 0, zoom: 1 });
   send('down', 1, 100, 300); send('down', 2, 200, 300);
   send('move', 1, 90, 300); send('move', 2, 210, 300);
@@ -222,4 +222,96 @@ test('wheel, drag and single-finger movement share wrapping while pinch and dire
   send('up', 1); send('up', 2);
   camera.panBounds = () => null; camera.set({ x: hi, y: 0, zoom: 1 }); camera.pan(1000, -1000);
   near(camera.value.x, hi + 1000); near(camera.value.y, -1000);
+});
+
+test('reflection: all four exits reflect the perpendicular coordinate with only two screen pixels of clearance', () => {
+  assert.equal(WRAP_MODE, 'adaptive'); assert.equal(WRAP_CLEARANCE_PX, 2);
+  for (const zoom of [MIN_ZOOM, 0.5, 1, 2.75, MAX_ZOOM]) {
+    const limits = wrapInterval(bounds, size, zoom), step = 0.5 / (GRID * zoom);
+    near((limits.x[1] - bounds.maxX) * GRID * zoom - size.width / 2, 2);
+    near((bounds.minY - limits.y[0]) * GRID * zoom - size.height / 2, 2);
+    for (const axis of ['x', 'y']) for (const sign of [-1, 1]) {
+      const other = axis === 'x' ? 'y' : 'x', [lo, hi] = limits[axis];
+      const before = { x: -8, y: 4, zoom, [axis]: sign > 0 ? hi - step : lo + step };
+      const next = { ...before, [axis]: before[axis] + sign * step * 2 };
+      const after = reflectPan(before, next, bounds, size);
+      near(after[axis], sign > 0 ? lo + step : hi - step);
+      near(after[other], limits[other][0] + limits[other][1] - before[other]);
+      assert.ok(blank(before)); assert.ok(blank(next)); assert.ok(blank(after));
+      const continued = reflectPan(after, { ...after, [axis]: after[axis] + sign * step }, bounds, size);
+      near(continued[axis] - after[axis], sign * step); near(continued[other], after[other]);
+    }
+  }
+});
+
+test('reflection: diagonal exit reflects the boundary point, not the overshoot or movement vector', () => {
+  const limits = wrapInterval(bounds, size, 1), [left, right] = limits.x, [top, bottom] = limits.y;
+  const before = { x: right - 0.01, y: 2, zoom: 1 };
+  const after = reflectPan(before, { ...before, x: right + 0.03, y: 2.02 }, bounds, size);
+  near(after.x, left + 0.03);
+  // The exit is at (right, 2.005); the remaining movement is (+.03, +.015).
+  near(after.y, top + bottom - 2.005 + 0.015);
+  assert.ok(blank(before)); assert.ok(blank(after));
+  const continued = reflectPan(after, { ...after, x: after.x + 0.02, y: after.y + 0.01 }, bounds, size);
+  near(continued.x, after.x + 0.02); near(continued.y, after.y + 0.01);
+});
+
+test('reflection: every exact corner exit is one reflection, with blank viewports on both sides', () => {
+  const limits = wrapInterval(bounds, size, 1);
+  for (const sx of [-1, 1]) for (const sy of [-1, 1]) {
+    const x = limits.x[sx > 0 ? 1 : 0], y = limits.y[sy > 0 ? 1 : 0];
+    const before = { x: x - sx * 0.01, y: y - sy * 0.01, zoom: 1 };
+    const after = reflectPan(before, { ...before, x: x + sx * 0.01, y: y + sy * 0.01 }, bounds, size);
+    near(after.x, limits.x[sx > 0 ? 0 : 1] + sx * 0.01);
+    near(after.y, limits.y[sy > 0 ? 0 : 1] + sy * 0.01);
+    assert.ok(blank(before)); assert.ok(blank(after));
+  }
+});
+
+test('reflection: a large multi-boundary pan agrees with many small events, without drift or nonfinite values', () => {
+  const start = { x: -3, y: 1, zoom: 1.7 };
+  for (const [dx, dy] of [[400, 70], [-400, 70], [95, -300], [-100, -400]]) {
+    const whole = reflectPan(start, { ...start, x: start.x + dx, y: start.y + dy }, bounds, size);
+    let divided = start;
+    for (let i = 0; i < 10000; i++) divided = reflectPan(divided, { ...divided, x: divided.x + dx / 10000, y: divided.y + dy / 10000 }, bounds, size);
+    assert.ok(Math.abs(whole.x - divided.x) < 1e-7); assert.ok(Math.abs(whole.y - divided.y) < 1e-7);
+  }
+  const limits = wrapInterval(bounds, size, start.zoom), period = limits.x[1] - limits.x[0];
+  const huge = reflectPan(start, { ...start, x: start.x + period * 2000000 + 0.125 }, bounds, size);
+  assert.ok(Math.abs(huge.x - start.x - 0.125) < 1e-7); near(huge.y, start.y);
+  assert.ok(Object.values(reflectPan(start, { ...start, x: 1e200, y: -1e200 }, bounds, size)).every(Number.isFinite));
+});
+
+test('reflection: repeated reversals restore both coordinates and continued travel does not bounce back', () => {
+  const [lo, hi] = wrapInterval(bounds, size, 1).x;
+  const start = { x: hi - 0.01, y: 5, zoom: 1 };
+  let camera = start;
+  for (let i = 0; i < 10000; i++) {
+    camera = reflectPan(camera, { ...camera, x: camera.x + 0.02 }, bounds, size);
+    near(camera.x, lo + 0.01); near(camera.y, bounds.minY + bounds.maxY - start.y);
+    camera = reflectPan(camera, { ...camera, x: camera.x - 0.02 }, bounds, size);
+    near(camera.x, start.x); near(camera.y, start.y);
+  }
+  camera = reflectPan(camera, { ...camera, x: camera.x + 0.02 }, bounds, size);
+  for (let i = 0; i < 1000; i++) {
+    const previous = camera;
+    camera = reflectPan(camera, { ...camera, x: camera.x + 0.001 }, bounds, size);
+    near(camera.x, previous.x + 0.001); near(camera.y, previous.y);
+  }
+});
+
+test('reflection: zoom/resize and tangent travel do not wrap; a subsequent outward pan only consumes its own movement', () => {
+  const before = { x: 1000, y: 2, zoom: 1 }, zoomed = { ...before, zoom: 2 };
+  assert.deepEqual(reflectPan(before, zoomed, bounds, size), zoomed);
+  const limits = wrapInterval(bounds, size, 2);
+  near(reflectPan(zoomed, { ...zoomed, x: 1000.01 }, bounds, size).x, limits.x[0] + 0.01);
+  assert.deepEqual(reflectPan(zoomed, { ...zoomed, x: 999 }, bounds, size), { ...zoomed, x: 999 });
+  assert.deepEqual(reflectPan(zoomed, zoomed, bounds, { width: 1800, height: 300 }), zoomed);
+  // A line that only touches a corner has no interior chord: do not flip forever.
+  const tangent = { x: limits.x[1] - 0.01, y: limits.y[1] + 0.01, zoom: 2 };
+  const next = { ...tangent, x: tangent.x + 0.02, y: tangent.y - 0.02 };
+  assert.deepEqual(reflectPan(tangent, next, bounds, size), next);
+  for (const invalid of [null, {}, { ...bounds, maxX: NaN }, { ...bounds, maxX: bounds.minX }])
+    assert.deepEqual(reflectPan(before, { ...before, x: 1001 }, invalid, size), { ...before, x: 1001 });
+  assert.deepEqual(reflectPan(before, { ...before, x: Infinity }, bounds, size), before);
 });
