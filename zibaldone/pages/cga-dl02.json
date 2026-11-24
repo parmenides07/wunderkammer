@@ -764,8 +764,8 @@
     {
       "id": "3bacade2-2731-43ee-bf4d-319c6110b39f",
       "type": "text",
-      "x": -42,
-      "y": -48,
+      "x": -47,
+      "y": -38,
       "width": 31.357471687823534,
       "height": 5.22284832666578,
       "text": "What am I doing and why? ",
@@ -779,11 +779,11 @@
     {
       "id": "88e23664-8621-4a54-941a-1b73a34b73e2",
       "type": "text",
-      "x": -42,
-      "y": -43,
+      "x": -47,
+      "y": -33,
       "width": 31,
       "height": 8,
-      "text": "- I had a bit of extra time and decided to make a simple finite state machine as a way to really get a good grasp on the things I learned about. I tried understanding finite state machines a bit better and how to translate a diagram to actual logic which was a bit tricky at first. But after a teeny bit of learning it all became really intuitive and I was able to create the following FSM (\"adds\" in binary as time progresses) without referencing the textbook:",
+      "text": "WIP",
       "font": "xanh",
       "fontSize": 21,
       "zIndex": -2
@@ -917,6 +917,18 @@
         ]
       ],
       "arrowhead": true
+    },
+    {
+      "id": "67784250-edb3-43fe-8d12-9d6e3d17285c",
+      "type": "text",
+      "x": 115,
+      "y": 16,
+      "width": 20,
+      "height": 14,
+      "text": "At one point, I kept getting seg fault errors and so I combed through my code over and over again until I decided there is no WAY my code is causing a seg fault. (Yes I obviously did try debugging via modulizing the program and ending in different lpaces and checking output). Apparently what was happening was something called relaxation where the linker for the assembler would choose to put something in the GP register rather than the one I asked for (I think for effeciency's sake or something) but since the GP register isn't initialized or something when my other line calls, it won't properly link up and so every time I look in the register I thought I saved the thing in, it will be looking at stuff it shouldn't be which causes the seg fault. I probably should've spent more time trying to understand this but I kinda ran out of time. ",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
     }
   ]
 }
