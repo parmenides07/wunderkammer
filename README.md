@@ -13,6 +13,7 @@ This is the single `parmenides07/wunderkammer` repository for **paramghetia.com*
 Run these from `~/Documents/Code/portfoliosite/` with Node 22.13 or newer:
 
 ```sh
+npm install                # install/update local build and authoring dependencies
 npm run dev                 # local Zibaldone editor + preview of both experiences, port 4173
 npm run dev:professional    # existing Markdown live-reload workflow, port 5173
 npm run build              # professional build + isolated personal build; never pushes
@@ -33,6 +34,16 @@ separate live-reload command when editing Markdown. `PORT=4174 npm run dev`
 selects another local port. The editor remains loopback-only and retains its
 Host/Origin/token protections; the query parameter is not authentication.
 `npm start` and `npm run dev:zibaldone` also launch this editor.
+
+In the editor, drop files at their intended canvas position and choose **Render**
+or **Attach**. Org/Markdown become formatted document previews; other text/source
+files render as plain text. Click a preview in the viewer to read and scroll in
+focus mode; canvas pan/zoom still works over its box. Images, GIFs and MP4/WebM
+use native media. Binary files become minimal download links,
+with active/source formats safely packaged as ZIPs. **Replace source** retains
+layout, and autosave/Publish wait for imports. See the [file authoring guide](zibaldone/README.md#importing-real-files)
+for supported formats, limits, source storage and document controls. Existing
+canvases and the professional website are unchanged.
 
 ## Hash trails
 

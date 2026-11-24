@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { mkdtemp, mkdir, writeFile, readFile, cp, rm } from 'node:fs/promises';
+import { mkdtemp, mkdir, writeFile, readFile, cp, rm, symlink } from 'node:fs/promises';
 import path from 'node:path';
 import os from 'node:os';
 import http from 'node:http';
@@ -20,19 +20,77 @@ async function fixture(t) {
   const source = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
   await cp(path.join(source, 'client'), path.join(root, 'client'), { recursive: true });
   await cp(path.join(source, 'build.mjs'), path.join(root, 'build.mjs'));
+  for (const file of ['template.mjs', 'package.json', 'files.mjs', 'documents.mjs']) await cp(path.join(source, file), path.join(root, file));
+  await writeFile(path.join(repo, 'build.js'), "import('./zibaldone/build.mjs').then(({ build }) => build()).catch(error => { console.error(error); process.exitCode = 1; });\n");
+  await symlink(path.join(source, '..', 'node_modules'), path.join(repo, 'node_modules'), 'dir');
+  await writeFile(path.join(repo, '.gitignore'), 'node_modules/\n');
   await writeFile(path.join(repo, '_config.yml'), 'exclude: [zibaldone]\n');
   await build({ source: root, output: path.join(repo, 'personal') });
   const git = args => runGit(repo, args);
   await runGit(dir, ['init', '--bare', remote]); await git(['init', '-b', 'main']);
   await git(['config', 'user.name', 'Publish Tests']); await git(['config', 'user.email', 'tests@example.invalid']);
   await git(['config', 'commit.gpgSign', 'false']); await git(['config', 'core.hooksPath', path.join(dir, 'no-hooks')]);
-  await git(['add', '--', 'README.md', 'zibaldone', 'personal', '_config.yml']);
+  await git(['add', '--', 'README.md', 'zibaldone', 'personal', '_config.yml', 'build.js', '.gitignore']);
   await git(['commit', '-m', 'initial']); await git(['remote', 'add', 'origin', remote]); await git(['push', '-u', 'origin', 'main']);
   const head = (await git(['rev-parse', 'HEAD'])).trim();
   const dirty = () => writeFile(path.join(root, 'pages/home.json'), JSON.stringify({ ...page, camera: { ...page.camera, x: 2 } }, null, 2) + '\n');
   return { dir, repo, root, remote, git, head, dirty };
 }
 const remoteHead = f => runGit(f.remote, ['rev-parse', 'refs/heads/main']).then(s => s.trim());
+const publishAll = (f, progress, run) => publishContent(f.root, progress, run, { scope: 'all' });
+
+test('all changes builds current code and commits staged/unstaged files, additions, deletions and content, respecting ignores', async t => {
+  const f = await fixture(t); await f.dirty();
+  const runtime = await readFile(path.join(f.root, 'client/main.js'), 'utf8') + '\n// new application code\n';
+  await writeFile(path.join(f.root, 'client/main.js'), runtime);
+  await writeFile(path.join(f.repo, 'README.md'), 'staged application notes'); await f.git(['add', '--', 'README.md']);
+  await writeFile(path.join(f.repo, 'README.md'), 'latest application notes');
+  await writeFile(path.join(f.repo, '.gitignore'), 'node_modules/\nlocal-only/\n');
+  await mkdir(path.join(f.repo, 'local-only')); await writeFile(path.join(f.repo, 'local-only/private.txt'), 'not for Git');
+  await writeFile(path.join(f.repo, 'new [literal] file.txt'), 'new');
+  await rm(path.join(f.root, 'assets/photo.png'));
+  // Build script changes are loaded from disk; old generated output is replaced.
+  await writeFile(path.join(f.repo, 'build.js'), "require('node:fs').writeFileSync('index.html', 'fresh professional output');\n" + await readFile(path.join(f.repo, 'build.js'), 'utf8'));
+  await writeFile(path.join(f.repo, 'personal/client/main.js'), 'outdated build');
+  const events = [];
+  assert.equal((await publishAll(f, e => events.push(e.state))).state, 'success');
+  assert.deepEqual(events, ['building', 'committing', 'pushing']);
+  assert.equal(await remoteHead(f), (await f.git(['rev-parse', 'HEAD'])).trim());
+  assert.equal((await f.git(['log', '-1', '--format=%s'])).trim(), 'Publish site changes');
+  assert.equal(await f.git(['show', 'HEAD:README.md']), 'latest application notes');
+  assert.equal(await f.git(['show', 'HEAD:personal/client/main.js']), runtime);
+  assert.equal(await f.git(['show', 'HEAD:index.html']), 'fresh professional output');
+  assert.equal(await f.git(['show', 'HEAD:new [literal] file.txt']), 'new');
+  assert.equal(await f.git(['ls-files', '--', 'local-only', 'zibaldone/assets/photo.png']), '');
+  assert.equal(await f.git(['status', '--porcelain']), '');
+  assert.equal((await publishAll(f, () => {}, (cwd, args) => {
+    assert.ok(!['ls-remote', 'push', 'commit'].includes(args[0])); return runGit(cwd, args);
+  })).state, 'nothing');
+});
+
+test('all changes accepts unpushed code commits and retries a failed push without another commit', async t => {
+  const f = await fixture(t);
+  await writeFile(path.join(f.repo, 'README.md'), 'local code commit'); await f.git(['add', '--', 'README.md']); await f.git(['commit', '-m', 'code']);
+  await f.dirty();
+  await assert.rejects(publishAll(f, () => {}, (cwd, args) => {
+    if (args[0] === 'push') throw Object.assign(new Error('failed'), { code: 128, stderr: 'Permission denied (publickey)' });
+    return runGit(cwd, args);
+  }), /authentication.*Local commit.*kept/);
+  const head = (await f.git(['rev-parse', 'HEAD'])).trim(); assert.equal(await remoteHead(f), f.head);
+  assert.equal((await publishAll(f)).state, 'success'); assert.equal(await remoteHead(f), head);
+  assert.equal((await f.git(['rev-parse', 'HEAD'])).trim(), head);
+});
+
+test('all changes refuses a failed build before staging or committing', async t => {
+  const f = await fixture(t);
+  await writeFile(path.join(f.repo, 'README.md'), 'staged'); await f.git(['add', '--', 'README.md']);
+  await writeFile(path.join(f.repo, 'build.js'), 'process.exit(1);');
+  const index = await f.git(['diff', '--cached', '--binary']);
+  await assert.rejects(publishAll(f), /Site build failed.*Nothing was committed or pushed/);
+  assert.equal(await f.git(['diff', '--cached', '--binary']), index);
+  assert.equal((await f.git(['rev-parse', 'HEAD'])).trim(), f.head); assert.equal(await remoteHead(f), f.head);
+  await assert.rejects(publishContent(f.root, undefined, undefined, { scope: 'invalid' }), /Choose content or all/);
+});
 
 test('publish stages only content additions/modifications/deletions and commits content. to the configured upstream', async t => {
   const f = await fixture(t); await f.dirty();
@@ -107,6 +165,7 @@ test('remote advancement is rejected before commit; a race at push remains a non
   await runGit(other, ['config', 'commit.gpgSign', 'false']);
   await writeFile(path.join(other, 'README.md'), 'remote changed'); await runGit(other, ['add', '--', 'README.md']); await runGit(other, ['commit', '-m', 'remote']); await runGit(other, ['push']);
   await assert.rejects(publishContent(f.root), /advanced or diverged/);
+  await assert.rejects(publishAll(f), /advanced or diverged/);
   assert.equal((await f.git(['rev-parse', 'HEAD'])).trim(), f.head);
   const fresh = await fixture(t); await fresh.dirty();
   await assert.rejects(publishContent(fresh.root, () => {}, async (cwd, args) => {
@@ -121,7 +180,7 @@ test('missing Git setup, missing upstream, and simultaneous publishers fail safe
   const gate = new Promise(r => { release = r; }), started = new Promise(r => { reached = r; });
   const first = publishContent(f.root, () => {}, async (cwd, args) => { if (args[0] === 'ls-remote') { reached(); await gate; } return runGit(cwd, args); });
   await started;
-  try { await assert.rejects(publishContent(f.root), /Another publish/); } finally { release(); }
+  try { await assert.rejects(publishContent(f.root), /Another publish/); await assert.rejects(publishAll(f), /Another publish/); } finally { release(); }
   await first;
   await f.git(['branch', '--unset-upstream']); await assert.rejects(publishContent(f.root), /upstream branch/);
   const empty = path.join(f.dir, 'no-git/zibaldone'); await mkdir(empty, { recursive: true });
@@ -140,7 +199,8 @@ test('publishing endpoint requires editor token/origin/host and rejects concurre
   const f = await fixture(t);
   let calls = 0, release, reached;
   const gate = new Promise(r => { release = r; }), started = new Promise(r => { reached = r; });
-  const server = createSpaceServer({ root: f.root, publish: async (_root, progress) => { calls++; progress({ state: 'committing' }); reached(); await gate; progress({ state: 'pushing' }); return { state: 'success', commit: '12345678' }; } });
+  const scopes = [];
+  const server = createSpaceServer({ root: f.root, publish: async (_root, progress, options) => { scopes.push(options.scope); calls++; progress({ state: 'committing' }); reached(); await gate; progress({ state: 'pushing' }); return { state: 'success', commit: '12345678' }; } });
   await new Promise(r => server.listen(0, '127.0.0.1', r));
   t.after(() => new Promise(r => server.close(r)));
   const origin = `http://127.0.0.1:${server.address().port}`;
@@ -151,6 +211,9 @@ test('publishing endpoint requires editor token/origin/host and rejects concurre
   assert.equal((await fetch(origin + '/_zibaldone/api/publish', { method: 'POST', headers: { ...headers, Origin: 'https://outside.invalid' } })).status, 403);
   const badHost = await new Promise(resolve => { const req = http.request(origin + '/_zibaldone/api/publish', { method: 'POST', headers: { ...headers, Host: 'outside.invalid' } }, res => { res.resume(); resolve(res.statusCode); }); req.end(); });
   assert.equal(badHost, 403); assert.equal(calls, 0);
+  for (const input of ['null', '{', '{"scope":"shell"}', '{"scope":"all","command":"anything"}'])
+    assert.equal((await fetch(origin + '/_zibaldone/api/publish', { method: 'POST', headers, body: input })).status, 400);
+  assert.equal(calls, 0);
   const first = fetch(origin + '/_zibaldone/api/publish', { method: 'POST', headers }); await started;
   try {
     assert.equal((await fetch(origin + '/_zibaldone/api/publish', { method: 'POST', headers })).status, 409);
@@ -158,6 +221,9 @@ test('publishing endpoint requires editor token/origin/host and rejects concurre
   } finally { release(); }
   const events = (await (await first).text()).trim().split('\n').map(line => JSON.parse(line));
   assert.deepEqual(events.map(e => e.state), ['committing', 'pushing', 'success']); assert.equal(calls, 1);
+  const allResponse = await fetch(origin + '/_zibaldone/api/publish', { method: 'POST', headers, body: JSON.stringify({ scope: 'all' }) });
+  assert.equal(allResponse.status, 200); await allResponse.text();
+  assert.deepEqual(scopes, ['content', 'all']);
 });
 
 
@@ -174,4 +240,20 @@ test('personal builds are validated before staging and independent code/generate
   await writeFile(path.join(f.root, 'client/main.js'), 'uncommitted code');
   await assert.rejects(publishContent(f.root), /application or configuration/);
   assert.equal(await remoteHead(f), f.head);
+});
+
+test('content-only publishing includes imported originals, safe source downloads and generated documents', async t => {
+  const f = await fixture(t);
+  const name = 'file-12345678-1234-1234-1234-123456789abc.org';
+  const bytes = '#+TITLE: Published notebook\n* Heading\nSome *bold* writing.\n';
+  await writeFile(path.join(f.root, 'assets', name), bytes);
+  const e = { id: 'document', type: 'file', src: '/personal/assets/' + name, filename: 'notebook.org', display: 'render', x: -3, y: 2, width: 24, height: 18, font: 'xanh', fontSize: 18 };
+  await writeFile(path.join(f.root, 'pages/home.json'), JSON.stringify({ ...page, elements: [e] }));
+  assert.equal((await publishContent(f.root)).state, 'success');
+  assert.equal(await f.git(['show', 'HEAD:zibaldone/assets/' + name]), bytes);
+  assert.match(await f.git(['show', 'HEAD:personal/documents/' + name + '.html']), /<strong>bold/);
+  assert.match(await f.git(['ls-tree', '-r', '--name-only', 'HEAD', '--', 'personal/assets']), /\.org.zip/);
+  await assert.rejects(f.git(['show', 'HEAD:personal/assets/' + name]));
+  assert.equal(await remoteHead(f), (await f.git(['rev-parse', 'HEAD'])).trim());
+  assert.equal((await publishContent(f.root)).state, 'nothing', 'stable HTML and ZIP output never creates repeat commits');
 });

@@ -1,0 +1,55 @@
+<div><pre class="plain-text">    .section .text
+    .global _start
+
+_start:
+    addi t0, zero, 0
+    la s1, arr
+    lbu s0, arrlen
+    j for
+for:
+    bge t0, s0, fordone
+    add t2, zero, t0
+    j while
+while:
+    li t6, 0
+    bge zero, t2, whiledone
+    addi t3, t2, -1
+    add a2, s1, t2
+    add a3, s1, t3
+    lbu t4, 0(a2)
+    lbu t5, 0(a3)
+    bge t4, t5, whiledone
+    sb t5, 0(a2)
+    sb t4, 0(a3)
+    add t2, zero, t3
+    j while
+whiledone:
+    addi t0, t0, 1
+    j for
+fordone:
+    la t0, arrlen
+    lbu t0, 0(t0)
+    j loop
+loop:
+    lbu t2, 0(s1)
+    addi t2, t2, 48
+    sb t2, 0(s1)
+    addi s1, s1, 1
+    addi t0, t0, -1
+    bnez t0, loop
+    li a7, 64
+    li a0, 1
+    la a1, arr
+    la t0, arrlen
+    lbu a2, 0(t0)
+    ecall
+    li a0, 0
+    li a7, 93
+    ecall
+
+    .section .data
+arr:
+    .byte 9, 8, 7, 6, 5
+arrlen:
+    .byte 5
+</pre></div>

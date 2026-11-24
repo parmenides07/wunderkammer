@@ -45,6 +45,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
 
     await require('./fonts.cjs')({ page, browser, origin, root });
     await require('./typography.cjs')({ page, browser, origin, root });
+    await require('./files.cjs')({ page, browser, origin, root });
     await require('./inversion.cjs')({ page, browser, origin, root });
     await require('./refinements.cjs')({ page, browser, origin, root });
     await require('./viewer-controls.cjs')({ page, browser, origin, root });
@@ -234,6 +235,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
       transfer.items.add(new File([bytes], 'drop.gif', { type: 'image/gif' }));
       document.querySelector('#viewport').dispatchEvent(new DragEvent('drop', { bubbles: true, dataTransfer: transfer, clientX: 900, clientY: 300 }));
     });
+    await page.locator('#import-render').click();
     await page.waitForFunction(count => document.querySelectorAll('.object').length === count, beforeDrop + 1);
     const dropped = (await state(page)).page.elements.at(-1);
     assert.match(dropped.src, /\.gif$/);
@@ -395,7 +397,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     await page.reload(); await ready(page);
     assert.equal(await page.locator('#editor-tools').count(), 0);
     assert.ok(await page.locator('[data-id=image] img').evaluate(img => img.complete && img.naturalWidth > 0));
-    assert.ok(await page.evaluate(() => document.fonts.check('16px "Zenbones Mono"')));
+    assert.ok(await page.evaluate(() => document.fonts.check('16px "Xanh Mono"')));
     assert.equal(await page.locator('[data-id=home] .content').getAttribute('href'), '/repository-name/personal/#/field-notes/home');
     await page.locator('[data-id=image] .content').click();
     assert.match(await page.locator('#focus-content img').getAttribute('src'), /^\/repository-name\/personal\/assets\//);
@@ -410,6 +412,7 @@ const settle = page => page.evaluate(() => new Promise(resolve => requestAnimati
     for (const base of ['/personal/', '/repository-name/personal/']) {
       await require('./fonts.cjs').static({ page, origin: staticOrigin, base });
       await require('./typography.cjs').static({ page, origin: staticOrigin, base });
+      await require('./files.cjs').static({ page, origin: staticOrigin, base });
       await require('./trail.cjs').static({ browser, origin: staticOrigin, base });
       await require('./wrapping.cjs').static({ page, origin: staticOrigin, base });
     }

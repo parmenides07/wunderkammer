@@ -1,4 +1,5 @@
 import { routeURL } from './routes.js';
+import { importedPath, safeFilename, extension, renderable, fileKind } from './files.js';
 export const GRID = 24;
 export const MIN_ZOOM = 0.08;
 export const MAX_ZOOM = 8;
@@ -14,7 +15,7 @@ export const spaceURL = (value, base = '/personal/') => value.replace(/^\/(?:spa
 export const snap = (value, enabled = true) => enabled ? Math.round(value) + 0 : value;
 export const clampZoom = z => Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, z));
 export const isMaximizable = e => e.type !== 'line' && e.maximizable !== false;
-export const isInteractive = e => e.type !== 'line' && (!!e.href || isMaximizable(e));
+export const isInteractive = e => e.type !== 'line' && (e.type === 'file' && (e.display === 'attach' || fileKind(e.filename, e.plainText) === 'video') || !!e.href || isMaximizable(e));
 export const canInvert = e => e.type === 'text' && e.invertOnHover === true && isInteractive(e);
 export const linePoints = e => e.points ?? [[e.x1, e.y1], [e.x2, e.y2]];
 export function setLinePoints(e, points) {
@@ -116,7 +117,7 @@ export function validatePage(page, expectedSlug = page?.slug) {
     if (!e || typeof e.id !== 'string' || !/^[a-zA-Z0-9_-]{1,100}$/.test(e.id) || ids.has(e.id))
       fail('Every object needs a unique, simple ID.');
     ids.add(e.id);
-    if (!['text', 'image', 'line'].includes(e.type)) fail('Object type must be text, image, or line.');
+    if (!['text', 'image', 'line', 'file'].includes(e.type)) fail('Object type must be text, image, line, or file.');
     if (e.zIndex !== undefined && (!Number.isInteger(e.zIndex) || Math.abs(e.zIndex) > 2147483647))
       fail('Z-index must be an integer between -2147483647 and 2147483647.');
     if (e.locked !== undefined && typeof e.locked !== 'boolean') fail('locked must be boolean.');
@@ -136,12 +137,20 @@ export function validatePage(page, expectedSlug = page?.slug) {
     if (e.maximizable !== undefined && typeof e.maximizable !== 'boolean') fail('maximizable must be boolean.');
     if (e.shadow !== undefined && typeof e.shadow !== 'boolean') fail('shadow must be boolean.');
     if (e.href !== undefined && !validHref(e.href)) fail('Links must be /zibaldone/ URLs, http(s), mailto, or tel URLs.');
-    if (e.type === 'text') {
+    if (e.type === 'file') {
+      if (!importedPath(e.src) || !safeFilename(e.filename) || extension(e.src) !== extension(e.filename)) fail('Files need a safe imported source and original filename.');
+      if (e.plainText !== undefined && typeof e.plainText !== 'boolean') fail('plainText must be boolean.');
+      if (!['render', 'attach'].includes(e.display) || e.display === 'render' && !renderable(e.filename, e.plainText)) fail('This file supports Attach only.');
+      if (e.label !== undefined && (typeof e.label !== 'string' || e.label.length > 4000)) fail('Attachment label must be text, at most 4000 characters.');
+      if (e.lockAspect !== undefined && typeof e.lockAspect !== 'boolean') fail('lockAspect must be boolean.');
+      if (e.href !== undefined) fail('File objects use their source or document links.');
+    }
+    if (e.type === 'text' || e.type === 'file') {
       if (e.lineHeight !== undefined && (!finite(e.lineHeight) || e.lineHeight < 0.5 || e.lineHeight > 4)) fail('Line height must be between 0.5 and 4.');
       if (e.letterSpacing !== undefined && (!finite(e.letterSpacing) || e.letterSpacing < -0.1 || e.letterSpacing > 1)) fail('Letter spacing must be between -0.1 and 1 em.');
       if (e.invertOnHover !== undefined && typeof e.invertOnHover !== 'boolean') fail('invertOnHover must be boolean.');
-      if (typeof e.text !== 'string' || e.text.length > 100000) fail('Text must be at most 100000 characters.');
-      if (!['xanh', 'mono', 'baskerville'].includes(e.font)) fail('Choose xanh, mono or baskerville.');
+      if (e.type === 'text' && (typeof e.text !== 'string' || e.text.length > 100000)) fail('Text must be at most 100000 characters.');
+      if (!['xanh', 'mono', 'baskerville', 'zenbones'].includes(e.font)) fail('Choose xanh, mono, baskerville or zenbones.');
       if (!finite(e.fontSize) || e.fontSize < 1 || e.fontSize > 1000) fail('Font size must be between 1 and 1000 pixels.');
       if (e.align !== undefined && !['left', 'center', 'right'].includes(e.align)) fail('Invalid text alignment.');
     } else {

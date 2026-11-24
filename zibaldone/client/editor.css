@@ -8,7 +8,7 @@ body.editing .content[contenteditable=true], body.editing .content[contenteditab
 body.editing .text-object[data-overflow=true] { outline: 1px dashed #777; }
 body.editing .text-object[data-overflow=true]::after {
   content: 'text exceeds box'; position: absolute; top: 100%; left: 0;
-  white-space: nowrap; background: #fff; font: 10px 'Zenbones Mono', monospace;
+  white-space: nowrap; background: #fff; font: 10px 'Xanh Mono', 'Courier New', monospace;
   transform: scale(var(--inverse-zoom)); transform-origin: top left; pointer-events: none;
 }
 body.editing #viewport.show-grid {
@@ -46,3 +46,9 @@ body.editing .locked .content, body.editing .locked .line-hit { cursor: default;
 .selection-marquee { position: absolute; outline: 1px solid #999; pointer-events: none; z-index: 2147483647; }
 body.editing .line-draft, body.editing .line-draft * { pointer-events: none; }
 body.editing .drawing-line, body.editing .drawing-line .content, body.editing .drawing-line .line-hit { cursor: crosshair; }
+
+body.editing .document-preview { user-select: none; cursor: move; }
+body.editing .selected > .file-grip { display: block; position: absolute; left: 0; right: 0; top: -10px; height: 10px; cursor: move; }
+#file-import-menu { z-index: 4; top: auto; max-width: min(360px, calc(100vw - 16px)); }
+#import-name, #import-error { display: block; overflow-wrap: anywhere; }
+#import-error { color: #a33a32; }

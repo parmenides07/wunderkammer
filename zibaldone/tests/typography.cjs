@@ -16,7 +16,7 @@ async function fonts(p) {
   assert.ok(body.some(f => f.isCustomFont && f.familyName === 'Xanh Mono' && f.postScriptName === 'XanhMono-Regular'), JSON.stringify(body));
   for (const selector of ['[data-id=annotation] .content', '#breadcrumbs [aria-current=page]']) {
     const used = await renderedFonts(p, selector);
-    assert.ok(used.some(f => f.isCustomFont && f.familyName === 'Zenbones Mono'), JSON.stringify(used));
+    assert.ok(used.some(f => f.isCustomFont && f.familyName === 'Xanh Mono'), JSON.stringify(used));
   }
   const heading = await renderedFonts(p, '[data-id=heading] .content');
   assert.ok(heading.length && heading.every(f => !/Xanh|Zenbones/.test(f.familyName)), JSON.stringify(heading));
@@ -68,7 +68,7 @@ module.exports = async ({ page, browser, origin, root }) => {
   assert.deepEqual([added.font, added.fontSize, added.width, added.height], ['xanh', 18, 12, 5]);
   assert.equal(await page.locator('#prop-font option').count(), 3);
   await page.locator(`[data-id="${added.id}"] .content`).click();
-  for (const choice of ['baskerville', 'mono', 'xanh']) {
+  for (const choice of ['baskerville', 'zenbones', 'xanh']) {
     await page.locator('#prop-font').selectOption(choice); await saved(page);
     const current = (await appState(page)).elements.find(e => e.id === added.id);
     assert.deepEqual(current, { ...added, font: choice });
@@ -76,22 +76,22 @@ module.exports = async ({ page, browser, origin, root }) => {
   await page.reload(); await canvasReady(page); await page.waitForSelector('#editor-tools');
   assert.equal((await appState(page)).elements.at(-1).font, 'xanh');
 
-  // The first late font switch must refresh overflow after initial fonts.ready.
+  // Delayed font loading must refresh editor overflow for legacy mono text.
   const late = await browser.newContext();
   try {
     const p = await late.newPage(); let release, requested;
     const gate = new Promise(r => { release = r; }), request = new Promise(r => { requested = r; });
     await fs.writeFile(path.join(root, 'pages/typography-late.json'), JSON.stringify({ ...fixture, slug: 'typography-late', elements: fixture.elements.map(e => e.id === 'body' ? { ...e, font: 'mono', height: 1 } : e) }));
     await p.route('**/assets/Xanh-Mono-Regular-*.woff2', async route => { requested(); await gate; await route.continue(); });
-    await p.goto(origin + '/personal/?edit5500#/typography-late'); await canvasReady(p); await p.waitForSelector('#editor-tools'); await p.evaluate(() => document.fonts.ready);
-    await p.locator('[data-id=body] .content').click(); await p.locator('#prop-font').selectOption('xanh'); await request; await settle(p);
+    await p.goto(origin + '/personal/?edit5500#/typography-late', { waitUntil: 'domcontentloaded' }); await canvasReady(p); await p.waitForSelector('#editor-tools');
+    await request; await settle(p);
     await p.locator('[data-id=body]').evaluate(n => { n.dataset.overflow = 'waiting-for-font'; });
     release(); await loaded(p);
     await p.waitForFunction(() => document.querySelector('[data-id=body]').dataset.overflow === 'true');
     await saved(p);
-    assert.equal((await appState(p)).elements.find(e => e.id === 'body').font, 'xanh');
+    assert.equal((await appState(p)).elements.find(e => e.id === 'body').font, 'mono');
   } finally { await late.close(); }
-  console.log('Xanh typography verified: all three fonts, new 18px defaults, saved identifiers, late-font overflow, desktop/mobile zoom, focus scrolling, persistence and local-only assets.');
+  console.log('Xanh typography verified: Xanh and Baskerville, new 18px defaults, legacy mono compatibility, late-font overflow, desktop/mobile zoom, focus scrolling, persistence and local-only assets.');
 };
 module.exports.static = async ({ page, origin, base }) => {
   await page.goto(origin + base + '#/typography-check'); await canvasReady(page); await loaded(page); await fonts(page);

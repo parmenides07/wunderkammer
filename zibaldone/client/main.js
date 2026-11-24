@@ -2,10 +2,14 @@ import { GRID, validatePage, elementBounds, linePoints, isMaximizable, isInterac
 import { Camera } from './camera.js';
 import { parseRoute, canvasURL, routeURL } from './routes.js';
 import { createTrail } from './trail.js';
+import { makeFileObject, fileContent, fileLink } from './file-view.js';
+import { fileKind, isMedia } from './files.js';
 
 export const fonts = {
   xanh: '"Xanh Mono", "Courier New", monospace',
-  mono: '"Zenbones Mono", monospace',
+  // Legacy saved selections now share the Xanh face without rewriting page JSON.
+  mono: '"Xanh Mono", "Courier New", monospace',
+  zenbones: '"Zenbones Mono", monospace',
   baskerville: 'Baskerville, "Baskerville Old Face", "Palatino Linotype", "Book Antiqua", Georgia, serif',
 };
 
@@ -68,6 +72,7 @@ export class Space {
     this.dialog = document.querySelector('#focus-view');
     document.querySelector('#close-focus').addEventListener('click', () => this.dialog.close());
     this.dialog.addEventListener('close', () => {
+      document.querySelector('#focus-content video')?.pause();
       document.querySelector('#focus-content').replaceChildren();
       this.focusReturn?.focus({ preventScroll: true });
     });
@@ -84,6 +89,7 @@ export class Space {
     document.title = `${page.slug === 'home' ? 'A place in space' : page.slug.replaceAll('-', ' ')} — Zibaldone`;
   }
   render() {
+    for (const video of this.world.querySelectorAll('video')) video.pause();
     this.nodes.clear();
     this.world.replaceChildren(...this.page.elements.map(element => this.makeObject(element)));
     this.updateFocusControls();
@@ -111,7 +117,7 @@ export class Space {
         // Default SVG miter joins and the rotated 8×8 stroke-unit arrow marker.
         margin += (element.arrowhead ? 9 : 4) * (element.strokeWidth ?? 1);
       } else {
-        if (element.type === 'text') {
+        if (element.type === 'text' || element.type === 'file' && element.display === 'attach') {
           const content = node.querySelector('.content'), range = document.createRange();
           range.selectNodeContents(content);
           const text = range.getBoundingClientRect();
@@ -150,6 +156,9 @@ export class Space {
     node.dataset.interactive = isInteractive(element);
     node.classList.toggle('inverts', canInvert(element));
     styleObject(node, element);
+    if (element.type === 'file') {
+      makeFileObject(node, element, this); this.nodes.set(element.id, node); return node;
+    }
     if (element.type === 'line') {
       node.setAttribute('aria-hidden', 'true');
       const svg = svgNode('svg', { class: 'line-drawing', width: '100%', height: '100%', 'aria-hidden': 'true' });
@@ -232,8 +241,18 @@ export class Space {
     this.camera.releaseSpace();
     this.focusReturn = returnTo;
     const container = document.querySelector('#focus-content');
-    container.className = element.type === 'image' ? 'focus-image' : 'focus-text';
-    if (element.type === 'image') {
+    container.className = isMedia(element) || element.type === 'file' && ['image','video'].includes(fileKind(element.filename)) ? 'focus-image' : 'focus-text';
+    if (element.type === 'file') {
+      this.nodes.get(element.id)?.querySelector('video')?.pause();
+      const content = fileContent(element, this, true);
+      content.style.fontFamily = fonts[element.font];
+      content.style.fontSize = `${Math.max(16, Math.min(32, element.fontSize))}px`;
+      content.style.lineHeight = element.lineHeight ?? 1.4;
+      content.style.letterSpacing = `${element.letterSpacing ?? 0}em`;
+      content.style.textAlign = element.align || 'left';
+      const download = fileLink(element, this.base, 'Download source'); download.classList.add('file-download');
+      container.replaceChildren(content, download);
+    } else if (element.type === 'image') {
       const img = document.createElement('img');
       img.src = spaceURL(element.src, this.base);
       img.alt = element.alt;

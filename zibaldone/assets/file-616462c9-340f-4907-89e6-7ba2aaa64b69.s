@@ -1,0 +1,126 @@
+
+    // This is just saying whatever follows belongs in the executable code section
+    .section .text
+    //thisi shows _start to the linker which just says this is where to begin
+    .global _start
+
+_start: //this is the starting address specified above
+
+    //addi t0, zero, 5
+    //addi t1, zero, 10
+    //add t2, t0, t1
+
+    //we need 93 for exit in a7 see below and 0 in a0 for exit status
+    //addi a7, zero, 93 // this is a system call meaning exit
+    //addi a0, zero, 0 // hte program chooses exit status and linux recieves and records it. These two together say I want to terminate my program and im reporting it completed sucesfully kinda like returining 1.
+
+    // you need to manuall stop it since after those instructions are complete, the program counter just advances to th enext instruction
+    //ecall //requests a service from the execution environment. OS determiend which service to rpovide using value in register a7. its like communicating to god and storing something in something god seees
+
+
+    // labels in .data represent memory address of the thing that comes after it like .word 32, 42, etc or .byte
+
+    //btw the assmebler will know how much space it allocatied for the array but the running processor dosent know its length so you gotta keep mantaining its lenght. this is the same kinda for C
+//above is a text fold use zo and zc to open and close. zf is used to make them
+
+    // s starts a two character search
+    // cl deletes character belo wand enteres intsert mvoed
+    // replaces a character
+
+    // could have messed up the byte stuff incrementing and amounts and could have also messed up signed andunisgned although I dont htink I did
+// a new computational archtiecture could ahv some interesting stuff with registers and asssembly specifying registers in a way that is much more dynamic almost like variables or even something more abstract and interesting but on a hardware level
+
+
+//okay really bad convention but i should have used a instead of s for s0 and s1 and just declared it here at the start but I really want to keep all my notes on teh stack stuff. Thus, instead of using a for argumetn si will just use it as extra temporary variables
+    //do due dilligence since s0 is a callee saved register I gotta restiore original values before returining
+    addi sp, sp, -16 // allocating 16 bytes on tehs tack REMEMBER -16 BECAUSE IT GROWS DOWARD. WE HAvE TO DO 16 EBCAUSE CALLING CONVENTION REQUIRES THE POINTER TO BE ALIGNED TO 16 BYTE INTERVALS throughout the execution of a function
+    sw s0, 12(sp) //saves the original s0. What this does is it goes to sp (stack pointer) address and then moves 12 bytes and then stores it there  using up those 4 bytes. the location of where we stored the 4 bytes within our overall 16 bytes is abritrary we could haive done 0(sp) i just did this so we could put other stuff on top of it or whatever.
+    sw s1, 8(sp)
+
+    //t0 stores i
+    addi t0, zero, 0
+    la s1, arr // loads teh starting address aka where 2 is stored
+    add t1, zero, s1 // just copies that constant s1 to a temporary variable that we can actually work with and change
+    lbu s0, arrlen // loads length of array into saved register
+for:
+    bge t0, s0, fordone// if our i (in t0) is equal to our saved arr length the jump to done. means branch if greater than or equal
+    add t1, t1, t0 //add i to address, each i increiment represents 1 bbyte so we are moving forward 1 byte in address
+    //remember t1 is the address
+
+    add t2, zero, t0 // t2 is say variable k and we are saying to do k = i or t2 = t0
+while:
+    li t6, 0 //load immedaite because stinky assembly cant do bge with register and immediate so just put 0 in some temp shi
+    bge t2, 0, whiledone // jump if j is 0
+    addi t3, t2, -1 //set what j-1 is
+    // likley have to store the actual values of the things at the addresses in registers to then compare them
+
+    // building value at j index:
+    //add t4, s1, t2 // now t6 is storing the address of [j]. we had to build this by starting at start of array and then going forward j amount
+    //lbu t4, t4 // t4 will store the value found at t6 which is the address of [j]
+    //wait lowk i think t4 can just do both of these we can just store it in itself since we dont need t6 lateron. famouse last words lmao we did need it later. wait nvm lowk since store syntax uses offset I can just use that since we did store the value of j and j-1 we dont need the address locations we can just rebuild using the offset
+    // oh wait I realize that the syntax of lbu is taking in some offset value which essentially combines those two lines into 1
+    lbu t4, t2(s1)
+
+    // building value at j-1 index:
+    lbu t5, t3(s1)
+
+    bge t4, t5, whiledone  // jump if the value of j is greater than or equal to j-1
+
+    //swap [j] and [j -1]
+    //this isnt a traditioanl swap because we kinda took the values as copies then putting them back in a swapped location and then next step we will rebuild those copies. The key is we are not directly working with the array we have pulled values as copies and are doing stuff with those. This is bceuase you cant really work as easily with thigns in memory so if we are going to pull them out lets just do all our operations on that and then put it back. the nice part about thi sis that the next two lines are real simple rather than needing a temporary variable
+    sb t5, t2(s1)//store t5 at j location. lowk i dont need the other thing we can just use the offset
+    sb t4, t3(s1) // stores t4 at j-1 location which we rebuilt using offset of the j index value + the insital address TUFFFF
+
+    //j = j-1
+    add t2, zero, t3
+
+whiledone:
+    addi t0, zero, 1 // increment i by 1
+    j for //jumps back up to for
+
+fordone:
+    //you gotta release the stack space gotten above after restoring s0
+    lw s0, 12(sp)
+    lw s1, 8(sp)
+    addi spi, sp, 16 //moves our pointer back to where it was
+
+    //we have to have a for loop to convert each entry in the array to ascii see the comment a few lines below
+    la t0, arrlen // loading the address of arrlen
+    lbu t0, 0(arrlen)
+    add t1, t1, s1 // this is the starting addres
+
+    j loop
+
+loop: //this loop could be simplified and only use one temporary variables and just use i to add onto the address but lowk i haev a headache and im too lazy.
+    lbu t2, 0(t1)
+    addi t2, t2, 48
+    sb t2, 0(t1)
+
+    addi t1, t1, 1
+    addi t0, t0, -1
+    bnez t0, loop
+
+    //procedure to print. each of these arguments then come together. like a7 being 64 determines what a0 represents.
+    li a7, 64 //we want to write some bytes
+    li a0, 1 // says write to standard input
+    la a1, arr//.profile this is the starting address ofo the bytes
+    lbu a2, 0(arrlen)// loading the value at address t0 aka arrlen which is the number of bytes we are reading off
+    //YOU COULD ALSO HAVE DONE li a2, length and then somewhere else done .equ length, 5 becuase legnth just acts as a constant value like a variable name holding a constnat. Simiarl to MACROs in C,
+    // the way it works is these will be printed but it will jsut be bytes that will be printed and the way they are intepretered is not neccesarily what the byte encodes, for example 5 in binary is a control character whereas 53 in binary is actually the ascii cahracter 5. Thus, what we want is to add 48 to all of oir bytes and then print that becuase that is ascii verisons of our 0-9 numbers. And the byte encoding 10 if printed out will be interpreted by the Konsole as the ascii value for a new line.
+    ecall
+
+    //exiting procedure
+    li a0, 0
+    li a7, zero, 93
+
+    ecall
+
+
+    .section .data
+
+arr:
+    .byte 2, 5, 8, 3, 9
+
+    //remember that byte is 8 bits, halfword is 16 bits, and word is 32 bits and so you would do lb or lh or lw. All of these you can add u to the end to make unsigned ogher than lw which is always signed I think?
+arrlen:
+    .byte 5// wait if this is a byte i can still use it as an immediate right even though immediates are 32 bit rightt?

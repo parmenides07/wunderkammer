@@ -5,18 +5,22 @@ import { randomUUID } from 'node:crypto';
 import { validatePage, normalizeBasePath, spaceURL } from './client/model.js';
 import { internalTarget, routeURL } from './client/routes.js';
 import { pageHTML } from './template.mjs';
+import { readAsset, prepareFile, fileReferences } from './files.mjs';
+import { directFile } from './client/files.js';
 const root = path.dirname(fileURLToPath(import.meta.url));
-export const publicFiles = ['model.js', 'routes.js', 'camera.js', 'main.js', 'style.css', 'trail.js'];
+export const publicFiles = ['model.js', 'files.js', 'file-view.js', 'routes.js', 'camera.js', 'main.js', 'style.css', 'trail.js'];
 export async function readContent(source = root, basePath = '/personal/', validateReferences = true) {
   const pages = [];
   for (const name of (await readdir(path.join(source, 'pages'))).filter(n => n.endsWith('.json')).sort())
     pages.push(validatePage(JSON.parse(await readFile(path.join(source, 'pages', name), 'utf8')), name.slice(0, -5)));
   if (!pages.some(p => p.slug === 'home')) throw new Error('A home.json canvas is required.');
   const known = new Set(pages.map(p => p.slug));
+  const references = fileReferences(pages);
   if (validateReferences) for (const page of pages) for (const e of page.elements) {
     const target = e.href && internalTarget(e.href, basePath);
     if (target && !known.has(target)) throw new Error(`${page.slug}/${e.id} links to a missing canvas: ${e.href}`);
     if (e.type === 'image') await readFile(path.join(source, 'assets', e.src.split('/assets/')[1]));
+    if (e.type === 'file') await prepareFile(source, e, references);
   }
   let legacy = {};
   try { legacy = JSON.parse(await readFile(path.join(source, 'legacy-personal.json'), 'utf8')); }
@@ -34,7 +38,19 @@ export async function build({ source = root, basePath = process.env.ZIBALDONE_BA
   try {
     await mkdir(path.join(stage, 'client'), { recursive: true }); await mkdir(path.join(stage, 'pages'));
     for (const file of publicFiles) await cp(path.join(source, 'client', file), path.join(stage, 'client', file));
-    await cp(path.join(source, 'assets'), path.join(stage, 'assets'), { recursive: true, dereference: false });
+    await mkdir(path.join(stage, 'assets')); await mkdir(path.join(stage, 'documents'));
+    const files = new Map(pages.flatMap(page => page.elements.filter(e => e.type === 'file').map(e => [e.src.split('/assets/')[1], e])));
+    const references = fileReferences(pages);
+    for (const name of await readdir(path.join(source, 'assets'))) {
+      const bytes = await readAsset(source, name);
+      if (name.startsWith('file-')) {
+        const e = files.get(name);
+        if (!e) continue; // Undo/replaced originals stay on disk, not published accidentally.
+        const prepared = await prepareFile(source, e, references);
+        await writeFile(path.join(stage, 'assets', name + (directFile(e.filename) ? '' : '.zip')), prepared.download);
+        if (prepared.html !== null) await writeFile(path.join(stage, 'documents', name + '.html'), prepared.html);
+      } else await writeFile(path.join(stage, 'assets', name), bytes);
+    }
     for (const page of pages) {
       const publicPage = structuredClone(page);
       for (const e of publicPage.elements) {

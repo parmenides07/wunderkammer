@@ -6,6 +6,8 @@ import { GRID, pageURL, snap, resizeBox, validatePage, validHref, elementBounds,
 import { History } from './history.js';
 import { Autosave } from './autosave.js';
 import { encodeClipboard, decodeClipboard, cloneElements } from './clipboard.js';
+import { fileImporter } from './file-editor.js';
+import { fileKind, isMedia, renderable, downloadPath, downloadName } from './files.js';
 
 const app = await ready;
 const token = document.querySelector('meta[name=zibaldone-editor-token]')?.content;
@@ -22,8 +24,10 @@ function startEditor(app, token) {
         <button id="new-page">New page</button>
         <button id="add-text">Text</button>
         <button id="add-image">Image</button>
+        <button id="add-file">File</button>
         <button id="add-line">Line</button>
         <button id="set-camera">Set starting view</button>
+        <select id="publish-scope" aria-label="Publish scope" title="All changes includes code, content, staged files and other non-ignored changes across the whole repository."><option value="content">Content only</option><option value="all">All changes (code + content)</option></select>
         <button id="publish-page">Publish</button>
         <button id="undo" disabled>Undo</button><button id="redo" disabled>Redo</button>
         <a id="preview" target="_blank" rel="noopener">Preview ↗</a>
@@ -76,7 +80,7 @@ function startEditor(app, token) {
         <label id="maximize-property"><input id="prop-maximizable" type="checkbox"> Maximizable</label>
       </div>
       <div id="text-properties" class="tool-row">
-        <select id="prop-font" aria-label="Font"><option value="xanh">Xanh Mono</option><option value="baskerville">Baskerville</option><option value="mono">Zenbones Mono</option></select>
+        <select id="prop-font" aria-label="Font"><option value="xanh">Xanh Mono</option><option value="baskerville">Baskerville</option><option value="zenbones">Zenbones Mono</option></select>
         <label>Size <input id="prop-fontSize" type="number" min="1" max="1000" step="1"> px</label>
         <label>Line height <input id="prop-lineHeight" type="number" min="0.5" max="4" step="0.05"></label>
         <label>Spacing <input id="prop-letterSpacing" type="number" min="-0.1" max="1" step="0.01"> em</label>
@@ -87,6 +91,12 @@ function startEditor(app, token) {
       <div id="image-properties" class="tool-row">
         <label><input id="prop-lockAspect" type="checkbox" checked> Keep aspect ratio</label>
         <label>Alt <input id="prop-alt" type="text"></label>
+      </div>
+      <div id="file-properties" class="tool-row" hidden>
+        <select id="prop-display" aria-label="File display"><option value="render">Render</option><option value="attach">Attach</option></select>
+        <label>Label <input id="prop-label" type="text"></label>
+        <button id="replace-source">Replace source</button>
+        <a id="download-source">Download source</a>
       </div>
       <div class="tool-row">
         <label id="link-property">Link <input id="prop-href" type="text" placeholder="/personal/#/field-notes or https://…" list="canvas-links"></label>
@@ -111,6 +121,10 @@ function startEditor(app, token) {
     </dialog>`);
 
   const $ = id => document.getElementById(id);
+  try { if (localStorage.getItem('zibaldone-publish-scope') === 'all') $('publish-scope').value = 'all'; } catch {}
+  $('publish-scope').onchange = () => {
+    try { localStorage.setItem('zibaldone-publish-scope', $('publish-scope').value); } catch {}
+  };
   let history = new History(app.page);
   let navigating = false;
   let selection = new Set();
@@ -118,7 +132,7 @@ function startEditor(app, token) {
   let drawing = null;
   let editing = null;
   let dirty = false;
-  let autosave, leaveTask, uploadError = null;
+  let autosave, leaveTask, importer, uploadError = null;
   let publishing = false;
   const pendingImages = new Set();
   let uploads = 0;
@@ -159,6 +173,7 @@ function startEditor(app, token) {
     for (const node of [app.viewport, $('properties'), ...$('editor-tools').querySelectorAll('.tool-row')]) node.inert = value;
   };
   app.beforePageChange = () => {
+    importer?.close();
     endText(); cancelLine(); app.camera.gesture?.cancel?.(); app.camera.gesture = null;
     autosave.close();
     selection.clear(); selected = null; dirty = false; $('properties').hidden = true;
@@ -227,8 +242,8 @@ function startEditor(app, token) {
     const defaults = { align: 'left', zIndex: 0, strokeStyle: 'solid', strokeWidth: 1, lineHeight: 1.4, letterSpacing: 0 };
     const points = e.type === 'line' ? linePoints(e) : null;
     const endpoints = points ? { x1: points[0][0], y1: points[0][1], x2: points.at(-1)[0], y2: points.at(-1)[1] } : {};
-    for (const key of ['x', 'y', 'width', 'height', 'x1', 'y1', 'x2', 'y2', 'fontSize', 'font', 'align', 'alt', 'href', 'zIndex', 'strokeStyle', 'strokeWidth', 'lineHeight', 'letterSpacing']) {
-      const value = endpoints[key] ?? e[key] ?? defaults[key] ?? '';
+    for (const key of ['x', 'y', 'width', 'height', 'x1', 'y1', 'x2', 'y2', 'fontSize', 'font', 'align', 'alt', 'href', 'zIndex', 'strokeStyle', 'strokeWidth', 'lineHeight', 'letterSpacing', 'display', 'label']) {
+      const value = key === 'font' && e.font === 'mono' ? 'xanh' : endpoints[key] ?? e[key] ?? defaults[key] ?? '';
       $('prop-' + key).value = typeof value === 'number' ? Number(value.toFixed(4)) : value;
       if (['x', 'y', 'width', 'height', 'x1', 'y1', 'x2', 'y2'].includes(key)) $('prop-' + key).disabled = e.locked === true;
     }
@@ -236,14 +251,22 @@ function startEditor(app, token) {
     $('line-properties').hidden = e.type !== 'line';
     $('maximize-property').hidden = e.type === 'line';
     $('shadow-property').hidden = e.type === 'line';
-    $('link-property').hidden = e.type === 'line';
+    $('link-property').hidden = e.type === 'line' || e.type === 'file';
     $('prop-maximizable').checked = isMaximizable(e);
     $('prop-shadow').checked = e.shadow === true;
     $('prop-invertOnHover').checked = e.invertOnHover === true;
     $('prop-arrowhead').checked = e.arrowhead === true;
     $('focus-selected').hidden = !isMaximizable(e);
-    $('text-properties').hidden = e.type !== 'text';
-    $('image-properties').hidden = e.type !== 'image';
+    $('text-properties').hidden = !['text','file'].includes(e.type);
+    $('edit-text').hidden = e.type !== 'text';
+    $('prop-invertOnHover').closest('label').hidden = e.type !== 'text';
+    $('image-properties').hidden = !isMedia(e);
+    $('prop-alt').closest('label').hidden = e.type !== 'image';
+    $('file-properties').hidden = e.type !== 'file';
+    if (e.type === 'file') {
+      $('prop-display').querySelector('[value=render]').disabled = !renderable(e.filename, e.plainText);
+      $('download-source').href = spaceURL(downloadPath(e), app.base); $('download-source').download = downloadName(e);
+    }
     $('prop-lockAspect').checked = e.lockAspect !== false;
     $('follow-link').hidden = !e.href;
     if (e.href) $('follow-link').href = canvasURL(e.href, app.trail.ids, app.base, true, location.origin);
@@ -264,7 +287,7 @@ function startEditor(app, token) {
     const e = element();
     if (e && selection.size === 1 && !e.locked) {
       const node = app.nodes.get(e.id);
-      const axes = e.type === 'line' ? linePoints(e).map((_, i) => i === 0 ? 'start' : i === linePoints(e).length - 1 ? 'end' : `vertex-${i}`) : e.type === 'text' ? ['width', 'height', 'both'] : ['both'];
+      const axes = e.type === 'line' ? linePoints(e).map((_, i) => i === 0 ? 'start' : i === linePoints(e).length - 1 ? 'end' : `vertex-${i}`) : !isMedia(e) ? ['width', 'height', 'both'] : ['both'];
       axes.forEach((axis, index) => {
         const handle = document.createElement('button');
         handle.className = 'resize-handle';
@@ -323,6 +346,11 @@ function startEditor(app, token) {
     for (const key of Object.keys(e)) delete e[key];
     Object.assign(e, structuredClone(before));
   }
+  app.selectFile = (id, additive) => {
+    if (publishing || navigating) return;
+    if (additive) setSelection(selection.has(id) ? [...selection].filter(value => value !== id) : [...selection, id], id);
+    else if (!selection.has(id)) select(id);
+  };
   app.camera.onTouchStart = () => {
     const previous = [...selection], primary = selected;
     return () => setSelection(previous, primary);
@@ -381,7 +409,7 @@ function startEditor(app, token) {
           setLinePoints(e, points);
           update(e);
         } else if (handle) {
-          Object.assign(e, resizeBox(start, handle === 'height' ? 0 : dx, handle === 'width' ? 0 : dy, snapped(event), e.type === 'image' && e.lockAspect !== false));
+          Object.assign(e, resizeBox(start, handle === 'height' ? 0 : dx, handle === 'width' ? 0 : dy, snapped(event), isMedia(e) && e.lockAspect !== false));
           if (handle === 'width') e.height = start.height;
           if (handle === 'height') e.width = start.width;
           update(e);
@@ -492,7 +520,7 @@ function startEditor(app, token) {
     $('prop-zIndex').value = (e.zIndex ?? 0) + delta;
     $('prop-zIndex').dispatchEvent(new Event('change'));
   };
-  for (const key of ['x', 'y', 'width', 'height', 'x1', 'y1', 'x2', 'y2', 'fontSize', 'font', 'align', 'alt', 'href', 'lockAspect', 'zIndex', 'maximizable', 'invertOnHover', 'strokeStyle', 'strokeWidth', 'arrowhead', 'shadow', 'lineHeight', 'letterSpacing']) {
+  for (const key of ['x', 'y', 'width', 'height', 'x1', 'y1', 'x2', 'y2', 'fontSize', 'font', 'align', 'alt', 'href', 'lockAspect', 'zIndex', 'maximizable', 'invertOnHover', 'strokeStyle', 'strokeWidth', 'arrowhead', 'shadow', 'lineHeight', 'letterSpacing', 'display', 'label']) {
     $('prop-' + key).addEventListener('change', event => {
       const e = element();
       if (!e) return;
@@ -513,14 +541,14 @@ function startEditor(app, token) {
             const points = linePoints(e).map(p => [...p]);
             points[key[1] === '1' ? 0 : points.length - 1][key[0] === 'x' ? 0 : 1] = snap(value, snapped(event));
             setLinePoints(e, points);
-          } else if (['width', 'height'].includes(key) && e.type === 'image' && e.lockAspect !== false) {
+          } else if (['width', 'height'].includes(key) && isMedia(e) && e.lockAspect !== false) {
             const ratio = e.width / e.height;
             e[key] = snap(value, snapped());
             if (key === 'width') e.height = e.width / ratio; else e.width = e.height * ratio;
           } else e[key] = ['x', 'y', 'width', 'height', 'x1', 'y1', 'x2', 'y2'].includes(key) ? snap(value, snapped()) : value;
         } else e[key] = input.value;
         validatePage(app.page);
-        if (['href', 'alt', 'lockAspect', 'maximizable', 'invertOnHover'].includes(key)) redraw(); else update(e);
+        if (['href', 'alt', 'lockAspect', 'maximizable', 'invertOnHover', 'display', 'label'].includes(key)) redraw(); else update(e);
         changed();
       } catch (error) { Object.keys(e).forEach(k => delete e[k]); Object.assign(e, before); report(error); }
       refreshProperties();
@@ -585,6 +613,7 @@ function startEditor(app, token) {
   $('publish-page').onclick = async () => {
     if (publishing) return;
     endText();
+    importer?.close();
     publishing = true;
     const button = $('publish-page');
     button.disabled = true; button.textContent = 'Publishing…'; button.setAttribute('aria-busy', 'true');
@@ -598,7 +627,9 @@ function startEditor(app, token) {
       if (drawing?.points.length) throw new Error('Finish or cancel the line before publishing.');
       await autosave.flush();
       status('Committing…');
-      const response = await fetch('/_zibaldone/api/publish', { method: 'POST', headers: { 'X-Zibaldone-Token': token } });
+      const response = await fetch('/_zibaldone/api/publish', { method: 'POST',
+        headers: { 'X-Zibaldone-Token': token, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ scope: $('publish-scope').value }) });
       if (!response.ok) throw new Error((await response.json()).error || 'Local publishing request failed.');
       const reader = response.body.getReader(), decoder = new TextDecoder();
       let buffer = '', finished = false;
@@ -685,7 +716,7 @@ function startEditor(app, token) {
   // Clipboard events work without clipboard-read permission. A local copy also
   // survives navigation between canvases when the system clipboard is unavailable.
   for (const operation of ['copy', 'cut']) window.addEventListener(operation, event => {
-    if (publishing || navigating || leaveTask || app.invalid || isTyping(event.target) || event.target.closest?.('#breadcrumbs') || document.querySelector('dialog[open]') || !selection.size) return;
+    if (publishing || navigating || leaveTask || app.invalid || isTyping(event.target) || event.target.closest?.('#breadcrumbs') || event.target.closest?.('[data-reading]') && !window.getSelection().isCollapsed || document.querySelector('dialog[open]') || !selection.size) return;
     const text = encodeClipboard(selectedElements());
     event.clipboardData?.setData('text/plain', text); rememberClipboard(text);
     event.preventDefault();
@@ -712,6 +743,7 @@ function startEditor(app, token) {
       endText(); cancelLine(); select(null); return;
     }
     if (isTyping(event.target)) return;
+    if (event.target.closest('[data-reading]') && (!window.getSelection().isCollapsed || ['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home','End','PageUp','PageDown'].includes(event.key) || command && key === 'a')) return;
     if (drawing && ['Enter', 'Backspace', 'Tab'].includes(event.key)) {
       event.preventDefault();
       if (event.key === 'Enter') finishLine(true);
@@ -797,6 +829,29 @@ function startEditor(app, token) {
   startAutosave(); recoverDraft();
   decorateSelection();
   $('image-input').onchange = () => { queueImages($('image-input').files, { ...app.camera.value }); $('image-input').value = ''; };
-  app.viewport.addEventListener('dragover', event => { event.preventDefault(); event.dataTransfer.dropEffect = 'copy'; });
-  app.viewport.addEventListener('drop', event => { event.preventDefault(); queueImages(event.dataTransfer.files, app.camera.toWorld(app.camera.point(event))); });
+  importer = fileImporter({ app, api, snapped, selected: element,
+    canImport: () => !publishing && !navigating && !leaveTask && !app.invalid,
+    track(operation) {
+      uploads++; uploadError = null;
+      const task = operation().catch(error => { uploadError = Object.assign(error, { status: error.status || 400 }); report(error); })
+        .finally(() => { uploads--; pendingImages.delete(task); autosave.changed(true); });
+      pendingImages.add(task); autosave.flush().catch(() => {});
+    },
+    commit(e, replaceId) {
+      endText();
+      if (replaceId) {
+        const index = app.page.elements.findIndex(element => element.id === replaceId);
+        if (index < 0) throw new Error('The file object was deleted while uploading.');
+        app.page.elements[index] = { ...app.page.elements[index], src: e.src, filename: e.filename, plainText: e.plainText,
+          display: renderable(e.filename, e.plainText) ? app.page.elements[index].display : 'attach' };
+        redraw();
+      } else {
+        validatePage({ ...app.page, elements: [...app.page.elements, e] });
+        app.page.elements.push(e); app.world.append(app.makeObject(e));
+      }
+      select(e.id); changed(true);
+    },
+  });
+  $('add-file').onclick = () => { endText(); cancelLine(); importer.open(); };
+  $('replace-source').onclick = () => importer.replace();
 }

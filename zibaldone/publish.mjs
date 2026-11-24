@@ -43,7 +43,10 @@ export function deploymentURL(remote) {
   return pair && /^[\w.-]+\/[\w.-]+$/.test(pair) ? `https://github.com/${pair}/actions` : null;
 }
 
-export async function publishContent(root, progress = () => {}, run = runGit) {
+export async function publishContent(root, progress = () => {}, run = runGit, { scope = 'content' } = {}) {
+  if (!['content', 'all'].includes(scope)) fail('Choose content or all changes for publishing.');
+  const all = scope === 'all';
+  const scopePaths = all ? ['.'] : folders;
   const cwd = path.dirname(await realpath(root));
   const git = args => run(cwd, args);
   let top;
@@ -69,7 +72,7 @@ export async function publishContent(root, progress = () => {}, run = runGit) {
     const checkIndex = async () => {
       if ((await git(['ls-files', '--unmerged', '-z'])).length) fail('Resolve the Git index conflicts in a terminal before publishing.');
       const staged = names(await git(['diff', '--cached', '--name-only', '--no-renames', '-z']));
-      if (staged.some(name => !contentPath(name))) fail('Unrelated staged changes exist. Commit or unstage those files in a terminal first; Publish only includes zibaldone/pages/, zibaldone/assets/, and generated personal/.');
+      if (!all && staged.some(name => !contentPath(name))) fail('Unrelated staged changes exist. Choose All changes to include them, or commit or unstage them in a terminal; Content only publishes zibaldone/pages/, zibaldone/assets/, and generated personal/.');
     };
     await checkIndex();
     let remote, ref, tracking;
@@ -84,14 +87,16 @@ export async function publishContent(root, progress = () => {}, run = runGit) {
     const urls = (await git(['remote', 'get-url', '--push', '--all', '--', remote])).trim().split('\n');
     if (urls.length !== 1 || !urls[0]) fail('Configure exactly one push destination for the upstream remote before publishing.');
     const remoteURL = urls[0]; actionsURL = deploymentURL(remoteURL);
-    // Application changes belong to the reviewed integration/code commit, not
-    // an automatic content publish. In particular, do not deploy a half migration.
+    // Both scopes require an already integrated checkout. Content-only mode
+    // continues to refuse application changes; All changes explicitly includes them.
     try { await git(['ls-files', '--error-unmatch', '--', 'zibaldone/build.mjs', '_config.yml']); }
     catch { fail('Commit and review the initial integration (including zibaldone/ and _config.yml) before using Publish.'); }
-    const sourceChanges = names(await git(['diff', '--name-only', '-z', 'HEAD', '--', 'zibaldone']));
-    sourceChanges.push(...names(await git(['ls-files', '--others', '--exclude-standard', '-z', '--', 'zibaldone'])));
-    if (sourceChanges.some(name => !contentPath(name))) fail('Zibaldone application or configuration files have uncommitted changes. Review and commit those separately before publishing content.');
-    const working = await git(['status', '--porcelain=v1', '-z', '--untracked-files=all', '--', ...folders]);
+    if (!all) {
+      const sourceChanges = names(await git(['diff', '--name-only', '-z', 'HEAD', '--', 'zibaldone']));
+      sourceChanges.push(...names(await git(['ls-files', '--others', '--exclude-standard', '-z', '--', 'zibaldone'])));
+      if (sourceChanges.some(name => !contentPath(name))) fail('Zibaldone application or configuration files have uncommitted changes. Choose All changes to publish code too, or commit and push those separately.');
+    }
+    const working = await git(['status', '--porcelain=v1', '-z', '--untracked-files=all', '--', ...scopePaths]);
     const ahead = Number((await git(['rev-list', '--count', `${tracking}..${head}`])).trim());
     if (!working && !ahead) return { state: 'nothing', actionsURL };
 
@@ -101,17 +106,31 @@ export async function publishContent(root, progress = () => {}, run = runGit) {
     if (!/^[a-f0-9]{40,64}$/.test(remoteHead)) fail('The upstream branch was not found. Configure and push it once in a terminal.');
     try { await git(['merge-base', '--is-ancestor', remoteHead, head]); }
     catch { fail('The remote branch has advanced or diverged. Fetch and reconcile it manually, then retry. Publish never pulls, rebases, or force pushes.'); }
-    // A push also carries earlier commits. Refuse unrelated unpushed work rather
-    // than silently publishing code alongside this content-only operation.
+    // A push also carries earlier commits. Only All changes includes code commits.
     const unpushed = names(await git(['log', '--format=', '--name-only', '--no-renames', '-z', `${remoteHead}..${head}`])).map(name => name.replace(/^\n+/, ''));
-    if (unpushed.some(name => name && !contentPath(name))) fail('This branch has unpushed commits outside the content folders. Review and push those commits manually first.');
+    if (!all && unpushed.some(name => name && !contentPath(name))) fail('This branch has unpushed commits outside the content folders. Choose All changes to push code too, or push those commits manually first.');
 
     const checkBranch = async expected => {
       if ((await git(['symbolic-ref', '--quiet', '--short', 'HEAD'])).trim() !== branch ||
           (await git(['rev-parse', 'HEAD'])).trim() !== expected) fail('The Git branch changed during publishing. Stop concurrent Git operations and retry.');
     };
     await checkBranch(head);
-    if (working) {
+    if (working && all) {
+      operation = 'build'; progress({ state: 'building' });
+      // A fresh process uses the current build/runtime code on disk, even when
+      // application files have changed since the authoring server was started.
+      try {
+        await execute(process.execPath, [path.join(cwd, 'build.js')], {
+          cwd, timeout: 300_000, maxBuffer: 4 * 1024 * 1024,
+          env: { ...process.env, ZIBALDONE_BASE_PATH: '/personal/' },
+        });
+      } catch (error) {
+        console.error('All-changes build failed:', error.stderr || error.message);
+        fail('Site build failed. Nothing was committed or pushed. Check the local server terminal for the build error, fix it, and retry.');
+      }
+      await checkIndex(); await checkBranch(head);
+    }
+    if (working && !all) {
       operation = 'build'; progress({ state: 'building' });
       const temporary = await mkdtemp(path.join(os.tmpdir(), 'zibaldone-publish-output-'));
       try {
@@ -136,16 +155,24 @@ export async function publishContent(root, progress = () => {}, run = runGit) {
       operation = 'commit'; progress({ state: 'committing' });
       await git(['var', 'GIT_AUTHOR_IDENT']); await git(['var', 'GIT_COMMITTER_IDENT']);
       await checkIndex();
-      await git(['add', '--all', '--', ...folders]);
+      // Explicit paths keep Git pathspec syntax in filenames harmless. In All
+      // changes mode, staged files and every non-ignored addition are intended.
+      const changed = all ? [...new Set([
+        ...names(await git(['diff', '--name-only', '--no-renames', '-z', 'HEAD'])),
+        ...names(await git(['diff', '--cached', '--name-only', '--no-renames', '-z'])),
+        ...names(await git(['ls-files', '--others', '--exclude-standard', '-z'])),
+      ])] : null;
+      const paths = all ? changed.map(name => `:(literal)${name}`) : folders;
+      if (paths.length) await git(['add', '--all', '--', ...paths]);
       await checkIndex(); await checkBranch(head);
-      const staged = names(await git(['diff', '--cached', '--name-only', '--no-renames', '-z', '--', ...folders]));
+      const staged = names(await git(['diff', '--cached', '--name-only', '--no-renames', '-z', '--', ...scopePaths]));
       if (staged.length) {
         // --only keeps unrelated index changes made by another process out of
         // this commit, even if they appear after the preceding index check.
-        await git(['commit', '--only', '-m', 'content.', '--', ...folders]);
+        await git(['commit', '--only', '-m', all ? 'Publish site changes' : 'content.', '--', ...(all ? staged.map(name => `:(literal)${name}`) : folders)]);
         commit = (await git(['rev-parse', 'HEAD'])).trim();
-        const paths = names(await git(['diff-tree', '--no-commit-id', '--name-only', '--no-renames', '-r', '-z', head, commit]));
-        if (paths.some(name => !contentPath(name))) fail('A Git hook added unrelated files to the commit. Nothing was pushed; review the local commit and hook in a terminal.');
+        const committedPaths = names(await git(['diff-tree', '--no-commit-id', '--name-only', '--no-renames', '-r', '-z', head, commit]));
+        if (committedPaths.some(name => all ? !changed.includes(name) : !contentPath(name))) fail('A Git hook added unrelated files to the commit. Nothing was pushed; review the local commit and hook in a terminal.');
         head = commit;
       }
     }

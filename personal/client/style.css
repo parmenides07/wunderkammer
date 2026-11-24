@@ -26,14 +26,7 @@
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 
-@font-face {
-  font-family: 'Zenbones Mono';
-  src: url('../assets/Zenbones-Mono-Regular.woff2') format('woff2');
-  font-display: swap;
-  font-weight: 400;
-  font-style: normal;
-}
-:root { --trail-height: 30px; color-scheme: light; font-family: 'Zenbones Mono', monospace; color: #111; background: #fff; }
+:root { --trail-height: 30px; color-scheme: light; font-family: 'Xanh Mono', 'Courier New', monospace; color: #111; background: #fff; }
 * { box-sizing: border-box; }
 html, body { margin: 0; width: 100%; height: 100%; }
 body { overflow: hidden; }
@@ -80,7 +73,7 @@ body:not(.editing) .object[data-interactive=false] > .content { cursor: default;
 .pan-ready:active, .pan-ready:active * { cursor: grabbing !important; }
 .focus-object {
   position: absolute; top: 0; left: 100%; width: 30px; height: 30px;
-  border: 0; background: #fff; font: 18px 'Zenbones Mono', monospace; opacity: 0;
+  border: 0; background: #fff; font: 18px 'Xanh Mono', 'Courier New', monospace; opacity: 0;
 }
 .object:has(:focus-visible) > .focus-object { opacity: 1; }
 @media (hover: hover) { .object:hover > .focus-object { opacity: 1; } }
@@ -99,7 +92,7 @@ body:not(.editing) .object[data-interactive=false] > .content { cursor: default;
 
 #breadcrumbs {
   position: fixed; inset: 0 0 auto; height: var(--trail-height); z-index: 1;
-  background: #fff; padding: 0 12px; font: 11px/30px 'Zenbones Mono', monospace;
+  background: #fff; padding: 0 12px; font: 11px/30px 'Xanh Mono', 'Courier New', monospace;
   overflow-x: auto; overflow-y: hidden; white-space: nowrap; scrollbar-width: none;
   touch-action: pan-x pinch-zoom; overscroll-behavior-x: contain;
 }
@@ -111,3 +104,39 @@ body:not(.editing) .object[data-interactive=false] > .content { cursor: default;
 #breadcrumbs [aria-current=page] { color: #777; }
 @media (hover: hover) { #breadcrumbs a:hover { color: #a33a32; } }
 body:has(#focus-view[open]) #breadcrumbs { visibility: hidden; }
+
+@font-face {
+  font-family: 'Zenbones Mono'; src: url('../assets/Zenbones-Mono-Regular.woff2') format('woff2');
+  font-display: swap; font-weight: 400; font-style: normal;
+}
+.file-object > .content { height: 100%; }
+.file-object video { display: block; width: 100%; height: 100%; object-fit: contain; }
+.document { overflow: auto; overscroll-behavior: contain; white-space: normal; user-select: text; cursor: text; }
+.document-preview { overflow: hidden; user-select: none; cursor: default; }
+.document-preview > * { pointer-events: none; }
+.document > div > :first-child { margin-top: 0; }
+.document p, .document ul, .document ol, .document blockquote, .document pre, .document table { margin: 0 0 .8em; }
+.document h1 { font-size: 2em; }
+.document h2 { font-size: 1.65em; }
+.document h3 { font-size: 1.35em; }
+.document h4, .document h5, .document h6 { font-size: 1.1em; }
+.document h1, .document h2, .document h3, .document h4, .document h5, .document h6 { line-height: 1.2; margin: 1em 0 .5em; }
+.document li > p { margin: 0; }
+.document li > ul, .document li > ol { margin-bottom: 0; }
+.document ul, .document ol { padding-left: 1.5em; }
+.document blockquote { margin-left: 1.5em; }
+.document pre { white-space: pre; overflow: auto; }
+.document code, .document pre { font-family: inherit; font-size: .95em; }
+.document pre.plain-text { font-size: 1em; white-space: pre-wrap; overflow-wrap: anywhere; tab-size: 4; }
+.document table { border-collapse: collapse; }
+.document td, .document th { padding: .2em .6em; border-bottom: 1px solid #ddd; text-align: inherit; }
+.document hr { border: 0; border-top: 1px solid #aaa; }
+.document a:focus-visible, .attachment:focus-visible { color: #a33a32; }
+@media (hover: hover) { .document a:hover, .attachment:hover { color: #a33a32; } }
+#focus-content .document { height: auto; min-height: 0; overflow: visible; }
+#focus-content:has(.file-download) { white-space: normal; }
+#focus-content.focus-image:has(.file-download) { display: block; text-align: center; }
+#focus-content.focus-image > .content { height: auto; min-height: 0; }
+#focus-content video { display: block; max-width: 100%; max-height: calc(100dvh - 140px); margin: auto; }
+.file-download { display: block; font-size: 12px; margin-top: 24px; }
+.file-grip { display: none; }

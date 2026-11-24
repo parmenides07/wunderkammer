@@ -9,10 +9,13 @@ import { pageHTML } from './template.mjs';
 import { readContent } from './build.mjs';
 import { routeURL } from './client/routes.js';
 import { publishContent } from './publish.mjs';
+import { fileLimit, extension as fileExtension, fileKind, safeFilename, directFile, isPlainText } from './client/files.js';
+import { validateFile, prepareFile, fileReferences } from './files.mjs';
+import { renderDocument } from './documents.mjs';
 
 const sourceRoot = path.dirname(fileURLToPath(import.meta.url));
 const types = { '.js': 'text/javascript', '.css': 'text/css', '.json': 'application/json', '.ttf': 'font/ttf', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.gif': 'image/gif', '.webp': 'image/webp' };
-Object.assign(types, { '.html': 'text/html', '.md': 'text/plain', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg', '.wav': 'audio/wav', '.csv': 'text/csv', '.mp4': 'video/mp4', '.webm': 'video/webm', '.pdf': 'application/pdf', '.mjs': 'text/javascript', '.wasm': 'application/wasm' });
+Object.assign(types, { '.html': 'text/html', '.md': 'text/plain', '.woff2': 'font/woff2', '.svg': 'image/svg+xml', '.mp3': 'audio/mpeg', '.ogg': 'audio/ogg', '.wav': 'audio/wav', '.csv': 'text/csv', '.mp4': 'video/mp4', '.webm': 'video/webm', '.pdf': 'application/pdf', '.mjs': 'text/javascript', '.wasm': 'application/wasm', '.zip': 'application/zip' });
 const etag = data => `"${createHash('sha256').update(data).digest('hex')}"`;
 const problem = (message, status = 400) => Object.assign(new Error(message), { status });
 
@@ -35,7 +38,7 @@ function imageExtension(buffer) {
   throw problem('Choose a PNG, JPEG, GIF, or WebP image.');
 }
 
-export function createSpaceServer({ root = sourceRoot, publish = publishContent } = {}) {
+export function createSpaceServer({ root = sourceRoot, publish = (root, progress, options) => publishContent(root, progress, undefined, options) } = {}) {
   if (process.env.NODE_ENV === 'production') throw new Error('The authoring server is development-only. Build and serve dist/ instead.');
   const token = randomBytes(32).toString('hex');
   let publishing = false;
@@ -68,16 +71,39 @@ export function createSpaceServer({ root = sourceRoot, publish = publishContent 
         if (request.headers['x-zibaldone-token'] !== token) throw problem('Open the development editor to use the authoring API.', 403);
         if (url.pathname === '/_zibaldone/api/publish' && request.method === 'POST') {
           if (publishing) throw problem('Another publish is already running. Wait for it to finish.', 409);
+          let options;
+          try {
+            const bytes = await body(request, 1024);
+            options = bytes.length ? JSON.parse(bytes.toString('utf8')) : { scope: 'content' };
+          } catch (error) { throw problem('Invalid publishing options.', error.status || 400); }
+          if (!options || Array.isArray(options) || !['content', 'all'].includes(options.scope) || Object.keys(options).some(key => key !== 'scope'))
+            throw problem('Choose content or all changes for publishing.');
+          if (publishing) throw problem('Another publish is already running. Wait for it to finish.', 409);
           publishing = true;
           return await serialize(async () => {
             response.writeHead(200, { 'Content-Type': 'application/x-ndjson', 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' });
             const progress = event => { if (!response.destroyed) response.write(JSON.stringify(event) + '\n'); };
-            try { progress(await publish(root, progress)); }
+            try { progress(await publish(root, progress, options)); }
             catch (error) { progress({ state: 'error', error: error.message, actionsURL: error.actionsURL }); }
             finally { publishing = false; response.end(); }
           });
         }
         if (publishing && request.method !== 'GET') throw problem('Publishing is in progress. Wait before saving or adding images.', 409);
+        if (url.pathname === '/_zibaldone/api/files' && request.method === 'POST') {
+          let filename;
+          try { filename = decodeURIComponent(request.headers['x-zibaldone-filename'] || ''); } catch { throw problem('Invalid filename.'); }
+          if (!safeFilename(filename)) throw problem('Choose a plain filename without paths or reserved punctuation.');
+          const bytes = await body(request, fileLimit(filename));
+          try {
+            validateFile(bytes, filename);
+            if (fileKind(filename) === 'document') await renderDocument(bytes, filename);
+          } catch (error) { throw problem(error.message); }
+          if (publishing) throw problem('Publishing is in progress. Wait before importing files.', 409);
+          const name = `file-${randomUUID()}.${fileExtension(filename)}`;
+          await serialize(async () => writeFile(path.join(await safeDirectory('assets'), name), bytes, { flag: 'wx' }));
+          return send(201, { src: `/personal/assets/${name}`, filename,
+            plainText: !directFile(filename) && fileKind(filename) !== 'document' && isPlainText(bytes) });
+        }
         if (url.pathname === '/_zibaldone/api/pages' && request.method === 'GET') {
           const entries = await readdir(await safeDirectory('pages'));
           return send(200, entries.filter(x => x.endsWith('.json')).map(x => x.slice(0, -5)).sort());
@@ -124,6 +150,24 @@ export function createSpaceServer({ root = sourceRoot, publish = publishContent 
         return send(200, pageHTML('home', url.searchParams.has('edit5500') ? token : '', '/personal/'), 'text/html; charset=utf-8');
       }
       if (url.pathname === '/personal/catalog.json') return send(200, (await readContent(root, '/personal/', false)).catalog);
+      const document = url.pathname.match(/^\/personal\/documents\/(file-[a-f0-9-]{36}\.[a-z0-9]{1,12})\.html$/);
+      const download = url.pathname.match(/^\/personal\/assets\/(file-[a-f0-9-]{36}\.[a-z0-9]{1,12})\.zip$/);
+      if (document || download) {
+        const name = (document || download)[1];
+        const { pages } = await readContent(root, '/personal/', false);
+        const element = pages.flatMap(p => p.elements).find(e => e.type === 'file' && e.src.endsWith('/' + name)) ||
+          { src: '/personal/assets/' + name, filename: name };
+        if (document && !['document','text'].includes(fileKind(element.filename, element.plainText)) || download && directFile(element.filename)) {
+          // Before the initial autosave, an unknown text extension has no page
+          // metadata yet. Rendering still validates bytes and only escapes text.
+          if (!document || directFile(element.filename)) throw problem('Not found.', 404);
+          element.plainText = true;
+        }
+        const prepared = await prepareFile(root, element, fileReferences(pages));
+        if (document && prepared.html === null) throw problem('This file cannot be rendered as text. Use Attach.', 400);
+        return document ? send(200, prepared.html, 'text/html; charset=utf-8', { 'Content-Security-Policy': "default-src 'none'; sandbox" })
+          : send(200, prepared.download, 'application/zip', { 'Content-Disposition': 'attachment' });
+      }
       // Preview the existing professional output without exposing the source
       // editor or private Markdown. Its separate live-reload workflow is retained.
       if (!url.pathname.startsWith('/personal/')) {
@@ -157,9 +201,28 @@ export function createSpaceServer({ root = sourceRoot, publish = publishContent 
       if (!fileMatch) throw problem('Not found. The personal website lives at /personal/.', 404);
       const extension = path.extname(fileMatch[2]);
       if (!types[extension]) throw problem('Not found.', 404);
+      // Raw active/doc/code imports stay private to authoring storage. Only their
+      // safe ZIP downloads and sanitized document output are served publicly.
+      if (fileMatch[1] === 'assets' && fileMatch[2].startsWith('file-') && !directFile(fileMatch[2])) throw problem('Use the ZIP download for this source file.', 404);
       const directory = path.join(root, fileMatch[1]);
       const file = path.join(directory, fileMatch[2]);
       if (!(await realpath(file)).startsWith((await realpath(directory)) + path.sep)) throw problem('Invalid asset path.', 403);
+      if (fileMatch[1] === 'assets' && /\.(mp4|webm)$/i.test(file)) {
+        const size = (await lstat(file)).size;
+        let start = 0, end = size - 1, code = 200;
+        const headers = { 'Content-Type': types[extension], 'Accept-Ranges': 'bytes', 'Cache-Control': 'no-cache', 'X-Content-Type-Options': 'nosniff' };
+        if (request.headers.range) {
+          const range = /^bytes=(\d*)-(\d*)$/.exec(request.headers.range);
+          if (!range || !range[1] && !range[2]) throw problem('Invalid range.', 416);
+          start = range[1] ? Number(range[1]) : Math.max(0, size - Number(range[2]));
+          end = range[1] && range[2] ? Math.min(Number(range[2]), end) : end;
+          if (start > end || start >= size) throw problem('Invalid range.', 416);
+          code = 206; headers['Content-Range'] = `bytes ${start}-${end}/${size}`;
+        }
+        headers['Content-Length'] = end - start + 1; response.writeHead(code, headers);
+        if (request.method === 'HEAD') return response.end();
+        return createReadStream(file, { start, end }).pipe(response);
+      }
       const bytes = await readFile(file);
       return send(200, bytes, types[extension], { ETag: etag(bytes) });
     } catch (error) {

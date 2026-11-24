@@ -1,0 +1,585 @@
+#+title: Textbook Notes
+- Digital Design and Computer Architecture: RISC-V Edition
+
+- Have in your mind the idea of "how can we change this", "how can this be different"
+  - Write that in my research journal
+
+- Read somewhat cassualy understanding higher level stuff. Spend enough time that I could explain basic behavior
+  - Then write down the most essential concepts adn build a small thing with those concepts referring back to the book
+    - Just pick the smallest interesting machine that forces me to combine the chapters central idea just a asuper simple basic thing that is pretty much just the underlying concepts
+- Before you can build high you must learn the fundamentals
+
+  nov 20
+learning assembly and perhaps writing a c compiler myself is vital to understanding the von neuman acrchitecture and building upon it or breaking it. It gives you a deep understanding of how von neuman harwadre actually processes instructiosna dn moves data.
+also systems programming is kinda sick
+these different layers of abstraction are so cool like for dld you have to think one type of way like you have to think very hard codedly for combinational logic then you get some power with sequential and think another way then for assembly you think another itneresting type of way like somewhat bit wise but doing these larger operations its a very unqiue way of thinking despite the fact that youre workign with the same stuff as the other lower layers
+
+nov 21
+*TOMORROW go back and read chapter 4 verilog chapter*
+Once you understand how higher-level computation emerges from these primitives, you can start imagining different primitives.
+
+One thing I'd encourage as you finish Chapter 6: pay particular attention to branches and the program counter. The program counter is one of the most interesting architectural concepts to question when you eventually begin designing your graph-based computational machine.
+
+okay so i gotta learn assembly and then write a compiler for C, also learn verilog and learn microarchitecture and computer architecture so chapters 4 6 and 7, also self study geometric/linear algebra and proofs and digest teh research paper. perhaps at later point i can build a risc v processor and write assembly to it. great thing is that hte stuff im working on is foundational to learning how to break the von neuman model but even besides that it shows a wide variety of professors that I am locked in with this shit and its widely useful for industry on many levels. So not only is it helpful for building baseline knowledge and learning the rules of computation but also helps just give me sitmilus and also in the process its widely applicable and deeply relevant for a number of fields
+lowk after this ill be heavy hitter for even swe stuff like sytems and embedded lol. but i want to do research so lowk get damn fucking good at this shit and keep building theory then start reaching out around december january and applying to NSF REUs and DIMACs and really try to get research ideally in spring if not junior year lined up research isi fine too. Just keep getting good it will be very helpeful and relevant and give me some ground to stand on for approaching professors which people in hte phd track im trying to go in dont really even do yet they do in summer after sophmore or junior year when they built up the math and tehcnical knoweldge. This is what I am doing and grinding at. Godspeed keep working hard. Arnold mentality actually so op even rn its giving me so much fruit i feel more confident im doing what I enjoy and I will just get better outcomes and choices because i will just be so much better yk. Along with some more math and tehoretical stuff that I do on my own, I will really be a very very locked guy to approach professors and a shoe in honestly
+when you're a technical genius aura farmer you can do anything. Imagine in january yeah I built my own c comoilre and built my own assembly language layer and yeah I implimented a research paper in fpga building my own GPU and i could do itnerviews at companies and ace the technicals be able to speak endlessly but aura farm that shit fry industry and just grab some research. Arnold mentality just lock in get good epsecially for the next month(s) and continue getting good while seeking out oppurtunities.
+this is so valuable because its rare that someone actually puts so much time and learns and gets good especially at this level even for industry or undegrad resaerch its trully an asset. It will be me who now holds the cards
+yeah lowk im seeing it now, im learnign this shit up so quick i know in january i can literally do anything if i want racks ill just do systems programming shits light but if I want research that shits chill too. Not on the lipp path, maybe others would but im locked this shit light for me, arnold mentality. Could lowk do whatver and it will work out because ill have a damn big phhysique and keep making it bigger.
+gives confidence like lwok idrc i can do whatever my outcome will be fine i just want to keep lockign in and getting better all these guys can jester for internships i dont evne want one but at that point i can get one easily and also get research but even then I may just wnat to hang out over summer and work on my own shit nad just get better idrc i got my goals
+
+i believe akasha has some larger potential but its chill for now ill work on it later. Its incredibly poewrful way of organizing information (dosent matter what that information is) based on relationship rather than extenal absolute location. Its veyr valuable maybe you want to write down a number well toss it in just write a phone number 7328290599 and then child it to phone numbers cell and then spouse the number to the name of the person. Now later on you can just query for the person
+i think perhaps I was thinking of it too spceificlaly how the person would use it perhaps it should be such a general tool that it can be used in whatever way people want. You want a vast database just to store your knicknacks peoples names where you stored items well you can do that but what if you want a place you can store cahracter sheets and stuff yeah well you can do that too via just organizing and visualizing the information. I mean fundemantelly you are just putting information ina  container (cell) then associating that ocntainer with others adn you have the option to visually orchestrate the depiction of those relationships (shoma) thats it. Perhaps its so extensible that the shomas are different like the concept of shomas is a lpugin with the drifting bound all of that is aplugin the whole idea of floating etc and other choices are just balls floating around. And maybe you also have the ability to write notes. These are all ways of interfacing with the fundamental nature of what akasha is. storing information in container and associating that container with other containers. What emerges from there, how those relationshop are created or visualized or how you can or cannot change the visualization are all. Even the ui and all should be extensibile because that is above what akasha fundamentally is. You really need to figure out what akasha is fundaemtnally on its lowest layer and i think really its less of even a software its more of a idea or like some base thing kinda like git or linux? idk but like its much more abstract its a bunch of modules formed together and what it fundamentally is is something else not neccesarily this final specific tool software I see it as ratehr it truly is something widely extensible made to look however the hell you want and an importnat part of that is that cannot be handled thorugh ui i think it has to be so extenisble that you have its own language to literally build the visuals not a typical plugin or scripting but the code you are writing is literally to build the visuals and interactions fromthe ground up. Maybe git is a good allegory idk. But yea just thinking about the capaibiltiies of the software I think in chasing something final and some real output I really fried it and i dont want to see it go to waste.
+
+* reading comprehension tips
+1. identify what they are trying to tell me
+2. identify the objects
+3. invent my own interpretation suing the simplest possible example try to invent an understanding
+4. Change an object adn manipulate it and move it around and think about it
+5. Reread the text
+
+* Chapter 3
+- Sequential logic depends on both current and prior input values. It seems to have memory, remembering certain previous inputs. It almost distills the previous inputs into a smaller piece of information called the STATE of teh system.
+  - The state of a digital sequential circuit is a set of bits called state variables that ocntain all information about past neccesary to explain future behavior
+  -
+** Latches and Flip Flops
+:PROPERTIES:
+:ID:       2b0520d1-e720-467d-8471-8945e853d576
+:END:
+- A bistable element is an element with two stable states.
+- An element with N stable states conveys log2N bits of information so a bistable elment stores one bit.
+ [[attachment:_20261109_110717screenshot.png]]
+- This is a bistable circuit (cross coupled inverter)
+- The value of Q tells us everthing about the past that is neccesary to explain the future behavior of the circuit. Like we know if Q = 0 it will conitnue to be 0 and if 1 it iwll be 1
+  - Q bar is nothing new it can also be another state variable
+*** SR Latch :ATTACH:
+:PROPERTIES:
+:ID:       c6b5cb18-b752-4b90-9810-af0787c3b983
+:END:
+- The state here can be controlled through the S and R inputs which set and reset the output Q
+  - To set a bit means to make it 1 and to reset it means ot make a bit 0. When neither input is asserted Q remembers its old value. Asserting both inputs means the latch should be set and reset at the same time which is impossible so the confused circuit repsonds by making both outputs 0
+  [[attachment:_20261109_111546screenshot.png]]
+- In the case of R 0 and S 0 you will get a Q value of wahtever Q used to be.
+- So th SR latch is a bistable element with one bit of state stored in Q. The state can be controlled through the S and R inputs. The entire history of inputs can be accounted for by the single staate vairable Q. All that is needed to predict the future behavior of the SR latch is whether it was most recently set or reset
+*** D latch :ATTACH:
+:PROPERTIES:
+:ID:       8643f4fe-27b6-4525-a718-e6aaad8365e8
+:END:
+- 2 inputs D which controls next state and CLK which controlls when state should change again
+- The issue with the SR is that it mixes up the quesitons of what vlaue do I want to store and when should I store that. Lets say we want it to store the value 1 when we say so, if we set S = 1 it will immediately change its state.
+  - So now data is the value that should be remembered and CLK answers whether that memory should be updated righ tnow
+- So if CLK = 1 the latch updates Q to whatever D is but if 0 then it ignores any changes to D adn remembers the previous value.
+  - As long as CLK = 1 the latch will = D
+  - When CLK = 1 the latch is trnasparent and if CLK is 0 the latch is opaque blocking the new data from flowing through to Q and ensuring Q just retains its old vlaue.
+   [[attachment:_20261109_130001screenshot.png]]
+
+**** D Flip Flop
+- So whenever CLK is 1, Q will become whatever vlaue D is so as D switches it will capture that. But what if we only want Q to be what D was when CLK became 1.
+- So at any point one will be trnasparent the other will be opaque and so what happens is the output passes through lets say the first one (transparent) and then the other one is opaque so notghing will be shown but then when it flips the first becomes opaque and locks that value adn then the next becomes trnasparent and allows that value to pass through and that is wha ti sshowbn
+***  Register :ATTACH:
+:PROPERTIES:
+:ID:       83a5a65b-d75f-4c73-bc1a-d64b61cc2643
+:END:
+- So now imagine a bunch of D flip flops and the single clock imnput running across all of them. Each of the D inputs will populate the Q output when CLK is 1 otherwise it will just retain whatever value it had before
+ [[attachment:_20261109_144102screenshot.png]]
+*** Enabled Flip Flop :ATTACH:
+:PROPERTIES:
+:ID:       457ab77a-7e13-4105-9363-a403f51b325b
+:END:
+- This adds another layer onto othe function of D and clock. D is the value that should be stored. CLock is saying when tehre is an opprutunity to update and EN determines when to actually update.
+- The implimentation for this consists of a multiplexer that uses EN value to decide between passing through the D or old Q'
+  - If EN is 1 it will pass through the intended D value which gets passed in as the D into the d flip flop and if EN is 0 it will just pass in the Q value (so whatever it was before)
+- Ther eis another implimentation that uses a simple AND gate with CLK and EN
+   -
+   [[attachment:_20261109_145536screenshot.png]]
+
+*** Resettable flip flop
+- Same as typical flip flop if reset is 0 but if reset is 1 then it makes the D intput to th eflip flop 0
+** Syncrhonous Logic Design
+- Sequential circuits are those not combinational, those whose otuput cannot be determined simply by lookingat current inputs.
+- Asynchronous circuit deisng is where outputs are directly fed back into intputs which causes race conditoins (where one compotnnent is waiting on anothe rand just goes which messes up the values)
+  - Where the behaviour of the circuit depends on which of two paths through logic gates is fastest
+  - These asychonroic are said to have cyclic paths
+    - To break this, designers will break it with registers which makes the circuit into a collection of combinational logic and registers. Registers contain the state of the system which changes only at the clock edge so we can say that the state is sycnhronized to the clock.
+  - A syncrhonous sequential circuit has a clock input who'se rising edges indiciate a sequence of times at which state transitions occur.
+    - THe timing specificaiton consists of an upper bound and a lower bound on the time from teh rising edge of the clock until the output cahnges as well as setup and hold time s
+**** Simpler Explanation
+- A flip flop stores a bit, that bit is called its state. if you have a bunch of D flip flops storing 1 0 and 1 repsectively then the 101 is the current state of the system.
+- So then if we have a circuit that stores a number nad incriments it every clock cycle like 000 to 001 to 010 etc
+  - Well we need the registers to remember the current number and the combinational logic to claculate the next number
+  - So the register would currently store 010 adn then combinational logic recieves that and caclulates 011 and
+  - The register dosent immediately change though it continues sotring 010
+  - The clock rises
+  - NOW, the register captures 011
+- This is a synchrnous sequential circuit: a circuit whos remembered state changes in cooridnation with clock edegs.
+  - If we didnt have  abuffer and synchronization between flip flops, the outpu would feed into input and then it would trigger many changes.
+    - Also differnet gates have different progation delays wher eit gets fried which causeses races where behavior depends on which signal arrives first
+-
+*** Synchronous and Asynchronous CIrcuits
+- Asynch sicruits are more generla than sync because htey can use any kind of feedback but they are harder to design.
+  - *WOAH WAIT LOOK MOREINTO ASYNC CIRCUITS THIS COULD BE A COOL DIRECTION*
+** Finite State Machines
+- Syncrhonous sequential circuits can be drawn in the form of finite state machines. The name exists because a circuit iwth k registers can be in one of finite number 2^k unique states.
+  - FSM has M inputs N output sand k bits of state. It recieves a clock too. FSM consists of two blocks of ocmbinational logic, next state logic and otuput logic and regsiter to store state. On each clock edge the FSM advances to next state which was computed based on current states and inputs.
+  - THere are 2 types of FSMs characterized by functional specs
+    - Moore machines: outputs depend only on current state of machine
+    - Mealy machines: output depends on both current state and inputs.
+- Yo wait these are sick and hiearchical state machines are really c
+  - *LOOK INTO ANALOG COMPUTING AND THE BLUM SHUB SMALE MACHINE*
+    - And other theoretical computation models
+      - FSM is simplest one
+      - Pushdown automata
+      - Turing machines
+      - RAM
+    - Computation THeory
+*** Factoring
+- Complex FSMs can be broken down into multiple interacting simple state machines so that hte output of some machines is the input of others.
+  - THis hierarchy nad modularity is known as the facotring of state machines
+
+NEXT TASK:
+Build a tiny sequential state machine
+*** Eurekas
+**** State Encoding
+- So a machine is in any number of states and when in that state it looks at the arrows going out of it to detemrine where to go and picks whatever value is true.
+- But how does the flip flop know what state we are in well we need ot represent the states uising bits which is called state encoding.
+-
+***** One Hot
+- The flip flop just stores either 0 or 1 to represent it being active
+***** Binary Encoding
+- Just having a binary value for each oen, 00 01 and 10
+** Timing of Sequential Logic :ATTACH:
+:PROPERTIES:
+:ID:       febc7af7-c12d-4d80-b980-6d9091ba9e15
+:END:
+- A flip flop copies the input D to the output on the rising edge of the clock. If D is unstable at 0 or 1 when the clock rises, the behavior is not clearly defined.
+  - There is an aperture time (similar to photography how long something has to rmain still to get a clear picture of them) for sequential elements too.
+    - This is made up of a setup and hold time which correspond to before and after hte clock edge.
+      - Static discipline limits to using logic levels outside of forbidden zone
+      - Dynamic discipline limits to using signals that change outside of aperture time.
+        - Using this we can think of time in discrete units called clock cyles. Under this we are only concerned about a signals final value at the end of the clock cycle.
+    - For things like flip flops to sample input correctly, the input must have stablized at least some setup time before the rising edge of the lcock and must remain stable for at least some holt time after the rising edge of the lcock. THe total of these is called the aperture time.
+- The dunamic discipline says inputs of a synchronous sequential circuit must be stable during the setup and hold aperture time around the clock edge.
+  - Because we only actually sample the signals while they aren't changing, we are concerned only about their final values at th etime they are samlped.
+  - The clock period is the time between rising edges of a clock signal. Its reciprocal is clock frequency asking how many cycles per 1 unit time.
+
+[[attachment:_20261110_180655screenshot.png]]A
+- Minimum clock period is greater than propogation delay + clock to Q propogation delay + setup time.
+  - Clock to Q propagation delay is how long R1 takes to update output Q after clock edge
+    - Time to leave first register
+  - Progation delay is how long combinational logic takes to caclulate and settle output
+  - Setup time is how long R2 needs tis input D to be stable before the next edge
+    - time neded to prepare second register
+     [[attachment:_20261110_183325screenshot.png]]
+  - At each rising clock edge
+    - R1 captures the new data and eventually changes Q1
+    - R2 captures the value already present at D2
+    - The new Q1 propogates through the combinational logic and prepares D2 for the following clock edge
+      - This is very important, R2 must capture the old calculation before the new calculation overwrites it.
+        - Setup time constriant says don't arrive too late
+         [[attachment:_20261110_183459screenshot.png]]
+        - Hold time constraint says dont arrive too early so it dosent overwrite D (which would be a hold time violation)
+          - For this tccq + tcd >= thold where tccq is earliest R1 can begin changing and tcd is earliest logic output can begin changing
+      - Hold time violations must be fixed by increasing the minimum data path delay
+      -
+  - Pretty much setup constriant says new data must arrive early enough before the next edge and hold constraint says it must not arrive too soon after the current edge
+*** Clock Skew
+- The clock dosent reach all registers at exactly the same time. There is such a thing as clock skew. Things like length of wires and noise can cause delays to some clocks.
+  - Because of this, our period must be >= tpcq + tpd + tsetup + *tskew*
+  - Clock skew increasesboth setup and hold time.
+*** Synchronizers
+- To garuntee good logic levels async input shold pass through shycnroizers. IT recieves an async input and a clock and produces an output Q it will never be metastable
+** Parralelism
+- A token is a group of inputs that is meant ot be processed to produce a group of outputs. Latency of a system is time require fro one token to pass through the system from start to end. Throughouput isteh number of tokens that can be produced per unit time.
+  - Throughput can be impoved with parrlelism.
+    - Spatial parrlalism
+      - Multiple copeis of hardware so that multiple tasks can be done at the sametime
+    - Temporal parrleleism
+      - Task is broken into stages like an assembly line so multiple tasks can be spread across the stages so we can have multiple tasks going at once.
+** Digital Building Blocks
+*** Arithmetic Circuits
+  - Half adder:
+**** Addition
+***** Half Adder: :ATTACH:
+:PROPERTIES:
+:ID:       7f4f9b6b-e2e0-4163-882a-8ea29a0d1ec5
+:END:
+
+[[attachment:_20261110_192114screenshot.png]]
+- 2 inputs A and B where S is the sum of A and B (represented in one binary val) and Cout is the carry out.
+***** Full Adder
+- This can actually take in a carry (solving hte problem of the previous)
+***** Carry Propagate Adder
+- N bit adder sums two N bit inputs and a carry in Cin to produce an N bit result S and a carry out C out.
+- Called this because the carry out of one bit progagates into the next bit. Drawn just like a full adder except A B and S are busses rather than single bits
+****** Ripple Carry Adder
+- Chains together N full adders. THe C out of one stage acts as the C in of the next stage.
+- Modularity and Regularity: the module is used over and over again
+- Slow when N is large.
+- Delay of adder grows with number of bits
+****** Carry Lookahead Adder
+- Ripple adder is slow because the carry signal has to go through every bit in the adder. A CLA solves this by divindg adder into blocks and providing circuitry to detemrine carry out of block as soon as it is known.
+- Trying to see if we can detrermine in advance which collumns will pass along a carry without actually waiting fro one to arrive
+  - Every collumn of the adder has 3 inputs, Ai Bi and Cin and has the ouptus S and Cout
+    - The collumn only has 3 possible behaviors: if A and B are 1 the collumn produces a carry regardless of the carry coming in
+      - If A or B is 1 and the othe ris 0, if a carry comes in this collumn produces a carry out. If no carry comes in it dosent generate one by itself.
+      - If A and B are 0, even if a carry comes in, the collumn dosen't produce a carry out.
+    - So essentially just by looking at A and B we can determine the carry.
+      - Thus, the carry equals AB + (A+B)Cprevious
+******* Blocks
+- Nowo lets think about blocks. If we make 4 bits into a block we can treat them as a single unit and only need to determine two things: 1. does this whole thing gneerate a carry? and 2. does this entire block propogate an incoming carry?
+  - Well for the whole block to propogate, P3:0 = P3P2P1P0 where each P is the corresponding (A+B) Ssee above case 2
+  - Okay how does it generate a carry? well it depends on if a carry makes it all the way to the end of the block
+    - G3:0 = G3 + P3G2 + P3P2G1 + P3P2P1G0
+      - This just describes where a carry could originate and how it could reach the end
+      - *LITTLE BIT IFFY ABOUT THIS FOMRULA*
+  - Coutblock = G3:0 + P3:0Cin (same as above but now just 3 bit version)
+****** Prefix Adder :ATTACH:
+:PROPERTIES:
+:ID:       7f6b8005-6f8a-4777-9049-de1737c73cab
+:END:
+- What the carry lookahead approach did was great but really all it does is simplify into blocks so its still a ripple carry just a smaller ripple carry. But what if we did it simultaneously, what if we S
+- Computes G and P for pairs of collumns then for block sof 4 then for 8 and 16 until gneerate signal is known. Sums are made from those generate signals.
+ [[attachment:_20261110_201206screenshot.png]]
+- In doing this we replace individual bits with groups that behave like bits as far as carriers are concerned
+  - Once we know the G and P of a group we don' tneed the indiivudal bits.
+  - To calculate teh sum at a bit we need to know the carry of the previous one and of course, that is what the prefix stuff caulcates
+    - Sum is A XOR B XOR Carry
+  - The textbook introduces the bit -1 and says the carry there was 0 so that by C2, there needed to have been a generated carry rather than dragging along the C2 = G2:0 + P2:0Cin we can just do C2 = G2:-1 with the P2:-1Cin evaluating to 0 which then allows us to make Si = Ai xor Bi xor Gi-1:-1
+- This is much faster because combinations can be done simultaneously, thus the delay scales like O(log2N)
+- Combined group generates a carry if lower group generates on and upper group propogates AND/OR if upper group generates the carry. Gcomb = Gu + PuGl
+**** Subtraction
+- Subtraction is as easy as reversing the sign of the secnd number then adding. Flipping the sign of twos complement number is done by inverting the bits and adding 1.
+  - -B = Bnot + 1.
+    - So then subtraction would be A-B with A + Bnot + 1 and in a CPA that would just be a Cin of 1.
+    - The derivation for this is as follows:
+      - Imagine we have B = 0101 and Bnot is 1010 then. SO when we add the two we will get 1111 which in decimal is 2^N -1 where N is the number of bits in this case there are 4 so it would be 15.
+      - Nowe we have B+Bnot = 2^N - 1
+        - Add 1 to both sides and rearrange to get Bnot + 1 = 2^N - B
+          - BUT with N bit arithmetic we discard any carry beyond the Nth bit (we only have N bits to store the number so anything over that gets fried) so we really are working with mod2^N and so we have Bnot +1 = -B
+**** Comparators
+- A comparator determines whether two binary numbers are equal or if one is greater or less than the other.
+  - It takes an input of 2 N bit binary numbers A and B and outputs a 1 bit comparison result.
+    - Equality compartor produces a single output while a magnitude comparator produces one or more ouputs.
+- Magnitude comparison does A-B and looks at sign of the result. If negative then A is less than B otherwise the opposite. But this fails on overflow.
+**** ALU :ATTACH:
+:PROPERTIES:
+:ID:       c6aa4d50-1ea4-413b-a9ac-21daa6ae9c9f
+:END:
+- Can perform addition subtraction AND and OR.
+- ALU recieves a 2 bit control signal that specifies which function to perform
+ [[attachment:_20261111_114200screenshot.png]]
+ [[attachment:_20261111_114554screenshot.png]]
+**** Shifters and Rotators
+- Move bits and multiply or divide by powers of 2.
+***** Shifters
+****** Logical Shifter
+- shifts niumber left or right and fills empty spots iwth 0 110001 >> 2 001101
+-
+****** Arithmetic Shifter
+- on right shifts fills most signfiicant bits with copy of old most signifcant bit. Left is the same as logical shift left.
+- *11*001 >>> 2 = 11*11*0
+- Left shift is multipication, multiplication by 2^N where N is the amount shifted
+- Arithmetic right shift is division by 2^N
+***** Rotator
+- Rotates number in circle such that empty spots are filled with bits shifted off the other end
+  - Imagine you connect up the ends of teh line and then rotate it in a circle with each end being continous so 11001 ROR 2 becomes 01110 and ROL 2 becomes 00111
+**** Multiplication :ATTACH:
+:PROPERTIES:
+:ID:       a14f73cb-bd5c-4027-84dd-8fe175ffce87
+:END:
+ -
+ [[attachment:_20261111_120052screenshot.png]]
+ - In both cases, partial products are formed by multiplying a single digit of the multiplier with the entire multiplicand.
+ - NxN multplier multiplies two N bit numbers and produces a 2N bit result.
+   - Multiplication of 1 bit is just AND gate
+ -
+**** Division
+- The partial remainder R is initialized to 0 (R′ = 0), and the most
+significant bit of the dividend A becomes the least significant bit of R
+(R = {R′ << 1, Ai}). The divisor B is subtracted from this partial remain-
+der to determine whether it fits (D = R − B). If the difference D is neg-
+ative (i.e., the sign bit of D is 1), then the quotient bit Qi is 0 and the
+difference is discarded. Otherwise, Qi is 1, and the partial remainder is
+updated to be the difference. In any event, the partial remainder is then
+doubled (left-shifted by one column), the next most significant bit of A
+becomes the least significant bit of R, and the process repeats.
+-
+*** Number Systems
+**** Signed and Unsigned
+- Unisgned is positive only and goes from 0 to 255
+- Signed is -128 to 127
+  - Left most bit indicates negative or positive
+**** Fixed Point Number Systems
+- There is a fixed decimal point Ua.b denotes unsignede fixed point with a integer bits adn b gfracton while Qa.b denotes signed w a integer bits (including sign bit)
+-
+**** Floating Point :ATTACH:
+:PROPERTIES:
+:ID:       66077724-c686-454e-925f-71944f2da1cf
+:END:
+- Like scientific notation in that it circumvents the limitation of having a constant number of integer and fraction bits. Floating point numbers have a sign, mantissa, base and exponent. The number 4.1 x 10^3 is decimal 4100 and has mantissa of 4.1 and base of 10 and exponent 3
+  - The decimal point floats to the position right after most signficiant digit.
+  - Floating point numbers are base 2 with a binary mantissa. 32 bits are used to represent 1 sign bit, 8 exponent bits and 23 mantissa bits
+  - Floating point also has something called a biased epxonent which means we take our expoennt then add a constant bias so for 32 bit that is 27 so we take lets say our epxoennt of 7 then add 127 and our exponet is 134
+
+[[attachment:_20261111_133018screenshot.png]]
+***** Rounding :ATTACH:
+:PROPERTIES:
+:ID:       aab91104-f826-4e71-a7e6-facc20c8e074
+:END:
+- Arithmetic results that fall outside of vailable precision must round to a neighboring number. Rounding modes are round down round up round toward 0 and round to nerest. THe default is round to nearest where if two numbers are equally near the one with a 0 in teh last signfiicant poisiton of the fraction is chosen (0.5 -> and 1.5 -> 2) meaning it is even
+- Number overflows when magnitude is too large to be represented. Number underflows when too tiny to be represented. In round to nearest overflows are rounded up to infinity and underflows are rounded down to 0
+ [[attachment:_20261111_133531screenshot.png]]
+** Sequential Building Blocks
+*** Counters
+- Advances through all 2^N possible outputs in binary order incrementing on rising edge of clock
+- The most significant bit of an Nbit counter toggles every 2^N cycles so it reduces the frequency of the clock by a factor of 2^N.
+- Another type fo counter is one that adds p on each cycle rather than 1. If the counter recieves a clock with frequency fclk the most singificant bit now toggles at fout = fclk  * p/N^2. This can output any frequency.
+*** Shift Register
+- Has a clock serial input serial output and N parralel outputs Qn-1:0. On each rising edge of the clock a new bit is shifted in from S in and all the subsquent contents are shifted forward, the last bit in the shift register is available at Sout
+  - These can be viewed as serial to parrlel converters where you provide serially one bit at a time at Sin and then after N cycles the past N inputs are aivlaable in parrleel at Q. THink of it like a box that you can gradually fill up.
+- Simialrly there is a parrelel to serial convert that loads N bits then shifts them out one at a time. Shift regsiters can be modified to perform both serial to parrleel and paralel to serial operations
+- can be made out of N flip flops connected in series.
+*** Scan Chains :ATTACH:
+:PROPERTIES:
+:ID:       e3049e01-f408-4276-aa87-97b7b7fe1fe3
+:END:
+- Used to test circuits, with combinational logic its simple just put in a test vector and observe output but here we have many interchanging states, so we connect all the flip flops in the system into a shift register called a scan chain.
+- There could be a nromal stuff d that gets passed through to a flip flop but if test is true (set via multiplixer)perhaps a test string is chosen S
+       [[attachment:_20261111_164755screenshot.png]]
+- So here we have a counter that just increments value and then a multiplexer behind it that determiens whether it is a nromal D or a scan input meaning the very same output as before just shifted forward
+-
+** Memory Arrays
+- So imagine there is a 2 dimensional array of memeory cells. THe memory reads or writes the contents of one of the rows of the array. The row is specified by an addres while the value read or written is called data.
+  - An array with N bit addresses and M bit data has 2^N and M collumns. Each row is called a word. Thus the arary contains 2^N M-bit words
+  - The depth of an array is the number of rows and width is the number of collumns known as the word size. Size of an array is given as depth x width.
+*** Bit Cells
+- Memory arrays are built as an array of bit cells, each storing 1 bit of data. Each cell is connected to a word line and bitline. For each combination of address bits the memory asserts a single wordline. When worldline is HIGH the stored bit transfers to or from the bitline. Otherwise the bitline is disconnected from the bit cell.
+- Bit line is the collumn and word line is a row
+  - Address tells the memory which row to seleect
+  - Worldline is the horizontal wire that activates that row
+  - Bitline is teh vertical write that carries data into or out of the cells in its column
+    - To read a bit cell the bitline is initially left floating then when the wordline is turned ON the stored value will drive the bitline to 0 or 1. Conversely, to write a bit cell the bitline is stngly driven to the desired value then the worldline is turned ON so that teh bitlines value is connected to the stored bit. The strongly driven bitline overpowers the bit cell. THis is just because the bit cells signal is kinda weak and by design we make it so the bitline overpowers it if it so desires
+*** Memory Ports
+- All memories have one or more ports. Each port gives read and or write acess to one memory address. Multiported memories can acess multiple addresses at the same time rather than just one at a time. So we can select mulitple wordlines and track mulitplie bitlines.
+*** Memory Types
+- Spcecified by size and number and type of ports. All of the memory arrays store data as an array of bit cells but they differ in how they store bits
+**** RAM
+- Voltaile: loses data when power turned off.
+- Any data word is accesed with teh same delay as any other (as opposed to a tape recorder)
+***** DRAM (dynamic)
+- Stores data as a charge on a capacitor
+- Dynamic because it is not actively driven high or low by a transistor tied to V or GND
+- Upon read data values are transferred from capacitor to bitline and vice versa for wreite.
+  - Reading destroys teh bit value on the capacitor so teh data word must be rewritten after each read
+    - *BRUH WHAT THIS IS SO ASS*
+  - Even when DRAM not read the concents must be refreshed every ms because charge on capactiro gradually leaks away
+    - *Yeah this is so ass*
+- high latency because we have to wait for the charge to slowly move from the capacitor to the bitline (for SRAM transistor drives) and has lower throughput  because it must refresh data periodically and after a read. This was then solved by synchronous DRAM and a double data rate SDRAM. SDRAM uses a clock to pipeline memory acess syncrhonizing access to clock edges, DDR SDRAM uses both rising and falling edges of the clock to access data thus doubling throughput for a given clock speed. DDR was standardized and DDR4 si the current one.
+***** SRAM (static)
+- Stores data using pair of cross coupled inverters (SR latch)
+- Do not need to be refreshed and noise degrradation is inherently accounted for by cross coupled inverters.
+**** ROM
+- Nonvolatile, retains data indefiniately even without power
+- Any data word is accesed with teh same delay as any other (as opposed to a tape recorder)
+- Stores bit as presence or absence ofo a transistor. To read the bitline is weakly pulled High and the worldline is turned ON if the transistor is present it pulls the bitline low if itis absent the bitline remains High.
+- Is combinational circuit and has no state to forget if power is turned off.
+- A programmable ROM places a transistor in every bit cell but provides a way to connect or disconnect the transsitor to ground.
+  - A one time programmable ROM is one that uses Fuses.
+  - Multi Use Ones, EPROMS (erasable PROMS) replace the nMOS transistor and fuse with a floating gate transsitor. Its not phyusically attached to any other wires but when high voltage applkied it tunnels through insulator onto the floating gate triggerng the transistor. And when EPROM is exposed to intense UV light for half na hour the leectrons are knocked off the floating gate turning the transitor off. EEPROM (electrically erasable) can individually erase and FLash memory erases larger blocks of bits and is chepaer because fewer circuits are needed. w
+**** Register Files
+- Temporary variables are stored in register file which is a small SRAM (more compact than array of flip flops).
+*** Logic Using Memory Arrays
+- A 2^N Word x M bit memory can perform any combinational function of N inputs and M outputs. Memory arrays used to perform logic are called lookup tables. Oh wait so it kinda stores the stuff as a truth table almost with teh addresses representing hte inputs. Using memory to perform logic the user cna look up the output value for a given input combination (address). Each address corresponds to a row in the truth table and each data bit corresponds to an output value.
+** Logic Arrays
+-
+* Architecture
+** Assembly
+- Assembly is the human readable veriosn of machine language.
+  - Each assembly lagnuage insutrction species operation to perform and operands on which to perform.
+  - In high level code there would be a = b+c; but in RISCV assembly you do add a, b, c.
+    - Add is the mnemonic and indicates which operation to perform. Operation is performed on b and c the source operands and the result is written to a the destination operand.
+  - If you have a more complex insturction like a = b+c-d you have to encode that in 2 instructions in assembly
+  - instructions are kept very minimal in RISCV assembly which is why it si a reduced instruction set computer architecture. x86 is a complex instruction set computer.
+    - EX: x86 has a string move instruction that copies a string from one part ofmemory to another. This operation requires hundireds of instructions in a risc machine.
+      - With CISC its kinda ss because if you have 256 instrucitons you need 8 bits of encoding per instruction and so even if you rarely use some of those other instructions they will add overhead.
+*** Operands
+- Operands can be stored in register sor memory or constants in the unstruction. Operands stored as constants or in resisters are accessed quickly but have a small limit.
+**** Registers :ATTACH:
+:PROPERTIES:
+:ID:       e7a38afa-c005-4e7e-9240-61dcdc35e9b4
+:END:
+- Instructions need to access operands quickly so they can run fast and so thus most arhcitectures have a small number of registers to hold these operands. RIsc V has 32 registers, smaller the number the faster they can be accessed.
+  - Register file is built from a small SRAM array
+    - *Huh? I thought thye were built out of d flip flops*
+- There are 32 riscv registers. they are numbered from 0 to 31.
+  - There are names given to registers to indciate their conventional purpose.
+    - Special name is s1 but the registern number is x9
+     [[attachment:_20261120_183905screenshot.png]]
+**** Constants :ATTACH:
+:PROPERTIES:
+:ID:       180e1574-bf8b-410b-a1fb-62af3b9d3297
+:END:
+- Instructions can use constant or immediate operands. Their values are immedaitely avialble from the insutrction adn dont require a register.
+  - Ex: addi s4, zero, 2032 (zero represents a register whos value is permantnly 0 so we are computing 0+2032)
+  - If you want even bigger constants you have ot use lui which says load upper immediate which loads a 20 bit immedaite into the most significant 20 bits of the instruction.
+    - lui s2, 0xABCDE
+    - addi s2, s2, 0x123
+      - I dont quite understand how this works because from my understanding is it not taking allat and putting into s2 and then later you just toss 0x123 onto the end of s2?? so like ig youre doing the constant thing but youve stored the thing previously no? ig you stored part of it earlier. But why invent lui for that?
+        - Okay so lui essentially will place ABCDE into the upper 20 bits and then leave the lower 12 filled with 0 and then addi just performs arithmetic to just add the new stuff to it
+        - Instructions themselves are 32 bits long so you can't have 0xABCDE123 because it still needs space in teh instruction for which operation and which register to write to and read from and tehn finally the actual constant.
+          - addi in fact only has 12 bits avialable so then lui was invented which dedicates 20 bits of intstruction to an immediate value. Using them in tandem we can make a full 32 bit constant in the register
+- Issue is that addi treates its 12 bit immediate as a signed number so really you have 11 actual bites
+  - You have to remember this because if you have say 0x987 in binary which is 10001 1000 0111, the first bit will be treated as negative and so the 0x987 represents -1657 in 12 bit two's complement.
+    - So we know addi is going to subtract something so we deliberately start one higher in the upper portion
+    - two's complement means something very interesting. It will take the value of your number so say you have some xxxx well it will build that number and if the first bit is 0 it will do nothing thats it it built it but if it is 1 it will then  take the value you have and then give you the built value - highest possible value. So if you have 1111 then it will build 15 which is the unsigned interprestaion but the signed interpreation will be -1 because 15-16 = -1. Acutally nvm scratch that the reasoning is it treats the most signficant bit as negative and then adds them up: so you would have -8+4+2+1 = -1.Like see wha tit does lets say with 1001 it does the following.
+     [[attachment:_20261120_190901screenshot.png]]
+      - This is only if the first bit is positive. duh because -0 is 0.
+        - To account for this, we want to increment all the upper 20 bits by 1 because an increment in the upper portion corresponds to precisely the bit of the lower 12 aka the 12th.
+        - So normally if we would start our upper 20 with lui s2, 0xFEEDA and then do addi s2, s2, -1657 we would know do lui s2, 0xFEEDB
+          - Think about it like this lets say we have 011 or whatever just 3 bits and whenever the 2nd one is 1 it becomes negative so its -2 and elts say we have a intended value of 011 or 3 then in the case of signed 011 we have -2 + 1 which is -1. So to counteract the effects of teh -2 we need to add 2 but then we need to reisnstate the 2 so we need to add back double the value of that bit and what is that? well thats an increase of the very next bit so thus if we do 111 we have 4+-2+1 which gets rid of the -2 adn gives back the 2 adn then adds the 1 giving us 3.
+    -
+**** Memory
+- We need more than 32 variables. Thus data can be stored in memory. It is larger and slower. In risc v architecture instructions only operateon registers so data in meory needs to be moved to the regsiter before procesisng.
+  - Risc V uses a byte addressable memory meaning each byte in memory has a unique addres. So a 32 bit word consists of 4 bit bytes so each word address is a multiple of 4.
+    - The address is stored is given in hexadecimal.
+    - load word instruction lw reads data word from emmory into register
+      - So you have some offset which is the starting address and then you can add some offset to that to get the word.
+      - Essentially ou have lw s7, 8(zero) where 8 is teh offset meaning kinda
+  - Okoay back up: memory has one byte per address. Every byte gets its own addres but we awnt to look in terms of words which is comprised of 4 bytes or 32 bits.
+    - So one word will have 4 addresses and essentially word 0 will begin at address 0 and word 1 begins at addres 4 and word 2 begins at byte addres 8
+      - Word starting address = 4 * word number
+      - but what is offset: easy well lw is lw destination, offset(base)
+        - address is base register + offset and the cpu reads 4 bytes starting at address 8 adn combines them into a 32 bit strnig and puts that word into the destination.
+        - base register is just starting address. This is helepful because we dont need to knwo the absolute addres of say elements in an array you can just know the address of the start of the array and then add offset 4 and 8 12 to get the first word in the array and 2nd word in array etc.
+*** Programming
+**** Program Flow
+- Instructions are stored in memory. Each instruction is 4 bytes long as i said earlier. So consectuive instruction addresses increase by 4.
+  - The program counter keeps track of the current instruction. THe pc holds the memory address of the current instruction and increments by 4 after each instruction completes so the processor can read teh next instruction.
+**** Logical Shift and multiply
+- RISCV logical operations are AND, OR, and XOR. This operates bitwise on two sourc eregisters and writes result to a destination register. andi ori and xori use a source register and a 12 bit sign extended immediate remember the andi stuff from above.
+  - And is useful for clearing or masking bits.
+  - or is useful for combining bitfields or setting bits meaning rocing bit to 1.
+  - logical Not can be performed with xori
+*
+***** Shift
+- Shift instructions shift register left or right dorpping bits off the end. sll shift left logicl and srl shift right logical and sra arithmetic. Left shift always fills least signfiicant bit with zeroes. Right shift can be eitiehr logical meaning zeroes shift into th emost signgificant buit or artihmetic meaning the sign bit shifts into the most singificant bit.
+  - sra:
+    - We fill empty positions with copies of the original sign bit so if you shift right by 4 bits the 4 bits that moved, they will become whatever the sign bit is.
+    - Think of srl as dumb it just fills it all by 0 but sra will fill with the bit of the most signfiicant bit (representing the sign). So if it is 0, then srl and sra do the same thing
+      - Essentially use arithmetic shift for signed and logical for non signed i think.
+        - The amount you shift by say it is n amount then 2^n amount is how much you are dividing bym if you shift by 2 to the right you have divided your original number by 2.
+          - rsa divides two's complement numbers meaning the signed interpretation while logical right shift divides unsigned.
+        - Shifting to the LEFT is mulitplying by 2^n
+***** Multiply
+- Multiplication of N bit numbers produces a 2N bit product (and if one is N and other is 3N then their product is 4N im assuming. also this is all assuming one of them is not 0). The way mul (multiply) works is it multiplies two 32 bit numbers and puts hte least signfiicant 32 and discards the high 32. mulh puts the high 32 bits result in the destination register. mulh treats both operands as signed whereas for mul it didnt matter. mulhsu treats the first operand as signed and the second as unisgned and mulhu treats both as unsigned.
+  - Wawit what about 0 that is not N=N. and also what about if its like only a 8 bit number what then becuase the signed bit is inclufded in that yk so when you multiply it will still be included.
+**** branching
+- A program can perform different tasks depending on the input. Branch instructions modify the flow of the program so processer can fetch instructions not in sequential order in memory. Modifies PC to skip over sections of code or to repeat previous code.
+*****  conditionsal branches
+- beq branch if equal branches when values in teh two source registers are equal
+- bne branches if not equal
+- blt branches when value in first source register is less than value in second
+- bge branches when fisrt is greater than or equal to seecond
+  - Blt and bge treat operands as signd numbers while bltu and bgeu treat them as unsigned.
+- For the destination of the branch, assembly uses labels to indicate instruction locations. When this is trnaslated to machine code these labels correspond to isntruction addresses
+  - hm well then is there a limit to their length?
+    - Also are s1 and s0 things that the machine lagnuage recognizes or are they just arbirtrary registers?
+    - also for a for like when you load a word from memory into the register, how do you put it back in memory after
+  - for example you may write beq s0, s1, target and later have target: ... and then below it instructions
+***** jumps
+- Program can also uncoditionally branch using...
+  - j - jump
+    - just goes straight to the label location
+  -
+***** Conditional STATEMENTs :ATTACH:
+:PROPERTIES:
+:ID:       9c00d843-96f4-4b90-8988-d6a14f3f8db7
+:END:
+- If statementsmple si
+  - you kinda have to derive these by skipping to a certain label if the condition is met like bne so it just skips the stuff below it
+- if else
+  - This can be handled the same way as above like testing the thing and skipping to a place but also having a jump right before hte label so that it dosent execute that other part
+    -
+    [[attachment:_20261121_102147screenshot.png]]
+- Switch case
+  - Cases executes one of several blocks depending on the codntion. If no conditions are met the default is executed. A case stement is a bunch of nested if else statements.
+   [[attachment:_20261121_103117screenshot.png]]
+**** Loops :ATTACH:
+:PROPERTIES:
+:ID:       aa536276-3f38-4856-bf19-faef6bc7aa77
+:END:
+- while
+  - While is very simple
+    [[attachment:_20261121_103417screenshot.png]]
+  - again, the way it works is if the condition is true it will skip the while loop which is kinda unitnutiive compared to nromal high level code.
+    - Remember labels are simply just address locations  nothing more nothing less. Like you cna just replacae while by line number thats all it is.
+- for
+  - For loop has a intiialization code executes before loop begins and the condition is tested at begining of each loop iteration and if it is not met it exits. if the condition is met the statement in the loop body is executed. loop operation executes at end of the loop iteration. You cna already kinda see the struction this takes its quite simple in assembly very muhc building with teh same parts we have before.
+  -
+- load byte load byte unsigned and store byte lb lbu and sb get individual bytes in memoery but lb sign extends the byte, lbu zeroextends the byte to fill the entire 32 bit register and sb sotres the least significan tbyte of the 32 bit register into the specieis byte addres in memory
+*** Function Calls
+- When one function calls another the callee and caller must agree on where to put arguments and return value. In RISC-V the caller places up to 8 arguments in registers a0 to a7 and the callee places the return value in register a0 before finishing
+  - Oh tuff the functions COULD have more outputs.
+    - Callee must not interfere with teh behavior of the caller so tehe callee must know where to return after completing and mustn trample on the resigetsrs or memory needed by the caller. (HOW??) The caller stores return address in ra at the same time it jumps to teh callee using the jump and link instruction.
+      - Specifically s0-s11 the saved registers and return address ra and stack must remain unmodifeid
+      - call a function with jal, ra(location of saving of current address) ___function address and then in the function function: jr ra (go back to ra). means jump register
+**** Stack :ATTACH:
+:PROPERTIES:
+:ID:       7e8ac97a-7931-4753-8013-6cd454925e60
+:END:
+- used as a scratch space to save temp info within afunction. it is a LIFO queue, its like a stack of dishes the last item pushed onto the stack is the first one that can be popped or removed.
+  - Each function may allocate stack space to store local variables to use as scratch space but they must deallocate before returingin. The stack expands to lower memory addresses when a program needs scratch space.
+  - To allow a function to modify registers, a function saves registers on hte stack beforemodifying them and then restores them from the stack before it returns.
+    1. Makes sapce on stack for the registers
+       1. This is known as stack space.
+    2. Stores value of register on stack
+    3. Executes function using registers
+    4. restores original values of registers form the stack
+    5. deallocates space on the stack
+- There is a distinction between preserved and nonpreserved registers s0 to s11 (saved) and t0 to t6 (temporary), a0 to a7 (argument) respectivel. The non preserved ones are jjust used as scratch and dont need to be saved and restored by the procedure listed above.
+  - Since a function has no obligation to preserve the non preserved ones, its up to the callee of the function to save anything they have in the non preserved registers. This is why preserved registers are called callee saved and non preserved registers are called caller saved.
+[[attachment:_20261121_143204screenshot.png]]
+-
+**** Nonleaf function calss
+- a leaf function is a function that dosent call others. A non leaf function is one that calls others which is wack because they need to save non preserved registers on the stack bfore they can call another function adn tehn restore those afterard.
+  - The have a few rules to follow
+    1. caller save rule:
+       - Before a function call the caller must save any non preserved registers that it needs after the call. After the call it must restore these registers before using them.
+    2. Callee save rule:
+       - Before a clle disturbs any of preserved registers it must save the registers, and before it returns it must restore the now changed registers to that saved copy.
+**** Additional Arguments :ATTACH:
+:PROPERTIES:
+:ID:       c3dfe0a3-4e1c-4baf-ae05-08ba68fd67c5
+:END:
+- Any more argument sthan 8 are put into the stack. THe caller must expand its stack to make room fro the additioanl arguments.
+ [[attachment:_20261121_151357screenshot.png]]
+ - wait but if it does it like this hten how will the callee use the additional arguments? cuz i thought the very first thing it does is save the registers to stack which would then go atop the additioanl arguments
+** Machine language
+- Risc v has 4 instruction formats, R type, I type, S/B-type, and U/J-type
+*** R Type :ATTACH:
+:PROPERTIES:
+:ID:       7d334507-3971-4754-9b39-8b1c2b1ea20e
+:END:
+- Operates on registers
+- The 32 bit instruction has six fields.
+ [[attachment:_20261121_153539screenshot.png]]
+*** I type :ATTACH:
+:PROPERTIES:
+:ID:       3ba32f0a-d467-4854-819c-a2e8eabe7ff5
+:END:
+-  immediate instructions
+ [[attachment:_20261121_153925screenshot.png]]
+
+*** S/B Type
+- Store branch insructions operates on two registers and an immediate
+*** U/J Type
+- upper immediate jump operates on one register and a 20 bit immediate
+*** Addressing Modes
+- register only addressing uses registers for all source and destination operands. All r type instructions use register only addressing. Immediate addressing uses an immediate along with registers. Base addressing where the effective address of the memory operand is calculated by adding the base addres in register rs1 to the sign extended 12 bit offset found in the immediate field. PC relative addressing species new value of the PC. Signed offset encoded in immediate field is added to pc to obtain target address.
+* Chapter 4 HDL
+- Hardware with inputs and outputs is module. AND gate multiplexer etc are all modules.
+  - Purposes of HDL is simulation and synthesis
+    - Simulation is to test system before being built
+  - testbnech code is only intended for simulation and cannot be syntehsized into hardware
+    - Its really just a shorthand for describing hardware.
+** Combinational Logic
+- logic [3:0] is little endian with most significant being on the left while logic [0:3] is big endian with most significant being on right

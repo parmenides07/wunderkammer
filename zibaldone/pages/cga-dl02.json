@@ -1,9 +1,9 @@
 {
   "slug": "cga-dl02",
   "camera": {
-    "x": -16.440695863582302,
-    "y": 1.3808505659575845,
-    "zoom": 0.8233361503529185
+    "x": -17.609536059104535,
+    "y": 1.0952248281270314,
+    "zoom": 1.143008670984695
   },
   "elements": [
     {
@@ -179,7 +179,7 @@
       "type": "text",
       "x": -21,
       "y": 6,
-      "width": 13,
+      "width": 17,
       "height": 2,
       "text": "01.5: November 9th",
       "font": "baskerville",
@@ -195,7 +195,7 @@
       "width": 18,
       "height": 8,
       "text": "- I had a bit of extra time and decided to make a simple finite state machine as a way to really get a good grasp on the things I learned about. I tried understanding finite state machines a bit better and how to translate a diagram to actual logic which was a bit tricky at first. But after a teeny bit of learning it all became really intuitive and I was able to create the following FSM (\"adds\" in binary as time progresses) without referencing the textbook:",
-      "font": "mono",
+      "font": "xanh",
       "fontSize": 16,
       "zIndex": -2
     },
@@ -410,7 +410,7 @@
       "id": "7df59974-17ac-4e43-9973-4456c993e656",
       "type": "text",
       "x": 13,
-      "y": -12,
+      "y": -11,
       "width": 15,
       "height": 2,
       "text": "03: November 11th\n",
@@ -422,9 +422,9 @@
     {
       "id": "d91e7da4-aefb-4c97-8a9c-e2f226f35257",
       "type": "text",
-      "x": 13,
-      "y": -10,
-      "width": 21,
+      "x": 12.959514926324147,
+      "y": -7.421057416136693,
+      "width": 16.58596184142914,
       "height": 10,
       "text": "I learned a LOT today:\n- Subtraction, Multiplication, Division\n- Comparators, ALUs, Shifters (Logical and Arithmetic) and Rotaters\n- Number Systems: Signed and Unisgned, Fixed Point, Floating Point, Rounding\n- Other stuff: Counters, Shift Registers (and Scan Chains)\n- Memory Arrays/Bit Cells\n- Different Memory Types",
       "font": "mono",
@@ -434,8 +434,8 @@
     {
       "id": "86a22db0-ed47-4fc2-9899-485db986e522",
       "type": "text",
-      "x": 34.916653930097404,
-      "y": -18.361337451192504,
+      "x": 32,
+      "y": -18,
       "width": 30.838059705296587,
       "height": 10,
       "text": "Now this was incredibly interesting. Essentially there is 3 memory types: RAM (Random Access Memory), ROM (Read Only Memory), and Register Files. \n\nRAM is volatile, meaning it loses data when power turns off. RAM also kinda sucks in that the way it works is the state of each bit cell is stored via a capacitor, which is nice because that makes it dynamic but that means when we (the bitline) read the data value, charge is transferred from the capacitor to the bitline and that data value is somewhat lost. Thus, we have to replenish it after reading. Also, by nature of capacitors, they discharge or are effected by noise or something. Whatever it may be, if we want to maintain accurate data values, we must periodically update ALL the bit cells. To make this all a bit easier we came up with SRAM which synchronizes (hence the S) access and the reading/writing to a clock so its a bit more systematic to replenish values. To make this more effecient we came up with DDR SRAM which means double data rate SRAM which utilizes both the rising and falling edge of the clock for access. \n\nThere's also SRAM which is static and uses cross coupled inverters instead of capacitors (hence the lack of dynamism). These are nice and do not have to be refreshed although they are larger and cost more transistors. They do have a lower latency and throughput though. \n\nROM is non volatile and retains data indefinately without power. It's very very interesting in the actual way it works. It stores the data values as the presence or absence of a transistor meaning it gives the bitline reading it a weak signal and if the transistor is present it will pull the bitline low but if there is no transistor the bitline will remain high. Remember this is READ ONLY. There are some intersting other progammable ROMS that also use fuses. These are obviously only good for one time so if you want a multi-use one you use EPROM (erasable programmable ROM) which uses a  floating gate resistor. Its not actually attached to anything but the electrons when provided with the right voltage tunnel thorugh the insulator and trigger the transistor. When this is exposed to UV light, the electrons are knocked off and its \"reset\". EEPROM )electrically erasable PROM) can individually \"reset\" bit cells.",
@@ -444,33 +444,10 @@
       "zIndex": -2
     },
     {
-      "id": "87689321-7447-45c8-ac36-58500d8f0c39",
-      "type": "line",
-      "points": [
-        [
-          23,
-          -1
-        ],
-        [
-          30,
-          -1
-        ],
-        [
-          30,
-          -3
-        ],
-        [
-          34,
-          -3
-        ]
-      ],
-      "arrowhead": true
-    },
-    {
       "id": "88c63a32-5410-4ca2-9c5e-a371badde266",
       "type": "text",
-      "x": 35.017729417292216,
-      "y": -19.627566662610576,
+      "x": 32.10107548719481,
+      "y": -19.26622921141807,
       "width": 15,
       "height": 2,
       "text": "Memory Types",
@@ -483,21 +460,463 @@
       "id": "6988ef9e-aa3b-4115-8e0d-8871e9ce25b6",
       "type": "image",
       "x": 12,
-      "y": -27,
-      "width": 22.21961932650073,
-      "height": 14,
+      "y": -23,
+      "width": 19.045387994143482,
+      "height": 12,
       "src": "/personal/assets/image-527db721-392f-4e42-aeca-976c263db066.png",
       "alt": ""
     },
     {
       "id": "c463bdc9-9ca5-44b7-812d-e76bb1abc9e3",
       "type": "image",
-      "x": 35,
-      "y": -34,
+      "x": 32.083346069902596,
+      "y": -33.638662548807496,
       "width": 22.21961932650073,
       "height": 14,
       "src": "/personal/assets/image-4b35ad7e-07fd-4848-9bf9-959ab45e59a5.png",
       "alt": ""
+    },
+    {
+      "id": "a9e45386-a045-4968-ba06-f5e8911dfb35",
+      "type": "line",
+      "points": [
+        [
+          23,
+          1
+        ],
+        [
+          30,
+          1
+        ],
+        [
+          30,
+          -3
+        ],
+        [
+          31,
+          -3
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "b3d8fb20-50b4-4dce-b473-aac83ee03e0f",
+      "type": "text",
+      "x": 52,
+      "y": 21,
+      "width": 15,
+      "height": 2,
+      "text": "02.5: November 17th",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "f164e5a4-cbd2-4a48-a3ed-89a0fb8616fe",
+      "type": "text",
+      "x": 52,
+      "y": 23,
+      "width": 22,
+      "height": 8,
+      "text": "- I got caught up with school and midterms but I finally had a chance to build something today. I wanted to build something that uses RAM and the ALU and a little more of the timing elements. My idea was to make a little calculator unit that calculates with its output and has a autosave type of thing every few seconds. And you can then read off these autosaves. ",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "3989d02c-3119-42cc-9395-de8cc0b7dc8e",
+      "type": "text",
+      "x": 51.84875106661745,
+      "y": 30.302501328591656,
+      "width": 15,
+      "height": 2,
+      "text": "RAM R/W Module:",
+      "font": "baskerville",
+      "fontSize": 29,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "a2158b4e-a776-4011-b8e6-4ecdcedab822",
+      "type": "image",
+      "x": 73,
+      "y": 17,
+      "width": 35.083615273078784,
+      "height": 23,
+      "src": "/personal/assets/image-f70e5e46-0c64-44c6-bbef-61c544535be3.png",
+      "alt": ""
+    },
+    {
+      "id": "d77d808a-9e05-4a3b-bc9d-13c6ddac4c0e",
+      "type": "text",
+      "x": 65.09588282611334,
+      "y": 13.616468695546622,
+      "width": 15,
+      "height": 2,
+      "text": "ALU Module",
+      "font": "baskerville",
+      "fontSize": 29,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "708290fb-543f-4eb8-beab-3a815b0b463b",
+      "type": "text",
+      "x": 65,
+      "y": 15,
+      "width": 22,
+      "height": 8,
+      "text": "- In the creation of the ALU module I ran into the intializaiton problem. This is when you have a feedback loop and it starts out floating and so its output will be floating so its input too will be floating and nothing will work or compute. This is why we need to have a reset pin that then applies some specified default value.",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "bb0e190a-f02f-4ca4-947a-d477cddbf4c2",
+      "type": "line",
+      "points": [
+        [
+          87.25347848050603,
+          16.85322996656385
+        ],
+        [
+          91.57077647240354,
+          16.85322996656385
+        ],
+        [
+          91.57077647240354,
+          20.00631237043236
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "d43f6340-712a-4928-9ff1-b9b9a135450d",
+      "type": "file",
+      "src": "/personal/assets/file-bd870c74-cc6b-4f06-a7f5-f2adb4466ed5.png",
+      "filename": "Untitlemkd.png",
+      "display": "render",
+      "x": 35.67740169322527,
+      "y": 32.13443059552718,
+      "width": 38.50136239782016,
+      "height": 15,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "5b99d8bb-2594-4fb7-8783-e5779f1aad13",
+      "type": "text",
+      "x": 0,
+      "y": -31,
+      "width": 31.357471687823534,
+      "height": 5.22284832666578,
+      "text": "Chapter 2 & 3: Combination and Sequential Logic ",
+      "font": "baskerville",
+      "fontSize": 68,
+      "zIndex": 2,
+      "invertOnHover": true,
+      "lineHeight": 0.95,
+      "align": "right"
+    },
+    {
+      "id": "e5d2e8f2-1b66-4ff8-9a1d-385e920bd5e5",
+      "type": "file",
+      "src": "/personal/assets/file-1d77f69e-8394-44a8-bbf1-390bb0c5ae45.jpg",
+      "filename": "IMG_1130a.jpg",
+      "display": "render",
+      "x": 64.97817921434746,
+      "y": -6.503266177933371,
+      "width": 31.501911316639866,
+      "height": 19.673490947747098,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "dca1959a-e5cd-4cf6-8e89-ba9d68714f98",
+      "type": "text",
+      "x": 141,
+      "y": -35,
+      "width": 31.357471687823534,
+      "height": 5.22284832666578,
+      "text": "Chapter 6: Assembly",
+      "font": "baskerville",
+      "fontSize": 68,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "14be165f-ffb9-479c-b80d-a635fbd034ba",
+      "type": "file",
+      "src": "/personal/assets/file-8a0d075c-be0c-4864-9b61-62dd84e92ad0.png",
+      "filename": "Screenshot_20261121_154319.png",
+      "display": "render",
+      "x": 112,
+      "y": -25,
+      "width": 27.01183431952663,
+      "height": 33,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "8affe0f7-3419-4991-a335-97eb44f0f505",
+      "type": "text",
+      "x": 141,
+      "y": -31,
+      "width": 15,
+      "height": 2,
+      "text": "01: November 20th",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "3dbd6292-8988-4158-b36d-1fb04874dcd0",
+      "type": "text",
+      "x": 141,
+      "y": -29,
+      "width": 29,
+      "height": 9,
+      "text": "- Pretty exciting stuff, I get to learn low level software and the instructions that go to the hardware. \n- Today I learned the following items: fundamentally what Assembly is, different register types, immediate, addresses/offsets loading and storing, and working with \"arrays\" in memory.\n\n- A lot of this sounds kinda small but there is a bit to learn for each thing. Its hard to describe the concepts I learned for this chapter, there's a decent amount of depth to each thing. There is also a lot more I learned that I didn't note here.",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "bcad2aab-54f9-4705-8296-76d87918d85e",
+      "type": "text",
+      "x": 141,
+      "y": -20,
+      "width": 15,
+      "height": 2,
+      "text": "02: November 20th",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "89e999ba-9313-490e-8577-747b8c078f19",
+      "type": "text",
+      "x": 141,
+      "y": -18,
+      "width": 30,
+      "height": 9,
+      "text": "- So with a basic understanding of Assembly, I was able to move onto logical operations and their operation between registers and immediates. After that, I learned about branching which is essentially where the idea of \"if statements\" and \"for loops\" can emerge, except in assembly these things are a bit verbose. In an odd way, this felt very elegant though. We could construct for loops and while loops and conditionals (all manipulating the flow of the program), with the same fundamental building block, whereas in higher level languages they are treated as different things. After this, I learned about \"functions\" and the conventions related to calling them and preserving registers and storing onto the stack. ",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "8662cbca-cf73-476d-a161-8dcbfbf4eb72",
+      "type": "text",
+      "x": 141,
+      "y": -9,
+      "width": 15,
+      "height": 2,
+      "text": "03: November 22nd",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "58d5eb9d-914c-4cdb-9381-6ea458a38e4c",
+      "type": "text",
+      "x": 141,
+      "y": -7,
+      "width": 30,
+      "height": 10,
+      "text": "- Today was my FAVORITE day. It was time to build something simple with assembly. I didn't have too too much time today so this unfortuantely took up all the time, though it did take quite a while ngl. I implimented insertion sort in RISC-V assembly!\n\n- ...WOW, assembly is both really intuitive but also completely unintuitive. Its quite cumbersome to debug because you can't name variables and track the program flow as elegantly, what with all the jumps in the program occur (see concept of branching ->). But even with all of this, I had a lot of fun. You can see 2 versions of my code below. 1 version is the final cleaned up version without comments, the other is an intermediary version that is FLAWED but does include comments. ",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "f9738078-ce8d-47b3-889a-764f5b8c3a7c",
+      "type": "text",
+      "x": 65,
+      "y": -13,
+      "width": 31.357471687823534,
+      "height": 5.22284832666578,
+      "text": "Chapter 5: Digital Building Blocks",
+      "font": "baskerville",
+      "fontSize": 68,
+      "zIndex": 2,
+      "invertOnHover": true,
+      "lineHeight": 0.95,
+      "align": "left"
+    },
+    {
+      "id": "05c8b26c-d384-4940-8dbe-d2950fd8368d",
+      "type": "file",
+      "src": "/personal/assets/file-0c68716a-e351-4e6f-b931-10641e679b3b.png",
+      "filename": "Screenshot_20261124_181428.png",
+      "display": "render",
+      "x": 172,
+      "y": -28,
+      "width": 30.504017531044557,
+      "height": 36,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "3bacade2-2731-43ee-bf4d-319c6110b39f",
+      "type": "text",
+      "x": -42,
+      "y": -48,
+      "width": 31.357471687823534,
+      "height": 5.22284832666578,
+      "text": "What am I doing and why? ",
+      "font": "baskerville",
+      "fontSize": 68,
+      "zIndex": 2,
+      "invertOnHover": true,
+      "lineHeight": 0.95,
+      "align": "left"
+    },
+    {
+      "id": "88e23664-8621-4a54-941a-1b73a34b73e2",
+      "type": "text",
+      "x": -42,
+      "y": -43,
+      "width": 31,
+      "height": 8,
+      "text": "- I had a bit of extra time and decided to make a simple finite state machine as a way to really get a good grasp on the things I learned about. I tried understanding finite state machines a bit better and how to translate a diagram to actual logic which was a bit tricky at first. But after a teeny bit of learning it all became really intuitive and I was able to create the following FSM (\"adds\" in binary as time progresses) without referencing the textbook:",
+      "font": "xanh",
+      "fontSize": 21,
+      "zIndex": -2
+    },
+    {
+      "id": "cb55c372-5708-48b0-9fd0-f2a42bd67f56",
+      "type": "text",
+      "x": 141,
+      "y": 3,
+      "width": 15,
+      "height": 2,
+      "text": "∞: Going Forward",
+      "font": "baskerville",
+      "fontSize": 36,
+      "zIndex": 2,
+      "invertOnHover": true
+    },
+    {
+      "id": "fa475f5c-af87-4cb9-82a9-f70010def63c",
+      "type": "text",
+      "x": 141,
+      "y": 5,
+      "width": 30,
+      "height": 7,
+      "text": "- My goals with all this stuff dosen't neccesarily require me to spend too much time on assembly at the moment but because I enjoyed it so much, I definately want to keep programming in RISCV assembly and getting better. This is nice because if I ever do need it, it keeps my skills sharp! I will primarily just impliment small, leetcode-like algorithms. What better way to get better with understanding these data structures than understanding them on the assembly level?! Specifically, I will be using the Neetcode roadmap to choose problems to implement. I'll try to log my progress here ->",
+      "font": "mono",
+      "fontSize": 16,
+      "zIndex": -2
+    },
+    {
+      "id": "6cf200a0-1f8f-4ed1-8900-293bf7c9b450",
+      "type": "text",
+      "x": 167,
+      "y": 10,
+      "width": 7,
+      "height": 2,
+      "text": "asm-rvdsa",
+      "font": "mono",
+      "fontSize": 35,
+      "zIndex": -2,
+      "href": "/personal/#/asm-rvdsa"
+    },
+    {
+      "id": "61353f66-74de-40d0-8428-c06874d04dae",
+      "type": "file",
+      "src": "/personal/assets/file-bdfa5bf8-21c5-4a2f-9f92-777da9094bda.s",
+      "filename": "sort.s",
+      "plainText": true,
+      "display": "render",
+      "x": 137,
+      "y": 14,
+      "width": 11,
+      "height": 57,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "7ebd24b1-a04e-4976-80e3-2daed9167e77",
+      "type": "file",
+      "src": "/personal/assets/file-616462c9-340f-4907-89e6-7ba2aaa64b69.s",
+      "filename": "sortWcomments.s",
+      "plainText": true,
+      "display": "render",
+      "x": 148,
+      "y": 14,
+      "width": 27,
+      "height": 52,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "e5823bc2-bf99-4d35-897d-38543073c80d",
+      "type": "text",
+      "x": 177.09966528988326,
+      "y": 21.697657029182857,
+      "width": 12,
+      "height": 7,
+      "text": "very extensive notes on a intermediary version of the program (click to maximize)",
+      "font": "mono",
+      "fontSize": 28,
+      "zIndex": -2,
+      "lineHeight": 1.05
+    },
+    {
+      "id": "03d5a10a-e42b-4134-a4c5-6cb5a0130a2c",
+      "type": "line",
+      "points": [
+        [
+          180,
+          28
+        ],
+        [
+          180,
+          30
+        ],
+        [
+          176,
+          30
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "2787075c-05c8-4944-95ef-f669fcba091d",
+      "type": "text",
+      "x": 128,
+      "y": 35,
+      "width": 10,
+      "height": 7,
+      "text": "final insertion sort",
+      "font": "mono",
+      "fontSize": 28,
+      "zIndex": -2,
+      "lineHeight": 1.05
+    },
+    {
+      "id": "551f37f0-b6ed-4c09-8d09-30a6ddcb6441",
+      "type": "line",
+      "points": [
+        [
+          130,
+          35
+        ],
+        [
+          130,
+          31
+        ],
+        [
+          136,
+          31
+        ]
+      ],
+      "arrowhead": true
     }
   ]
 }

@@ -18,21 +18,25 @@ module.exports = async ({ browser, source }) => {
     const composition = { slug: 'home', camera: { x: 0, y: 0, zoom: 1 }, elements: [{ id: 'note', type: 'text', x: -6, y: -4, width: 12, height: 4, text: 'Before', font: 'mono', fontSize: 16 }] };
     await fs.writeFile(path.join(root, 'pages/home.json'), JSON.stringify(composition, null, 2) + '\n');
     await fs.cp(path.join(source, 'build.mjs'), path.join(root, 'build.mjs'));
+    for (const file of ['template.mjs', 'package.json', 'files.mjs', 'documents.mjs']) await fs.cp(path.join(source, file), path.join(root, file));
+    await fs.writeFile(path.join(repo, 'build.js'), "import('./zibaldone/build.mjs').then(({ build }) => build()).catch(error => { console.error(error); process.exitCode = 1; });\n");
+    await fs.symlink(path.join(source, '..', 'node_modules'), path.join(repo, 'node_modules'), 'dir');
+    await fs.writeFile(path.join(repo, '.gitignore'), 'node_modules/\n');
     await fs.writeFile(path.join(repo, '_config.yml'), 'exclude: [zibaldone]\n');
     await (await import(path.join(source, 'build.mjs'))).build({ source: root, output: path.join(repo, 'personal') });
     await fs.writeFile(path.join(repo, 'README.md'), 'Initial project');
     await git(['init', '-b', 'main']); await git(['config', 'user.name', 'Browser Tests']); await git(['config', 'user.email', 'test@example.invalid']);
     await git(['config', 'commit.gpgSign', 'false']); await git(['config', 'core.hooksPath', path.join(directory, 'no-hooks')]);
-    await git(['add', '--', 'zibaldone', 'personal', '_config.yml', 'README.md']); await git(['commit', '-m', 'initial']);
+    await git(['add', '--', 'zibaldone', 'personal', '_config.yml', 'README.md', 'build.js', '.gitignore']); await git(['commit', '-m', 'initial']);
     await git(['init', '--bare', remote]); await git(['remote', 'add', 'origin', remote]); await git(['push', '-u', 'origin', 'main']);
     const { createSpaceServer } = await import(path.join(source, 'server.mjs'));
     const { publishContent, runGit } = await import(path.join(source, 'publish.mjs'));
     let mode = '', pushGate;
-    server = createSpaceServer({ root, publish: (root, progress) => publishContent(root, progress, async (cwd, args) => {
+    server = createSpaceServer({ root, publish: (root, progress, options) => publishContent(root, progress, async (cwd, args) => {
       if (mode === 'auth' && args[0] === 'ls-remote') throw Object.assign(new Error('Authentication failed'), { code: 128, stderr: 'Authentication failed for https://secret@github.com/private/repo.git' });
       if (mode === 'hold' && args[0] === 'push') await pushGate;
       return runGit(cwd, args);
-    }) });
+    }, options) });
     await new Promise(resolve => server.listen(0, '127.0.0.1', resolve));
     const origin = `http://127.0.0.1:${server.address().port}`;
     context = await browser.newContext({ viewport: { width: 1200, height: 800 } });
@@ -101,6 +105,35 @@ module.exports = async ({ browser, source }) => {
     assert.equal(saved.elements.at(-1).type, 'image');
     assert.match(await git(['show', '--format=', '--name-only', 'HEAD']), /zibaldone\/assets\/image-/);
 
+    // File imports/conversion share the same save barrier as image uploads.
+    let releaseFile, fileStarted;
+    const filePending = new Promise(resolve => { fileStarted = resolve; });
+    const fileGate = new Promise(resolve => { releaseFile = resolve; });
+    await page.route('**/_zibaldone/api/files', async route => { fileStarted(); await fileGate; await route.continue(); });
+    await page.locator('#file-input').setInputFiles({ name: 'published.org', mimeType: 'text/plain', buffer: Buffer.from('* Published document\nSome *bold* words.') });
+    await page.locator('#import-render').click(); await filePending;
+    const beforeFilePublish = publishRequests;
+    await button.click(); assert.equal(publishRequests, beforeFilePublish);
+    releaseFile(); await waitStatus('^Pushed successfully'); await page.unroute('**/_zibaldone/api/files');
+    assert.match(await git(['show', '--format=', '--name-only', 'HEAD']), /personal\/documents\/file-.*\.org.html/);
+    assert.match(await git(['show', '--format=', '--name-only', 'HEAD']), /personal\/assets\/file-.*\.org.zip/);
+
+    // The explicit all-repository choice includes code and staged changes, and
+    // the fresh build ships the current runtime rather than stale public files.
+    const runtime = await fs.readFile(path.join(root, 'client/main.js'), 'utf8') + '\n// browser publish code change\n';
+    await fs.writeFile(path.join(root, 'client/main.js'), runtime);
+    await git(['add', '--', 'README.md']);
+    await button.click(); await waitStatus('^Publishing failed: Unrelated staged');
+    await page.locator('#publish-scope').selectOption('all');
+    await page.reload(); await canvasReady(page); await page.waitForSelector('#editor-tools');
+    assert.equal(await page.locator('#publish-scope').inputValue(), 'all');
+    await button.click(); await waitStatus('^Pushed successfully');
+    assert.equal(await git(['show', 'HEAD:personal/client/main.js']), runtime.trim());
+    assert.equal(await git(['show', 'HEAD:README.md']), 'unrelated staged');
+    assert.equal(await git(['log', '-1', '--format=%s']), 'Publish site changes');
+    assert.equal(await git(['status', '--porcelain']), '');
+    await button.click(); await waitStatus('^Nothing new to publish$');
+
     // The optional link is deliberately a deployment-status link, never a claim
     // that a successful push has already updated Pages.
     await page.route('**/_zibaldone/api/publish', route => route.fulfill({ contentType: 'application/x-ndjson', body: JSON.stringify({ state: 'success', commit: '12345678', actionsURL: 'https://github.com/owner/repo/actions' }) + '\n' }));
@@ -108,8 +141,8 @@ module.exports = async ({ browser, source }) => {
     assert.equal(await page.locator('#deployment-link').getAttribute('href'), 'https://github.com/owner/repo/actions');
     await page.screenshot({ path: '/tmp/zibaldone-publish-editor.png' });
     await page.goto(origin + '/personal/'); await canvasReady(page); await page.waitForSelector('.object');
-    assert.equal(await page.locator('#publish-page').count(), 0); assert.deepEqual(errors, []);
-    console.log('Publish UI verified: save-before-push, progress, no changes, save failures, staged safety, auth errors, concurrent requests, pending uploads and viewer isolation.');
+    assert.equal(await page.locator('#publish-page').count(), 0); assert.equal(await page.locator('#publish-scope').count(), 0); assert.deepEqual(errors, []);
+    console.log('Publish UI verified: both scopes, remembered all-changes choice, current code build, save-before-push, progress, no changes, save failures, staged safety, auth errors, concurrent requests, pending uploads and viewer isolation.');
   } finally {
     releasePush?.(); await context?.close(); if (server) await new Promise(resolve => server.close(resolve));
     await fs.rm(directory, { recursive: true, force: true });

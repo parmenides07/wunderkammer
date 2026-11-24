@@ -168,7 +168,7 @@ export class Camera {
       }
     }, true);
     window.addEventListener('keydown', e => {
-      if (e.code === 'Space' && !isTyping(e.target) && !e.target.closest('button, summary, #breadcrumbs') && !document.querySelector('dialog[open]')) {
+      if (e.code === 'Space' && !isTyping(e.target) && !e.target.closest('button, summary, #breadcrumbs, video') && !document.querySelector('dialog[open]')) {
         e.preventDefault();
         this.space = true;
         viewport.classList.add('pan-ready');
@@ -236,6 +236,7 @@ export class Camera {
   }
   down(e) {
     if (e.button !== 0 && e.button !== 1) return;
+    if (!this.space && e.button !== 1 && e.target.closest('[data-reading]')) return;
     if (!this.pointers.size) this.suppressUntil = 0;
     if (isTyping(e.target) || e.target.closest('button:not(.resize-handle)')) return;
     const point = this.point(e);

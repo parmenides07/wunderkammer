@@ -2,3 +2,5 @@ node_modules/
 .test-results/
 generated/images/cache.json
 generated/documents/cache.json
+# Local font download archives; installed webfonts and licenses live in assets/.
+/zibaldone/*-WOFF2.zip

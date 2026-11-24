@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-05T17:51:19.423Z",
+  "generatedAt": "2026-11-24T23:35:15.523Z",
   "navigationMode": "folders",
   "pages": [
     {
@@ -944,6 +944,35 @@
       "source": "generated/pages/akasha-manual.md",
       "assetBase": "content/projects/akasha",
       "images": "generated/images/akasha-manual.json"
+    },
+    {
+      "id": "akasha-trailer",
+      "title": "Trailer",
+      "slug": "projects/akasha/trailer",
+      "section": "projects",
+      "type": "project-note",
+      "project": "akasha",
+      "audience": [
+        "public",
+        "professional"
+      ],
+      "status": "active",
+      "published": true,
+      "created": "2026-10-28",
+      "order": 20,
+      "contentFolder": "projects/akasha",
+      "collection": null,
+      "parent": null,
+      "modified": "2026-10-28",
+      "topics": [],
+      "featured": false,
+      "summary": "",
+      "banner": null,
+      "sound": null,
+      "authorSource": "content/projects/akasha/trailer.md",
+      "source": "generated/pages/akasha-trailer.md",
+      "assetBase": "content/projects/akasha",
+      "images": "generated/images/akasha-trailer.json"
     },
     {
       "layout": "project",
