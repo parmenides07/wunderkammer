@@ -1,0 +1,21 @@
+<div><h2 id="doc-adaptive-geometric-patch-image-format">Adaptive Geometric Patch Image Format</h2>
+<p>The idea is to develop a <strong>vector-like image format that represents images as a collection of freely sized, positioned, and overlapping rectangular patches</strong>, rather than pixels or conventional long Bézier paths.</p>
+<p>Each rectangle contains a minimal geometric description of part of an image, typically a boundary separating two regions.</p>
+<h3 id="doc-core-idea">Core idea</h3>
+<ul>
+<li><strong>Adaptive rectangles:</strong> Rectangles can have arbitrary positions, widths, and heights. Simple geometry can occupy one large rectangle, while complex details use multiple smaller ones. There is no fixed grid.</li>
+<li><strong>Minimal curve representation:</strong> Ideally, each rectangle contains only one simple edge or curve. The curve is described using a small number of parameters, such as where it intersects the rectangle's boundaries, the position of an anchor point along the straight line (chord) connecting those intersections, and the anchor's perpendicular displacement from that line.</li>
+<li><strong>Implicit shading:</strong> Instead of explicitly defining an entire filled polygon, the rectangle stores which region of the box should be shaded, potentially specified by identifying a corner. The geometric boundary then divides the filled and unfilled regions.</li>
+<li><strong>Layering:</strong> Rectangles can overlap, with a stored z-index determining which appears above another. This allows complex shapes to be assembled from simpler geometric patches.</li>
+<li><strong>Special geometric primitives:</strong> Straight lines can be represented without unnecessary curvature information. Circles and ellipses could potentially be represented by a single rectangular patch using specialized parameters.</li>
+<li><strong>Local coordinate systems:</strong> Curve parameters can be expressed relative to the rectangle's dimensions, potentially reducing the information required to describe their geometry.</li>
+</ul>
+<h3 id="doc-the-larger-objective">The larger objective</h3>
+<p>The goal is to <strong>reconstruct an image using the smallest possible collection of simple, locally defined geometric descriptions</strong>, while maintaining a desired level of visual accuracy.</p>
+<p>Rather than requiring increasingly complex mathematical curves to represent intricate shapes, the format can break those shapes into smaller, simpler pieces. Conversely, simple shapes can be represented with very few large patches.</p>
+<h3 id="doc-potential-implementation">Potential implementation</h3>
+<p>Build an experimental renderer and encoder in <strong>C, potentially using raylib</strong>.</p>
+<p>Initially, manually construct images from patches to validate the representation. Eventually, develop an algorithm that takes a raster image, detects its boundaries, selects appropriately sized and positioned rectangles, fits local geometric primitives, and minimizes the number of patches and parameters needed.</p>
+<p>The key research question is whether this representation can offer advantages over traditional SVG-style vectorization in <strong>storage efficiency, geometric simplicity, adaptive detail, or localized rendering and editing</strong>.</p>
+<p><strong>The central insight:</strong> Use the freedom to choose each rectangle's size and position to make the geometry <em>inside</em> that rectangle as simple as possible. Instead of representing a complex image with complex curves, represent it through an adaptive arrangement of simple geometric patches.</p>
+</div>

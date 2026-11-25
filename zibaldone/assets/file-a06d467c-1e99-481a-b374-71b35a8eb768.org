@@ -1,0 +1,13 @@
+#+title: 1nearestneighbor
+
+* k nearest neighbor
+- This is incredibely simple algorithm. Essentially it goes off of the hypothesis that if a test data point is close to an actual data point input then the test output will likely be similar to the others output.
+- k nearest neighbor just says find the k amouhnt of nearest neighbors (real data inputs) given the test input and then average the k nearest inputs' output
+  - I will actually do weighted where not every neighbor gets anequal say rather the ones closer get more of a say which reuqires me to normalize distance and units on both axises
+** Improvements
+1. *Distance weighting:* closer neighbors contribute more to prediction
+2. *Feature normalizaiton:* units and scales of input variables do not arbritarely determine which dominate hte distance
+   1. Standardization: Mapping mean and standard deviation of dataset to 0 and 1
+   2. Min max normalization: Mapping min and max of dataset to 0 and 1
+      1. Very very senstiive to outliers
+3.

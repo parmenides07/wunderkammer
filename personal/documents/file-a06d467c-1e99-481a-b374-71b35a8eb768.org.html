@@ -1,0 +1,10 @@
+<div><h1 id="doc-1nearestneighbor">1nearestneighbor</h1><h1 id="doc-k-nearest-neighbor">k nearest neighbor</h1><ul><li>This is incredibely simple algorithm. Essentially it goes off of the hypothesis that if a test data point is close to an actual data point input then the test output will likely be similar to the others output.
+</li><li>k nearest neighbor just says find the k amouhnt of nearest neighbors (real data inputs) given the test input and then average the k nearest inputs' output
+<ul><li>I will actually do weighted where not every neighbor gets anequal say rather the ones closer get more of a say which reuqires me to normalize distance and units on both axises
+</li></ul></li></ul><h2 id="doc-improvements">Improvements</h2><ol><li><strong>Distance weighting:</strong> closer neighbors contribute more to prediction
+</li><li><strong>Feature normalizaiton:</strong> units and scales of input variables do not arbritarely determine which dominate hte distance
+<ol><li>Standardization: Mapping mean and standard deviation of dataset to 0 and 1
+</li><li>Min max normalization: Mapping min and max of dataset to 0 and 1
+<ol><li>Very very senstiive to outliers
+</li></ol></li></ol></li><li>
+</li></ol></div>

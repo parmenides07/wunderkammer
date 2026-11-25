@@ -1,30 +1,19 @@
 {
   "slug": "co-26",
   "camera": {
-    "x": 0,
-    "y": 0,
-    "zoom": 1
+    "x": -6.0802976462862635,
+    "y": -4.341763006261396,
+    "zoom": 3.998822728800372
   },
   "elements": [
-    {
-      "id": "6cf83c0e-2f99-455d-97ab-60e4bb560f29",
-      "type": "text",
-      "x": -22,
-      "y": -6,
-      "width": 12,
-      "height": 5,
-      "text": "",
-      "font": "mono",
-      "fontSize": 16
-    },
     {
       "id": "18910c28-4a2f-4162-b39f-40480738a2f0",
       "type": "text",
       "x": -19,
-      "y": -4,
+      "y": -5,
       "width": 15,
       "height": 1,
-      "text": "cga-dl...........................02 →",
+      "text": "cga_dl...........................01 →",
       "font": "mono",
       "fontSize": 16,
       "href": "/space/cga-dl02/"
@@ -32,22 +21,22 @@
     {
       "id": "dba1caf3-de8a-46c0-b48a-e03166aae41b",
       "type": "text",
-      "x": -8,
-      "y": 1,
-      "width": 12,
-      "height": 5,
-      "text": "\n",
+      "x": -26,
+      "y": -6,
+      "width": 5,
+      "height": 4,
+      "text": "chunked according to topic, number corresponds to chronological relevancy",
       "font": "mono",
-      "fontSize": 16
+      "fontSize": 9
     },
     {
       "id": "c9b7a48a-a076-4d17-83b7-c390d6dd928d",
       "type": "text",
-      "x": -16,
-      "y": -2,
+      "x": -19,
+      "y": -7,
       "width": 15,
       "height": 1,
-      "text": "mlgo-00 →",
+      "text": "mlgo..............................0 →",
       "font": "mono",
       "fontSize": 16,
       "href": "/space/mlgo-00/"
@@ -55,34 +44,47 @@
     {
       "id": "a94fe1b0-684b-4aed-ad76-031a60306d20",
       "type": "image",
-      "x": -2,
-      "y": -10,
+      "x": -4,
+      "y": -12,
       "width": 12,
       "height": 14.96,
       "src": "/zibaldone/assets/image-60680e3f-bbb8-4d8b-9115-417e7d7fc1b7.jpg",
       "alt": ""
     },
     {
-      "id": "b94abdfc-d53c-47b3-b37f-52740ae38d60",
+      "id": "9477fd88-ff9c-4007-8925-a773839f0e1f",
       "type": "text",
-      "x": -19,
-      "y": -14,
-      "width": 12,
-      "height": 1,
-      "text": "frontier\n\n",
-      "font": "mono",
-      "fontSize": 16
-    },
-    {
-      "id": "1be5e554-00db-4502-aa4f-390d2a7b8fdb",
-      "type": "text",
-      "x": -16,
-      "y": -13,
+      "x": -9,
+      "y": -15,
       "width": 12,
       "height": 5,
-      "text": "wilderness",
+      "text": "",
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "e25a3ef2-58e5-40c8-b444-7e43ee5e31a1",
+      "type": "text",
+      "x": -19,
+      "y": -2,
+      "width": 15,
+      "height": 1,
+      "text": "a_pach...........................10 →",
       "font": "mono",
-      "fontSize": 16
+      "fontSize": 16,
+      "href": "/space/a-pach/"
+    },
+    {
+      "id": "72f0645a-072d-43ec-9f30-bba2cebce086",
+      "type": "text",
+      "x": -19,
+      "y": -4,
+      "width": 15,
+      "height": 1,
+      "text": "asm_rvdsa........................11 →",
+      "font": "mono",
+      "fontSize": 16,
+      "href": "/space/cga-dl02/"
     }
   ]
 }

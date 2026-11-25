@@ -1,9 +1,232 @@
 {
   "slug": "mlgo-00",
   "camera": {
-    "x": 0,
-    "y": 0,
-    "zoom": 1
+    "x": 64.61661823029802,
+    "y": -36.95758317576199,
+    "zoom": 1.3531848166068754
   },
-  "elements": []
+  "elements": [
+    {
+      "id": "5c01be88-31cb-4e9a-a91d-85bec427e54e",
+      "type": "file",
+      "src": "/personal/assets/file-f11b82f7-b325-4944-bd3e-fcde75b26774.py",
+      "filename": "1nearestneighbor.py",
+      "plainText": true,
+      "display": "render",
+      "x": -16,
+      "y": -3,
+      "width": 37,
+      "height": 49.93914956943532,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "672c4979-0cf1-4132-8f1b-9f2879714427",
+      "type": "file",
+      "src": "/personal/assets/file-a06d467c-1e99-481a-b374-71b35a8eb768.org",
+      "filename": "1nearestneighbor.org",
+      "plainText": false,
+      "display": "render",
+      "x": 22,
+      "y": -7,
+      "width": 33,
+      "height": 25,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "7a7ebb27-daa4-47ab-839a-1070e005ac03",
+      "type": "file",
+      "src": "/personal/assets/file-04152f1a-48c0-4a2e-9e02-ebd381ac8d97.jpg",
+      "filename": "4884a6d139881f323d392f52eadafb7a.jpg",
+      "plainText": false,
+      "display": "render",
+      "x": -4.118884633833963,
+      "y": -15.972033940137916,
+      "width": 23.353542145282706,
+      "height": 16.678321348756064,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "aba2a9c9-60a7-4175-8dff-a7cfe3692be1",
+      "type": "text",
+      "x": 29,
+      "y": 9,
+      "width": 12,
+      "height": 5,
+      "text": "",
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "8e98bb12-dae4-4b0c-bac7-623cc2b2a9a5",
+      "type": "text",
+      "x": 40,
+      "y": -9,
+      "width": 12,
+      "height": 5,
+      "text": "That got me interesting in ML and the concept of self-driven computation: a function that changes itself. ",
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "26af1fbc-00ef-4d8a-84e9-426c62551372",
+      "type": "file",
+      "src": "/personal/assets/file-0ee11906-47e1-4f5b-a19e-877464afe78c.md",
+      "filename": "chefsincs.md",
+      "plainText": false,
+      "display": "render",
+      "x": 47,
+      "y": -57,
+      "width": 43,
+      "height": 47,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "e06d3ea0-36df-40b8-a033-203594ba301f",
+      "type": "text",
+      "x": 22,
+      "y": -16,
+      "width": 23,
+      "height": 6,
+      "text": "I didn't spend too long doing this, so all I was able to learn was the basics of supervised learning, namely, concepts of classification and regression, the kNN distance based method, decision trees (for numerical and categorical values), input normalization, and a few other things. ",
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "15b8eb70-28ae-4d1b-ab76-a09882318505",
+      "type": "file",
+      "src": "/personal/assets/file-b1c9e0af-8bb8-4206-b610-8f8af5c1cee2.png",
+      "filename": "Screenshot_20261125_131412.png",
+      "plainText": false,
+      "display": "render",
+      "x": -54.29370138739209,
+      "y": -4.849657653987208,
+      "width": 37.76011994002999,
+      "height": 49,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "0b0b3e6e-2122-4d45-8430-66e94ba28b30",
+      "type": "file",
+      "src": "/personal/assets/file-b97cf2c8-8c70-4b87-8466-0142cee3eaee.png",
+      "filename": "Screenshot_20261125_131444.png",
+      "plainText": false,
+      "display": "render",
+      "x": 19,
+      "y": -59,
+      "width": 27,
+      "height": 41.15661478599222,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "2e6b1d67-2980-4dcb-923a-3716dd8aae00",
+      "type": "file",
+      "src": "/personal/assets/file-187dca29-3192-4a36-b7a6-a568d4e40ab6.png",
+      "filename": "Screenshot_20261125_131525.png",
+      "plainText": false,
+      "display": "render",
+      "x": -6.227290832934823,
+      "y": -57.685166097872056,
+      "width": 25.993049257644273,
+      "height": 40.73424353508261,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "ff139449-f1b8-4d50-b8d2-9201a5348f8a",
+      "type": "file",
+      "src": "/personal/assets/file-93cae52f-b136-455a-92f9-2b9032a71afd.png",
+      "filename": "Screenshot_20261125_131546.png",
+      "plainText": false,
+      "display": "render",
+      "x": 56,
+      "y": -10,
+      "width": 47.821665708362744,
+      "height": 74.94231853713266,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "17aa80c0-77fd-4fab-af6b-4387c08e6abf",
+      "type": "file",
+      "src": "/personal/assets/file-0f4ce4b1-2953-4e83-9d0e-cce64040c51d.png",
+      "filename": "Screenshot_20261125_131604.png",
+      "plainText": false,
+      "display": "render",
+      "x": 22,
+      "y": 19,
+      "width": 32.752904338299516,
+      "height": 46.31833758583442,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "6d68b57b-e247-428a-9b3c-89d2326012d8",
+      "type": "file",
+      "src": "/personal/assets/file-5070dbce-596c-48c2-8e26-e14032f6cd9a.png",
+      "filename": "Screenshot_20261125_131719.png",
+      "plainText": false,
+      "display": "render",
+      "x": -55.11536709575484,
+      "y": -58.2480930646122,
+      "width": 48.447349705185246,
+      "height": 52.578519059890965,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "ec0b88cf-d00a-4a32-a28f-ca7de5dbf6f9",
+      "type": "text",
+      "x": 47,
+      "y": -59.293706989386976,
+      "width": 22,
+      "height": 5,
+      "text": "Cooking and Computation ",
+      "font": "baskerville",
+      "fontSize": 44
+    },
+    {
+      "id": "c6f5e4c0-9ab9-451e-b320-80079a501cac",
+      "type": "line",
+      "points": [
+        [
+          55,
+          -10
+        ],
+        [
+          55,
+          -7
+        ],
+        [
+          52,
+          -7
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "55721c64-d028-4f56-8910-f95733d0903a",
+      "type": "line",
+      "points": [
+        [
+          39,
+          -8
+        ],
+        [
+          30,
+          -8
+        ],
+        [
+          30,
+          -10
+        ]
+      ],
+      "arrowhead": true
+    }
+  ]
 }

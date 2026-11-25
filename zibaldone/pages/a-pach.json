@@ -1,0 +1,39 @@
+{
+  "slug": "a-pach",
+  "camera": {
+    "x": 0,
+    "y": 0,
+    "zoom": 1
+  },
+  "elements": [
+    {
+      "id": "1c720537-7838-4ff1-9e86-0452ba40fa3c",
+      "type": "file",
+      "src": "/personal/assets/file-90c09c95-e30c-4a7c-af38-749419f67f39.md",
+      "filename": "apach.md",
+      "plainText": false,
+      "display": "render",
+      "x": -17,
+      "y": -13,
+      "width": 30,
+      "height": 44,
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "129f4934-a2ca-40d8-9646-9a2050283635",
+      "type": "file",
+      "src": "/personal/assets/file-d1b9e32b-0bde-4582-853f-8bda7374091e.jpg",
+      "filename": "1d9713359babea6764062081e051bd3d.jpg",
+      "plainText": false,
+      "display": "render",
+      "x": -42,
+      "y": -10,
+      "width": 29.243697478991596,
+      "height": 29,
+      "font": "xanh",
+      "fontSize": 18,
+      "zIndex": -2
+    }
+  ]
+}
