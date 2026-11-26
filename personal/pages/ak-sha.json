@@ -171,6 +171,43 @@
       "text": "Fundamentals of Akasha ",
       "font": "baskerville",
       "fontSize": 34
+    },
+    {
+      "id": "fe07c7e9-7bd1-4bc6-a742-371e4d4ee480",
+      "type": "line",
+      "points": [
+        [
+          10,
+          108
+        ],
+        [
+          10,
+          110
+        ],
+        [
+          18,
+          110
+        ],
+        [
+          19,
+          110
+        ]
+      ],
+      "arrowhead": true
+    },
+    {
+      "id": "4c6c4d6b-814c-4971-bc3c-adcaa91fc9ba",
+      "type": "file",
+      "src": "/personal/assets/file-1a5f595d-883b-4f04-a860-7168607e53a1.jpg",
+      "filename": "cloud.jpg",
+      "plainText": false,
+      "display": "render",
+      "x": 19.042141385165095,
+      "y": 2.053407325418899,
+      "width": 48.68947287909633,
+      "height": 20.819821475905254,
+      "font": "xanh",
+      "fontSize": 18
     }
   ]
 }
