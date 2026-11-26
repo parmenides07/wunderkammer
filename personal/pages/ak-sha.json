@@ -1,22 +1,11 @@
 {
   "slug": "ak-sha",
   "camera": {
-    "x": 0,
-    "y": 0,
-    "zoom": 1
+    "x": 3.9975698791697662,
+    "y": 10.611950262681017,
+    "zoom": 1.251061245474208
   },
   "elements": [
-    {
-      "id": "59b140d6-ae93-4465-843b-5f27498631b3",
-      "type": "text",
-      "x": 0,
-      "y": 0,
-      "width": 2,
-      "height": 1,
-      "text": "wip. ",
-      "font": "xanh",
-      "fontSize": 18
-    },
     {
       "id": "9b393c6d-3d31-4d92-9d5e-0262d43a0c09",
       "type": "text",
@@ -31,8 +20,8 @@
     {
       "id": "c202b5ad-d38d-4a96-8b4e-8190dee426e0",
       "type": "text",
-      "x": 20,
-      "y": 3,
+      "x": -9,
+      "y": 24,
       "width": 27,
       "height": 57,
       "text": "I want to channel the power of this astral dimension. This undertaking is known as Project Akasha. Project Akasha has seen many avatars and conduits of the astral dimensions's power. Namely, in the spring of 2026, an aspect of this project was explored in the form of a spatial, textual editor. However, as that editor reached its completion, I began to realize that wasnt quite what I had envisioned for Project Akasha. Thus, I renamed it to Zion and moved forward, looking for my next conduit. \n\nIt was in a desktop app now named Akashom that I tried bringing to life Akasha. Akashom went through a number of revisions and I put countless hours into its development over the Summer of 2026. It was initially just a text editor where text can be placed in these things called cells. And within a cell's shomas (a tiled representation of their relationships) you could spatially organize other cells which in the process automatically defined relationships with the root cell. The capabilities of this alone was quite vast allowing for note taking and knowledge management in an entirely unique manner: one that was driven by the information itself and the relationships between its constituents as opposed to some larger organization or preestablished hierarchy (like typical file systems) where each piece of organization only existed in a singular place, confined by some externally imposed hierarchy. Akashom was my first true adventure in the intersection of spatial orientation, visual representation, and the dynamic organization of information. A large focus while I developed it was customizability. I wanted the ability to look completely different and function compltely different, catered to near infinite types of users.\n\nThis then took another direction when I decided to allow cells contain more than just text. I decided they should encompass information largely beyond just text. Thus they encompassed files largely, image, video, text. As much as possible. This was a decent direction and I did spend some time using it. I used it for around a month or so before getting caught up with other things and putting it to the side. \n\nBy this point it was late Fall 2026 and I'd been learning more about graph theory, programming language theory, and just overall exploring more eccentric software and CS research. Naturally, when I returned to Akasha in November 2026 I felt that the astral dimension was not really brought to fruition by Akashom. It seemed that at the time, I tried to bring forth the vision of Akasha I Had with the tools and concepts I was familiar with (simple software, notetaking apps, etc). But now, being equipped with more skills, a bigger imagination, and the stomach for failure, I want to return to Project Akasha and expand the scope of my research. Im now somehwat against Akasha's final form being some kind of typical application. I'm now erring towards something more akin to a database management tool or even programming language for the sake of utmost power and extensibility. Usable for an epidemiologist tracking the spread of a disease, a tailor logging inventory and the fabrics he uses and how he crafts clothing, as well as a world builder organizing the vast intricacies of their world's languages and races (in whatever form of information best suits them). \n\nI'm disappointed with Akashom because I was trying too hard to package it into a final product/application meant for use. In doing so, I narrowed the scope of the project, kneecapping its power and limiting its potential, and took away a level of the infinite extensibility i was chasing but most importantly, I lost a part of what I enjoy the most: the unbounded exploration and research of this wonderful astral dimension I had stumbled across. Now that I have that awareness and don't mind endlessly exploring this idea without any discernible fruit, I can pursue this project in the manner best suited for me and truly try my best to capture this astral dimension, this Akasha.",
@@ -46,10 +35,10 @@
       "filename": "Screenshot_20260615_220518.png",
       "plainText": false,
       "display": "render",
-      "x": 48,
-      "y": 29,
-      "width": 26,
-      "height": 14.318640467339351,
+      "x": 44.816016030929944,
+      "y": 43.32539117761895,
+      "width": 23,
+      "height": 12.66648964418481,
       "font": "xanh",
       "fontSize": 18
     },
@@ -60,10 +49,10 @@
       "filename": "Screenshot_20260602_230930.png",
       "plainText": false,
       "display": "render",
-      "x": 48,
-      "y": 15,
-      "width": 19.264885920979413,
-      "height": 13,
+      "x": 19,
+      "y": 40,
+      "width": 24,
+      "height": 16.195268494179494,
       "font": "xanh",
       "fontSize": 18
     },
@@ -74,10 +63,10 @@
       "filename": "Screenshot_20260603_182559.png",
       "plainText": false,
       "display": "render",
-      "x": 69,
-      "y": 2,
-      "width": 21.809608540925268,
-      "height": 17,
+      "x": 44.816016030929944,
+      "y": 24.325391177618947,
+      "width": 23.092526690391463,
+      "height": 18,
       "font": "xanh",
       "fontSize": 18
     },
@@ -88,12 +77,100 @@
       "filename": "Screenshot_20260603_142218.png",
       "plainText": false,
       "display": "render",
-      "x": 48,
-      "y": 2,
-      "width": 19.564537157757496,
-      "height": 12,
+      "x": 19,
+      "y": 24,
+      "width": 24.45567144719687,
+      "height": 15,
       "font": "xanh",
       "fontSize": 18
+    },
+    {
+      "id": "23795fe2-5412-48f7-9ea9-9a0d5a8e77e6",
+      "type": "text",
+      "x": -9,
+      "y": 1,
+      "width": 19,
+      "height": 5,
+      "text": "The Astral Dimension",
+      "font": "baskerville",
+      "fontSize": 34
+    },
+    {
+      "id": "7bd58f31-fdfa-4163-b849-15af00072d2a",
+      "type": "text",
+      "x": -9,
+      "y": 22,
+      "width": 19,
+      "height": 5,
+      "text": "Project Akasha Past",
+      "font": "baskerville",
+      "fontSize": 34
+    },
+    {
+      "id": "fd01d25d-ee44-42c2-84c0-206d7f91b6a3",
+      "type": "text",
+      "x": -9,
+      "y": 93,
+      "width": 27,
+      "height": 57,
+      "text": "My guiding research with this project is the following: \n\n\"How can information exist independetly of any single organization, while supporting arbitrarily many relationships and interpretations?\" \n\n\"What minimal computational model would let those relationships and interpretations be constructed, queried, composed, and manipulated?\"\n\n\"How can unexepected structure and intepretation be discovered and experience from the relationshins within a body of information ",
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "a9dd5c75-4d7e-4f24-bdad-3ac7b058e800",
+      "type": "text",
+      "x": -9,
+      "y": 91,
+      "width": 19,
+      "height": 5,
+      "text": "Project Akasha Present",
+      "font": "baskerville",
+      "fontSize": 34
+    },
+    {
+      "id": "7bbd6236-05aa-4a8c-8ff9-15811f59d506",
+      "type": "text",
+      "x": 20,
+      "y": 93,
+      "width": 27,
+      "height": 11,
+      "text": "My guiding research questions with this project is the following: \n\n\"How can information exist independetly of any single organization, while supporting arbitrarily many relationships and interpretations?\" \n\n\"What minimal computational model would let those relationships and interpretations be constructed, queried, composed, and manipulated?\"\n\n\"How can unexpected structure and interpretation be discovered and experience from the relationshins within a body of information?\" ",
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "851d0425-cc69-4819-9bee-159a19d0b335",
+      "type": "text",
+      "x": 20,
+      "y": 91,
+      "width": 19,
+      "height": 5,
+      "text": "Guiding Questions: ",
+      "font": "baskerville",
+      "fontSize": 34
+    },
+    {
+      "id": "66dc06b9-fd16-4fd1-8d44-cd458a4b71ad",
+      "type": "text",
+      "x": 20,
+      "y": 107,
+      "width": 27,
+      "height": 11,
+      "text": "1. Generality: \n2. Relational Organization\n3. Derivation: Existing structure and organization should make discovering and computing new relationships and structure possible. Perhaps the structure can grow to give itself life and dynamism. \n4. Extensibility: Users should be able to independently construc ttheir own representations, operations, and ways of interacting with Akasha being the underlying engine of this. ",
+      "font": "xanh",
+      "fontSize": 18
+    },
+    {
+      "id": "37af4c03-58be-4d4d-b197-062fbbbd8b9b",
+      "type": "text",
+      "x": 20,
+      "y": 105,
+      "width": 19,
+      "height": 5,
+      "text": "Fundamentals of Akasha ",
+      "font": "baskerville",
+      "fontSize": 34
     }
   ]
 }
